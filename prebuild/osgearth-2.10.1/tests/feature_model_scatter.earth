@@ -1,0 +1,84 @@
+<!--
+osgEarth Sample
+
+Model Scattering using the "feature_geom" driver.
+
+For each polygon in the feature geometry, scatter model instances within
+that polygon as a specific density (instances/sqkm). Scattered placement
+is randomized, but it is randomized exactly the same way each time.
+-->
+
+<map name="Model Scattering Demo" type="geocentric" version="2">
+      
+    <!-- Our features layer. The "feature_geom" driver will analyze the
+         style sheet and determine how to render the feature data. -->
+         
+    <feature_model name="trees" enabled="true">
+          
+        <!-- Feature data set to load. This is a set of polygons representing
+             the public parks in Washington DC -->
+             
+        <features name="parks" driver="ogr">
+            <url>../data/parks.shp</url>
+            <build_spatial_index>true</build_spatial_index>
+        </features>
+        
+        <!-- The stylesheet will describe how to render the feature data. In this case
+             we indicate model substitution with density-based scattering. The "density"
+             units are instances-per-sqkm. -->
+             
+        <layout>
+            <crop_features>true</crop_features>
+            <level max_range="25000" style="park-polygons"/>
+            <level max_range="7000"  style="parks-1"/>
+            <level max_range="3000"  style="parks-2"/>
+            <level max_range="1000"  style="parks-3"/>
+        </layout>
+             
+        <styles>
+            <style type="text/css">
+                park-polygons {
+                   fill:                #00ff007f;
+                   altitude-clamping:   terrain-drape;
+                }    
+                parks {
+                   model:               "../data/tree.osg";
+                   model-placement:     random;
+                   altitude-clamping:   terrain;
+                   altitude-resolution: 0.001;
+                   render-transparent:  true;
+                   render-min-alpha:    0.15;                   
+                }
+                parks-1 : parks {
+                   model-density:     1000;
+                   model-scale:       2.0;
+                   model-random-seed: 0;
+                }            
+                parks-2 : parks {
+                   model-density:     2500;
+                   model-scale:       2.5;
+                   model-random-seed: 1;
+                }              
+                parks-3 : parks {
+                   model-density:     5000;
+                   model-scale:       2.25;
+                   model-random-seed: 2;
+                }                
+            </style>
+        </styles>        
+    </feature_model>
+    
+    <image name="ReadyMap.org - Imagery" driver="tms">
+        <url>http://readymap.org/readymap/tiles/1.0.0/7/</url>
+    </image>
+    
+    <elevation name="ReadyMap.org - Elevation" driver="tms">
+        <url>http://readymap.org/readymap/tiles/1.0.0/116/</url>
+    </elevation>
+    
+    <viewpoints>
+        <viewpoint name="DC overview" heading="0" height="25.83" lat="38.9015" long="-77.0217" pitch="-89.9" range="28262"/>
+        <viewpoint name="DC close up" heading="-13.48" lat="38.911" long="-77.051" pitch="-10.1" range="2711"/>
+    </viewpoints>
+  
+</map>

@@ -1,0 +1,95 @@
+/* -*-c++-*- */
+/* osgEarth - Geospatial SDK for OpenSceneGraph
+ * Copyright 2019 Pelican Mapping
+ * http://osgearth.org
+ *
+ * osgEarth is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>
+ */
+#ifndef OSGEARTH_TRITON_DRAWABLE_H
+#define OSGEARTH_TRITON_DRAWABLE_H
+
+#include "Common"
+#include <osg/Drawable>
+#include <osg/RenderInfo>
+#include <osg/TextureCubeMap>
+#include <osg/Version>
+#include <osg/Texture2D>
+#include <osg/buffered_value>
+
+#include <osgEarth/Terrain>
+#include <osgEarth/NativeProgramAdapter>
+#include <osgEarth/ImageLayer>
+
+const unsigned int TRITON_OCEAN_MASK = 0x4; // 0100
+
+namespace osgEarth { namespace Triton
+{
+    class TritonContext;
+    class TritonHeightMap;
+
+    /**
+     * Custom drawable for rendering the Triton ocean effects
+     */
+    class OSGEARTHTRITON_EXPORT TritonDrawable : public osg::Drawable
+    {
+    public:
+        TritonDrawable(TritonContext* TRITON);
+
+        //! Layer to use as an ocean rendering mask
+        void setMaskLayer(const osgEarth::ImageLayer* maskLayer);
+
+        //! Height map generator to use to mask out the ocean where the
+        //! terrain has positive elevation
+        void setHeightMapGenerator(TritonHeightMap* heightMap);
+
+        //! Gets the Triton Camera associated with an osg Camera
+        ::Triton::Camera* getTritonCam(const osg::Camera* cam) {
+            return _local.get(cam)._tritonCam;
+        }
+
+    public: // osg::Drawable
+
+        void drawImplementation(osg::RenderInfo& ri) const;
+
+        osg::BoundingBox computeBoundingBox() const;
+
+        void setPlanarReflectionMap(osg::Texture2D* map);
+
+        void setPlanarReflectionProjection(osg::RefMatrix* proj);
+
+    protected:
+        virtual ~TritonDrawable();
+
+        osg::observer_ptr<TritonContext>  _TRITON;
+        osg::observer_ptr<const osgEarth::ImageLayer> _maskLayer;
+        osg::ref_ptr<osg::TextureCubeMap> _cubeMap;
+        
+        osg::ref_ptr<osg::Texture2D> _planarReflectionMap;
+        osg::ref_ptr<osg::RefMatrix> _planarReflectionProjection;
+
+        mutable osg::ref_ptr<TritonHeightMap> _heightMapGenerator;
+
+        mutable osg::buffered_object<osgEarth::NativeProgramAdapterCollection> _adapters;
+
+        struct CameraLocal
+        {
+            CameraLocal() : _tritonCam(0L) { }
+            ::Triton::Camera* _tritonCam;
+        };
+        mutable PerObjectFastMap<const osg::Camera*, CameraLocal> _local;
+    };
+
+} } // namespace osgEarth::Triton
+
+#endif // OSGEARTH_TRITON_DRAWABLE_H

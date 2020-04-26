@@ -1,0 +1,66 @@
+/* -*-c++-*- */
+/* osgEarth - Geospatial SDK for OpenSceneGraph
+ * Copyright 2019 Pelican Mapping
+ * http://osgearth.org
+ *
+ * osgEarth is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>
+ */
+#ifndef OSGEARTH_EXT_TERRAIN_SHADER_H
+#define OSGEARTH_EXT_TERRAIN_SHADER_H 1
+
+#include "TerrainShaderOptions"
+#include <osgEarth/Extension>
+#include <osgEarth/MapNode>
+#include <osgEarth/TerrainEffect>
+#include <osgEarthUtil/Controls>
+
+namespace osgEarth { namespace TerrainShader
+{
+    using namespace osgEarth;
+
+    class TerrainShaderExtension : public Extension,
+                                   public ExtensionInterface<MapNode>,
+                                   public TerrainShaderOptions
+    {
+    public:
+        META_OE_Extension(osgEarth, TerrainShaderExtension, terrainshader);
+
+        // CTORs
+        TerrainShaderExtension();
+        TerrainShaderExtension(const TerrainShaderOptions& options);
+
+        // DTOR
+        virtual ~TerrainShaderExtension();
+
+
+    public: // Extension
+
+        virtual void setDBOptions(const osgDB::Options* dbOptions);
+
+        virtual const ConfigOptions& getConfigOptions() const { return *this; }
+
+    public: // ExtensionInterface<MapNode>
+
+        bool connect(MapNode* mapNode);
+
+        bool disconnect(MapNode* mapNode);
+
+    private:
+        osg::ref_ptr<const osgDB::Options> _dbOptions;
+        osg::ref_ptr<TerrainEffect>        _effect;
+    };
+
+} } // namespace osgEarth::TerrainShader
+
+#endif // OSGEARTH_EXT_TERRAIN_SHADER_H

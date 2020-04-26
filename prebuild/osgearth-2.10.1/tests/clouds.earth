@@ -1,0 +1,35 @@
+<!--
+osgEarth Sample - Rendering a cloud layer with a layer shader
+-->
+<map name="Imagery with clouds" type="geocentric">
+    
+    <image name="readymap_imagery" driver="tms">
+        <url>http://readymap.org/readymap/tiles/1.0.0/7/</url>
+    </image>
+    
+    <image name="clouds" driver="osg">
+        <url>../data/cloud_combined_2048.jpg</url>
+        <profile>global-geodetic</profile>
+        <shader>
+          <![CDATA[
+          
+            #pragma vp_entryPoint raiseClouds
+            #pragma vp_location vertex_view
+            vec3 oe_UpVectorView;
+            const float cloudsAlt = 20000.0;
+            void raiseClouds(inout vec4 vv) {
+                vv.xyz += oe_UpVectorView*cloudsAlt;
+            }
+            
+            [break]
+            
+            #pragma vp_entryPoint alphaOut
+            #pragma vp_location fragment_coloring
+            void alphaOut(inout vec4 color) {
+                color.a *= clamp(distance(color.rgb, vec3(0.0,0.0,0.0)), 0.0, 1.0);
+            }
+            
+          ]]>
+        </shader>
+    </image>
+</map>

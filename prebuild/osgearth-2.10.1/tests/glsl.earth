@@ -1,0 +1,26 @@
+<!-- 
+osgEarth Sample - GLSL in the Earth File.
+-->
+
+<map>
+    <options>
+        <terrain driver="rex"></terrain>
+    </options>
+    
+    <image driver="gdal" name="world-tiff">
+        <url>../data/world.tif</url>
+        <caching_policy usage="no_cache"/>
+        <shader>
+          <uniform name="gamma" value="2.2"/>
+          <![CDATA[
+            #pragma vp_entryPoint gammaCorrection
+            #pragma vp_location   fragment
+            uniform float gamma;
+            void gammaCorrection(inout vec4 color)
+            {
+                color.rgb = pow(color.rgb, vec3(1.0/gamma));
+            }            
+          ]]>
+        </shader>
+    </image>
+</map>

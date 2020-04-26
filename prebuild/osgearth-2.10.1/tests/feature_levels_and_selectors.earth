@@ -1,0 +1,85 @@
+<!--
+osgEarth Sample
+Shows how to use Levels and Selectors together when rendering feature data.
+-->
+
+<map name="Feature Geometry Demo" type="geocentric" version="2">
+
+    <xi:include href="readymap_imagery.xml"/>
+    
+    <feature_model name="boundaries">
+        <features name="world" driver="ogr">
+            <url>../data/world.shp</url>
+        </features>
+        <styles>
+            <style type="text/css">
+                world {
+                   stroke:       #9f9f7f;
+                   stroke-width: 2px;
+                   render-clip-plane: 0;
+                   render-depth-test: false;
+                }            
+            </style>
+        </styles>        
+    </feature_model>    
+    
+    <feature_model name="cities">
+
+        <features name="cities" driver="ogr">
+            <url>../data/cities.gpkg</url>
+        </features>
+        
+        <layout>
+            <level name="far"    style="large"  max_range="1e10"/>
+            <level name="medium" style="medium" max_range="3000000"/>
+            <level name="close"  style="small"  max_range="200000"/>
+        </layout>
+
+        <styles>
+            <selector name="large" class="label-large">
+                <query>
+                    <expr> <![CDATA[ rank_max >= 12 ]]> </expr>
+                </query>
+            </selector>
+            
+            <selector name="medium" class="label-medium">
+                <query>
+                    <expr> <![CDATA[ rank_max >= 8 AND rank_max < 12 ]]> </expr>
+                </query>
+            </selector>
+            
+            <selector name="small" class="label-small">
+                <query>
+                    <expr> <![CDATA[ rank_max < 8 ]]> </expr>
+                </query>
+            </selector>
+            
+            <style type="text/css">   
+                label {
+                    text-declutter: true;
+                    text-content:   [name];
+                    text-encoding:  utf-8;
+                    text-align:     center_center;
+                    text-priority:  [rank_max];
+                    text-halo:      #2f2f2f;
+                }                
+                label-large : label {
+                    text-size:      26.0;
+                    text-color: #ffff00;
+                }           
+                label-medium : label {
+                    text-size:      20.0;
+                }           
+                label-small : label {
+                    text-size:      16.0;
+                }     
+            </style>
+        </styles>
+        
+    </feature_model>
+    
+    <screen_space_layout>
+        <sort_by_priority>true</sort_by_priority>
+    </screen_space_layout>
+  
+</map>

@@ -1,0 +1,158 @@
+<!--
+osgEarth Sample. Like boston.earth, but on a projected map
+-->
+
+<map name="Boston Demo" type="projected">
+    
+    <options>
+		<profile srs="+proj=utm +zone=19 +ellps=GRS80 +units=m +no_defs"
+		         xmin="291343"  xmax="367343"
+				 ymin="4653876" ymax="4722276"
+                 num_tiles_wide_at_lod_0="1"
+				 num_tiles_high_at_lod_0="1">
+        </profile>
+    </options>
+    
+    <image name="readymap_imagery" driver="tms">
+        <url>http://readymap.org/readymap/tiles/1.0.0/22/</url>
+    </image>
+    
+    <elevation name="readymap_elevation" driver="tms">
+        <url>http://readymap.org/readymap/tiles/1.0.0/116/</url>
+    </elevation>
+      
+    <feature_model name="buildings" max_range="20000">
+         
+        <features name="buildings" driver="ogr">
+            <url>../data/boston_buildings_utm19.shp</url>
+			<resample min_length="2.5"/>
+        </features>
+        
+        <!--
+         ! The "layout" element activates tiling and paging of the feature set. If you
+         ! omit the layout element, the entire feature set will render as one pre-loaded
+         ! model (no tiling or paging).
+         !  
+         ! Each "level" is a level of detail for features, and should select a style
+         ! to use for that level. It also can specify min and max camera ranges, in meters.
+         -->
+        
+        <layout tile_size="500">
+            <level name="default" max_range="20000" style="buildings"/>
+        </layout>
+        
+        <styles>            
+            <library name="us_resources">
+                <url>../data/resources/textures_us/catalog.xml</url>
+            </library>
+            
+            <style type="text/css">
+                buildings {
+                    extrusion-height:        3.5 * max([story_ht_], 1);
+                    extrusion-flatten:       true;
+                    extrusion-wall-style:    building-wall;
+                    extrusion-wall-gradient: 0.5;
+                    extrusion-roof-style:    building-rooftop;
+                    altitude-clamping:       terrain;
+                    altitude-technique:      map;
+                    altitude-binding:        vertex;
+					altitude-resolution:     0;
+                }            
+                building-wall {
+                    skin-library:     us_resources;
+                    skin-tags:        building;
+                    skin-random-seed: 1;
+                }
+                building-rooftop {
+                    skin-library:     us_resources;
+                    skin-tags:        rooftop;
+                    skin-tiled:       true;
+                    skin-random-seed: 1;
+                }
+            </style>
+        </styles>   
+    </feature_model>
+    
+    
+    <feature_model name="Streets" feature_source="streets-data">        
+        <layout crop_features="true" tile_size="1000">
+            <level max_range="5000"/>
+        </layout>        
+        <styles>
+            <style type="text/css">
+                default {
+                    stroke:                       #ffff7f7f;
+                    stroke-width:                 7.5m;
+                    altitude-clamping:            terrain;
+                    render-depth-offset-min-bias: 3.6;
+                    render-transparent:           true;
+                }
+            </style>
+        </styles>        
+    </feature_model>
+	
+	
+	<feature_model name="streetlamps" feature_source="streets-data">
+        <layout tile_size="1000" crop_features="true">
+            <level max_range="1000" style="default"/>
+        </layout>
+        
+        <styles>
+            <style type="text/css">
+                default {
+                    model:             "../data/streetlight.osgb";
+                    model-script:      positionAlongSegments();
+					model-heading:     feature.properties.heading;
+                    altitude-clamping: terrain;
+                }
+            </style>
+            <script language="javascript" profile="full">
+				<url>../data/scripts/createLineOffsetPoints.js</url>
+			</script>
+        </styles>   
+    </feature_model>
+    
+    
+    <feature_model name="Parks" enabled="true">
+        <features name="parks" driver="ogr">
+            <url>../data/boston-parks.shp</url>
+        </features>        
+        
+        <layout tile_size="1000">
+            <level max_range="2000"/>
+        </layout>
+        
+        <feature_indexing enabled="false"/>
+        
+        <styles>
+            <style type="text/css">
+                default {
+                   model:                  "../data/loopix/tree4.osgb";
+				   model-scale:            0.15 + 0.1*Math.random();
+                   model-placement:        random;
+                   model-density:          3000;
+				   model-heading:          Math.random() * 360.0;
+                   altitude-clamping:      terrain;
+                   render-transparent:     true;
+				   render-min-alpha:       0.15;
+                }
+            </style>
+        </styles>        
+    </feature_model>
+    
+    <viewpoints time="1.0">
+        <viewpoint name="Boston Overview" heading="24.261" height="0" lat="42.34425" long="-71.076262" pitch="-21.6" range="3450"/>
+        <viewpoint name="Boston Downtown 1" heading="117" lat="42.3568" long="-71.0585" height="0" pitch="-20.4" range="1500" />
+        <viewpoint name="Boston Downtown 2" heading="-128.5" lat="42.3582" long="-71.0546" height="0" pitch="-19" range="1620" />
+        <viewpoint name="Boston Street Level" heading="-145.64081" lat="42.364015" long="-71.054149" pitch="-9.701" range="144.95"/>
+    </viewpoints>
+  
+    
+    <feature_source name="streets-data" driver="ogr">
+        <url>../data/boston-scl-utm19n-meters.shp</url>
+        <filters>
+            <resample min_length="25" max_length="25"/>
+        </filters>
+    </feature_source>
+    
+</map>
