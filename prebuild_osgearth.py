@@ -11,7 +11,8 @@ from common import *
 #内部路径 升级后可能会替换
 # osgearth_DIR_NAME = "gwaldron-osgearth-25ce0e1"   #github 2.7
 # osgearth_DIR_NAME = "osgearth28"   #github 2.8
-osgearth_DIR_NAME = "osgearth-master-20180304"   #github 2.10
+# osgearth_DIR_NAME = "osgearth-master-20180304"   #github 2.10
+osgearth_DIR_NAME = "osgearth-2.10.1"   #osgearth-2.10.1
 
 
 #    

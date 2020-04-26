@@ -11,8 +11,8 @@ from common import *
 #内部路径 升级后可能会替换
 # OSG_DIR_NAME = "OpenSceneGraph-3.2.1-rc3"
 # OSG_DIR_NAME = "OpenSceneGraph-3.3.6"
-OSG_DIR_NAME = "OpenSceneGraph-3.4.0"
-# OSG_DIR_NAME = "OpenSceneGraph-3.6.4"
+# OSG_DIR_NAME = "OpenSceneGraph-3.4.0"
+OSG_DIR_NAME = "OpenSceneGraph-3.6.4"
 VPB_DIR_NAME = "VirtualPlanetBuilder-master"
 
 
