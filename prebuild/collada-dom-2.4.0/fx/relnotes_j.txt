@@ -1,0 +1,40 @@
+#
+# Copyright 2006 Sony Computer Entertainment Inc.
+#
+# Licensed under the MIT Open Source License, for details please see license.txt or the website
+# http://www.opensource.org/licenses/mit-license.php
+#
+
+COLLADA FX Loaderリリースノート
+-------------------------------
+
+**COLLADA FX Loaderには、CG 1.5が必要です。β版は以下から入手できます。
+http://developer.nvidia.com/object/cg-toolkit-15beta.html
+
+COLLADA FX Loaderプロジェクトは、基本的なCOLLADA FX文書をロードし、すべての
+呼び出しをCg/CgGLランタイムにして、COLLADAで定義されているマテリアルと
+エフェクトを作成・初期化するために開発されたサンプルです。
+
+また、エフェクトのパス状態をセットしたりリセットするために、呼び出しを
+介してそれらのエフェクトを適用するためのAPIも提供しています。クライアント
+コードでは、目的のマテリアルで描くようにパス状態をセットした後でポリゴンを
+プッシュする必要があるだけです。
+
+現時点では、ロードは、CgおよびOpenGLで利用可能なタイプや状態をすべて
+サポートしているわけではありません。現在サポートしていなくても必要な任意の
+タイプや状態の実装を追加するために、配備されているフレームワークは簡単に
+拡張できます。
+
+これまでテストを行い、デモで利用した適度に複雑なエフェクトをロードして
+実行するには十分です。レンダリングターゲットやフルスクリーンエフェクトは
+まだサポートしていません。
+
+COLLADA FXローダのソースはlibcfx.aと呼ばれるライブラリに組み込まれており、
+このライブラリは、かならずアプリケーションにリンクしなければなりません。
+
+ローダは、COLLADAから直接アセットをロードする場合にCOLLADA DOMを利用します。
+もしくは、エフェクトやマテリアルは、libcfxのネイティブバイナリフォーマット
+に変換することができます。
+
+著者：Tanya Scovill, SCEA
+      Andrew Lorino, SCEA

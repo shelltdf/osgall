@@ -1,0 +1,16 @@
+#
+# Copyright 2006 Sony Computer Entertainment Inc.
+#
+# Licensed under the MIT Open Source License, for details please see license.txt or the website
+# http://www.opensource.org/licenses/mit-license.php
+#
+
+MAKERULES_NAME = $(addsuffix $(TARGET_PLATFORM),MakeRules_)
+include $(ROOT_DIR)/build/$(MAKERULES_NAME)
+
+display:
+	@echo 'TARGET_PLATFORM      = $(TARGET_PLATFORM)'
+	@echo 'COLLADA_DOM_VERSION  = $(COLLADA_DOM_VERSION)'
+	@echo 'BUILD                = $(BUILD)'
+	@echo 'MSVC                 = $(MSVC)'
+	@echo ''

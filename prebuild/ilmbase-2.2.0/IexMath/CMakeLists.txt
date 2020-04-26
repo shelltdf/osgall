@@ -1,0 +1,33 @@
+# pstanczyk@ilm.com
+
+IF(BUILD_SHARED_LIBS)
+    ADD_DEFINITIONS(-DIEXMATH_EXPORTS)
+ENDIF()
+ADD_LIBRARY ( IexMath ${LIB_TYPE}
+  IexMathFloatExc.cpp  
+  IexMathFpu.cpp
+  )
+TARGET_LINK_LIBRARIES(IexMath Iex)
+
+
+IF(WIN32)
+INSTALL ( TARGETS IexMath
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION bin
+    ARCHIVE DESTINATION lib
+)
+ELSE(WIN32)
+INSTALL ( TARGETS IexMath
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+)
+ENDIF(WIN32)
+
+INSTALL ( FILES 
+  IexMathFloatExc.h  
+  IexMathFpu.h  
+  IexMathIeeeExc.h
+  DESTINATION
+  include/OpenEXR
+)

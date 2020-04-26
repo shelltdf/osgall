@@ -1,0 +1,26 @@
+#
+# Copyright 2006 Sony Computer Entertainment Inc.
+#
+# Licensed under the MIT Open Source License, for details please see license.txt or the website
+# http://www.opensource.org/licenses/mit-license.php
+#
+
+.PHONY: $(SUBDIRS) $(PROJECT_FILES) 
+
+all: $(SUBDIRS) $(PROJECT_FILES) $(SRC)
+	
+$(PROJECT_FILES):
+	$(VCC) $@ /build $(PROJECT_CONFIG)
+	
+rebuild: $(SUBDIRS)
+	$(VCC) $(PROJECT_FILES) /rebuild $(PROJECT_CONFIG)
+
+clean: 
+	rm -rf $(CLEAN_DIR)
+	for dirs in $(SUBDIRS); do \
+		$(MAKE) -C $$dirs clean; \
+	done
+
+$(SUBDIRS):
+	$(MAKE) -C $@
+

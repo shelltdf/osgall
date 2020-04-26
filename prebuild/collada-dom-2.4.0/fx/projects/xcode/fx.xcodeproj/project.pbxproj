@@ -1,0 +1,442 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6DB9C0AC0DC1A759009CAD26 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DB9C0AB0DC1A759009CAD26 /* OpenGL.framework */; };
+		6DB9C0F00DC1A8FB009CAD26 /* cfxAnnotatable.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB9C0D30DC1A8FB009CAD26 /* cfxAnnotatable.h */; };
+		6DB9C0F10DC1A8FB009CAD26 /* cfxAnnotate.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB9C0D40DC1A8FB009CAD26 /* cfxAnnotate.h */; };
+		6DB9C0F20DC1A8FB009CAD26 /* cfxBinaryUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB9C0D50DC1A8FB009CAD26 /* cfxBinaryUtil.h */; };
+		6DB9C0F30DC1A8FB009CAD26 /* cfxBindParam.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB9C0D60DC1A8FB009CAD26 /* cfxBindParam.h */; };
+		6DB9C0F40DC1A8FB009CAD26 /* cfxCode.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB9C0D70DC1A8FB009CAD26 /* cfxCode.h */; };
+		6DB9C0F50DC1A8FB009CAD26 /* cfxConnectParam.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB9C0D80DC1A8FB009CAD26 /* cfxConnectParam.h */; };
+		6DB9C0F60DC1A8FB009CAD26 /* cfxData.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB9C0D90DC1A8FB009CAD26 /* cfxData.h */; };
+		6DB9C0F70DC1A8FB009CAD26 /* cfxDataMaker.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB9C0DA0DC1A8FB009CAD26 /* cfxDataMaker.h */; };
+		6DB9C0F80DC1A8FB009CAD26 /* cfxEffect.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB9C0DB0DC1A8FB009CAD26 /* cfxEffect.h */; };
+		6DB9C0F90DC1A8FB009CAD26 /* cfxError.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB9C0DC0DC1A8FB009CAD26 /* cfxError.h */; };
+		6DB9C0FA0DC1A8FB009CAD26 /* cfxGlEnumMaps.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB9C0DD0DC1A8FB009CAD26 /* cfxGlEnumMaps.h */; };
+		6DB9C0FB0DC1A8FB009CAD26 /* cfxGlPipelineSetting.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB9C0DE0DC1A8FB009CAD26 /* cfxGlPipelineSetting.h */; };
+		6DB9C0FC0DC1A8FB009CAD26 /* cfxGlPipelineSettingMaker.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB9C0DF0DC1A8FB009CAD26 /* cfxGlPipelineSettingMaker.h */; };
+		6DB9C0FD0DC1A8FB009CAD26 /* cfxGlSamplerSetting.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB9C0E00DC1A8FB009CAD26 /* cfxGlSamplerSetting.h */; };
+		6DB9C0FF0DC1A8FB009CAD26 /* cfxLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB9C0E20DC1A8FB009CAD26 /* cfxLoader.h */; };
+		6DB9C1000DC1A8FB009CAD26 /* cfxNewParam.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB9C0E30DC1A8FB009CAD26 /* cfxNewParam.h */; };
+		6DB9C1010DC1A8FB009CAD26 /* cfxOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB9C0E40DC1A8FB009CAD26 /* cfxOSX.h */; };
+		6DB9C1020DC1A8FB009CAD26 /* cfxParam.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB9C0E50DC1A8FB009CAD26 /* cfxParam.h */; };
+		6DB9C1030DC1A8FB009CAD26 /* cfxParamable.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB9C0E60DC1A8FB009CAD26 /* cfxParamable.h */; };
+		6DB9C1040DC1A8FB009CAD26 /* cfxPass.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB9C0E70DC1A8FB009CAD26 /* cfxPass.h */; };
+		6DB9C1050DC1A8FB009CAD26 /* cfxPlatform.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB9C0E80DC1A8FB009CAD26 /* cfxPlatform.h */; };
+		6DB9C1060DC1A8FB009CAD26 /* cfxSampler.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB9C0E90DC1A8FB009CAD26 /* cfxSampler.h */; };
+		6DB9C1070DC1A8FB009CAD26 /* cfxSetParam.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB9C0EA0DC1A8FB009CAD26 /* cfxSetParam.h */; };
+		6DB9C1080DC1A8FB009CAD26 /* cfxShader.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB9C0EB0DC1A8FB009CAD26 /* cfxShader.h */; };
+		6DB9C1090DC1A8FB009CAD26 /* cfxSurface.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB9C0EC0DC1A8FB009CAD26 /* cfxSurface.h */; };
+		6DB9C10A0DC1A8FB009CAD26 /* cfxTechnique.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB9C0ED0DC1A8FB009CAD26 /* cfxTechnique.h */; };
+		6DB9C10B0DC1A8FB009CAD26 /* cfxTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB9C0EE0DC1A8FB009CAD26 /* cfxTypes.h */; };
+		6DB9C10C0DC1A8FB009CAD26 /* cfxMaterial.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB9C0EF0DC1A8FB009CAD26 /* cfxMaterial.h */; };
+		6DCE727B0E197BAE0012DC0A /* Cg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DCE727A0E197BAE0012DC0A /* Cg.framework */; };
+		6DD265460DBBD68A007AC96B /* cfxAnnotatable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DD2652D0DBBD68A007AC96B /* cfxAnnotatable.cpp */; };
+		6DD265470DBBD68A007AC96B /* cfxAnnotate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DD2652E0DBBD68A007AC96B /* cfxAnnotate.cpp */; };
+		6DD265480DBBD68A007AC96B /* cfxBinaryUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DD2652F0DBBD68A007AC96B /* cfxBinaryUtil.cpp */; };
+		6DD265490DBBD68A007AC96B /* cfxBindParam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DD265300DBBD68A007AC96B /* cfxBindParam.cpp */; };
+		6DD2654A0DBBD68A007AC96B /* cfxCode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DD265310DBBD68A007AC96B /* cfxCode.cpp */; };
+		6DD2654B0DBBD68A007AC96B /* cfxConnectParam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DD265320DBBD68A007AC96B /* cfxConnectParam.cpp */; };
+		6DD2654C0DBBD68A007AC96B /* cfxData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DD265330DBBD68A007AC96B /* cfxData.cpp */; };
+		6DD2654D0DBBD68A007AC96B /* cfxDataMaker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DD265340DBBD68A007AC96B /* cfxDataMaker.cpp */; };
+		6DD2654E0DBBD68A007AC96B /* cfxEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DD265350DBBD68A007AC96B /* cfxEffect.cpp */; };
+		6DD2654F0DBBD68A007AC96B /* cfxError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DD265360DBBD68A007AC96B /* cfxError.cpp */; };
+		6DD265500DBBD68A007AC96B /* cfxGlEnumMaps.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DD265370DBBD68A007AC96B /* cfxGlEnumMaps.cpp */; };
+		6DD265510DBBD68A007AC96B /* cfxGlPipelineSetting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DD265380DBBD68A007AC96B /* cfxGlPipelineSetting.cpp */; };
+		6DD265520DBBD68A007AC96B /* cfxGlPipelineSettingMaker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DD265390DBBD68A007AC96B /* cfxGlPipelineSettingMaker.cpp */; };
+		6DD265530DBBD68A007AC96B /* cfxGlSamplerSetting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DD2653A0DBBD68A007AC96B /* cfxGlSamplerSetting.cpp */; };
+		6DD265540DBBD68A007AC96B /* cfxLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DD2653B0DBBD68A007AC96B /* cfxLoader.cpp */; };
+		6DD265550DBBD68A007AC96B /* cfxMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DD2653C0DBBD68A007AC96B /* cfxMaterial.cpp */; };
+		6DD265560DBBD68A007AC96B /* cfxNewParam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DD2653D0DBBD68A007AC96B /* cfxNewParam.cpp */; };
+		6DD265570DBBD68A007AC96B /* cfxParam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DD2653E0DBBD68A007AC96B /* cfxParam.cpp */; };
+		6DD265580DBBD68A007AC96B /* cfxParamable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DD2653F0DBBD68A007AC96B /* cfxParamable.cpp */; };
+		6DD265590DBBD68A007AC96B /* cfxPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DD265400DBBD68A007AC96B /* cfxPass.cpp */; };
+		6DD2655A0DBBD68A007AC96B /* cfxSampler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DD265410DBBD68A007AC96B /* cfxSampler.cpp */; };
+		6DD2655B0DBBD68A007AC96B /* cfxSetParam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DD265420DBBD68A007AC96B /* cfxSetParam.cpp */; };
+		6DD2655C0DBBD68A007AC96B /* cfxShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DD265430DBBD68A007AC96B /* cfxShader.cpp */; };
+		6DD2655D0DBBD68A007AC96B /* cfxSurface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DD265440DBBD68A007AC96B /* cfxSurface.cpp */; };
+		6DD2655E0DBBD68A007AC96B /* cfxTechnique.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DD265450DBBD68A007AC96B /* cfxTechnique.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		6DB9C0AB0DC1A759009CAD26 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		6DB9C0D30DC1A8FB009CAD26 /* cfxAnnotatable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cfxAnnotatable.h; path = ../../include/cfxAnnotatable.h; sourceTree = SOURCE_ROOT; };
+		6DB9C0D40DC1A8FB009CAD26 /* cfxAnnotate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cfxAnnotate.h; path = ../../include/cfxAnnotate.h; sourceTree = SOURCE_ROOT; };
+		6DB9C0D50DC1A8FB009CAD26 /* cfxBinaryUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cfxBinaryUtil.h; path = ../../include/cfxBinaryUtil.h; sourceTree = SOURCE_ROOT; };
+		6DB9C0D60DC1A8FB009CAD26 /* cfxBindParam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cfxBindParam.h; path = ../../include/cfxBindParam.h; sourceTree = SOURCE_ROOT; };
+		6DB9C0D70DC1A8FB009CAD26 /* cfxCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cfxCode.h; path = ../../include/cfxCode.h; sourceTree = SOURCE_ROOT; };
+		6DB9C0D80DC1A8FB009CAD26 /* cfxConnectParam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cfxConnectParam.h; path = ../../include/cfxConnectParam.h; sourceTree = SOURCE_ROOT; };
+		6DB9C0D90DC1A8FB009CAD26 /* cfxData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cfxData.h; path = ../../include/cfxData.h; sourceTree = SOURCE_ROOT; };
+		6DB9C0DA0DC1A8FB009CAD26 /* cfxDataMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cfxDataMaker.h; path = ../../include/cfxDataMaker.h; sourceTree = SOURCE_ROOT; };
+		6DB9C0DB0DC1A8FB009CAD26 /* cfxEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cfxEffect.h; path = ../../include/cfxEffect.h; sourceTree = SOURCE_ROOT; };
+		6DB9C0DC0DC1A8FB009CAD26 /* cfxError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cfxError.h; path = ../../include/cfxError.h; sourceTree = SOURCE_ROOT; };
+		6DB9C0DD0DC1A8FB009CAD26 /* cfxGlEnumMaps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cfxGlEnumMaps.h; path = ../../include/cfxGlEnumMaps.h; sourceTree = SOURCE_ROOT; };
+		6DB9C0DE0DC1A8FB009CAD26 /* cfxGlPipelineSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cfxGlPipelineSetting.h; path = ../../include/cfxGlPipelineSetting.h; sourceTree = SOURCE_ROOT; };
+		6DB9C0DF0DC1A8FB009CAD26 /* cfxGlPipelineSettingMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cfxGlPipelineSettingMaker.h; path = ../../include/cfxGlPipelineSettingMaker.h; sourceTree = SOURCE_ROOT; };
+		6DB9C0E00DC1A8FB009CAD26 /* cfxGlSamplerSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cfxGlSamplerSetting.h; path = ../../include/cfxGlSamplerSetting.h; sourceTree = SOURCE_ROOT; };
+		6DB9C0E20DC1A8FB009CAD26 /* cfxLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cfxLoader.h; path = ../../include/cfxLoader.h; sourceTree = SOURCE_ROOT; };
+		6DB9C0E30DC1A8FB009CAD26 /* cfxNewParam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cfxNewParam.h; path = ../../include/cfxNewParam.h; sourceTree = SOURCE_ROOT; };
+		6DB9C0E40DC1A8FB009CAD26 /* cfxOSX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cfxOSX.h; path = ../../include/cfxOSX.h; sourceTree = SOURCE_ROOT; };
+		6DB9C0E50DC1A8FB009CAD26 /* cfxParam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cfxParam.h; path = ../../include/cfxParam.h; sourceTree = SOURCE_ROOT; };
+		6DB9C0E60DC1A8FB009CAD26 /* cfxParamable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cfxParamable.h; path = ../../include/cfxParamable.h; sourceTree = SOURCE_ROOT; };
+		6DB9C0E70DC1A8FB009CAD26 /* cfxPass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cfxPass.h; path = ../../include/cfxPass.h; sourceTree = SOURCE_ROOT; };
+		6DB9C0E80DC1A8FB009CAD26 /* cfxPlatform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cfxPlatform.h; path = ../../include/cfxPlatform.h; sourceTree = SOURCE_ROOT; };
+		6DB9C0E90DC1A8FB009CAD26 /* cfxSampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cfxSampler.h; path = ../../include/cfxSampler.h; sourceTree = SOURCE_ROOT; };
+		6DB9C0EA0DC1A8FB009CAD26 /* cfxSetParam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cfxSetParam.h; path = ../../include/cfxSetParam.h; sourceTree = SOURCE_ROOT; };
+		6DB9C0EB0DC1A8FB009CAD26 /* cfxShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cfxShader.h; path = ../../include/cfxShader.h; sourceTree = SOURCE_ROOT; };
+		6DB9C0EC0DC1A8FB009CAD26 /* cfxSurface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cfxSurface.h; path = ../../include/cfxSurface.h; sourceTree = SOURCE_ROOT; };
+		6DB9C0ED0DC1A8FB009CAD26 /* cfxTechnique.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cfxTechnique.h; path = ../../include/cfxTechnique.h; sourceTree = SOURCE_ROOT; };
+		6DB9C0EE0DC1A8FB009CAD26 /* cfxTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cfxTypes.h; path = ../../include/cfxTypes.h; sourceTree = SOURCE_ROOT; };
+		6DB9C0EF0DC1A8FB009CAD26 /* cfxMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cfxMaterial.h; path = ../../include/cfxMaterial.h; sourceTree = SOURCE_ROOT; };
+		6DCE727A0E197BAE0012DC0A /* Cg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cg.framework; path = /Library/Frameworks/Cg.framework; sourceTree = "<absolute>"; };
+		6DD2652D0DBBD68A007AC96B /* cfxAnnotatable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cfxAnnotatable.cpp; path = ../../src/cfxAnnotatable.cpp; sourceTree = SOURCE_ROOT; };
+		6DD2652E0DBBD68A007AC96B /* cfxAnnotate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cfxAnnotate.cpp; path = ../../src/cfxAnnotate.cpp; sourceTree = SOURCE_ROOT; };
+		6DD2652F0DBBD68A007AC96B /* cfxBinaryUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cfxBinaryUtil.cpp; path = ../../src/cfxBinaryUtil.cpp; sourceTree = SOURCE_ROOT; };
+		6DD265300DBBD68A007AC96B /* cfxBindParam.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cfxBindParam.cpp; path = ../../src/cfxBindParam.cpp; sourceTree = SOURCE_ROOT; };
+		6DD265310DBBD68A007AC96B /* cfxCode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cfxCode.cpp; path = ../../src/cfxCode.cpp; sourceTree = SOURCE_ROOT; };
+		6DD265320DBBD68A007AC96B /* cfxConnectParam.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cfxConnectParam.cpp; path = ../../src/cfxConnectParam.cpp; sourceTree = SOURCE_ROOT; };
+		6DD265330DBBD68A007AC96B /* cfxData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cfxData.cpp; path = ../../src/cfxData.cpp; sourceTree = SOURCE_ROOT; };
+		6DD265340DBBD68A007AC96B /* cfxDataMaker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cfxDataMaker.cpp; path = ../../src/cfxDataMaker.cpp; sourceTree = SOURCE_ROOT; };
+		6DD265350DBBD68A007AC96B /* cfxEffect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cfxEffect.cpp; path = ../../src/cfxEffect.cpp; sourceTree = SOURCE_ROOT; };
+		6DD265360DBBD68A007AC96B /* cfxError.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cfxError.cpp; path = ../../src/cfxError.cpp; sourceTree = SOURCE_ROOT; };
+		6DD265370DBBD68A007AC96B /* cfxGlEnumMaps.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cfxGlEnumMaps.cpp; path = ../../src/cfxGlEnumMaps.cpp; sourceTree = SOURCE_ROOT; };
+		6DD265380DBBD68A007AC96B /* cfxGlPipelineSetting.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cfxGlPipelineSetting.cpp; path = ../../src/cfxGlPipelineSetting.cpp; sourceTree = SOURCE_ROOT; };
+		6DD265390DBBD68A007AC96B /* cfxGlPipelineSettingMaker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cfxGlPipelineSettingMaker.cpp; path = ../../src/cfxGlPipelineSettingMaker.cpp; sourceTree = SOURCE_ROOT; };
+		6DD2653A0DBBD68A007AC96B /* cfxGlSamplerSetting.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cfxGlSamplerSetting.cpp; path = ../../src/cfxGlSamplerSetting.cpp; sourceTree = SOURCE_ROOT; };
+		6DD2653B0DBBD68A007AC96B /* cfxLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cfxLoader.cpp; path = ../../src/cfxLoader.cpp; sourceTree = SOURCE_ROOT; };
+		6DD2653C0DBBD68A007AC96B /* cfxMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cfxMaterial.cpp; path = ../../src/cfxMaterial.cpp; sourceTree = SOURCE_ROOT; };
+		6DD2653D0DBBD68A007AC96B /* cfxNewParam.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cfxNewParam.cpp; path = ../../src/cfxNewParam.cpp; sourceTree = SOURCE_ROOT; };
+		6DD2653E0DBBD68A007AC96B /* cfxParam.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cfxParam.cpp; path = ../../src/cfxParam.cpp; sourceTree = SOURCE_ROOT; };
+		6DD2653F0DBBD68A007AC96B /* cfxParamable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cfxParamable.cpp; path = ../../src/cfxParamable.cpp; sourceTree = SOURCE_ROOT; };
+		6DD265400DBBD68A007AC96B /* cfxPass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cfxPass.cpp; path = ../../src/cfxPass.cpp; sourceTree = SOURCE_ROOT; };
+		6DD265410DBBD68A007AC96B /* cfxSampler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cfxSampler.cpp; path = ../../src/cfxSampler.cpp; sourceTree = SOURCE_ROOT; };
+		6DD265420DBBD68A007AC96B /* cfxSetParam.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cfxSetParam.cpp; path = ../../src/cfxSetParam.cpp; sourceTree = SOURCE_ROOT; };
+		6DD265430DBBD68A007AC96B /* cfxShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cfxShader.cpp; path = ../../src/cfxShader.cpp; sourceTree = SOURCE_ROOT; };
+		6DD265440DBBD68A007AC96B /* cfxSurface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cfxSurface.cpp; path = ../../src/cfxSurface.cpp; sourceTree = SOURCE_ROOT; };
+		6DD265450DBBD68A007AC96B /* cfxTechnique.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cfxTechnique.cpp; path = ../../src/cfxTechnique.cpp; sourceTree = SOURCE_ROOT; };
+		D2AAC046055464E500DB518D /* libfx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libfx.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D289987405E68DCB004EDB86 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6DB9C0AC0DC1A759009CAD26 /* OpenGL.framework in Frameworks */,
+				6DCE727B0E197BAE0012DC0A /* Cg.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08FB7794FE84155DC02AAC07 /* fx */ = {
+			isa = PBXGroup;
+			children = (
+				6DCE727A0E197BAE0012DC0A /* Cg.framework */,
+				6DB9C0D10DC1A8E4009CAD26 /* Headers */,
+				6DB9C0AB0DC1A759009CAD26 /* OpenGL.framework */,
+				08FB7795FE84155DC02AAC07 /* Source */,
+				C6A0FF2B0290797F04C91782 /* Documentation */,
+				1AB674ADFE9D54B511CA2CBB /* Products */,
+			);
+			name = fx;
+			sourceTree = "<group>";
+		};
+		08FB7795FE84155DC02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				6DD2652D0DBBD68A007AC96B /* cfxAnnotatable.cpp */,
+				6DD2652E0DBBD68A007AC96B /* cfxAnnotate.cpp */,
+				6DD2652F0DBBD68A007AC96B /* cfxBinaryUtil.cpp */,
+				6DD265300DBBD68A007AC96B /* cfxBindParam.cpp */,
+				6DD265310DBBD68A007AC96B /* cfxCode.cpp */,
+				6DD265320DBBD68A007AC96B /* cfxConnectParam.cpp */,
+				6DD265330DBBD68A007AC96B /* cfxData.cpp */,
+				6DD265340DBBD68A007AC96B /* cfxDataMaker.cpp */,
+				6DD265350DBBD68A007AC96B /* cfxEffect.cpp */,
+				6DD265360DBBD68A007AC96B /* cfxError.cpp */,
+				6DD265370DBBD68A007AC96B /* cfxGlEnumMaps.cpp */,
+				6DD265380DBBD68A007AC96B /* cfxGlPipelineSetting.cpp */,
+				6DD265390DBBD68A007AC96B /* cfxGlPipelineSettingMaker.cpp */,
+				6DD2653A0DBBD68A007AC96B /* cfxGlSamplerSetting.cpp */,
+				6DD2653B0DBBD68A007AC96B /* cfxLoader.cpp */,
+				6DD2653C0DBBD68A007AC96B /* cfxMaterial.cpp */,
+				6DD2653D0DBBD68A007AC96B /* cfxNewParam.cpp */,
+				6DD2653E0DBBD68A007AC96B /* cfxParam.cpp */,
+				6DD2653F0DBBD68A007AC96B /* cfxParamable.cpp */,
+				6DD265400DBBD68A007AC96B /* cfxPass.cpp */,
+				6DD265410DBBD68A007AC96B /* cfxSampler.cpp */,
+				6DD265420DBBD68A007AC96B /* cfxSetParam.cpp */,
+				6DD265430DBBD68A007AC96B /* cfxShader.cpp */,
+				6DD265440DBBD68A007AC96B /* cfxSurface.cpp */,
+				6DD265450DBBD68A007AC96B /* cfxTechnique.cpp */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		1AB674ADFE9D54B511CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D2AAC046055464E500DB518D /* libfx.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6DB9C0D10DC1A8E4009CAD26 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				6DB9C0D30DC1A8FB009CAD26 /* cfxAnnotatable.h */,
+				6DB9C0D40DC1A8FB009CAD26 /* cfxAnnotate.h */,
+				6DB9C0D50DC1A8FB009CAD26 /* cfxBinaryUtil.h */,
+				6DB9C0D60DC1A8FB009CAD26 /* cfxBindParam.h */,
+				6DB9C0D70DC1A8FB009CAD26 /* cfxCode.h */,
+				6DB9C0D80DC1A8FB009CAD26 /* cfxConnectParam.h */,
+				6DB9C0D90DC1A8FB009CAD26 /* cfxData.h */,
+				6DB9C0DA0DC1A8FB009CAD26 /* cfxDataMaker.h */,
+				6DB9C0DB0DC1A8FB009CAD26 /* cfxEffect.h */,
+				6DB9C0DC0DC1A8FB009CAD26 /* cfxError.h */,
+				6DB9C0DD0DC1A8FB009CAD26 /* cfxGlEnumMaps.h */,
+				6DB9C0DE0DC1A8FB009CAD26 /* cfxGlPipelineSetting.h */,
+				6DB9C0DF0DC1A8FB009CAD26 /* cfxGlPipelineSettingMaker.h */,
+				6DB9C0E00DC1A8FB009CAD26 /* cfxGlSamplerSetting.h */,
+				6DB9C0E20DC1A8FB009CAD26 /* cfxLoader.h */,
+				6DB9C0E30DC1A8FB009CAD26 /* cfxNewParam.h */,
+				6DB9C0E40DC1A8FB009CAD26 /* cfxOSX.h */,
+				6DB9C0E50DC1A8FB009CAD26 /* cfxParam.h */,
+				6DB9C0E60DC1A8FB009CAD26 /* cfxParamable.h */,
+				6DB9C0E70DC1A8FB009CAD26 /* cfxPass.h */,
+				6DB9C0E80DC1A8FB009CAD26 /* cfxPlatform.h */,
+				6DB9C0E90DC1A8FB009CAD26 /* cfxSampler.h */,
+				6DB9C0EA0DC1A8FB009CAD26 /* cfxSetParam.h */,
+				6DB9C0EB0DC1A8FB009CAD26 /* cfxShader.h */,
+				6DB9C0EC0DC1A8FB009CAD26 /* cfxSurface.h */,
+				6DB9C0ED0DC1A8FB009CAD26 /* cfxTechnique.h */,
+				6DB9C0EE0DC1A8FB009CAD26 /* cfxTypes.h */,
+				6DB9C0EF0DC1A8FB009CAD26 /* cfxMaterial.h */,
+			);
+			name = Headers;
+			sourceTree = "<group>";
+		};
+		C6A0FF2B0290797F04C91782 /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Documentation;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D2AAC043055464E500DB518D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6DB9C0F00DC1A8FB009CAD26 /* cfxAnnotatable.h in Headers */,
+				6DB9C0F10DC1A8FB009CAD26 /* cfxAnnotate.h in Headers */,
+				6DB9C0F20DC1A8FB009CAD26 /* cfxBinaryUtil.h in Headers */,
+				6DB9C0F30DC1A8FB009CAD26 /* cfxBindParam.h in Headers */,
+				6DB9C0F40DC1A8FB009CAD26 /* cfxCode.h in Headers */,
+				6DB9C0F50DC1A8FB009CAD26 /* cfxConnectParam.h in Headers */,
+				6DB9C0F60DC1A8FB009CAD26 /* cfxData.h in Headers */,
+				6DB9C0F70DC1A8FB009CAD26 /* cfxDataMaker.h in Headers */,
+				6DB9C0F80DC1A8FB009CAD26 /* cfxEffect.h in Headers */,
+				6DB9C0F90DC1A8FB009CAD26 /* cfxError.h in Headers */,
+				6DB9C0FA0DC1A8FB009CAD26 /* cfxGlEnumMaps.h in Headers */,
+				6DB9C0FB0DC1A8FB009CAD26 /* cfxGlPipelineSetting.h in Headers */,
+				6DB9C0FC0DC1A8FB009CAD26 /* cfxGlPipelineSettingMaker.h in Headers */,
+				6DB9C0FD0DC1A8FB009CAD26 /* cfxGlSamplerSetting.h in Headers */,
+				6DB9C0FF0DC1A8FB009CAD26 /* cfxLoader.h in Headers */,
+				6DB9C1000DC1A8FB009CAD26 /* cfxNewParam.h in Headers */,
+				6DB9C1010DC1A8FB009CAD26 /* cfxOSX.h in Headers */,
+				6DB9C1020DC1A8FB009CAD26 /* cfxParam.h in Headers */,
+				6DB9C1030DC1A8FB009CAD26 /* cfxParamable.h in Headers */,
+				6DB9C1040DC1A8FB009CAD26 /* cfxPass.h in Headers */,
+				6DB9C1050DC1A8FB009CAD26 /* cfxPlatform.h in Headers */,
+				6DB9C1060DC1A8FB009CAD26 /* cfxSampler.h in Headers */,
+				6DB9C1070DC1A8FB009CAD26 /* cfxSetParam.h in Headers */,
+				6DB9C1080DC1A8FB009CAD26 /* cfxShader.h in Headers */,
+				6DB9C1090DC1A8FB009CAD26 /* cfxSurface.h in Headers */,
+				6DB9C10A0DC1A8FB009CAD26 /* cfxTechnique.h in Headers */,
+				6DB9C10B0DC1A8FB009CAD26 /* cfxTypes.h in Headers */,
+				6DB9C10C0DC1A8FB009CAD26 /* cfxMaterial.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D2AAC045055464E500DB518D /* fx */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB91EB08733DB70010E9CD /* Build configuration list for PBXNativeTarget "fx" */;
+			buildPhases = (
+				D2AAC043055464E500DB518D /* Headers */,
+				D2AAC044055464E500DB518D /* Sources */,
+				D289987405E68DCB004EDB86 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = fx;
+			productName = fx;
+			productReference = D2AAC046055464E500DB518D /* libfx.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB91EF08733DB70010E9CD /* Build configuration list for PBXProject "fx" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 08FB7794FE84155DC02AAC07 /* fx */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D2AAC045055464E500DB518D /* fx */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D2AAC044055464E500DB518D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6DD265460DBBD68A007AC96B /* cfxAnnotatable.cpp in Sources */,
+				6DD265470DBBD68A007AC96B /* cfxAnnotate.cpp in Sources */,
+				6DD265480DBBD68A007AC96B /* cfxBinaryUtil.cpp in Sources */,
+				6DD265490DBBD68A007AC96B /* cfxBindParam.cpp in Sources */,
+				6DD2654A0DBBD68A007AC96B /* cfxCode.cpp in Sources */,
+				6DD2654B0DBBD68A007AC96B /* cfxConnectParam.cpp in Sources */,
+				6DD2654C0DBBD68A007AC96B /* cfxData.cpp in Sources */,
+				6DD2654D0DBBD68A007AC96B /* cfxDataMaker.cpp in Sources */,
+				6DD2654E0DBBD68A007AC96B /* cfxEffect.cpp in Sources */,
+				6DD2654F0DBBD68A007AC96B /* cfxError.cpp in Sources */,
+				6DD265500DBBD68A007AC96B /* cfxGlEnumMaps.cpp in Sources */,
+				6DD265510DBBD68A007AC96B /* cfxGlPipelineSetting.cpp in Sources */,
+				6DD265520DBBD68A007AC96B /* cfxGlPipelineSettingMaker.cpp in Sources */,
+				6DD265530DBBD68A007AC96B /* cfxGlSamplerSetting.cpp in Sources */,
+				6DD265540DBBD68A007AC96B /* cfxLoader.cpp in Sources */,
+				6DD265550DBBD68A007AC96B /* cfxMaterial.cpp in Sources */,
+				6DD265560DBBD68A007AC96B /* cfxNewParam.cpp in Sources */,
+				6DD265570DBBD68A007AC96B /* cfxParam.cpp in Sources */,
+				6DD265580DBBD68A007AC96B /* cfxParamable.cpp in Sources */,
+				6DD265590DBBD68A007AC96B /* cfxPass.cpp in Sources */,
+				6DD2655A0DBBD68A007AC96B /* cfxSampler.cpp in Sources */,
+				6DD2655B0DBBD68A007AC96B /* cfxSetParam.cpp in Sources */,
+				6DD2655C0DBBD68A007AC96B /* cfxShader.cpp in Sources */,
+				6DD2655D0DBBD68A007AC96B /* cfxSurface.cpp in Sources */,
+				6DD2655E0DBBD68A007AC96B /* cfxTechnique.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB91EC08733DB70010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = /usr/local/lib;
+				PRODUCT_NAME = fx;
+			};
+			name = Debug;
+		};
+		1DEB91ED08733DB70010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/lib;
+				PRODUCT_NAME = fx;
+			};
+			name = Release;
+		};
+		1DEB91F008733DB70010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEFAULT_CG_PLATFORM=\\\"PC-OGL\\\"",
+					"CFX_PLATFORM_INCLUDE=\\<cfxOSX.h\\>",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../../dom/external-libs/boost\"",
+					"\"$(SRCROOT)/../../include\"",
+					"\"$(SRCROOT)/../../../dom/include\"/**",
+					"\"$(SRCROOT)/../../../../collada tools/External/Cg/include\"",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Debug;
+		};
+		1DEB91F108733DB70010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEFAULT_CG_PLATFORM=\\\"PC-OGL\\\"",
+					"CFX_PLATFORM_INCLUDE=\\<cfxOSX.h\\>",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../include\"/**",
+					"\"$(SRCROOT)/../../../dom/include\"/**",
+					"\"$(SRCROOT)/../../../../collada tools/External/Cg/include\"/**",
+					"\"$(SRCROOT)/../../../dom/external-libs/boost\"",
+				);
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB91EB08733DB70010E9CD /* Build configuration list for PBXNativeTarget "fx" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB91EC08733DB70010E9CD /* Debug */,
+				1DEB91ED08733DB70010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB91EF08733DB70010E9CD /* Build configuration list for PBXProject "fx" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB91F008733DB70010E9CD /* Debug */,
+				1DEB91F108733DB70010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}

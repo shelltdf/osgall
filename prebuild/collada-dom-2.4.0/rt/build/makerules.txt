@@ -1,0 +1,119 @@
+#-*-makefile-*-
+#
+# Copyright 2006 Sony Computer Entertainment Inc.
+#
+# Licensed under the MIT Open Source License, for details please see license.txt or the website
+# http://www.opensource.org/licenses/mit-license.php
+#
+# makefile rules: all nosubs clean cleandir
+#
+#
+
+#########################################################
+# some more definitions
+OBJS  = $(addprefix $(INTERMEDIATE_DIR), $(notdir $(addsuffix $(OBJ_SUFFIX), $(basename $(SRC)))))
+OBJS += $(addprefix $(INTERMEDIATE_DIR), $(notdir $(addsuffix .res, $(basename $(RES)))))
+CLEAN_LIST  = $(OBJS) $(TARGET)
+
+# Tell make where to find our source files
+SRC_DIRS = $(sort $(dir $(SRC))) # Generate a unique list of the paths containing our source files
+vpath %.cpp $(subst $(space),:,$(SRC_DIRS)) # Pass vpath a colon-separated list of paths
+
+# Tell make where to find our resource files
+RES_DIRS = $(sort $(dir $(RES)))
+vpath %.rc $(subst $(space),:,$(RES_DIRS))
+
+#########################################################
+# all rule
+
+.PHONY:	all $(SUBDIRS)
+
+all: $(SUBDIRS) nosubs
+nosubs: check createdirs $(SUBDIR) $(TARGET) done
+
+$(TARGET): $(OBJS)
+
+#########################################################
+# build rules
+
+$(INTERMEDIATE_DIR)%$(OBJ_SUFFIX) : %.cpp
+				$(QUIET)$(CXX) -c $< $(CCQUIET) $(CCOPT) $(CCOUT)$@ $(addprefix $(CCINC) ,$(INCLUDE_DIR))
+
+$(INTERMEDIATE_DIR)%.res : %.rc
+				$(QUIET)rc /fo$@ $<
+
+$(OUTDIR)%$(LIB_SUFFIX):
+				@echo $@
+				@$(QUIET)$(AR) $(LCOUT)$@ $(OBJS) $(LCQUIET)
+
+$(OUTDIR)%$(EXE_SUFFIX): $(DEP_LIBS)
+				@echo $@
+				$(LD) $(OBJS) $(LIBRARIES) $(EXEOUT)$@ $(LCOPT) $(LCQUIET)
+
+
+#########################################################
+# clean rules
+clean: $(SUBDIRS)
+ifneq ($(strip $(CLEAN_LIST)),)
+ifeq ($(USE_SHELL),)
+#	@for %%d in ($(subst /,\,$(CLEAN_LIST))) do if exist "%%d" del /Q "%%d" 2> nul
+else
+	@echo cleaning $(notdir $(CLEAN_LIST))
+	@rm -f $(CLEAN_LIST)
+endif
+endif
+
+cleandir:
+ifneq ($(strip $(CLEAN_LIST)),)
+ifeq ($(USE_SHELL),)
+#	@for %%d in ($(subst /,\,$(CLEAN_LIST))) do if exist "%%d" del /Q "%%d" 2> nul
+else
+	@echo cleaning $(notdir $(CLEAN_LIST))
+	@rm -f $(CLEAN_LIST)
+endif
+endif
+
+#########################################################
+#create directory rule
+createdirs:
+ifneq ($(TARGET),)
+ifeq ($(USE_SHELL),)
+				@for %%d in ($(CREATE_DIR)) do if not exist "%%d" mkdir "%%d"
+else
+				@for d in $(CREATE_DIR); do \
+					if [ ! -d $dd ] ; then \
+						mkdir -p $$d ; \
+					fi; \
+					done;
+endif
+endif
+
+#########################################################
+# check rule: can be used to perform some basic checks and tests
+check:
+	@echo building $(TARGET) - $(CONF_NAME)
+#	@echo TARGET = $(TARGET)
+#	@echo EXECUTABLE = $(EXECUTABLE)
+#	@echo LIBRARY = $(LIBRARY)
+#	@echo DEBUG = $(DEBUG)
+#	@echo SRC = $(SRC)
+#	@echo OBJS = $(OBJS)
+
+#########################################################
+# run rule: can be used to run the target
+run: all
+ifneq ($(EXECUTABLE),)
+	cd $(OUTDIR) ;./$(EXECUTABLE)$(EXE_SUFFIX)
+else
+	echo "Nothing to be runned here"
+endif
+
+
+#########################################################
+# subdirectories
+
+$(SUBDIRS):
+	@$(MAKE) -r -R -C $@ $(MAKECMDGOALS)
+
+done:
+	@echo done

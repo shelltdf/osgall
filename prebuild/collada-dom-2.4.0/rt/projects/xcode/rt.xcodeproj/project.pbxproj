@@ -1,0 +1,436 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4BA4A12A0ECBE71100AE001D /* Cg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA4A1290ECBE71100AE001D /* Cg.framework */; };
+		4BA4A12C0ECBE74A00AE001D /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA4A12B0ECBE74A00AE001D /* OpenGL.framework */; };
+		6DB124060E198B76004FA1FD /* CrtAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB123EC0E198B76004FA1FD /* CrtAnimation.h */; };
+		6DB124070E198B76004FA1FD /* CrtCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB123ED0E198B76004FA1FD /* CrtCamera.h */; };
+		6DB124080E198B76004FA1FD /* CrtCg.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB123EE0E198B76004FA1FD /* CrtCg.h */; };
+		6DB124090E198B76004FA1FD /* CrtController.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB123EF0E198B76004FA1FD /* CrtController.h */; };
+		6DB1240A0E198B76004FA1FD /* CrtData.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB123F00E198B76004FA1FD /* CrtData.h */; };
+		6DB1240B0E198B76004FA1FD /* CrtEffect.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB123F10E198B76004FA1FD /* CrtEffect.h */; };
+		6DB1240C0E198B76004FA1FD /* CrtGeometry.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB123F20E198B76004FA1FD /* CrtGeometry.h */; };
+		6DB1240D0E198B76004FA1FD /* CrtImageLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB123F30E198B76004FA1FD /* CrtImageLoader.h */; };
+		6DB1240E0E198B76004FA1FD /* CrtLight.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB123F40E198B76004FA1FD /* CrtLight.h */; };
+		6DB124100E198B76004FA1FD /* CrtMaterial.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB123F60E198B76004FA1FD /* CrtMaterial.h */; };
+		6DB124110E198B76004FA1FD /* CrtMatrix.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB123F70E198B76004FA1FD /* CrtMatrix.h */; };
+		6DB124120E198B76004FA1FD /* CrtMemory.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB123F80E198B76004FA1FD /* CrtMemory.h */; };
+		6DB124130E198B76004FA1FD /* CrtMorph.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB123F90E198B76004FA1FD /* CrtMorph.h */; };
+		6DB124140E198B76004FA1FD /* CrtNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB123FA0E198B76004FA1FD /* CrtNode.h */; };
+		6DB124150E198B76004FA1FD /* CrtOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB123FB0E198B76004FA1FD /* CrtOSX.h */; };
+		6DB124160E198B76004FA1FD /* CrtPhysics.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB123FC0E198B76004FA1FD /* CrtPhysics.h */; };
+		6DB124170E198B76004FA1FD /* CrtPlatform.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB123FD0E198B76004FA1FD /* CrtPlatform.h */; };
+		6DB124190E198B76004FA1FD /* CrtRender.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB123FF0E198B76004FA1FD /* CrtRender.h */; };
+		6DB1241A0E198B76004FA1FD /* CrtSkin.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB124000E198B76004FA1FD /* CrtSkin.h */; };
+		6DB1241B0E198B76004FA1FD /* CrtTargaLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB124010E198B76004FA1FD /* CrtTargaLoader.h */; };
+		6DB1241C0E198B76004FA1FD /* CrtTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB124020E198B76004FA1FD /* CrtTexture.h */; };
+		6DB1241D0E198B76004FA1FD /* CrtTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB124030E198B76004FA1FD /* CrtTypes.h */; };
+		6DB1241E0E198B76004FA1FD /* CrtUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DB124040E198B76004FA1FD /* CrtUtils.h */; };
+		6DB129300E1993BC004FA1FD /* CrtLinux.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DB9C1690DC1AB97009CAD26 /* CrtLinux.cpp */; };
+		6DB9C1750DC1AB97009CAD26 /* CrtUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DB9C15E0DC1AB97009CAD26 /* CrtUtils.cpp */; };
+		6DB9C1760DC1AB97009CAD26 /* CrtAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DB9C15F0DC1AB97009CAD26 /* CrtAnimation.cpp */; };
+		6DB9C1770DC1AB97009CAD26 /* CrtCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DB9C1600DC1AB97009CAD26 /* CrtCamera.cpp */; };
+		6DB9C1780DC1AB97009CAD26 /* CrtCommonCg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DB9C1610DC1AB97009CAD26 /* CrtCommonCg.cpp */; };
+		6DB9C1790DC1AB97009CAD26 /* CrtCommonGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DB9C1620DC1AB97009CAD26 /* CrtCommonGL.cpp */; };
+		6DB9C17A0DC1AB97009CAD26 /* CrtController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DB9C1630DC1AB97009CAD26 /* CrtController.cpp */; };
+		6DB9C17B0DC1AB97009CAD26 /* CrtData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DB9C1640DC1AB97009CAD26 /* CrtData.cpp */; };
+		6DB9C17D0DC1AB97009CAD26 /* CrtEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DB9C1660DC1AB97009CAD26 /* CrtEffect.cpp */; };
+		6DB9C17E0DC1AB97009CAD26 /* CrtGeometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DB9C1670DC1AB97009CAD26 /* CrtGeometry.cpp */; };
+		6DB9C17F0DC1AB97009CAD26 /* CrtLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DB9C1680DC1AB97009CAD26 /* CrtLight.cpp */; };
+		6DB9C1810DC1AB97009CAD26 /* CrtMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DB9C16A0DC1AB97009CAD26 /* CrtMaterial.cpp */; };
+		6DB9C1820DC1AB97009CAD26 /* CrtMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DB9C16B0DC1AB97009CAD26 /* CrtMatrix.cpp */; };
+		6DB9C1830DC1AB97009CAD26 /* CrtMorph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DB9C16C0DC1AB97009CAD26 /* CrtMorph.cpp */; };
+		6DB9C1840DC1AB97009CAD26 /* CrtNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DB9C16D0DC1AB97009CAD26 /* CrtNode.cpp */; };
+		6DB9C1850DC1AB97009CAD26 /* CrtPhysics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DB9C16E0DC1AB97009CAD26 /* CrtPhysics.cpp */; };
+		6DB9C1860DC1AB97009CAD26 /* CrtPlatform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DB9C16F0DC1AB97009CAD26 /* CrtPlatform.cpp */; };
+		6DB9C1870DC1AB97009CAD26 /* CrtRender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DB9C1700DC1AB97009CAD26 /* CrtRender.cpp */; };
+		6DB9C1880DC1AB97009CAD26 /* CrtSkin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DB9C1710DC1AB97009CAD26 /* CrtSkin.cpp */; };
+		6DB9C1890DC1AB97009CAD26 /* CrtTargaLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DB9C1720DC1AB97009CAD26 /* CrtTargaLoader.cpp */; };
+		6DB9C18A0DC1AB97009CAD26 /* CrtTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DB9C1730DC1AB97009CAD26 /* CrtTexture.cpp */; };
+		6DB9C18E0DC1ABA1009CAD26 /* CrtScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DB9C18C0DC1ABA0009CAD26 /* CrtScene.cpp */; };
+		6DB9C18F0DC1ABA1009CAD26 /* CrtSceneRead.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6DB9C18D0DC1ABA1009CAD26 /* CrtSceneRead.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		4BA4A1290ECBE71100AE001D /* Cg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cg.framework; path = /Library/Frameworks/Cg.framework; sourceTree = "<absolute>"; };
+		4BA4A12B0ECBE74A00AE001D /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
+		6DB123EC0E198B76004FA1FD /* CrtAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrtAnimation.h; path = ../../include/Crt/CrtAnimation.h; sourceTree = SOURCE_ROOT; };
+		6DB123ED0E198B76004FA1FD /* CrtCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrtCamera.h; path = ../../include/Crt/CrtCamera.h; sourceTree = SOURCE_ROOT; };
+		6DB123EE0E198B76004FA1FD /* CrtCg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrtCg.h; path = ../../include/Crt/CrtCg.h; sourceTree = SOURCE_ROOT; };
+		6DB123EF0E198B76004FA1FD /* CrtController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrtController.h; path = ../../include/Crt/CrtController.h; sourceTree = SOURCE_ROOT; };
+		6DB123F00E198B76004FA1FD /* CrtData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrtData.h; path = ../../include/Crt/CrtData.h; sourceTree = SOURCE_ROOT; };
+		6DB123F10E198B76004FA1FD /* CrtEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrtEffect.h; path = ../../include/Crt/CrtEffect.h; sourceTree = SOURCE_ROOT; };
+		6DB123F20E198B76004FA1FD /* CrtGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrtGeometry.h; path = ../../include/Crt/CrtGeometry.h; sourceTree = SOURCE_ROOT; };
+		6DB123F30E198B76004FA1FD /* CrtImageLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrtImageLoader.h; path = ../../include/Crt/CrtImageLoader.h; sourceTree = SOURCE_ROOT; };
+		6DB123F40E198B76004FA1FD /* CrtLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrtLight.h; path = ../../include/Crt/CrtLight.h; sourceTree = SOURCE_ROOT; };
+		6DB123F60E198B76004FA1FD /* CrtMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrtMaterial.h; path = ../../include/Crt/CrtMaterial.h; sourceTree = SOURCE_ROOT; };
+		6DB123F70E198B76004FA1FD /* CrtMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrtMatrix.h; path = ../../include/Crt/CrtMatrix.h; sourceTree = SOURCE_ROOT; };
+		6DB123F80E198B76004FA1FD /* CrtMemory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrtMemory.h; path = ../../include/Crt/CrtMemory.h; sourceTree = SOURCE_ROOT; };
+		6DB123F90E198B76004FA1FD /* CrtMorph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrtMorph.h; path = ../../include/Crt/CrtMorph.h; sourceTree = SOURCE_ROOT; };
+		6DB123FA0E198B76004FA1FD /* CrtNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrtNode.h; path = ../../include/Crt/CrtNode.h; sourceTree = SOURCE_ROOT; };
+		6DB123FB0E198B76004FA1FD /* CrtOSX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrtOSX.h; path = ../../include/Crt/CrtOSX.h; sourceTree = SOURCE_ROOT; };
+		6DB123FC0E198B76004FA1FD /* CrtPhysics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrtPhysics.h; path = ../../include/Crt/CrtPhysics.h; sourceTree = SOURCE_ROOT; };
+		6DB123FD0E198B76004FA1FD /* CrtPlatform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrtPlatform.h; path = ../../include/Crt/CrtPlatform.h; sourceTree = SOURCE_ROOT; };
+		6DB123FF0E198B76004FA1FD /* CrtRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrtRender.h; path = ../../include/Crt/CrtRender.h; sourceTree = SOURCE_ROOT; };
+		6DB124000E198B76004FA1FD /* CrtSkin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrtSkin.h; path = ../../include/Crt/CrtSkin.h; sourceTree = SOURCE_ROOT; };
+		6DB124010E198B76004FA1FD /* CrtTargaLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrtTargaLoader.h; path = ../../include/Crt/CrtTargaLoader.h; sourceTree = SOURCE_ROOT; };
+		6DB124020E198B76004FA1FD /* CrtTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrtTexture.h; path = ../../include/Crt/CrtTexture.h; sourceTree = SOURCE_ROOT; };
+		6DB124030E198B76004FA1FD /* CrtTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrtTypes.h; path = ../../include/Crt/CrtTypes.h; sourceTree = SOURCE_ROOT; };
+		6DB124040E198B76004FA1FD /* CrtUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrtUtils.h; path = ../../include/Crt/CrtUtils.h; sourceTree = SOURCE_ROOT; };
+		6DB9C15E0DC1AB97009CAD26 /* CrtUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CrtUtils.cpp; path = ../../src/Crt/CrtUtils.cpp; sourceTree = SOURCE_ROOT; };
+		6DB9C15F0DC1AB97009CAD26 /* CrtAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CrtAnimation.cpp; path = ../../src/Crt/CrtAnimation.cpp; sourceTree = SOURCE_ROOT; };
+		6DB9C1600DC1AB97009CAD26 /* CrtCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CrtCamera.cpp; path = ../../src/Crt/CrtCamera.cpp; sourceTree = SOURCE_ROOT; };
+		6DB9C1610DC1AB97009CAD26 /* CrtCommonCg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CrtCommonCg.cpp; path = ../../src/Crt/CrtCommonCg.cpp; sourceTree = SOURCE_ROOT; };
+		6DB9C1620DC1AB97009CAD26 /* CrtCommonGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CrtCommonGL.cpp; path = ../../src/Crt/CrtCommonGL.cpp; sourceTree = SOURCE_ROOT; };
+		6DB9C1630DC1AB97009CAD26 /* CrtController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CrtController.cpp; path = ../../src/Crt/CrtController.cpp; sourceTree = SOURCE_ROOT; };
+		6DB9C1640DC1AB97009CAD26 /* CrtData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CrtData.cpp; path = ../../src/Crt/CrtData.cpp; sourceTree = SOURCE_ROOT; };
+		6DB9C1660DC1AB97009CAD26 /* CrtEffect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CrtEffect.cpp; path = ../../src/Crt/CrtEffect.cpp; sourceTree = SOURCE_ROOT; };
+		6DB9C1670DC1AB97009CAD26 /* CrtGeometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CrtGeometry.cpp; path = ../../src/Crt/CrtGeometry.cpp; sourceTree = SOURCE_ROOT; };
+		6DB9C1680DC1AB97009CAD26 /* CrtLight.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CrtLight.cpp; path = ../../src/Crt/CrtLight.cpp; sourceTree = SOURCE_ROOT; };
+		6DB9C1690DC1AB97009CAD26 /* CrtLinux.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CrtLinux.cpp; path = ../../src/Crt/CrtLinux.cpp; sourceTree = SOURCE_ROOT; };
+		6DB9C16A0DC1AB97009CAD26 /* CrtMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CrtMaterial.cpp; path = ../../src/Crt/CrtMaterial.cpp; sourceTree = SOURCE_ROOT; };
+		6DB9C16B0DC1AB97009CAD26 /* CrtMatrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CrtMatrix.cpp; path = ../../src/Crt/CrtMatrix.cpp; sourceTree = SOURCE_ROOT; };
+		6DB9C16C0DC1AB97009CAD26 /* CrtMorph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CrtMorph.cpp; path = ../../src/Crt/CrtMorph.cpp; sourceTree = SOURCE_ROOT; };
+		6DB9C16D0DC1AB97009CAD26 /* CrtNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CrtNode.cpp; path = ../../src/Crt/CrtNode.cpp; sourceTree = SOURCE_ROOT; };
+		6DB9C16E0DC1AB97009CAD26 /* CrtPhysics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CrtPhysics.cpp; path = ../../src/Crt/CrtPhysics.cpp; sourceTree = SOURCE_ROOT; };
+		6DB9C16F0DC1AB97009CAD26 /* CrtPlatform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CrtPlatform.cpp; path = ../../src/Crt/CrtPlatform.cpp; sourceTree = SOURCE_ROOT; };
+		6DB9C1700DC1AB97009CAD26 /* CrtRender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CrtRender.cpp; path = ../../src/Crt/CrtRender.cpp; sourceTree = SOURCE_ROOT; };
+		6DB9C1710DC1AB97009CAD26 /* CrtSkin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CrtSkin.cpp; path = ../../src/Crt/CrtSkin.cpp; sourceTree = SOURCE_ROOT; };
+		6DB9C1720DC1AB97009CAD26 /* CrtTargaLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CrtTargaLoader.cpp; path = ../../src/Crt/CrtTargaLoader.cpp; sourceTree = SOURCE_ROOT; };
+		6DB9C1730DC1AB97009CAD26 /* CrtTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CrtTexture.cpp; path = ../../src/Crt/CrtTexture.cpp; sourceTree = SOURCE_ROOT; };
+		6DB9C1740DC1AB97009CAD26 /* CrtImageloader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CrtImageloader.cpp; path = ../../src/Crt/CrtImageloader.cpp; sourceTree = SOURCE_ROOT; };
+		6DB9C18C0DC1ABA0009CAD26 /* CrtScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CrtScene.cpp; path = ../../src/Crt/1.4/CrtScene.cpp; sourceTree = SOURCE_ROOT; };
+		6DB9C18D0DC1ABA1009CAD26 /* CrtSceneRead.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CrtSceneRead.cpp; path = ../../src/Crt/1.4/CrtSceneRead.cpp; sourceTree = SOURCE_ROOT; };
+		D2AAC046055464E500DB518D /* librt.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = librt.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D289987405E68DCB004EDB86 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4BA4A12A0ECBE71100AE001D /* Cg.framework in Frameworks */,
+				4BA4A12C0ECBE74A00AE001D /* OpenGL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08FB7794FE84155DC02AAC07 /* rt */ = {
+			isa = PBXGroup;
+			children = (
+				4BA4A12B0ECBE74A00AE001D /* OpenGL.framework */,
+				4BA4A1290ECBE71100AE001D /* Cg.framework */,
+				6DB123E70E198B64004FA1FD /* Headers */,
+				08FB7795FE84155DC02AAC07 /* Source */,
+				C6A0FF2B0290797F04C91782 /* Documentation */,
+				1AB674ADFE9D54B511CA2CBB /* Products */,
+			);
+			name = rt;
+			sourceTree = "<group>";
+		};
+		08FB7795FE84155DC02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				6DB9C18C0DC1ABA0009CAD26 /* CrtScene.cpp */,
+				6DB9C18D0DC1ABA1009CAD26 /* CrtSceneRead.cpp */,
+				6DB9C15E0DC1AB97009CAD26 /* CrtUtils.cpp */,
+				6DB9C15F0DC1AB97009CAD26 /* CrtAnimation.cpp */,
+				6DB9C1600DC1AB97009CAD26 /* CrtCamera.cpp */,
+				6DB9C1610DC1AB97009CAD26 /* CrtCommonCg.cpp */,
+				6DB9C1620DC1AB97009CAD26 /* CrtCommonGL.cpp */,
+				6DB9C1630DC1AB97009CAD26 /* CrtController.cpp */,
+				6DB9C1640DC1AB97009CAD26 /* CrtData.cpp */,
+				6DB9C1660DC1AB97009CAD26 /* CrtEffect.cpp */,
+				6DB9C1670DC1AB97009CAD26 /* CrtGeometry.cpp */,
+				6DB9C1680DC1AB97009CAD26 /* CrtLight.cpp */,
+				6DB9C1690DC1AB97009CAD26 /* CrtLinux.cpp */,
+				6DB9C16A0DC1AB97009CAD26 /* CrtMaterial.cpp */,
+				6DB9C16B0DC1AB97009CAD26 /* CrtMatrix.cpp */,
+				6DB9C16C0DC1AB97009CAD26 /* CrtMorph.cpp */,
+				6DB9C16D0DC1AB97009CAD26 /* CrtNode.cpp */,
+				6DB9C16E0DC1AB97009CAD26 /* CrtPhysics.cpp */,
+				6DB9C16F0DC1AB97009CAD26 /* CrtPlatform.cpp */,
+				6DB9C1700DC1AB97009CAD26 /* CrtRender.cpp */,
+				6DB9C1710DC1AB97009CAD26 /* CrtSkin.cpp */,
+				6DB9C1720DC1AB97009CAD26 /* CrtTargaLoader.cpp */,
+				6DB9C1730DC1AB97009CAD26 /* CrtTexture.cpp */,
+				6DB9C1740DC1AB97009CAD26 /* CrtImageloader.cpp */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		1AB674ADFE9D54B511CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D2AAC046055464E500DB518D /* librt.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6DB123E70E198B64004FA1FD /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				6DB123EC0E198B76004FA1FD /* CrtAnimation.h */,
+				6DB123ED0E198B76004FA1FD /* CrtCamera.h */,
+				6DB123EE0E198B76004FA1FD /* CrtCg.h */,
+				6DB123EF0E198B76004FA1FD /* CrtController.h */,
+				6DB123F00E198B76004FA1FD /* CrtData.h */,
+				6DB123F10E198B76004FA1FD /* CrtEffect.h */,
+				6DB123F20E198B76004FA1FD /* CrtGeometry.h */,
+				6DB123F30E198B76004FA1FD /* CrtImageLoader.h */,
+				6DB123F40E198B76004FA1FD /* CrtLight.h */,
+				6DB123F60E198B76004FA1FD /* CrtMaterial.h */,
+				6DB123F70E198B76004FA1FD /* CrtMatrix.h */,
+				6DB123F80E198B76004FA1FD /* CrtMemory.h */,
+				6DB123F90E198B76004FA1FD /* CrtMorph.h */,
+				6DB123FA0E198B76004FA1FD /* CrtNode.h */,
+				6DB123FB0E198B76004FA1FD /* CrtOSX.h */,
+				6DB123FC0E198B76004FA1FD /* CrtPhysics.h */,
+				6DB123FD0E198B76004FA1FD /* CrtPlatform.h */,
+				6DB123FF0E198B76004FA1FD /* CrtRender.h */,
+				6DB124000E198B76004FA1FD /* CrtSkin.h */,
+				6DB124010E198B76004FA1FD /* CrtTargaLoader.h */,
+				6DB124020E198B76004FA1FD /* CrtTexture.h */,
+				6DB124030E198B76004FA1FD /* CrtTypes.h */,
+				6DB124040E198B76004FA1FD /* CrtUtils.h */,
+			);
+			name = Headers;
+			sourceTree = "<group>";
+		};
+		C6A0FF2B0290797F04C91782 /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Documentation;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D2AAC043055464E500DB518D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6DB124060E198B76004FA1FD /* CrtAnimation.h in Headers */,
+				6DB124070E198B76004FA1FD /* CrtCamera.h in Headers */,
+				6DB124080E198B76004FA1FD /* CrtCg.h in Headers */,
+				6DB124090E198B76004FA1FD /* CrtController.h in Headers */,
+				6DB1240A0E198B76004FA1FD /* CrtData.h in Headers */,
+				6DB1240B0E198B76004FA1FD /* CrtEffect.h in Headers */,
+				6DB1240C0E198B76004FA1FD /* CrtGeometry.h in Headers */,
+				6DB1240D0E198B76004FA1FD /* CrtImageLoader.h in Headers */,
+				6DB1240E0E198B76004FA1FD /* CrtLight.h in Headers */,
+				6DB124100E198B76004FA1FD /* CrtMaterial.h in Headers */,
+				6DB124110E198B76004FA1FD /* CrtMatrix.h in Headers */,
+				6DB124120E198B76004FA1FD /* CrtMemory.h in Headers */,
+				6DB124130E198B76004FA1FD /* CrtMorph.h in Headers */,
+				6DB124140E198B76004FA1FD /* CrtNode.h in Headers */,
+				6DB124150E198B76004FA1FD /* CrtOSX.h in Headers */,
+				6DB124160E198B76004FA1FD /* CrtPhysics.h in Headers */,
+				6DB124170E198B76004FA1FD /* CrtPlatform.h in Headers */,
+				6DB124190E198B76004FA1FD /* CrtRender.h in Headers */,
+				6DB1241A0E198B76004FA1FD /* CrtSkin.h in Headers */,
+				6DB1241B0E198B76004FA1FD /* CrtTargaLoader.h in Headers */,
+				6DB1241C0E198B76004FA1FD /* CrtTexture.h in Headers */,
+				6DB1241D0E198B76004FA1FD /* CrtTypes.h in Headers */,
+				6DB1241E0E198B76004FA1FD /* CrtUtils.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D2AAC045055464E500DB518D /* rt */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB91EB08733DB70010E9CD /* Build configuration list for PBXNativeTarget "rt" */;
+			buildPhases = (
+				D2AAC043055464E500DB518D /* Headers */,
+				D2AAC044055464E500DB518D /* Sources */,
+				D289987405E68DCB004EDB86 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = rt;
+			productName = rt;
+			productReference = D2AAC046055464E500DB518D /* librt.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB91EF08733DB70010E9CD /* Build configuration list for PBXProject "rt" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 08FB7794FE84155DC02AAC07 /* rt */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D2AAC045055464E500DB518D /* rt */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D2AAC044055464E500DB518D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6DB9C1750DC1AB97009CAD26 /* CrtUtils.cpp in Sources */,
+				6DB9C1760DC1AB97009CAD26 /* CrtAnimation.cpp in Sources */,
+				6DB9C1770DC1AB97009CAD26 /* CrtCamera.cpp in Sources */,
+				6DB9C1780DC1AB97009CAD26 /* CrtCommonCg.cpp in Sources */,
+				6DB9C1790DC1AB97009CAD26 /* CrtCommonGL.cpp in Sources */,
+				6DB9C17A0DC1AB97009CAD26 /* CrtController.cpp in Sources */,
+				6DB9C17B0DC1AB97009CAD26 /* CrtData.cpp in Sources */,
+				6DB9C17D0DC1AB97009CAD26 /* CrtEffect.cpp in Sources */,
+				6DB9C17E0DC1AB97009CAD26 /* CrtGeometry.cpp in Sources */,
+				6DB9C17F0DC1AB97009CAD26 /* CrtLight.cpp in Sources */,
+				6DB9C1810DC1AB97009CAD26 /* CrtMaterial.cpp in Sources */,
+				6DB9C1820DC1AB97009CAD26 /* CrtMatrix.cpp in Sources */,
+				6DB9C1830DC1AB97009CAD26 /* CrtMorph.cpp in Sources */,
+				6DB9C1840DC1AB97009CAD26 /* CrtNode.cpp in Sources */,
+				6DB9C1850DC1AB97009CAD26 /* CrtPhysics.cpp in Sources */,
+				6DB9C1860DC1AB97009CAD26 /* CrtPlatform.cpp in Sources */,
+				6DB9C1870DC1AB97009CAD26 /* CrtRender.cpp in Sources */,
+				6DB9C1880DC1AB97009CAD26 /* CrtSkin.cpp in Sources */,
+				6DB9C1890DC1AB97009CAD26 /* CrtTargaLoader.cpp in Sources */,
+				6DB9C18A0DC1AB97009CAD26 /* CrtTexture.cpp in Sources */,
+				6DB9C18E0DC1ABA1009CAD26 /* CrtScene.cpp in Sources */,
+				6DB9C18F0DC1ABA1009CAD26 /* CrtSceneRead.cpp in Sources */,
+				6DB129300E1993BC004FA1FD /* CrtLinux.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB91EC08733DB70010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/SDKs/MacOSX10.5.sdk/System/Library/Frameworks,
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"CFX_PLATFORM_INCLUDE=\\<cfxOSX.h\\>",
+					"CRT_PLATFORM_INCLUDE=\\\"Crt/CrtOSX.h\\\"",
+					CRT_WORDS_BIGENDIAN,
+				);
+				INSTALL_PATH = /usr/local/lib;
+				PRODUCT_NAME = rt;
+			};
+			name = Debug;
+		};
+		1DEB91ED08733DB70010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/SDKs/MacOSX10.5.sdk/System/Library/Frameworks,
+				);
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"CFX_PLATFORM_INCLUDE=\\<cfxOSX.h\\>",
+					"CRT_PLATFORM_INCLUDE=\\\"Crt/CrtOSX.h\\\"",
+					CRT_WORDS_BIGENDIAN,
+				);
+				INSTALL_PATH = /usr/local/lib;
+				PRODUCT_NAME = rt;
+			};
+			name = Release;
+		};
+		1DEB91F008733DB70010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"CFX_PLATFORM_INCLUDE=\\<cfxOSX.h\\>",
+					"CRT_PLATFORM_INCLUDE=\\\"Crt/CrtOSX.h\\\"",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../include\"/**",
+					"\"$(SRCROOT)/../../../dom/include\"/**",
+					"\"$(SRCROOT)/../../../fx/include\"/**",
+					"\"$(SRCROOT)/../../../dom/external-libs/boost\"",
+					"\"$(SRCROOT)/../../external-libs/bullet/include\"/**",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Debug;
+		};
+		1DEB91F108733DB70010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"CFX_PLATFORM_INCLUDE=\\<cfxOSX.h\\>",
+					"CRT_PLATFORM_INCLUDE=\\\"Crt/CrtOSX.h\\\"",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../include\"/**",
+					"\"$(SRCROOT)/../../../dom/include\"/**",
+					"\"$(SRCROOT)/../../../fx/include\"/**",
+					"\"$(SRCROOT)/../../external-libs/bullet/include\"/**",
+					"\"$(SRCROOT)/../../../dom/external-libs/boost\"",
+				);
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB91EB08733DB70010E9CD /* Build configuration list for PBXNativeTarget "rt" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB91EC08733DB70010E9CD /* Debug */,
+				1DEB91ED08733DB70010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB91EF08733DB70010E9CD /* Build configuration list for PBXProject "rt" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB91F008733DB70010E9CD /* Debug */,
+				1DEB91F108733DB70010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}

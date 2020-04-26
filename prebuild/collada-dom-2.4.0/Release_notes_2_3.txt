@@ -1,0 +1,36 @@
+---------------
+COLLADA-DOM 2.3
+---------------
+
+2.3.1
+=====
+
+[New Features]
+
+- added cmake configuration scripts to find the collada-dom installs through cmake easier
+
+- added cpack generation and debian source package install preparation for cmake
+
+- windows compiles with cmake, forcing to use boost DLL, etc, all libraries are suffixed with VC version
+
+- added pcre-8.02 and zlib 3rdparty library sources to be used for static linking
+
+- added latest libxml2 library along with vc80, vc90, and vc100 DLLs.
+
+2.3.0
+=====
+
+[New Features]
+
+- Added cmake support. cmake now produces *.pc files direclty usable in Linux's package config: collada14dom, collada15dom. Use the cmake-modules/FindCOLLADA.cmake when searching for the collada installation.
+
+- Added newer version of minizip v1.1. 
+
+[Bug Fix]
+
+- Fixed two problems in SID resolution which was prevent collada 1.5 robot files from being loaded correctly.
+
+
+[Known Bugs/Restrictions]
+
+- Currently it is not possible to use both 1.4 and 1.5 in the same executable. This issue might addressed in the future with namespaces. This means collada-dom has to offer two different pkg-config files, one for 1.4 and one for 1.5.

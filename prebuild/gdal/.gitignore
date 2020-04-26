@@ -1,0 +1,22 @@
+*.pyc
+*.o
+*.obj
+*.so
+*~
+*.swp
+
+.vagrant
+
+# IDE ignore
+.project
+.settings
+.pydevproject
+.cproject
+.idea
+.vscode
+.vs
+
+# Python
+__pycache__/
+.env*/
+.venv*/

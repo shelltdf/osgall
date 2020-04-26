@@ -1,0 +1,42 @@
+Copyright 2006 Sony Computer Entertainment Inc.
+
+Licensed under the MIT Open Source License, for details please see license.txt or the website
+http://www.opensource.org/licenses/mit-license.php
+
+COLLADA RTローダ/ビューワ・リリースノート
+-----------------------------------------
+
+COLLADA RTローダは、COLLADA文書のシーンファイルをロードし、PCや他のプラット
+フォーム上でCG 1.5を利用してレンダリングするために開発されたサンプルです。
+
+シーン階層、カメラ、アニメーション、スキニングをサポートしているだけでなく、
+COLLADA_FXライブラリを利用した基本的なCOLLADA_FXレンダリングも提供しています。
+
+現時点では、COLLADA_RTはCOLLADA 1.40のファイルだけをロードするようになっており、
+厳格な形式ではありませんが、部分的なテストを行ってあります。OpenGLを利用した
+サンプルのCOLLADAローダ/レンダの実装であり、参考ビューワではない点に注意して
+ください。つまり、COLLADAで表現可能なものをすべてサポートすることを意図して
+いません。
+
+サポートされていない2つの機能としては、アニメーション化されたテクスチャ座標と、
+頂点モーフィングがあります。これらの機能は、COLLADA 1.4xで表現可能になれば、
+将来的に追加される可能性があります。
+
+COLLADA_RTは、基本的に、以下の2通りの方法で利用できます。
+
+1.ライブラリとしてリンクして、COLLADAデータをインポートするのに利用します。
+リアルタイムレンダリング用に組み立て直す必要があるCOLLADAデータをすべて抜き
+出すためのさまざまな::publicインタフェースが用意されています。実際のEpic Game
+Dataを利用したUnreal Editorでのテストは成功しています。
+
+2.ライブラリとしてリンクして、レンダリングに利用します。
+この例が、COLLADA_RT_FX.slnです。COLLADAファイルがインポートされ、COLLADA_RTを
+介して、Windows PCアプリケーションでレンダリングされます。
+
+ローダは、未加工のCOLLADAデータをインポートするのにCOLLADA DOMを利用し、
+ファイルがロードされた際に、ランタイム時にレンダリング可能なデータに組み立て
+直します。つまり、名前が意味するように、COLLADA_RTは、COLLADA Run-Timeの
+省略形なのです。
+
+著者：Richard Stenson, SCEA
+      Greg Corson, SCEA

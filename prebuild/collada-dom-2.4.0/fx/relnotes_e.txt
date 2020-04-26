@@ -1,0 +1,46 @@
+#
+# Copyright 2006 Sony Computer Entertainment Inc.
+#
+# Licensed under the MIT Open Source License, for details please see license.txt or the website
+# http://www.opensource.org/licenses/mit-license.php
+#
+
+
+COLLADA FX Loader Release Notes
+-------------------------------
+
+Description:
+
+The COLLADA FX Loader project is a sample that was developed to load a
+basic COLLADA FX document, and to make all of the calls to the Cg / CgGL
+runtime to create and initialize the materials and effects defined in
+COLLADA.
+
+It also provides an API to apply those effects through calls to set and
+reset the pass state of an effect.  The client code just needs to push
+the polygons after setting the pass state to draw with the desired material.
+
+The loader does not currently provide exhaustive support for all of the
+types or states that can be used in Cg and OpenGL.  The framework that
+is in place is easily extensible to add implementation for any types or
+states that are needed and currently unsupported.
+
+It has been sufficient to load and run moderately complex effects that
+we have tested and used in demos so far.  It does not yet support render
+targets yet or full screen effects.
+
+The sources for the COLLADA FX loader build into a library called
+libcfx.a that must be linked into the application.
+
+The loader uses the COLLADA DOM when loading assets directly out of
+COLLADA, or the effects and materials can be converted into a binary
+format native to libcfx.
+
+authors: Tanya Scovill, SCEA
+         Andrew Lorino, SCEA
+         
+
+Dependency:
+
+**COLLADA FX Loader requires CG 1.5. It can be obtained at 
+http://www.nvidia.com/object/cg_toolkit.html

@@ -1,0 +1,15 @@
+#
+# Copyright 2006 Sony Computer Entertainment Inc.
+#
+# Licensed under the MIT Open Source License, for details please see license.txt or the website
+# http://www.opensource.org/licenses/mit-license.php
+#
+
+VCC7				:= "$(VS71COMNTOOLS)/../IDE/devenv.com"
+VCC8				:= "$(VS80COMNTOOLS)/../IDE/devenv.com"
+
+COLLADA_DOM_PATH		:= $(ROOT_DIR)/../COLLADA_DOM
+JAVAC				:= "$(JAVA_HOME)/bin/javac.exe"
+JAR				:= "$(JAVA_HOME)/bin/jar.exe"
+JAVA				:= java
+RM				:= rm

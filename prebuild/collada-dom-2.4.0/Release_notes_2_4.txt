@@ -1,0 +1,32 @@
+---------------
+COLLADA-DOM 2.4
+---------------
+
+2.4.0
+=====
+
+[New Features]
+
+- All dom classes are now in their own namespaces making it possible to use 1.4.1 and 1.5.0 simultaneously! namespaces are ColladaDOM141 and ColladaDOM150::
+
+  dae=DAE(NULL,NULL,"1.4.1");
+  dae2=DAE(NULL,NULL,"1.5.0");
+
+- New dom namespaces are not automatically put into the global scope, meaning that domCOLLADA should not be converted to ColladaDOM141::domCOLLADA or ColladaDOM150::domCOLLAdA
+
+- Users can define COLLADA_DOM_USING_141 or COLLADA_DOM_USING_150 before any collada-dom includes in order to get an automatic "using namespace ColladaDOMXX".
+
+- If COLLADA_DOM_NAMESPACE is not defined, will call **using namespace ColladaDOMXXX** on the highest version available. If not, it will not clutter the global namespace with dom definition.
+
+- The DAE constructor takes in a string for the collada version to support. Current supported are "1.4.1" and "1.5.0"
+
+- The following DAE methods need to be manually casted to the correct domCOLLADA version: DAE::add, DAE::open, DAE::openFromMemory, DAE::getRoot, DAE::setRoot, DAE::getDom, DAE::setDom. For backward compat, added DAE::add141, DAE::add150, etc. In otherwords::
+
+  domCOLLADA* dom = (domCOLLADA*)dae->open();
+  ColladaDOM150::domCOLLADA* dom = (ColladaDOM150::domCOLLADA*)dae->open();
+  ColladaDOM150::domCOLLADA* dom = daeSafeCast<ColladaDOM150::domCOLLADA>(dae->open());
+  ColladaDOM150::domCOLLADA* dom = dae->open150();
+
+- Included a double-precision flag COLLADA_DOM_DAEFLOAT_IS64 to compile collada-dom without any floating point. When using cmake, do -DOPT_DOUBLE_PRECISION=ON
+
+- DAE::writeX support writing to compressed ZAE files using zlib and minizip. Automatically enabled when extension is zae.

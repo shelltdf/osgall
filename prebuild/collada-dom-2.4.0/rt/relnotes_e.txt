@@ -1,0 +1,42 @@
+Copyright 2006 Sony Computer Entertainment Inc.
+
+Licensed under the MIT Open Source License, for details please see license.txt or the website
+http://www.opensource.org/licenses/mit-license.php
+
+COLLADA RT Loader/Viewer Release Notes
+-------------------------------
+
+The COLLADA RT Loader is a sample that was developed to load 
+COLLADA document scene files, and render them using CG 1.5 on the PC,
+and other platforms.
+
+It provides scene heirarchy, cameras, animation, and skinning support 
+as well as basic COLLADA_FX rendering with the assistance of the 
+COLLADA_FX lib.
+
+Currently COLLADA_RT only loads COLLADA 1.40 files and has been tested 
+some though not in a rigorous fashion.  It is a sample COLLADA 
+loader / render implementation in OpenGL and is not a reference viewer; meaning 
+it is not and isn't intended to support everything that COLLADA can represent.  
+Two such features that aren't supported are animated texture coordinates and 
+vertex morphing.  These features, though may be added in the future as they are 
+expressible in COLLADA 1.4x.
+
+COLLADA_RT can be used in basically 2 ways. 
+
+1.) To link as a lib for and used to import COLLADA data.  There are several 
+::public interfaces that allow for extraction of all need refactored COLLADA 
+data for real-time rendering.  This has been tested successful within Unreal 
+Editor with actual Epic Game Data.  
+
+2.) To link as a lib and used for rendering.  The COLLADA_RT_Viewer.vcproj is an 
+example of this.  A COLLADA file is imported and rendering via COLLADA_RT in 
+a windows PC application.  
+
+The loader uses the COLLADA DOM for importing the raw COLLADA data and refactors 
+it into renderable data at run-time when a file is loaded.  Thus the name, 
+COLLADA_RT, short for COLLADA Run-Time. 
+
+authors: Richard Stenson, SCEA
+         Greg Corson, SCEA
+         Herbert Law, SCEA

@@ -1,0 +1,5 @@
+code.google.com/r/dwing4g-leveldbjni
+code.google.com/r/kkowalczyk-leveldb
+github.com/hsn10/leveldb-mingw
+github.com/ripple/leveldb
+github.com/okuoku/leveldb-cmake

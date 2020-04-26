@@ -1,0 +1,40 @@
+#-*-makefile-*-
+#
+# Copyright 2006 Sony Computer Entertainment Inc.
+#
+# Licensed under the MIT Open Source License, for details please see license.txt or the website
+# http://www.opensource.org/licenses/mit-license.php
+#
+# Visual Studio 7.1 compiler and linker specific settings
+#
+#
+
+
+LIB_PREFIX      := libcollada_
+LIB_SUFFIX      := .a
+EXE_SUFFIX		:= 
+OBJ_SUFFIX      := .o
+
+CC	= "gcc"
+CXX	= "g++"
+LD	= "g++"
+AR	= ar rcs
+
+LCOUT = 
+EXEOUT = -o 
+CCOUT = -o
+LCQUIET = 
+CCQUIET = 
+CCOPT = -c
+CCINC = -I
+
+RELEASE_CCOPT = -O2 -D"NDEBUG" 
+DEBUG_CCOPT = -g -D"_DEBUG"
+LIB_CCOPT =
+
+EXE_DBG_LCOPT = 
+EXE_REL_LCOPT = 
+
+RM  = rm 
+
+USE_SHELL=1

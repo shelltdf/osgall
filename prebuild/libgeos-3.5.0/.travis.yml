@@ -1,0 +1,50 @@
+# .travis.yml - Travis CI service confiuration for GEOS
+#
+#
+# This is free software; you can redistribute and/or modify it under
+# the terms of the GNU Lesser General Public Licence as published
+# by the Free Software Foundation. 
+# See the COPYING file for more information.
+#
+sudo: false
+
+language: cpp
+
+compiler:
+    - g++
+    - clang
+
+env:
+    - GEOS_BUILD_TOOL=autotools CFLAGS=-m32 CXXFLAGS=-m32
+    - GEOS_BUILD_TOOL=autotools CFLAGS=-m64 CXXFLAGS=-m64
+    - GEOS_BUILD_TOOL=cmake CFLAGS=-m32 CXXFLAGS=-m32
+    - GEOS_BUILD_TOOL=cmake CFLAGS=-m64 CXXFLAGS=-m64
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - env: GEOS_BUILD_TOOL=cmake CFLAGS=-m64 CXXFLAGS=-m64
+
+addons:
+  apt:
+    packages:
+    - gcc-multilib
+    - g++-multilib
+    - cmake
+    - make
+
+script: ./tools/ci/script.sh
+
+notifications:
+    irc:
+        channels:
+            - "chat.freenode.net#postgis"
+        on_success: always # [always|never|change] # default: change
+        on_failure: always # [always|never|change] # default: always
+        use_notice: true
+    email:
+        recipients:
+            #- geos-devel@lists.osgeo.org # TODO: whitelist this e-mail
+        on_success: change
+        on_failure: always
+

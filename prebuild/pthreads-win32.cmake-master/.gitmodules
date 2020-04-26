@@ -1,0 +1,3 @@
+[submodule "pthreads-win32"]
+	path = pthreads-win32
+	url = https://github.com/martell/pthreads-win32.git

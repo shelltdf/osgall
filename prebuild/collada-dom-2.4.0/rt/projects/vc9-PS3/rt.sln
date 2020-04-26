@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "rt", "rt.vcproj", "{2A1A827F-0C61-4979-9DE4-7514212510DB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		PS3 Debug|Win32 = PS3 Debug|Win32
+		PS3 Release|Win32 = PS3 Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2A1A827F-0C61-4979-9DE4-7514212510DB}.PS3 Debug|Win32.ActiveCfg = PS3 Debug|Win32
+		{2A1A827F-0C61-4979-9DE4-7514212510DB}.PS3 Debug|Win32.Build.0 = PS3 Debug|Win32
+		{2A1A827F-0C61-4979-9DE4-7514212510DB}.PS3 Release|Win32.ActiveCfg = PS3 Release|Win32
+		{2A1A827F-0C61-4979-9DE4-7514212510DB}.PS3 Release|Win32.Build.0 = PS3 Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
