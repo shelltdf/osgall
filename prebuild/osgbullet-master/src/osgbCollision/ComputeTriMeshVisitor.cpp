@@ -44,7 +44,7 @@ struct ComputeTriMeshFunc
         vertices->clear();
     }
 
-    void inline operator()( const osg::Vec3 v1, const osg::Vec3 v2, const osg::Vec3 v3, bool _temp )
+    void inline operator()( const osg::Vec3 v1, const osg::Vec3 v2, const osg::Vec3 v3/*, bool _temp*/ )
     {
         vertices->push_back( v1 );
         vertices->push_back( v2 );
