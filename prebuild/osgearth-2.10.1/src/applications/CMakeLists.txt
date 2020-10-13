@@ -97,6 +97,10 @@ IF(BUILD_OSGEARTH_EXAMPLES)
     ADD_SUBDIRECTORY(osgearth_eci)
     ADD_SUBDIRECTORY(osgearth_windows)
     #ADD_SUBDIRECTORY(osgearth_3dtiles)
+    
+    ADD_SUBDIRECTORY(osgearth_package_qt)
+    ADD_SUBDIRECTORY(osgearth_qt_simple)
+    ADD_SUBDIRECTORY(osgearth_qt_windows)
 
     IF(SILVERLINING_FOUND)
         ADD_SUBDIRECTORY(osgearth_silverlining)

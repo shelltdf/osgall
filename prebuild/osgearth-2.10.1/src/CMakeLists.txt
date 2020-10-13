@@ -4,7 +4,7 @@ FOREACH( lib
          osgEarthAnnotation
          osgEarthFeatures
          osgEarthSymbology
-         osgEarthUtil )
+         osgEarthUtil)
 
     ADD_SUBDIRECTORY(${lib})
 
@@ -29,6 +29,8 @@ ENDIF()
 IF(BUILD_TESTS AND NOT OSGEARTH_BUILD_PLATFORM_IPHONE)
     ADD_SUBDIRECTORY( tests )
 ENDIF()
+
+ADD_SUBDIRECTORY( osgEarthQt )
 
 
 IF(MSVC80)
