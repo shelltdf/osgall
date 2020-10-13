@@ -37,16 +37,20 @@ def build_osgearth( str_target ):
         str_ops += ' -DDYNAMIC_OSGEARTH=0'
         
     if(Qt_ON):
+        str_ops += " -DQt5_DIR=" + Qt_DIR + "/../Qt5"
         str_ops += " -DQt5Widgets_DIR=" + Qt_DIR + "/../Qt5Widgets"
+        str_ops += " -DQt5OpenGL_DIR=" + Qt_DIR + "/../Qt5OpenGL"
         str_ops += " -DBUILD_OPENTHREADS_WITH_QT=1"
         str_ops += " -DOSGEARTH_USE_QT=1"
+        str_ops += " -DOSGEARTH_QT_BUILD=1"
     else:
         str_ops += " -DBUILD_OPENTHREADS_WITH_QT=0"
         str_ops += " -DOSGEARTH_USE_QT=0"
+        str_ops += " -DOSGEARTH_QT_BUILD=0"
         
     if( str_target == "vc"):
         str_ops += " -DWIN32_USE_MP=1";
-        str_ops += " -DBUILD_OSGEARTH_EXAMPLES=0";
+        str_ops += " -DBUILD_OSGEARTH_EXAMPLES=1";
         
         str_ops += ' -DSQLITE3_LIBRARY='+ os.getcwd() +'/../../../3rdparty/lib/sqlite.lib'
         str_ops += ' -DSQLITE3_LIBRARY_DEBUG='+ os.getcwd() +'/../../../3rdparty/lib/sqlited.lib'
@@ -56,6 +60,7 @@ def build_osgearth( str_target ):
         str_ops += ' -DGDAL_LIBRARY='+ os.getcwd() +'/../../../3rdparty/lib/gdal31.lib'
         str_ops += ' -DGDAL_LIBRARY_DEBUG='+ os.getcwd() +'/../../../3rdparty/lib/gdal31d.lib'
         
+        str_ops += ' -DCURL_DIR='+ os.getcwd() +'/../../../3rdparty/include/curl'
         str_ops += ' -DCURL_LIBRARY='+ os.getcwd() +'/../../../3rdparty/lib/libcurl_imp.lib'
         str_ops += ' -DCURL_LIBRARY_DEBUG='+ os.getcwd() +'/../../../3rdparty/lib/libcurld_imp.lib'
 

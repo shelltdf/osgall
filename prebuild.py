@@ -983,8 +983,8 @@ def main():
     if only("stb"):
         build_stb( ALL_TARGET )
     # [cmake] imgui
-    if only("imgui"):
-        build_imgui( ALL_TARGET )
+    # if only("imgui"):
+        # build_imgui( ALL_TARGET )
     # [cmake] eigen
     if only("eigen"):
         build_eigen( ALL_TARGET )

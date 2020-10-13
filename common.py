@@ -51,8 +51,8 @@ FBX_DIR = r'D:/Program Files/Autodesk/FBX/FBX SDK/2016.1.2'   # fbx install dir
 FBX_LIB_PROFILE = r'vs2015\x86' # vs2013\x86 vs2013\x64
 QuickTimeSDK_ON  = False
 QuickTimeSDK_DIR = r'D:/QuickTime SDK'   #quicktime sdk install dir
-Qt_ON = False
-Qt_DIR = r'D:\Qt\Qt5.10.1\5.10.1\msvc2015_64\lib\cmake\Qt5' #lib/cmake/Qt5/
+Qt_ON = True
+Qt_DIR = r'D:\Qt\Qt5.9.0\5.9\msvc2017_64\lib\cmake\Qt5' #lib/cmake/Qt5/
 
 
 #android ndk setting
@@ -173,23 +173,32 @@ def my_configure( str_target , str_config ,is_osg = False , over_debug_postfix =
     
 
 def my_build( str_target , only_release = False):
+    system_ret = 0
     if(str_target == "vc" or str_target == "cw" ):
         if( not only_release ):
             if(BUILD_VC_DEBUG):
-                os.system('msbuild INSTALL.vcxproj /p:Configuration=Debug')
+                system_ret = os.system('msbuild INSTALL.vcxproj /p:Configuration=Debug')
                 pass
         if(BUILD_VC_RELEASE):
-            os.system('msbuild INSTALL.vcxproj /p:Configuration=Release')
+            system_ret = os.system('msbuild INSTALL.vcxproj /p:Configuration=Release')
     # elif str_target == "cw" :
         # pass
     elif(str_target == "ndk"):
         # os.system(CMAKE_EXE + " --build .")
-        os.system("make install")
+        system_ret = os.system("make install")
     else:
-        os.system("make install")
+        system_ret = os.system("make install")
     # os.chdir( "../../..")
     
+    # error
+    if(system_ret != 0):
+        print("error = " + os.getcwd())
+        sys.exit(1)
+        
     global CWD
     print("CWD = " + CWD)
     os.chdir(CWD)
     
+    
+        
+        

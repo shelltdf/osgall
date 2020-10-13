@@ -13,6 +13,7 @@ from common import *
 # OSG_DIR_NAME = "OpenSceneGraph-3.3.6"
 # OSG_DIR_NAME = "OpenSceneGraph-3.4.0"
 OSG_DIR_NAME = "OpenSceneGraph-3.6.4"
+OSGQT_DIR_NAME = "osgQt-master"
 VPB_DIR_NAME = "VirtualPlanetBuilder-master"
 
 
@@ -232,7 +233,7 @@ def build_vpb( str_target ):
     str_ops += ' -D3rdPartyRoot=' + os.getcwd() + '/../../../3rdparty'
     str_ops += ' -DGDAL_INCLUDE_DIR=' + os.getcwd() + '/../../../3rdparty/include/gdal'
     str_ops += ' -DGDAL_LIBRARY=' + os.getcwd() + '/../../../3rdparty/lib/gdal31.lib'
-    str_ops += ' -DGDAL_LIBRARY_DEBUG=' + os.getcwd() + '/../../../3rdparty/lib/gda31d.lib'
+    str_ops += ' -DGDAL_LIBRARY_DEBUG=' + os.getcwd() + '/../../../3rdparty/lib/gdal31d.lib'
     
     
     if( BUILD_DYNAMIC_LINK_LIBRARY ):
@@ -264,6 +265,29 @@ def build_vpb( str_target ):
     my_configure(str_target , str_ops ,True)
     my_build(str_target)
     
+
+def build_osgqt( str_target ):
+    print ("build osgqt")
+    my_make_build_dir( OSGQT_DIR_NAME , str_target )
+    
+    str_ops = ""
+
+    # if( BUILD_DYNAMIC_LINK_LIBRARY ):
+        # str_ops += " -DDYNAMIC_VIRTUALPLANETBUILDER=1"
+    # else:
+        # str_ops += " -DDYNAMIC_VIRTUALPLANETBUILDER=0"
+        
+    str_ops += " -DQt5_DIR=" + Qt_DIR + "/../Qt5"
+    str_ops += " -DQt5Widgets_DIR=" + Qt_DIR + "/../Qt5Widgets"
+    # str_ops += " -DBUILD_OPENTHREADS_WITH_QT=1"
+    # str_ops += " -DOSG_MAINTAINER=1"
+    str_ops += " -DOPENSCENEGRAPH_MAJOR_VERSION=3"
+    str_ops += " -DOPENSCENEGRAPH_MINOR_VERSION=6"
+    str_ops += " -DOPENSCENEGRAPH_PATCH_VERSION=4"
+            
+    my_configure(str_target , str_ops)
+    my_build(str_target)
+
     
 #main    
 def main():
@@ -274,10 +298,15 @@ def main():
     print( ALL_TARGET )
 
         
-    #◊Ó÷’“¿¿µ
+    #osg
     build_osg(ALL_TARGET)
     
-    # if(ALL_TARGET == "vc" and BUILD_DYNAMIC_LINK_LIBRARY and VC_PPAPI_MODE==False):
-        # build_vpb(ALL_TARGET)
+    #osgQT
+    if(Qt_ON):
+        build_osgqt(ALL_TARGET)
+    
+    #VPB
+    if(ALL_TARGET == "vc" and BUILD_DYNAMIC_LINK_LIBRARY and VC_PPAPI_MODE==False):
+        build_vpb(ALL_TARGET)
 
 main()
