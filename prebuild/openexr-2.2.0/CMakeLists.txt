@@ -179,6 +179,7 @@ SET_TARGET_PROPERTIES ( IlmImf
   SOVERSION 22
   OUTPUT_NAME "IlmImf${OPENEXR_LIBSUFFIX}"
   )
+  SET_TARGET_PROPERTIES(IlmImf PROPERTIES  DEBUG_POSTFIX "d")
   
 ##########################
 # IlmImfUtil library
@@ -191,6 +192,7 @@ SET_TARGET_PROPERTIES ( IlmImfUtil
   SOVERSION 22
   OUTPUT_NAME "IlmImfUtil${OPENEXR_LIBSUFFIX}"
   )
+  SET_TARGET_PROPERTIES(IlmImfUtil PROPERTIES  DEBUG_POSTFIX "d")
   
 ##########################
 # Example Code

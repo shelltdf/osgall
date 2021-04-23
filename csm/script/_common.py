@@ -2,6 +2,7 @@
 # import git
 # from git import Repo
 import os
+import sys
 import glob
 import shutil
 
@@ -21,17 +22,17 @@ def my_build_and_install_dir(dict_config):
     dir_name += dict_config['arch']
     
     if(dict_config['static']==True):
-        dir_name += '_s'
+        dir_name += '_static'
     if(dict_config['dynamic']==True):
-        dir_name += '_d'
+        dir_name += '_dynamic'
         
     # if(dict_config['arch'][:2]=="vs"):
         # return dir_name
         
     if(dict_config['debug']==True):
-        dir_name += '_d'
+        dir_name += '_debug'
     if(dict_config['release']==True):
-        dir_name += '_r'
+        dir_name += '_release'
     return dir_name
     
         
@@ -169,17 +170,25 @@ def configure(str_name ,dict_config, str_config = "",str_subdir="",str_local_dir
     
 def build(str_name,dict_config):
     my_into_build_dir( str_name ,dict_config)
+    system_ret = 0
     if(dict_config['arch'][:2]=="vs"):
         if(dict_config['debug']==True):
-            os.system('msbuild ALL_BUILD.vcxproj /p:Configuration=Debug')
+            system_ret = os.system('msbuild ALL_BUILD.vcxproj /p:Configuration=Debug')
         if(dict_config['release']==True):
-            os.system('msbuild ALL_BUILD.vcxproj /p:Configuration=Release')
+            system_ret = os.system('msbuild ALL_BUILD.vcxproj /p:Configuration=Release')
     elif(dict_config['arch']=="nmake"):
-        os.system('nmake')
+        system_ret = os.system('nmake')
     else:
-        os.system('make')
+        system_ret = os.system('make')
     my_out_build_dir( str_name )
-    pass
+    
+    
+    # error
+    global CWD
+    if(system_ret != 0):
+        print("error = " + CWD)
+        sys.exit(1)
+        
     
 def install(str_name,dict_config):
     my_into_build_dir( str_name ,dict_config)

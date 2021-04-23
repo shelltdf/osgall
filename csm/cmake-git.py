@@ -139,6 +139,11 @@ def main():
         dict_config['cmake_cfg'] = ' -G "Visual Studio 15 2017" '
     if(ARG_ARCH == "vs2017-64"):
         dict_config['cmake_cfg'] = ' -G "Visual Studio 15 2017 Win64" '
+        
+    if(ARG_ARCH == "vs2019-32"):
+        dict_config['cmake_cfg'] = ' -G "Visual Studio 16 2019" -A Win32'
+    if(ARG_ARCH == "vs2019-64"):
+        dict_config['cmake_cfg'] = ' -G "Visual Studio 16 2019" -A x64'
 
     if(ARG_ARCH == "mingw-32"):
         dict_config['cmake_cfg'] = ' -G "MSYS Makefiles" '

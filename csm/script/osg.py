@@ -33,7 +33,7 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     else:
         STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/gdal31d.lib'"
     
-    source_dir = os.getcwd() + '/../prebuild/OpenSceneGraph-3.4.0'
+    source_dir = os.getcwd() + '/../prebuild/OpenSceneGraph-3.6.4'
     
     configure(str_name,dict_config,STR_CFG,"",source_dir)
     build(str_name,dict_config)

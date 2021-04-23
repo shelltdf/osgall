@@ -6,6 +6,7 @@ def getDependency( str_name ,getDependency):
     
     list_name = addDependency("osg" , list_name,getDependency)
     list_name = addDependency("geos" , list_name,getDependency)
+    list_name = addDependency("leveldb" , list_name,getDependency)
 
     return list_name + [str_name]
     
@@ -41,7 +42,10 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         STR_CFG += " -DOSGWIDGET_LIBRARY='" + install_dir + "/lib/osgWidgetd.lib'"
     
     
-    source_dir = os.getcwd() + '/../prebuild/osgearth-master-20180304'
+    STR_CFG += " -DOSGEARTH_USE_QT=0"
+    STR_CFG += " -DOSGEARTH_QT_BUILD=0"
+    
+    source_dir = os.getcwd() + '/../prebuild/osgearth-2.10.1'
     
     configure(str_name,dict_config,STR_CFG,"",source_dir)
     build(str_name,dict_config)

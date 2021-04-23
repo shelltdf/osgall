@@ -19,7 +19,7 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     if(dict_config['static']):
         STR_CFG += " -DLEVELDB_BUILD_STATIC=1"
     else:
-        STR_CFG += " -DLEVELDB_BUILD_STATIC=0"
+        STR_CFG += " -DLEVELDB_BUILD_STATIC=1" #只能编译静态库
     
     source_dir = os.getcwd() + '/../prebuild/leveldb-master'
     

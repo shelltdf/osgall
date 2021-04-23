@@ -187,11 +187,14 @@ set(HDRS
 OPTION(LEVELDB_BUILD_STATIC "Enable build static library" ON)
 find_package(Threads)
 
+set(LIB_NAME "")
+
 if(LEVELDB_BUILD_STATIC)
 
     add_library(leveldb_static STATIC ${SRCS} ${HDRS} ${SNAPPY_SRCS} ${SNAPPY_HDRS})
     target_link_libraries(leveldb_static ${CMAKE_THREAD_LIBS_INIT} ${LIBS})
-
+	set(LIB_NAME leveldb_static)
+	
 else(LEVELDB_BUILD_STATIC)
 
     add_library(leveldb SHARED ${SRCS} ${HDRS} ${SNAPPY_SRCS} ${SNAPPY_HDRS})
@@ -200,7 +203,8 @@ else(LEVELDB_BUILD_STATIC)
       SOVERSION ${VERSION_MAJOR}
       )
     target_link_libraries(leveldb ${CMAKE_THREAD_LIBS_INIT} ${LIBS})
-
+	set(LIB_NAME leveldb)
+	
 endif(LEVELDB_BUILD_STATIC)
 
 ###
@@ -224,7 +228,8 @@ macro(leveldb_tests)
     add_executable(${_tname} ${t})
     target_link_libraries(${_tname}
       leveldb-testharness
-      leveldb_static
+      # leveldb_static
+	  ${LIB_NAME}
       )
     add_test(NAME ${_tname}
       COMMAND $<TARGET_FILE:${_tname}>)

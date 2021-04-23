@@ -25,6 +25,12 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         # STR_CFG += ' -DNVIMAGE_SHARED=1'
         STR_CFG += ' -DNVTT_SHARED=1'
         STR_CFG += ' -DNVTT_EXTERN=0'
+        
+        STR_CFG += ' -DHAVE_JPEG=0'
+        STR_CFG += ' -DHAVE_MAYA=0'
+        STR_CFG += ' -DHAVE_PNG=0'
+        STR_CFG += ' -DHAVE_TIFF=0'
+        STR_CFG += ' -DHAVE_OPENEXR=0'
     
     source_dir = os.getcwd() + '/../prebuild/nvidia-texture-tools'
     
