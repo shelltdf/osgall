@@ -173,9 +173,9 @@ def build(str_name,dict_config):
     system_ret = 0
     if(dict_config['arch'][:2]=="vs"):
         if(dict_config['debug']==True):
-            system_ret = os.system('msbuild ALL_BUILD.vcxproj /p:Configuration=Debug')
+            system_ret = os.system('msbuild ALL_BUILD.vcxproj -maxcpucount:16 /p:Configuration=Debug')
         if(dict_config['release']==True):
-            system_ret = os.system('msbuild ALL_BUILD.vcxproj /p:Configuration=Release')
+            system_ret = os.system('msbuild ALL_BUILD.vcxproj -maxcpucount:16 /p:Configuration=Release')
     elif(dict_config['arch']=="nmake"):
         system_ret = os.system('nmake')
     else:
