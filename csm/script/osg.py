@@ -28,10 +28,15 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     STR_CFG = " -DGDAL_INCLUDE_DIR='" + install_dir + "/include/gdal'"
     STR_CFG += " -DOPENEXR_INCLUDE_DIR='" + install_dir + "/include'"
     
+    # STR_CFG += ' -DNVTT_SHARED=1'
+    
     if(dict_config['release']):
         STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/gdal31.lib'"
     else:
         STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/gdal31d.lib'"
+        # STR_CFG += " -DCURL_LIBRARY_RELEASE='" + install_dir + "/lib/libcurld_imp.lib'"
+        STR_CFG += " -DCURL_LIBRARY_DEBUG='" + install_dir + "/lib/libcurld_imp.lib'"
+        STR_CFG += " -DNVSQUISH_LIBRARY_DEBUG='" + install_dir + "/lib/squishd.lib'"
     
     source_dir = os.getcwd() + '/../prebuild/OpenSceneGraph-3.6.5'
     

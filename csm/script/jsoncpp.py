@@ -17,6 +17,7 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     STR_CGG = ''
     STR_CGG += ' -DBUILD_TESTING=0'
     STR_CGG += ' -DJSONCPP_WITH_TESTS=0'
+    STR_CGG += ' -DDEBUG_LIBNAME_SUFFIX="d"'
     # if(dict_config['static']):
         # STR_CGG += ''
     # else:

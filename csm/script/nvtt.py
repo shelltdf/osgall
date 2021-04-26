@@ -18,6 +18,9 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     STR_CFG = ''
     if(dict_config['static']):
         STR_CFG += ' -DNVTT_SHARED=0'
+        
+        STR_CFG += " -DBUILD_SHARED_LIBS=0" #只能静态
+        
     else:
         # STR_CFG += ' -DNVTHREAD_SHARED=1'
         # STR_CFG += ' -DNVCORE_SHARED=1'
@@ -31,8 +34,10 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         STR_CFG += ' -DHAVE_PNG=0'
         STR_CFG += ' -DHAVE_TIFF=0'
         STR_CFG += ' -DHAVE_OPENEXR=0'
+        
+        STR_CFG += " -DBUILD_SHARED_LIBS=0" #只能静态
     
-    source_dir = os.getcwd() + '/../prebuild/nvidia-texture-tools'
+    source_dir = os.getcwd() + '/../prebuild/nvidia-texture-tools-master'
     
     configure(str_name,dict_config,STR_CFG,"",source_dir)
     build(str_name,dict_config)

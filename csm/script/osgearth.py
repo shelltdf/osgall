@@ -26,7 +26,7 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         STR_CFG += " -DCURL_LIBRARY='" + install_dir + "/lib/libcurl_imp.lib'"
     else:
         STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/gdal31d.lib'"
-        STR_CFG += " -DCURL_LIBRARY='" + install_dir + "/lib/libcurl_imp.lib'"
+        STR_CFG += " -DCURL_LIBRARY='" + install_dir + "/lib/libcurld_imp.lib'"
         STR_CFG += " -DOPENTHREADS_LIBRARY='" + install_dir + "/lib/OpenThreadsd.lib'"
         STR_CFG += " -DOSG_LIBRARY='" + install_dir + "/lib/osgd.lib'"
         STR_CFG += " -DOSGDB_LIBRARY='" + install_dir + "/lib/osgDBd.lib'"
