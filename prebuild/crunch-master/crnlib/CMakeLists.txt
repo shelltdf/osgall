@@ -91,6 +91,8 @@ else(CRUNCH_BUILD_SHARED)
 	add_library(${LIB_NAME} STATIC ${CRN_SOURCES} )
 endif(CRUNCH_BUILD_SHARED)
 
+set_target_properties( ${LIB_NAME} PROPERTIES OUTPUT_NAME ${LIB_NAME}
+                        DEBUG_OUTPUT_NAME ${LIB_NAME}d )
 
 install(TARGETS ${LIB_NAME}
     RUNTIME DESTINATION bin
