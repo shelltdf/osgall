@@ -110,10 +110,15 @@ include(policies)
 ################################################################################
 # Check for sqlite3
 ################################################################################
+if(NOT EMSCRIPTEN)
+
 find_program(EXE_SQLITE3 sqlite3)
 if(NOT EXE_SQLITE3)
   message(SEND_ERROR "sqlite3 binary not found!")
 endif()
+
+endif()
+
 
 find_package(Sqlite3 REQUIRED)
 if(NOT SQLITE3_FOUND)

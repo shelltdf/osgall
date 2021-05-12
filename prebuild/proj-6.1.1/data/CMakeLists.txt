@@ -40,6 +40,7 @@ add_custom_command(
 
 add_custom_target(generate_all_sql_in ALL DEPENDS ${ALL_SQL_IN})
 
+if(NOT EMSCRIPTEN)
 add_custom_command(
   OUTPUT ${PROJ_DB}
   COMMAND ${CMAKE_COMMAND} -E remove -f ${PROJ_DB}
@@ -51,6 +52,7 @@ add_custom_command(
 )
 
 add_custom_target(generate_proj_db ALL DEPENDS ${PROJ_DB})
+endif()
 
 if(NOT "${CMAKE_CURRENT_SOURCE_DIR}" STREQUAL "${CMAKE_CURRENT_BINARY_DIR}")
   foreach(FILE ${PROJ_DICTIONARY} ${GRIDSHIFT_FILES})
@@ -64,8 +66,15 @@ endif()
 set(ALL_DATA_FILE
   ${PROJ_DICTIONARY}
   ${GRIDSHIFT_FILES}
+  # ${PROJ_DB}
+)
+
+if(NOT EMSCRIPTEN)
+set(ALL_DATA_FILE
   ${PROJ_DB}
 )
+endif()
+
 install(
   FILES ${ALL_DATA_FILE}
   DESTINATION ${DATADIR}

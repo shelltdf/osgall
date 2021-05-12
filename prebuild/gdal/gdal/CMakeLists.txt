@@ -86,13 +86,16 @@ elseif(NACL)
 elseif(MINGW)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-psabi ")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-psabi -fpermissive")
+elseif(EMSCRIPTEN)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-psabi ")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-psabi ")
 else( ANDROID)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -W4 -wd4127 -wd4251 -wd4275 -wd4786 -wd4100 -wd4245 -wd4206 -wd4018 -wd4389")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -W4 -wd4127 -wd4251 -wd4275 -wd4786 -wd4100 -wd4245 -wd4206 -wd4018 -wd4389")
 endif( ANDROID)
 
 # set path to additional CMake modules
-set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
+set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
 # uninstall target
 configure_file(${CMAKE_MODULE_PATH}/cmake_uninstall.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake IMMEDIATE @ONLY)
@@ -112,9 +115,9 @@ if( MSVC_VERSION LESS 1900)
 endif( MSVC_VERSION LESS 1900)
 endif(MSVC)
 
-if(NOT ANDROID AND NOT NACL AND NOT MINGW)
+if(NOT EMSCRIPTEN AND NOT ANDROID AND NOT NACL AND NOT MINGW)
 add_definitions(-DSTRICT -DHAVE_SSE_AT_COMPILE_TIME)
-endif(NOT ANDROID AND NOT NACL AND NOT MINGW)
+endif(NOT EMSCRIPTEN AND NOT ANDROID AND NOT NACL AND NOT MINGW)
 
 if(UNIX)
     add_definitions(-DCPL_LSB)

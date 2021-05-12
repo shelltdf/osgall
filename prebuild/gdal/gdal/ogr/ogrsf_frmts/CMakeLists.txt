@@ -30,7 +30,7 @@ set(LIB_NAME "ogrsf_frmts")
 project ("lib${LIB_NAME}")
 
 include_directories(${GDAL_ROOT_SOURCE_DIR}/gcore)
-include_directories(${GDAL_ROOT_SOURCE_DIR}/ogr/ogrsf_frmts)  
+include_directories(${GDAL_ROOT_SOURCE_DIR}/ogr/ogrsf_frmts/)  
 
 set(LIB_HHEADERS
 	ogr_attrind.h

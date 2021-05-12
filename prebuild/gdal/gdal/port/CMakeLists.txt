@@ -50,6 +50,9 @@ configure_file(${CMAKE_MODULE_PATH}/cpl_config.h.ndk.cmake ${GDAL_ROOT_SOURCE_DI
 elseif(NACL)
 configure_file(${CMAKE_MODULE_PATH}/cpl_config.h.nc.cmake ${GDAL_ROOT_SOURCE_DIR}/port/cpl_config.h @ONLY)
 
+elseif(EMSCRIPTEN)
+configure_file(${CMAKE_MODULE_PATH}/cpl_config.h.emcc.cmake ${GDAL_ROOT_SOURCE_DIR}/port/cpl_config.h @ONLY)
+
 elseif(MINGW)
 configure_file(${CMAKE_MODULE_PATH}/cpl_config.h.mingw.cmake ${GDAL_ROOT_SOURCE_DIR}/port/cpl_config.h @ONLY)
 
@@ -365,7 +368,8 @@ set(LIB_CSOURCES
 if(WIN32)
     set(LIB_CSOURCES ${LIB_CSOURCES} cpl_vsil_win32.cpp)
 else(WIN32)
-    set(LIB_CSOURCES ${LIB_CSOURCES} cpl_vsil_unix_stdio_64.cpp vsipreload.cpp)
+    # set(LIB_CSOURCES ${LIB_CSOURCES} cpl_vsil_unix_stdio_64.cpp vsipreload.cpp)
+    set(LIB_CSOURCES ${LIB_CSOURCES} cpl_vsil_unix_stdio_64.cpp)
 endif(WIN32)
 
 

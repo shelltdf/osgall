@@ -34,15 +34,24 @@ ELSE( SQLITE_BUILD_STATIC )
 ENDIF( SQLITE_BUILD_STATIC )
 
 
+        
+if(NOT EMSCRIPTEN)
 add_executable( ${APP_NAME} shell.c )
 target_link_libraries(${APP_NAME} ${LIBRARY_NAME})
+
+INSTALL(TARGETS ${APP_NAME}
+        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION bin
+        ARCHIVE DESTINATION lib
+        )
+endif()
+
 
 INSTALL(
         FILES       ${LIBSQLITE_HEADERS}
         DESTINATION include
         )
-        
-INSTALL(TARGETS ${LIBRARY_NAME} ${APP_NAME}
+INSTALL(TARGETS ${LIBRARY_NAME}
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION bin
         ARCHIVE DESTINATION lib

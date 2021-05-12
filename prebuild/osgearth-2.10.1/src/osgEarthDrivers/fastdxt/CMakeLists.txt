@@ -30,8 +30,17 @@ SET(TARGET_SRC
     dxt.cpp
     util.cpp
     libdxt.cpp
+    # intrinsic.cpp
+)
+
+if(EMSCRIPTEN)
+ADD_DEFINITIONS(-DDXT_INTR=0)
+else(EMSCRIPTEN)
+ADD_DEFINITIONS(-DDXT_INTR=1)
+SET(TARGET_SRC ${TARGET_SRC}
     intrinsic.cpp
 )
+endif(EMSCRIPTEN)
 
 SETUP_PLUGIN(fastdxt)
 

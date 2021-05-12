@@ -368,7 +368,10 @@ endif()
 ################################################################################
 
 add_subdirectory(src/libjasper)
+
+if(NOT EMSCRIPTEN)
 add_subdirectory(src/appl)
+endif ()
 if (JAS_ENABLE_DOC)
 	add_subdirectory(doc)
 endif ()

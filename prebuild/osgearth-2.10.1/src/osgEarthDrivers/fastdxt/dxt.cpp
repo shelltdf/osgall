@@ -7,7 +7,7 @@
 #include "util.h"
 
 
-#define DXT_INTR 1
+//#define DXT_INTR 1
 
 void ExtractBlock( const byte *inPtr, int width, byte *colorBlock );
 void ExtractBlock_Intrinsics( const byte *inPtr, int width, byte *colorBlock );

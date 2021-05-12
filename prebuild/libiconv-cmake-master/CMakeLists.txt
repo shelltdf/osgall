@@ -50,6 +50,11 @@ if(WIN32)
   add_definitions(-DLIBDIR)
 endif()
 
+if(EMSCRIPTEN)
+  add_definitions(-DLIBDIR)
+endif()
+
+
 # Hack: to be able to configure the localcharset.h.build.in correctly, we
 # inject code in the variable have visibility
 header_injection_hack(

@@ -76,7 +76,9 @@ error_exit (j_common_ptr cinfo)
   /* Let the memory manager delete any temp files before we die */
   jpeg_destroy(cinfo);
 
+#ifndef __EMSCRIPTEN__
   exit(EXIT_FAILURE);
+#endif
 }
 
 
