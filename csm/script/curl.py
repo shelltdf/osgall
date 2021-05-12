@@ -23,7 +23,9 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         STR_CFG += ' -DZLIB_LIBRARY=' + install_dir + '/lib/zlibstatic.lib'
         STR_CFG += ' -DZLIB_LIBRARY_DEBUG=' + install_dir + '/lib/zlibstaticd.lib'
     else:
-        STR_CFG = " -DCURL_STATICLIB=0"
+        STR_CFG += " -DCURL_STATICLIB=0"
+        STR_CFG += " -DBUILD_CURL_EXE=0"
+        STR_CFG += " -DBUILD_CURL_TESTS=0"
         STR_CFG += ' -DZLIB_LIBRARY=' + install_dir + '/lib/zlib.lib'
         STR_CFG += ' -DZLIB_LIBRARY_DEBUG=' + install_dir + '/lib/zlibd.lib'
         
