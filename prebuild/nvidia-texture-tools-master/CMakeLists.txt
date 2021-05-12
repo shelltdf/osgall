@@ -39,6 +39,9 @@ IF(CMAKE_BUILD_TYPE MATCHES "debug")
     ADD_DEFINITIONS(-D_DEBUG=1)
 ENDIF()
 
+option(BUILD_CUDA "Enable CUDA" ON)
+option(BUILD_TOOLS "Enable tools" ON)
+option(BUILD_TESTS "Enable tests" ON)
 
 #IF(NVTT_SHARED)
 #	SET(NVCORE_SHARED TRUE)
