@@ -15,6 +15,9 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         # download_source(str_name,"https://github.com/shelltdf/nvidia-texture-tools.git")
         # return
         
+    if(dict_config['arch']=="em"):
+        return
+        
     STR_CFG = ''
     if(dict_config['static']):
         STR_CFG += ' -DNVTT_SHARED=0'
@@ -34,6 +37,10 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         STR_CFG += ' -DHAVE_PNG=0'
         STR_CFG += ' -DHAVE_TIFF=0'
         STR_CFG += ' -DHAVE_OPENEXR=0'
+        
+        STR_CFG += ' -DBUILD_CUDA=0'
+        STR_CFG += ' -DBUILD_TOOLS=0'
+        STR_CFG += ' -DBUILD_TESTS=0'
         
         STR_CFG += " -DBUILD_SHARED_LIBS=0" #只能静态
     

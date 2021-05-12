@@ -18,13 +18,26 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         
         # return
         
-    STR_CFG = " -DPROJ_TESTS=0";
-    STR_CFG += ' -DSQLITE3_LIBRARY=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/sqlite.lib'
-    STR_CFG += ' -DSQLITE3_LIBRARY_DEBUG=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/sqlited.lib'
-    if(dict_config['static']):
-        STR_CFG += " -DBUILD_LIBPROJ_SHARED=0"
-    else:
-        STR_CFG += " -DBUILD_LIBPROJ_SHARED=1"
+    dir_name = my_build_and_install_dir(dict_config)
+    install_dir = os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config)
+        
+    STR_CFG = "";
+    
+    if(dict_config['arch'][:2]=="vs"):
+        STR_CFG += " -DPROJ_TESTS=0";
+        STR_CFG += ' -DSQLITE3_LIBRARY=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/sqlite.lib'
+        STR_CFG += ' -DSQLITE3_LIBRARY_DEBUG=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/sqlited.lib'
+        if(dict_config['static']):
+            STR_CFG += " -DBUILD_LIBPROJ_SHARED=0"
+        else:
+            STR_CFG += " -DBUILD_LIBPROJ_SHARED=1"
+        
+        
+    if(dict_config['arch']=="em"):
+        STR_CFG += " -DPROJ_TESTS=0";
+        STR_CFG += ' -DSQLITE3_INCLUDE_DIR="' + install_dir + '"/include'
+        STR_CFG += ' -DSQLITE3_LIBRARY=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/libsqlite.a'
+        STR_CFG += ' -DSQLITE3_LIBRARY_DEBUG=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/libsqlite.a'
         
     source_dir = os.getcwd() + '/../prebuild/proj-6.1.1'
     

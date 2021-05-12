@@ -16,16 +16,29 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     
         # return
         
-    STR_CFG = ''
-    if(dict_config['static']):
-        STR_CFG = " -DPNG_SHARED=0 -DPNG_STATIC=1";
-    else:
-        STR_CFG = " -DPNG_SHARED=1 -DPNG_STATIC=0";
+    dir_name = my_build_and_install_dir(dict_config)
+    install_dir = os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config)
         
-    STR_CFG += ' -DZLIB_LIBRARY=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/zlib.lib'
-    STR_CFG += ' -DZLIB_LIBRARY_DEBUG=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/zlibd.lib'
+    STR_CFG = ''
+    
+    if(dict_config['arch'][:2]=="vs"):
+        if(dict_config['static']):
+            STR_CFG += " -DPNG_SHARED=0 -DPNG_STATIC=1";
+        else:
+            STR_CFG += " -DPNG_SHARED=1 -DPNG_STATIC=0";
+            
+        STR_CFG += ' -DZLIB_LIBRARY=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/zlib.lib'
+        STR_CFG += ' -DZLIB_LIBRARY_DEBUG=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/zlibd.lib'
   
-  
+    if(dict_config['arch']=="em"):
+    
+        STR_CFG += " -DPNG_TESTS=0";
+        STR_CFG += " -DPNG_SHARED=0 -DPNG_STATIC=1";
+        
+        STR_CFG += ' -DZLIB_INCLUDE_DIR="' + install_dir + '"/include'
+        STR_CFG += ' -DZLIB_LIBRARY=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/libz.a'
+        STR_CFG += ' -DZLIB_LIBRARY_DEBUG=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/libzd.a'
+        
     source_dir = os.getcwd() + '/../prebuild/libpng-1.6.15'
 
     configure(str_name,dict_config,STR_CFG,"",source_dir)    

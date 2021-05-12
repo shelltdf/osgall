@@ -53,24 +53,28 @@ def main():
         # return
         
     for arg_num in range(len(sys.argv)):
-        if sys.argv[arg_num] == "source" or sys.argv[arg_num] == "install":
-            ARG_CMD = sys.argv[arg_num]
+        if sys.argv[arg_num].strip('\r') == "source" or sys.argv[arg_num].strip('\r') == "install":
+            ARG_CMD = sys.argv[arg_num].strip('\r')
             if(arg_num < len(sys.argv)-1):
                 ARG_NAME = sys.argv[arg_num+1]
-        if sys.argv[arg_num] == "-a" or sys.argv[arg_num] == "-arch":
+        if sys.argv[arg_num].strip('\r') == "-a" or sys.argv[arg_num].strip('\r') == "-arch":
             if(arg_num < len(sys.argv)-1):
-                ARG_ARCH = sys.argv[arg_num+1]
-        if sys.argv[arg_num] == "-release":
+                ARG_ARCH = sys.argv[arg_num+1].strip('\r')
+        if sys.argv[arg_num].strip('\r') == "-release":
             ARG_RELEASE = True
-        if sys.argv[arg_num] == "-debug":
+        if sys.argv[arg_num].strip('\r') == "-debug":
             ARG_DEBUG = True
-        if sys.argv[arg_num] == "-dynamic":
+        if sys.argv[arg_num].strip('\r') == "-dynamic":
             ARG_DYNAMIC = True
-        if sys.argv[arg_num] == "-static":
+        if sys.argv[arg_num].strip('\r') == "-static":
             ARG_STATIC = True
-        if sys.argv[arg_num] == "-only":
+        if sys.argv[arg_num].strip('\r') == "-only":
             ARG_ONLIY = True    
                 
+                
+    # ARG_NAME = ARG_NAME.strip('\r')
+    # ARG_ARCH = ARG_ARCH.strip('\r')
+    
     print( "ARG_CMD=" + ARG_CMD )
     print( "ARG_NAME=" + ARG_NAME )
     print( "ARG_ARCH=" + ARG_ARCH )
@@ -151,6 +155,9 @@ def main():
         dict_config['cmake_cfg'] = ' -G "MSYS Makefiles" '
 
     if(ARG_ARCH == "nmake"):
+        dict_config['cmake_cfg'] = ' -G "NMake Makefiles" '
+    
+    if(ARG_ARCH == "em"):
         dict_config['cmake_cfg'] = ' -G "NMake Makefiles" '
         
     print (dict_config)

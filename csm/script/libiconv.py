@@ -17,6 +17,10 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         
     STR_CFG = ''
     
+    
+    if(dict_config['arch']=="em"):
+        STR_CFG += " -DBUILD_SHARED_LIBS=0"
+    
     source_dir = os.getcwd() + '/../prebuild/libiconv-cmake-master'
     
     configure(str_name,dict_config,STR_CFG,"",source_dir)

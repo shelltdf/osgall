@@ -161,9 +161,15 @@ def configure(str_name ,dict_config, str_config = "",str_subdir="",str_local_dir
         # print str_name + "configure is exist"
     # else:
     # my_exec( "cmake "+source_dir+"/" + str_name + "/" + str_subdir +
-    my_exec( "cmake "+source_dir+
-    " -DCMAKE_USE_RELATIVE_PATHS=1 -DCMAKE_INSTALL_PREFIX='../../../install/" + dir_name + "' " +
-    dict_config['cmake_cfg'] + BUILD_TYPE + BUILD_STATIC_LIB + str_config )
+    
+    if(dict_config['arch']=="em"):
+        my_exec( "emcmake cmake "+source_dir+
+        " -DCMAKE_USE_RELATIVE_PATHS=1 -DCMAKE_INSTALL_PREFIX='../../../install/" + dir_name + "' " +
+        dict_config['cmake_cfg'] + BUILD_TYPE + BUILD_STATIC_LIB + str_config )
+    else:
+        my_exec( "cmake "+source_dir+
+        " -DCMAKE_USE_RELATIVE_PATHS=1 -DCMAKE_INSTALL_PREFIX='../../../install/" + dir_name + "' " +
+        dict_config['cmake_cfg'] + BUILD_TYPE + BUILD_STATIC_LIB + str_config )
     
     my_out_build_dir( str_name )
     
@@ -177,6 +183,8 @@ def build(str_name,dict_config):
         if(dict_config['release']==True):
             system_ret = os.system('msbuild ALL_BUILD.vcxproj -maxcpucount:16 /p:Configuration=Release')
     elif(dict_config['arch']=="nmake"):
+        system_ret = os.system('nmake')
+    elif(dict_config['arch']=="em"):
         system_ret = os.system('nmake')
     else:
         system_ret = os.system('make')
@@ -198,6 +206,8 @@ def install(str_name,dict_config):
         if(dict_config['release']==True):
             os.system('msbuild INSTALL.vcxproj /p:Configuration=Release')
     elif(dict_config['arch']=="nmake"):
+        os.system('nmake install')
+    elif(dict_config['arch']=="em"):
         os.system('nmake install')
     else:
         os.system('make install')

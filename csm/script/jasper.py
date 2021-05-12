@@ -20,21 +20,29 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     install_dir = os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config)
     
     STR_CFG = ''
-    if(dict_config['static']):
-        STR_CFG += " -DJAS_ENABLE_SHARED=0"
-    else:
-        STR_CFG += " -DJAS_ENABLE_SHARED=1"
+    
+    if(dict_config['arch'][:2]=="vs"):
+        if(dict_config['static']):
+            STR_CFG += " -DJAS_ENABLE_SHARED=0"
+        else:
+            STR_CFG += " -DJAS_ENABLE_SHARED=1"
+            
+        STR_CFG += ' -DJPEG_INCLUDE_DIR=' + install_dir + '/include'
         
-    STR_CFG += ' -DJPEG_INCLUDE_DIR=' + install_dir + '/include'
+        # STR_CFG += ' -DJPEG_LIBRARY=' + install_dir + '/lib/jpeg.lib'
+        # STR_CFG += ' -DJPEG_LIBRARY_DEBUG=' + install_dir + '/lib/jpegd.lib'
+        
+        if(dict_config['release']):
+            STR_CFG += ' -DJPEG_LIBRARY=' + install_dir + '/lib/jpeg.lib'
+        else:
+            STR_CFG += ' -DJPEG_LIBRARY=' + install_dir + '/lib/jpegd.lib'
     
-    # STR_CFG += ' -DJPEG_LIBRARY=' + install_dir + '/lib/jpeg.lib'
-    # STR_CFG += ' -DJPEG_LIBRARY_DEBUG=' + install_dir + '/lib/jpegd.lib'
-    
-    if(dict_config['release']):
-        STR_CFG += ' -DJPEG_LIBRARY=' + install_dir + '/lib/jpeg.lib'
-    else:
-        STR_CFG += ' -DJPEG_LIBRARY=' + install_dir + '/lib/jpegd.lib'
-    
+    if(dict_config['arch']=="em"):
+        STR_CFG += " -DJAS_ENABLE_SHARED=0"
+        
+        STR_CFG += ' -DJPEG_INCLUDE_DIR=' + install_dir + '/include'
+        STR_CFG += ' -DJPEG_LIBRARY=' + install_dir + '/lib/libjpeg.a'
+        
     
     source_dir = os.getcwd() + '/../prebuild/jasper-2.0.12'
     

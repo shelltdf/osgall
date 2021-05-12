@@ -14,6 +14,11 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         # download_source(str_name,"https://github.com/google/leveldb.git")
         # return
         
+        
+    if(dict_config['arch']=="em"):
+        # em根本无法在本地建立leveldb数据库
+        return
+        
     STR_CFG = ''
     STR_CFG += " -DLEVELDB_BUILD_TEST=0"
     if(dict_config['static']):

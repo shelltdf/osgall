@@ -25,18 +25,28 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     dir_name = my_build_and_install_dir(dict_config)
     install_dir = os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config)
     
-    STR_CFG = " -DGDAL_INCLUDE_DIR='" + install_dir + "/include/gdal'"
-    STR_CFG += " -DOPENEXR_INCLUDE_DIR='" + install_dir + "/include'"
+    STR_CFG = ''
     
-    # STR_CFG += ' -DNVTT_SHARED=1'
+    if(dict_config['arch'][:2]=="vs"):
     
-    if(dict_config['release']):
-        STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/gdal31.lib'"
-    else:
-        STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/gdal31d.lib'"
-        # STR_CFG += " -DCURL_LIBRARY_RELEASE='" + install_dir + "/lib/libcurld_imp.lib'"
-        STR_CFG += " -DCURL_LIBRARY_DEBUG='" + install_dir + "/lib/libcurld_imp.lib'"
-        STR_CFG += " -DNVSQUISH_LIBRARY_DEBUG='" + install_dir + "/lib/squishd.lib'"
+        STR_CFG += " -DGDAL_INCLUDE_DIR='" + install_dir + "/include/gdal'"
+        STR_CFG += " -DOPENEXR_INCLUDE_DIR='" + install_dir + "/include'"
+    
+        # STR_CFG += ' -DNVTT_SHARED=1'
+        
+        if(dict_config['release']):
+            STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/gdal31.lib'"
+        else:
+            STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/gdal31d.lib'"
+            # STR_CFG += " -DCURL_LIBRARY_RELEASE='" + install_dir + "/lib/libcurld_imp.lib'"
+            STR_CFG += " -DCURL_LIBRARY_DEBUG='" + install_dir + "/lib/libcurld_imp.lib'"
+            STR_CFG += " -DNVSQUISH_LIBRARY_DEBUG='" + install_dir + "/lib/squishd.lib'"
+    
+    if(dict_config['arch']=="em"):
+        STR_CFG += ' -DOPENGL_PROFILE=GLES2'
+        STR_CFG += ' -DBUILD_OSG_APPLICATIONS=0'
+        STR_CFG += ' -DBUILD_OSG_EXAMPLES=0'
+    
     
     source_dir = os.getcwd() + '/../prebuild/OpenSceneGraph-3.6.5'
     
