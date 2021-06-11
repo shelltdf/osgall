@@ -29,7 +29,7 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         
     STR_CFG = ''
     
-    STR_CFG += ' -DGDAL_USE_ICONV=OFF'
+    # STR_CFG += ' -DGDAL_USE_ICONV=1'
     STR_CFG += ' -DGDAL_USE_CURL=OFF'
     STR_CFG += " -DGDAL_USE_OPENCL=0 "
     
@@ -72,6 +72,8 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += " -DGDAL_BUILD_SHARED=1"
             STR_CFG += ' -DGDAL_BUILD_APPS=1'
             
+            
+        STR_CFG += ' -DGDAL_USE_ICONV=0'
 
         # STR_CFG += " -DCURL_LIBRARY='" + install_dir + "/lib/libcurl_imp.lib'"
         # STR_CFG += " -DCURL_LIBRARY_DEBUG='" + install_dir + "/lib/libcurl-d_imp.lib'"
@@ -96,12 +98,21 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         
         STR_CFG += " -DZLIB_LIBRARY='" + install_dir + "/lib/zlib.lib'"
         STR_CFG += " -DZLIB_LIBRARY_DEBUG='" + install_dir + "/lib/zlibd.lib'"
+        
+        # STR_CFG += ' -DICONV_INCLUDE_DIR="' + install_dir + '"/include'
+        # STR_CFG += " -DICONV_LIBRARIES='" + install_dir + "/lib/libiconv.lib'"
     
-    if(dict_config['arch']=="em"):
-        STR_CFG += " -DGDAL_BUILD_SHARED=0"
-        STR_CFG += " -DGDAL_BUILD_APPS=0"
+    if(dict_config['arch']=="unix"):
+
+        if(dict_config['static']):
+            STR_CFG += " -DGDAL_BUILD_SHARED=0"
+            STR_CFG += " -DGDAL_BUILD_APPS=0"
+        else:
+            STR_CFG += " -DGDAL_BUILD_SHARED=1"
+            STR_CFG += ' -DGDAL_BUILD_APPS=1'
             
-            
+        STR_CFG += ' -DGDAL_USE_ICONV=1'
+        
         STR_CFG += ' -DGEOTIFF_INCLUDE_DIR="' + install_dir + '"/include'
         STR_CFG += " -DGEOTIFF_LIBRARY='" + install_dir + "/lib/libgeotiff.a'"        
         STR_CFG += " -DGEOTIFF_LIBRARY_DEBUG='" + install_dir + "/lib/libgeotiffd.a'"    
@@ -133,6 +144,53 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         STR_CFG += ' -DZLIB_INCLUDE_DIR="' + install_dir + '"/include'
         STR_CFG += " -DZLIB_LIBRARY='" + install_dir + "/lib/libz.a'"
         STR_CFG += " -DZLIB_LIBRARY_DEBUG='" + install_dir + "/lib/libzd.a'"
+        
+        STR_CFG += ' -DICONV_INCLUDE_DIR="' + install_dir + '"/include'
+        STR_CFG += " -DICONV_LIBRARIES='" + install_dir + "/lib/liblibiconv.a'"
+        
+        
+    if(dict_config['arch']=="em"):
+        STR_CFG += " -DGDAL_BUILD_SHARED=0"
+        STR_CFG += " -DGDAL_BUILD_APPS=0"
+            
+        STR_CFG += ' -DGDAL_USE_ICONV=1'
+        
+        STR_CFG += ' -DGEOTIFF_INCLUDE_DIR="' + install_dir + '"/include'
+        STR_CFG += " -DGEOTIFF_LIBRARY='" + install_dir + "/lib/libgeotiff.a'"        
+        STR_CFG += " -DGEOTIFF_LIBRARY_DEBUG='" + install_dir + "/lib/libgeotiffd.a'"    
+        
+        STR_CFG += ' -DJPEG_INCLUDE_DIR="' + install_dir + '"/include'
+        STR_CFG += " -DJPEG_LIBRARY='" + install_dir + "/lib/libjpeg.a'"        
+        STR_CFG += " -DJPEG_LIBRARY_DEBUG='" + install_dir + "/lib/libjpegd.a'"        
+        
+        STR_CFG += ' -DTIFF_INCLUDE_DIR="' + install_dir + '"/include'
+        STR_CFG += " -DTIFF_LIBRARY='" + install_dir + "/lib/libtiff.a'"
+        STR_CFG += " -DTIFF_LIBRARY_DEBUG='" + install_dir + "/lib/libtiffd.a'"
+        
+        STR_CFG += ' -DGEOS_INCLUDE_DIR="' + install_dir + '"/include'
+        STR_CFG += " -DGEOS_LIBRARY='" + install_dir + "/lib/libgeos-static.a'"
+        STR_CFG += " -DGEOS_LIBRARY_DEBUG='" + install_dir + "/lib/libgeos-staticd.a'"
+        
+        STR_CFG += ' -DSQLITE3_INCLUDE_DIR="' + install_dir + '"/include'
+        STR_CFG += " -DSQLITE3_LIBRARY='" + install_dir + "/lib/libsqlite.a'"
+        STR_CFG += " -DSQLITE3_LIBRARY_DEBUG='" + install_dir + "/lib/libsqlited.a'"
+        
+        STR_CFG += ' -DPROJ_INCLUDE_DIR="' + install_dir + '"/include'
+        STR_CFG += " -DPROJ_LIBRARY='" + install_dir + "/lib/libproj.a'"
+        STR_CFG += " -DPROJ_LIBRARY_DEBUG='" + install_dir + "/lib/libprojd.a'"
+        
+        STR_CFG += ' -DEXPAT_INCLUDE_DIR="' + install_dir + '"/include'
+        STR_CFG += " -DEXPAT_LIBRARY='" + install_dir + "/lib/libexpat.a'"
+        STR_CFG += " -DEXPAT_LIBRARY_DEBUG='" + install_dir + "/lib/libexpatd.a'"
+        
+        STR_CFG += ' -DZLIB_INCLUDE_DIR="' + install_dir + '"/include'
+        STR_CFG += " -DZLIB_LIBRARY='" + install_dir + "/lib/libz.a'"
+        STR_CFG += " -DZLIB_LIBRARY_DEBUG='" + install_dir + "/lib/libzd.a'"
+        
+        STR_CFG += ' -DICONV_INCLUDE_DIR="' + install_dir + '"/include'
+        STR_CFG += " -DICONV_LIBRARIES='" + install_dir + "/lib/liblibiconv.a'"
+        # STR_CFG += " -DICONV_LIBRARY='" + install_dir + "/lib/liblibiconv.a'"
+        # STR_CFG += " -DICONV_LIBRARY_DEBUG='" + install_dir + "/lib/liblibiconv.a'"
         
    
     source_dir = os.getcwd() + '/../prebuild/gdal/gdal'

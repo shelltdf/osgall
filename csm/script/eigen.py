@@ -24,7 +24,8 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         # STR_CGG += ''
     
     
-    source_dir = os.getcwd() + '/../prebuild/eigen-eigen-5a0156e40feb'
+    # source_dir = os.getcwd() + '/../prebuild/eigen-eigen-5a0156e40feb'
+    source_dir = os.getcwd() + '/../prebuild/eigen-3.4-rc1'
     
     configure(str_name,dict_config,"","",source_dir)
     build(str_name,dict_config)

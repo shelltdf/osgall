@@ -156,9 +156,18 @@ def main():
 
     if(ARG_ARCH == "nmake"):
         dict_config['cmake_cfg'] = ' -G "NMake Makefiles" '
+        
+    if(ARG_ARCH == "unix"):
+        dict_config['cmake_cfg'] = ' -G "Unix Makefiles" '
     
+    if(ARG_ARCH == "ninja"):
+        dict_config['cmake_cfg'] = ' -G Ninja'
+        
     if(ARG_ARCH == "em"):
-        dict_config['cmake_cfg'] = ' -G "NMake Makefiles" '
+        dict_config['static'] = True
+        dict_config['dynamic'] = False
+        # dict_config['cmake_cfg'] = ' -G "NMake Makefiles" '
+        dict_config['cmake_cfg'] = ' -G Ninja '
         
     print (dict_config)
     

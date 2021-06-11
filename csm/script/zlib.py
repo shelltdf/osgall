@@ -14,15 +14,19 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         # download_source(str_name,"https://github.com/madler/zlib.git")
         # return
         
-    # STR_CFG = ''
-    # if(dict_config['static']):
-        # STR_CFG += ''
-    # else:
-        # STR_CFG += ''
+    STR_CFG = ''
+    if(dict_config['static']):
+        STR_CFG += ' -DBUILD_EXECUTABLE=0'
+        STR_CFG += ' -DBUILD_STAITC_LIBRARY=1'
+        STR_CFG += ' -DBUILD_DYNAMIC_LIBRARY=0'
+    else:
+        STR_CFG += ' -DBUILD_EXECUTABLE=0'
+        STR_CFG += ' -DBUILD_STAITC_LIBRARY=0'
+        STR_CFG += ' -DBUILD_DYNAMIC_LIBRARY=1'
         
     source_dir = os.getcwd() + '/../prebuild/zlib-1.2.8'
     
-    configure(str_name,dict_config,"","",source_dir)
+    configure(str_name,dict_config,STR_CFG,"",source_dir)
     build(str_name,dict_config)
     install(str_name,dict_config)
     

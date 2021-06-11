@@ -4,6 +4,8 @@ from ._common import *
 def getDependency( str_name ,getDependency):
     list_name = []
     
+    list_name = addDependency("eigen" , list_name,getDependency)
+    
     # list_name = addDependency("anttweakbar" , list_name,getDependency)
     # list_name = addDependency("avunity" , list_name,getDependency)
     list_name = addDependency("boost" , list_name,getDependency)
@@ -12,7 +14,7 @@ def getDependency( str_name ,getDependency):
     # list_name = addDependency("cgal" , list_name,getDependency)
     list_name = addDependency("curl" , list_name,getDependency)
     list_name = addDependency("draco" , list_name,getDependency)
-    list_name = addDependency("eigen" , list_name,getDependency)
+    
     list_name = addDependency("expat" , list_name,getDependency)
     # list_name = addDependency("flann" , list_name,getDependency)
     # list_name = addDependency("freeglut" , list_name,getDependency)
@@ -21,6 +23,7 @@ def getDependency( str_name ,getDependency):
     list_name = addDependency("geos" , list_name,getDependency)
     list_name = addDependency("glew" , list_name,getDependency)
     list_name = addDependency("googletest" , list_name,getDependency)
+    list_name = addDependency("hdf" , list_name,getDependency)
     list_name = addDependency("ilmbase" , list_name,getDependency)
     list_name = addDependency("imgui" , list_name,getDependency)
     # list_name = addDependency("ifcplusplus" , list_name,getDependency)

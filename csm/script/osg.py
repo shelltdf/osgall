@@ -27,8 +27,10 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     
     STR_CFG = ''
     
-    if(dict_config['arch'][:2]=="vs"):
     
+    if(dict_config['arch'][:2]=="vs"):
+        STR_CFG += ' -DOSG_USE_UTF8_FILENAME=1'
+        
         STR_CFG += " -DGDAL_INCLUDE_DIR='" + install_dir + "/include/gdal'"
         STR_CFG += " -DOPENEXR_INCLUDE_DIR='" + install_dir + "/include'"
     
@@ -43,9 +45,16 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += " -DNVSQUISH_LIBRARY_DEBUG='" + install_dir + "/lib/squishd.lib'"
     
     if(dict_config['arch']=="em"):
+        # STR_CFG += ' -DOSG_USE_UTF8_FILENAME=1'
+        
         STR_CFG += ' -DOPENGL_PROFILE=GLES2'
         STR_CFG += ' -DBUILD_OSG_APPLICATIONS=0'
         STR_CFG += ' -DBUILD_OSG_EXAMPLES=0'
+        
+        STR_CFG += ' -DDYNAMIC_OPENSCENEGRAPH=0'
+        STR_CFG += ' -DDYNAMIC_OPENTHREADS=0'
+        STR_CFG += ' -DOSG_GL_LIBRARY_STATIC=1'
+        STR_CFG += ' -DEGL_LIBRARY=egl' #这里应该无所谓是什么，只要赋值就行了。
     
     
     source_dir = os.getcwd() + '/../prebuild/OpenSceneGraph-3.6.5'
