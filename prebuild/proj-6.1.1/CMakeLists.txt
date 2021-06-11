@@ -15,6 +15,11 @@ cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 project(PROJ4 LANGUAGES C CXX)
 set(PROJECT_INTERN_NAME PROJ)
 
+if (EMSCRIPTEN)
+     set(CMAKE_C_FLAGS "-pthread")
+     set(CMAKE_CXX_FLAGS "-pthread")
+endif (EMSCRIPTEN)
+
 if(NOT CMAKE_VERSION VERSION_LESS 3.1)
   cmake_policy(SET CMP0054 NEW)
 endif()
