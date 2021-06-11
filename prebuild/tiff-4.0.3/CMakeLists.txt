@@ -85,8 +85,10 @@ ELSEIF(EMSCRIPTEN)
     CONFIGURE_FILE(${PROJECT_SOURCE_DIR}/libtiff/tif_config.emcc.h ${PROJECT_SOURCE_DIR}/libtiff/tif_config.h COPYONLY)
     CONFIGURE_FILE(${PROJECT_SOURCE_DIR}/libtiff/tiffconf.emcc.h ${PROJECT_SOURCE_DIR}/libtiff/tiffconf.h COPYONLY)
 ELSE(MSVC)
-    CONFIGURE_FILE(${PROJECT_SOURCE_DIR}/libtiff/tif_config.h.in ${PROJECT_SOURCE_DIR}/libtiff/tif_config.h COPYONLY)
-    CONFIGURE_FILE(${PROJECT_SOURCE_DIR}/libtiff/tiffconf.h.in ${PROJECT_SOURCE_DIR}/libtiff/tiffconf.h COPYONLY)
+    # CONFIGURE_FILE(${PROJECT_SOURCE_DIR}/libtiff/tif_config.h.in ${PROJECT_SOURCE_DIR}/libtiff/tif_config.h COPYONLY)
+    # CONFIGURE_FILE(${PROJECT_SOURCE_DIR}/libtiff/tiffconf.h.in ${PROJECT_SOURCE_DIR}/libtiff/tiffconf.h COPYONLY) 
+    CONFIGURE_FILE(${PROJECT_SOURCE_DIR}/libtiff/tif_config.unix.h ${PROJECT_SOURCE_DIR}/libtiff/tif_config.h COPYONLY)
+    CONFIGURE_FILE(${PROJECT_SOURCE_DIR}/libtiff/tiffconf.unix.h ${PROJECT_SOURCE_DIR}/libtiff/tiffconf.h COPYONLY)
 ENDIF(MSVC)
 
 
