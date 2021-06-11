@@ -14,6 +14,16 @@ ELSEIF(MSYS AND MINGW)
 ElSE(MSVC) #android
 ENDIF(MSVC)
 
+if (EMSCRIPTEN)
+     set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS} "-pthread")
+     set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-pthread")
+endif (EMSCRIPTEN)
+
+if (NOT WIN32)
+     set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS} "-pthread")
+     set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-pthread")
+endif (NOT WIN32)
+
 OPTION(SQLITE_BUILD_STATIC "Enable build static library" OFF)
 
 SET( LIBSQLITE_HEADERS
@@ -33,6 +43,9 @@ ELSE( SQLITE_BUILD_STATIC )
     ADD_LIBRARY(${LIBRARY_NAME} SHARED ${LIBSQLITE_HEADERS} ${LIBSQLITE_SOURCE} sqlite3.def)
 ENDIF( SQLITE_BUILD_STATIC )
 
+if (NOT WIN32)
+    target_link_libraries(${LIBRARY_NAME} dl)
+endif (NOT WIN32)
 
         
 if(NOT EMSCRIPTEN)
@@ -51,8 +64,17 @@ INSTALL(
         FILES       ${LIBSQLITE_HEADERS}
         DESTINATION include
         )
+        
+# if(WIN32)
 INSTALL(TARGETS ${LIBRARY_NAME}
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION bin
         ARCHIVE DESTINATION lib
         )
+# else()
+# INSTALL(TARGETS ${LIBRARY_NAME}
+        # RUNTIME DESTINATION bin
+        # LIBRARY DESTINATION lib
+        # ARCHIVE DESTINATION lib
+        # )
+# endif()
