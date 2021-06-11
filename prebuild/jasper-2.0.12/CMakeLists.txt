@@ -369,9 +369,12 @@ endif()
 
 add_subdirectory(src/libjasper)
 
+if(JAS_ENABLE_SHARED)
 if(NOT EMSCRIPTEN)
 add_subdirectory(src/appl)
 endif ()
+endif ()
+
 if (JAS_ENABLE_DOC)
 	add_subdirectory(doc)
 endif ()
