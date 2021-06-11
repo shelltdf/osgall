@@ -72,14 +72,14 @@ if(NOT BUILD_STATIC_LIBRARY)
     VERSION ${VERSION}
     CLEAN_DIRECT_OUTPUT 1)
     
-endif(NOT BUILD_STATIC_LIBRARY)
+else()
   add_library(geos-static STATIC ${geos_SOURCES} ${geos_ALL_HEADERS})
   
     set_target_properties(geos-static PROPERTIES LINK_SEARCH_START_STATIC 1)
     set_target_properties(geos-static PROPERTIES LINK_SEARCH_END_STATIC 1)
 
     SET_TARGET_PROPERTIES(geos-static PROPERTIES DEBUG_POSTFIX "${CMAKE_DEBUG_POSTFIX}")
-    
+endif()    
 
 endif()
 
@@ -100,12 +100,12 @@ if(NOT BUILD_STATIC_LIBRARY)
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib)
-endif(NOT BUILD_STATIC_LIBRARY)
+else()
   install(TARGETS geos-static
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib)
-    
+endif()
 endif()
 
 #################################################################################

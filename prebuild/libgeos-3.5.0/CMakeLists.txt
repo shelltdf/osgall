@@ -13,6 +13,11 @@
 project(geos)
 cmake_minimum_required(VERSION 2.6)
 
+if (EMSCRIPTEN)
+     set(CMAKE_C_FLAGS "-pthread")
+     set(CMAKE_CXX_FLAGS "-pthread")
+endif (EMSCRIPTEN)
+
 if(NOT CMAKE_VERSION)
     set(CMAKE_VERSION
       "${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}.${CMAKE_PATCH_VERSION}")

@@ -46,13 +46,13 @@ endmacro()
 set(libname libcharset)
 set(libcharset_source_dir ${Libiconv_SOURCE_DIR}/libcharset)
 
-if(WIN32)
+# if(WIN32)
   add_definitions(-DLIBDIR)
-endif()
+# endif()
 
-if(EMSCRIPTEN)
-  add_definitions(-DLIBDIR)
-endif()
+# if(EMSCRIPTEN)
+  # add_definitions(-DLIBDIR)
+# endif()
 
 
 # Hack: to be able to configure the localcharset.h.build.in correctly, we
