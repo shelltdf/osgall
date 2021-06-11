@@ -35,7 +35,11 @@ CPL_CVSID("$Id$")
 #include "cpl_string.h"
 
 #ifndef ICONV_CPP_CONST
+#ifdef _WIN32
+#define ICONV_CPP_CONST
+#else
 #define ICONV_CPP_CONST ICONV_CONST
+#endif
 #endif
 
 constexpr size_t CPL_RECODE_DSTBUF_SIZE = 32768;

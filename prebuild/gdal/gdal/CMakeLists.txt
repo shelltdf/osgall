@@ -77,6 +77,11 @@ SET(CMAKE_C_CREATE_STATIC_LIBRARY "<CMAKE_AR> rc <TARGET> <LINK_FLAGS> <OBJECTS>
 SET(CMAKE_CXX_CREATE_STATIC_LIBRARY "<CMAKE_AR> rc <TARGET> <LINK_FLAGS> <OBJECTS>") 
 endif(NACL)
 
+if (EMSCRIPTEN)
+     set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS} "-pthread")
+     set(CMAKE_CXX_FLAGS ${CMAKE_C_FLAGS} "-pthread")
+endif (EMSCRIPTEN)
+
 if(ANDROID)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-psabi ")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-psabi ")
@@ -89,9 +94,12 @@ elseif(MINGW)
 elseif(EMSCRIPTEN)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-psabi ")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-psabi ")
+elseif(WIN32)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -W4 -wd4127 -wd4251 -wd4275 -wd4786 -wd4100 -wd4245 -wd4206 -wd4018 -wd4389")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -W4 -wd4127 -wd4251 -wd4275 -wd4786 -wd4100 -wd4245 -wd4206 -wd4018 -wd4389")
 else( ANDROID)
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -W4 -wd4127 -wd4251 -wd4275 -wd4786 -wd4100 -wd4245 -wd4206 -wd4018 -wd4389")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -W4 -wd4127 -wd4251 -wd4275 -wd4786 -wd4100 -wd4245 -wd4206 -wd4018 -wd4389")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -W")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -W -fpermissive")
 endif( ANDROID)
 
 # set path to additional CMake modules
@@ -233,6 +241,7 @@ SET(GDAL_TARGET_LINK_LIB "")
     optimized ${PROJ_LIBRARY} debug ${PROJ_LIBRARY_DEBUG}
     optimized ${EXPAT_LIBRARY} debug ${EXPAT_LIBRARY_DEBUG}
     optimized ${ZLIB_LIBRARY} debug ${ZLIB_LIBRARY_DEBUG}
+    ${ICONV_LIBRARIES}
     )
 # endif(GDAL_TARGET_LINK_LIB)
  
