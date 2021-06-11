@@ -113,6 +113,9 @@ DynamicLibrary::HANDLE DynamicLibrary::getLibraryHandle( const std::string& libr
     // BIND_FIRST is necessary for some reason
     handle = shl_load ( libraryName.c_str(), BIND_DEFERRED|BIND_FIRST|BIND_VERBOSE, 0);
     return handle;
+
+#elif defined(__EMSCRIPTEN__)
+
 #else // other unix
 
 #if defined(__ANDROID__)

@@ -2208,7 +2208,7 @@ bool GraphicsWindowWin32::checkEvents()
     if (!_realized) return false;
 
     MSG msg;
-    while (::PeekMessage(&msg, _hwnd, 0, 0, PM_REMOVE))
+    while (::PeekMessage(&msg, NULL/*_hwnd*/, 0, 0, PM_REMOVE))
     {
         ::TranslateMessage(&msg);
         ::DispatchMessage(&msg);
