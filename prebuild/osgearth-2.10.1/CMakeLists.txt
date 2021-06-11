@@ -317,6 +317,17 @@ ELSE (DYNAMIC_OSGEARTH)
     SET(OSGEARTH_USER_DEFINED_DYNAMIC_OR_STATIC "STATIC")
 ENDIF(DYNAMIC_OSGEARTH)
 
+# IF   (DYNAMIC_OSGEARTH)
+# ELSE (DYNAMIC_OSGEARTH)
+    # ADD_DEFINITIONS(-DOSG_LIBRARY_STATIC)
+    # ADD_DEFINITIONS(-DOSGEARTH_LIBRARY_STATIC)
+# ENDIF(DYNAMIC_OSGEARTH)
+
+if (EMSCRIPTEN)
+     set(CMAKE_CXX_FLAGS "-pthread")
+endif (EMSCRIPTEN)
+
+
 #Whether or not to copy osgEarth to the OSG_DIR during installation
 # Dynamic vs Static Linking
 OPTION(INSTALL_TO_OSG_DIR "Set to ON to install osgearth to the path defined in the OSG_DIR" OFF)
