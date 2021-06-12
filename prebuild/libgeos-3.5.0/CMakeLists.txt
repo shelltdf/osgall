@@ -307,18 +307,18 @@ if ( NOT ${Project_WC_REVISION} EQUAL 0 )
       # "${geos_BINARY_DIR}/include/geos_svn_revision.h" )
 else()
    message(STATUS "Generating revision header ${CMAKE_SOURCE_DIR}/geos_svn_revision.h")
-   find_program(SH sh)
-   if(SH)
-      execute_process(COMMAND ${SH} -c 
-      "cd ${CMAKE_SOURCE_DIR} && ${CMAKE_SOURCE_DIR}/tools/svn_repo_revision.sh")
+   # find_program(SH sh)
+   # if(SH)
+      # execute_process(COMMAND ${SH} -c 
+      # "cd ${CMAKE_SOURCE_DIR} && ${CMAKE_SOURCE_DIR}/tools/svn_repo_revision.sh")
 
-      file(RENAME "${CMAKE_SOURCE_DIR}/geos_svn_revision.h"
-      "${CMAKE_BINARY_DIR}/geos_svn_revision.h")
-   else()
+      # file(RENAME "${CMAKE_SOURCE_DIR}/geos_svn_revision.h"
+      # "${CMAKE_BINARY_DIR}/geos_svn_revision.h")
+   # else()
       message("*** sh-compatible command not found, cannot create geos_svn_revision.h")
       message("*** Check SVN revision and create revision header manually:")
       message("*** echo '#define GEOS_SVN_REVISION XYZ' > ${CMAKE_SOURCE_DIR}/geos_svn_revision.h")
-   endif()
+   # endif()
 endif()
 # End: Determine SVN/Git revision
 

@@ -21,9 +21,9 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         
     STR_CFG = ''
     if(dict_config['static']):
-        str_ops = " -DTIFF_BUILD_STATIC=1"
+        STR_CFG += " -DTIFF_BUILD_STATIC=1"
     else:
-        str_ops = " -DTIFF_BUILD_STATIC=0"
+        STR_CFG += " -DTIFF_BUILD_STATIC=0"
         
     source_dir = os.getcwd() + '/../prebuild/tiff-4.0.3'
     
