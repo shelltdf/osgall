@@ -14,15 +14,15 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         # download_source(str_name,"https://github.com/madler/zlib.git")
         # return
         
-    # STR_CGG = ''
-    # if(dict_config['static']):
-        # STR_CGG += ''
-    # else:
-        # STR_CGG += ''
+    STR_CGG = ''
+    if(dict_config['static']):
+        STR_CGG += ' -DIMGUI_BUILD_STATIC=1'
+    else:
+        STR_CGG += ' -DIMGUI_BUILD_STATIC=0'
         
     source_dir = os.getcwd() + '/../prebuild/imgui-master'
     
-    configure(str_name,dict_config,"","",source_dir)
+    configure(str_name,dict_config,STR_CGG,"",source_dir)
     build(str_name,dict_config)
     install(str_name,dict_config)
     

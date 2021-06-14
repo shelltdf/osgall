@@ -5,5 +5,7 @@ SET(TARGET_SRC ReaderWriterLAS.cpp )
 
 SET(TARGET_LIBRARIES_VARS LIBLAS_LIBRARY LIBLASC_LIBRARY)
 
+add_definitions(-DBOOST_ALL_NO_LIB)
+
 #### end var setup  ###
 SETUP_PLUGIN(las)

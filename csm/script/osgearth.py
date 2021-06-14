@@ -23,14 +23,21 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     
     
     STR_CFG = ""
+    STR_CFG += ' -DOSG_DIR="' + install_dir + '/"'
     STR_CFG += " -DOSGEARTH_USE_QT=0"
     STR_CFG += " -DOSGEARTH_QT_BUILD=0"
+    # STR_CFG += " -DINSTALL_TO_OSG_DIR=1"
+    STR_CFG += " -DAPPEND_OPENSCENEGRAPH_VERSION=1"
     
     if(dict_config['arch'][:2]=="vs"):
         STR_CFG += " -DGDAL_INCLUDE_DIR='" + install_dir + "/include/gdal'"
+        STR_CFG += " -DSQLITE3_INCLUDE_DIR='" + install_dir + "/include'"
         if(dict_config['release']):
             STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/gdal31.lib'"
             STR_CFG += " -DCURL_LIBRARY='" + install_dir + "/lib/libcurl_imp.lib'"
+            
+            STR_CFG += " -DSQLITE3_LIBRARY='" + install_dir + "/lib/sqlite.lib'"
+            
         else:
             STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/gdal31d.lib'"
             STR_CFG += " -DCURL_LIBRARY='" + install_dir + "/lib/libcurld_imp.lib'"
@@ -47,6 +54,8 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += " -DOSGUTIL_LIBRARY='" + install_dir + "/lib/osgUtild.lib'"
             STR_CFG += " -DOSGVIEWER_LIBRARY='" + install_dir + "/lib/osgViewerd.lib'"
             STR_CFG += " -DOSGWIDGET_LIBRARY='" + install_dir + "/lib/osgWidgetd.lib'"
+            
+            STR_CFG += " -DSQLITE3_LIBRARY='" + install_dir + "/lib/sqlited.lib'"
     
     if(dict_config['arch']=="em"):
     

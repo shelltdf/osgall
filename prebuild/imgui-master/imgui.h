@@ -51,6 +51,19 @@ Index of this file:
 #define IMGUI_VERSION_NUM           17301
 #define IMGUI_CHECKVERSION()        ImGui::DebugCheckVersionAndDataLayout(IMGUI_VERSION, sizeof(ImGuiIO), sizeof(ImGuiStyle), sizeof(ImVec2), sizeof(ImVec4), sizeof(ImDrawVert), sizeof(ImDrawIdx))
 
+// modify
+#if defined(_MSC_VER) || defined(__CYGWIN__) || defined(__MINGW32__) || defined( __BCPLUSPLUS__)  || defined( __MWERKS__)
+#  if defined( IMGUI_LIBRARY_STATIC )
+#    define IMGUI_API
+#  elif defined( IMGUI_LIBRARY )
+#    define IMGUI_API   __declspec(dllexport)
+#  else
+#    define IMGUI_API   __declspec(dllimport)
+#  endif
+#else
+#  define IMGUI_API
+#endif
+
 // Define attributes of all API symbols declarations (e.g. for DLL under Windows)
 // IMGUI_API is used for core imgui functions, IMGUI_IMPL_API is used for the default bindings files (imgui_impl_xxx.h)
 // Using dear imgui via a shared library is not recommended, because of function call overhead and because we don't guarantee backward nor forward ABI compatibility.

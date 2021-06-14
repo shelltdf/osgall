@@ -131,6 +131,10 @@ add_library(libjasper ${libjasper_type}
 	${libjasper_ras_sources}
 )
 
+# SET_TARGET_PROPERTIES(libjasper PROPERTIES DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX})
+SET_TARGET_PROPERTIES(libjasper PROPERTIES DEBUG_POSTFIX "d")
+
+
 # The JasPer include directories in the source and build tree must be included
 # before any other directories that may contain the include directory for an
 # already installed version of the JasPer library.

@@ -137,6 +137,8 @@ ELSE( FT2_BUILD_STATIC )
     add_library(freetype SHARED ${BASE_SRCS})
 ENDIF( FT2_BUILD_STATIC )
 
+SET_TARGET_PROPERTIES(freetype PROPERTIES DEBUG_POSTFIX "d")
+
 # Installations
 # Note the trailing slash in the argument to the `DIRECTORY' directive
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/

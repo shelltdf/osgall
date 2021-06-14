@@ -10,6 +10,8 @@ def getDependency( str_name ,getDependency):
     list_name = addDependency("libpng" , list_name,getDependency)
     list_name = addDependency("freetype" , list_name,getDependency)
     list_name = addDependency("jasper" , list_name,getDependency)
+    list_name = addDependency("giflib" , list_name,getDependency)
+    list_name = addDependency("liblas" , list_name,getDependency)
 
     return list_name + [str_name]
     
@@ -33,16 +35,22 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         
         STR_CFG += " -DGDAL_INCLUDE_DIR='" + install_dir + "/include/gdal'"
         STR_CFG += " -DOPENEXR_INCLUDE_DIR='" + install_dir + "/include'"
+        STR_CFG += " -DGIFLIB_INCLUDE_DIR='" + install_dir + "/include'"
     
         # STR_CFG += ' -DNVTT_SHARED=1'
         
         if(dict_config['release']):
             STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/gdal31.lib'"
+            STR_CFG += " -DGIFLIB_LIBRARY='" + install_dir + "/lib/giflib.lib'"
+            STR_CFG += " -DLIBLAS_LIBRARY='" + install_dir + "/lib/liblas.lib'"
         else:
             STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/gdal31d.lib'"
             # STR_CFG += " -DCURL_LIBRARY_RELEASE='" + install_dir + "/lib/libcurld_imp.lib'"
             STR_CFG += " -DCURL_LIBRARY_DEBUG='" + install_dir + "/lib/libcurld_imp.lib'"
             STR_CFG += " -DNVSQUISH_LIBRARY_DEBUG='" + install_dir + "/lib/squishd.lib'"
+            STR_CFG += " -DNVTT_LIBRARY_DEBUG='" + install_dir + "/lib/nvttd.lib'"
+            STR_CFG += " -DGIFLIB_LIBRARY='" + install_dir + "/lib/giflibd.lib'"
+            STR_CFG += " -DLIBLAS_LIBRARY='" + install_dir + "/lib/liblasd.lib'"
     
     if(dict_config['arch']=="em"):
         # STR_CFG += ' -DOSG_USE_UTF8_FILENAME=1'
