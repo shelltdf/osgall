@@ -90,8 +90,8 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         STR_CFG += " -DSQLITE3_LIBRARY='" + install_dir + "/lib/sqlite.lib'"
         STR_CFG += " -DSQLITE3_LIBRARY_DEBUG='" + install_dir + "/lib/sqlited.lib'"
         
-        STR_CFG += " -DPROJ_LIBRARY='" + install_dir + "/lib/proj_6_1.lib'"
-        STR_CFG += " -DPROJ_LIBRARY_DEBUG='" + install_dir + "/lib/proj_6_1_d.lib'"
+        STR_CFG += " -DPROJ_LIBRARY='" + install_dir + "/lib/proj.lib'"
+        STR_CFG += " -DPROJ_LIBRARY_DEBUG='" + install_dir + "/lib/proj_d.lib'"
 
         STR_CFG += " -DEXPAT_LIBRARY='" + install_dir + "/lib/expat.lib'"
         STR_CFG += " -DEXPAT_LIBRARY_DEBUG='" + install_dir + "/lib/expatd.lib'"

@@ -5,6 +5,8 @@ def getDependency( str_name ,getDependency):
     list_name = []
     
     list_name = addDependency("sqlite3" , list_name,getDependency)
+    list_name = addDependency("libtiff" , list_name,getDependency)
+    list_name = addDependency("curl" , list_name,getDependency)
     
     return list_name + [str_name]
     
@@ -25,8 +27,11 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     
     if(dict_config['arch'][:2]=="vs"):
         STR_CFG += " -DPROJ_TESTS=0";
-        STR_CFG += ' -DSQLITE3_LIBRARY=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/sqlite.lib'
-        STR_CFG += ' -DSQLITE3_LIBRARY_DEBUG=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/sqlited.lib'
+        STR_CFG += " -DBUILD_TESTING=0";
+        STR_CFG += ' -DSQLITE3_LIBRARY=' + install_dir + '/lib/sqlite.lib'
+        STR_CFG += ' -DSQLITE3_LIBRARY_DEBUG=' + install_dir + '/lib/sqlited.lib'
+        STR_CFG += ' -DCURL_LIBRARY=' + install_dir + '/lib/libcurl_imp.lib'
+        STR_CFG += ' -DCURL_LIBRARY_DEBUG=' + install_dir + '/lib/libcurld_imp.lib'
         if(dict_config['static']):
             STR_CFG += " -DBUILD_LIBPROJ_SHARED=0"
         else:
@@ -60,7 +65,8 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         STR_CFG += ' -DSQLITE3_LIBRARY=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/libsqlite.a'
         STR_CFG += ' -DSQLITE3_LIBRARY_DEBUG=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/libsqlite.a'
         
-    source_dir = os.getcwd() + '/../prebuild/proj-6.1.1'
+    # source_dir = os.getcwd() + '/../prebuild/proj-6.1.1'
+    source_dir = os.getcwd() + '/../prebuild/proj-8.0.1'
     
     configure(str_name,dict_config,STR_CFG,"",source_dir)
     build(str_name,dict_config)

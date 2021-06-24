@@ -20,7 +20,8 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     else:
         STR_CFG += " -DSQLITE_BUILD_STATIC=0"
         
-    source_dir = os.getcwd() + '/../prebuild/sqlite-amalgamation-3100200'
+    # source_dir = os.getcwd() + '/../prebuild/sqlite-amalgamation-3100200'
+    source_dir = os.getcwd() + '/../prebuild/sqlite-amalgamation-3360000'
     
     configure(str_name,dict_config,STR_CFG,"",source_dir)
     build(str_name,dict_config)
