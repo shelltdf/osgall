@@ -43,10 +43,12 @@ CoordinateSystemType vpb::getCoordinateSystemType(const osg::CoordinateSystemNod
 
     free(projection_string);
 
-    if (strcmp(lhsSR.GetRoot()->GetValue(),"GEOCCS")==0) log(osg::INFO,"    lhsSR. is GEOCENTRIC ");
-    
+    if (lhsSR.GetRoot() && strcmp(lhsSR.GetRoot()->GetValue(), "GEOCCS") == 0)
+    {
+        log(osg::INFO, "    lhsSR. is GEOCENTRIC ");
+        return GEOCENTRIC;
+    }
 
-    if (strcmp(lhsSR.GetRoot()->GetValue(),"GEOCCS")==0) return GEOCENTRIC;
     if (lhsSR.IsGeographic()) return GEOGRAPHIC;
     if (lhsSR.IsProjected()) return PROJECTED;
     if (lhsSR.IsLocal()) return LOCAL;

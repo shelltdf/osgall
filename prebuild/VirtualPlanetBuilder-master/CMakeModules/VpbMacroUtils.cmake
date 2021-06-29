@@ -13,7 +13,7 @@
 MACRO(LINK_WITH_VARIABLES TRGTNAME)
     FOREACH(varname ${ARGN})
         IF(${varname}_DEBUG)
-            TARGET_LINK_LIBRARIES(${TRGTNAME} optimized "${${varname}_RELEASE}" debug "${${varname}_DEBUG}")
+            TARGET_LINK_LIBRARIES(${TRGTNAME} optimized "${${varname}}" debug "${${varname}_DEBUG}")
         ELSE(${varname}_DEBUG)
             TARGET_LINK_LIBRARIES(${TRGTNAME} "${${varname}}" )
         ENDIF(${varname}_DEBUG)
@@ -42,7 +42,7 @@ ENDMACRO(LINK_EXTERNAL TRGTNAME)
 #######################################################################################################
 
 MACRO(LINK_CORELIB_DEFAULT CORELIB_NAME)
-    LINK_EXTERNAL(${CORELIB_NAME} ${OPENGL_LIBRARIES})
+    LINK_EXTERNAL(${CORELIB_NAME} ${OPENGL_gl_LIBRARY})
     LINK_WITH_VARIABLES(${CORELIB_NAME} OPENTHREADS_LIBRARY)
     IF(VIRTUALPLANETBUILDER_SONAMES)
       SET_TARGET_PROPERTIES(${CORELIB_NAME} PROPERTIES VERSION ${VIRTUALPLANETBUILDER_VERSION} SOVERSION ${VIRTUALPLANETBUILDER_SOVERSION})
