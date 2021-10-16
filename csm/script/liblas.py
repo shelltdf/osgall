@@ -34,6 +34,12 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     if(dict_config['static']):
         STR_CFG += " -DBUILD_STATIC_LIBRARY=1"
         STR_CFG += " -DBoost_USE_STATIC_LIBS=1"
+        
+        if(dict_config['release']):
+            STR_CFG += " -DGEOTIFF_LIBRARY='" + install_dir + "/lib/geotiff.lib'"
+        else:
+            STR_CFG += " -DGEOTIFF_LIBRARY='" + install_dir + "/lib/geotiff_d.lib'"
+            
     else:
         STR_CFG += " -DBUILD_STATIC_LIBRARY=0"
         STR_CFG += " -DBoost_USE_STATIC_LIBS=0"

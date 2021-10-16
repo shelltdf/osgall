@@ -41,6 +41,21 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     
         # STR_CFG += ' -DNVTT_SHARED=1'
         
+        if(dict_config['static']):
+            STR_CFG += ' -DBUILD_OSG_APPLICATIONS=0'
+            STR_CFG += ' -DBUILD_OSG_EXAMPLES=0'
+            
+            STR_CFG += ' -DDYNAMIC_OPENSCENEGRAPH=0'
+            STR_CFG += ' -DDYNAMIC_OPENTHREADS=0'
+            STR_CFG += ' -DOSG_GL_LIBRARY_STATIC=0'
+        else:
+            STR_CFG += ' -DBUILD_OSG_APPLICATIONS=1'
+            STR_CFG += ' -DBUILD_OSG_EXAMPLES=0'
+            
+            STR_CFG += ' -DDYNAMIC_OPENSCENEGRAPH=1'
+            STR_CFG += ' -DDYNAMIC_OPENTHREADS=1'
+            STR_CFG += ' -DOSG_GL_LIBRARY_STATIC=0'
+            
         if(dict_config['release']):
             STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/gdal31.lib'"
             STR_CFG += " -DGIFLIB_LIBRARY='" + install_dir + "/lib/giflib.lib'"

@@ -30,6 +30,17 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     STR_CFG += " -DAPPEND_OPENSCENEGRAPH_VERSION=1"
     
     if(dict_config['arch'][:2]=="vs"):
+    
+        if(dict_config['static']):
+            STR_CFG += " -DDYNAMIC_OSGEARTH=0"
+            
+            STR_CFG += " -DBUILD_OSGEARTH_EXAMPLES=0"
+            STR_CFG += " -DBUILD_APPLICATIONS=0"
+            STR_CFG += " -DBUILD_TESTS=0"
+            
+        else:
+            STR_CFG += " -DDYNAMIC_OSGEARTH=1"
+            
         STR_CFG += " -DGDAL_INCLUDE_DIR='" + install_dir + "/include/gdal'"
         STR_CFG += " -DSQLITE3_INCLUDE_DIR='" + install_dir + "/include'"
         if(dict_config['release']):

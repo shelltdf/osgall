@@ -26,6 +26,7 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     
     if(dict_config['static']):
         STR_CFG += " -DDYNAMIC_VIRTUALPLANETBUILDER=0"
+        return
     else:
         STR_CFG += " -DDYNAMIC_VIRTUALPLANETBUILDER=1"
         

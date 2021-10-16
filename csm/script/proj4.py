@@ -30,12 +30,26 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         STR_CFG += " -DBUILD_TESTING=0";
         STR_CFG += ' -DSQLITE3_LIBRARY=' + install_dir + '/lib/sqlite.lib'
         STR_CFG += ' -DSQLITE3_LIBRARY_DEBUG=' + install_dir + '/lib/sqlited.lib'
-        STR_CFG += ' -DCURL_LIBRARY=' + install_dir + '/lib/libcurl_imp.lib'
-        STR_CFG += ' -DCURL_LIBRARY_DEBUG=' + install_dir + '/lib/libcurld_imp.lib'
+        
         if(dict_config['static']):
             STR_CFG += " -DBUILD_LIBPROJ_SHARED=0"
+            
+            STR_CFG += " -DBUILD_CCT=0"
+            STR_CFG += " -DBUILD_CS2CS=0"
+            STR_CFG += " -DBUILD_GEOD=0"
+            STR_CFG += " -DBUILD_GIE=0"
+            STR_CFG += " -DBUILD_PROJ=0"
+            STR_CFG += " -DBUILD_PROJINFO=0"
+            STR_CFG += " -DBUILD_PROJSYNC=0"
+            
+            STR_CFG += ' -DCURL_LIBRARY=' + install_dir + '/lib/libcurl.lib'
+            STR_CFG += ' -DCURL_LIBRARY_DEBUG=' + install_dir + '/lib/libcurld.lib'
+            
         else:
             STR_CFG += " -DBUILD_LIBPROJ_SHARED=1"
+            
+            STR_CFG += ' -DCURL_LIBRARY=' + install_dir + '/lib/libcurl_imp.lib'
+            STR_CFG += ' -DCURL_LIBRARY_DEBUG=' + install_dir + '/lib/libcurld_imp.lib'
         
     
     if(dict_config['arch']=="unix"):

@@ -2,6 +2,7 @@
 
 * CMake
 * python2 或者 python3
+* ninja 可选
 
 ## 编译支持
 
@@ -30,6 +31,10 @@ cmake-git.py install zlib -arch vs2017-64 [-release] [-debug] [-dynamic] [-stati
 ```
 
 3. 等待结束
+
+### Visual Studio 2019
+
+
 
 ## 依赖关系
 
@@ -98,5 +103,4 @@ graph LR
     _Triton
     
 ```
-
 

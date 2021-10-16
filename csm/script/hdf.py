@@ -25,6 +25,9 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     if(dict_config['static']):
         STR_CFG += " -DBUILD_STATIC_LIBS=1"
         STR_CFG += " -DBUILD_SHARED_LIBS=0"
+        
+        STR_CFG += " -DHDF5_BUILD_TOOLS=0"
+        
         # STR_CFG += " -DONLY_SHARED_LIBS=0"
         # STR_CFG += ' -DZLIB_LIBRARY=' + install_dir + '/lib/zlibstatic.lib'
         # STR_CFG += ' -DZLIB_LIBRARY_DEBUG=' + install_dir + '/lib/zlibstaticd.lib'
