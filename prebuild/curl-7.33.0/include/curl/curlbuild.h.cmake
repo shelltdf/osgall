@@ -141,13 +141,7 @@
 #ifdef _WIN32
 #  include <winsock2.h>
 #  include <ws2tcpip.h>
-#endif
-
-#ifdef HAVE_SYS_SOCKET_H
-#  include <sys/socket.h>
-#endif
-
-#ifdef __EMSCRIPTEN__
+#else
 #  include <sys/socket.h>
 #endif
 
