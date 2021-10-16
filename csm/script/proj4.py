@@ -53,11 +53,12 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         
     
     if(dict_config['arch']=="unix"):
-        STR_CFG += " -DPROJ_TESTS=0";
+        STR_CFG += " -DPROJ_TESTS=0"
+        STR_CFG += " -DBUILD_TESTING=0"
         
         if(dict_config['static']):
             STR_CFG += " -DBUILD_LIBPROJ_SHARED=0"
-            STR_CFG += " -DPROJ_TESTS=0"
+            # STR_CFG += " -DPROJ_TESTS=0"
             
             STR_CFG += " -DBUILD_CCT=0"
             STR_CFG += " -DBUILD_CS2CS=0"
@@ -68,10 +69,16 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             
             STR_CFG += ' -DSQLITE3_LIBRARY=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/libsqlite.a'
             STR_CFG += ' -DSQLITE3_LIBRARY_DEBUG=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/libsqlite.a'
+            
         else:
             STR_CFG += " -DBUILD_LIBPROJ_SHARED=1"
+            # STR_CFG += " -DPROJ_TESTS=0"
+            
             STR_CFG += ' -DSQLITE3_LIBRARY=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/libsqlite.so'
             STR_CFG += ' -DSQLITE3_LIBRARY_DEBUG=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/libsqlite.so'
+            
+            STR_CFG += ' -DCURL_LIBRARY=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/libcurl.so'
+            STR_CFG += ' -DCURL_LIBRARY_DEBUG=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/libcurld.so'
             
     if(dict_config['arch']=="em"):
         STR_CFG += " -DPROJ_TESTS=0";

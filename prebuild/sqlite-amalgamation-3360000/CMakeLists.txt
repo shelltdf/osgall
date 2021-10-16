@@ -66,16 +66,16 @@ INSTALL(
         DESTINATION include
         )
         
-# if(WIN32)
+if(WIN32)
 INSTALL(TARGETS ${LIBRARY_NAME}
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION bin
         ARCHIVE DESTINATION lib
         )
-# else()
-# INSTALL(TARGETS ${LIBRARY_NAME}
-        # RUNTIME DESTINATION bin
-        # LIBRARY DESTINATION lib
-        # ARCHIVE DESTINATION lib
-        # )
-# endif()
+else()
+INSTALL(TARGETS ${LIBRARY_NAME}
+        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION lib
+        ARCHIVE DESTINATION lib
+        )
+endif()

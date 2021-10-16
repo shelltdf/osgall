@@ -698,7 +698,7 @@ foreach(CURL_TEST
     HAVE_POSIX_STRERROR_R
     )
 if(NOT NACL)
-  curl_internal_test_run(${CURL_TEST})
+  # curl_internal_test_run(${CURL_TEST})
 endif(NOT NACL)
 endforeach(CURL_TEST)
 

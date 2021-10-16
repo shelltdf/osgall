@@ -49,12 +49,12 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += ' -DTIFF_LIBRARY=' + install_dir + '/lib/libtiff.a'
         else:
             STR_CFG += " -DBUILD_STATIC_LIBRARY=0"
-            STR_CFG += ' -DPROJ_LIBRARY=' + install_dir + '/lib/proj_6_1.lib'
-            STR_CFG += ' -DPROJ_LIBRARY_DEBUG=' + install_dir + '/lib/proj_6_1_d.lib'
-            STR_CFG += ' -DZLIB_LIBRARY=' + install_dir + '/lib/zlib.lib'
-            STR_CFG += ' -DZLIB_LIBRARY_DEBUG=' + install_dir + '/lib/zlibd.lib'
+            STR_CFG += ' -DPROJ_LIBRARY=' + install_dir + '/lib/libproj.so'
+            STR_CFG += ' -DPROJ_LIBRARY_DEBUG=' + install_dir + '/lib/libprojd.so'
+            STR_CFG += ' -DZLIB_LIBRARY=' + install_dir + '/lib/zlib.so'
+            STR_CFG += ' -DZLIB_LIBRARY_DEBUG=' + install_dir + '/lib/zlibd.so'
             STR_CFG += ' -DTIFF_INCLUDE_DIR="' + install_dir + '"/include'
-            STR_CFG += ' -DTIFF_LIBRARY=' + install_dir + '/lib/libtiff.a'
+            STR_CFG += ' -DTIFF_LIBRARY=' + install_dir + '/lib/libtiff.so'
     
     if(dict_config['arch']=="em"):
         STR_CFG += " -DBUILD_STATIC_LIBRARY=1"
