@@ -19,6 +19,8 @@
 
 ### Visual Studio 2015
 
+参考 2017。
+
 ### Visual Studio 2017
 
 1. 启动控制台
@@ -33,6 +35,36 @@ cmake-git.py install zlib -arch vs2017-64 [-release] [-debug] [-dynamic] [-stati
 3. 等待结束
 
 ### Visual Studio 2019
+
+参考 2017。
+
+
+
+### Ninjia
+
+因为ninja在不同系统上的连接库设置不一致，所以暂时不实现这个功能。
+
+
+
+### ubuntu 64bit
+
+这个编译流程跟wsl不能兼容，因为wsl有很多系统设置和换行符号都不一致。
+
+
+
+### NDK（windows host）
+
+安装 Android Studio 安装对应的ADK和NDK版本。
+
+
+
+
+
+### EMCC（windows host）
+
+下载emsdk 并且初始化安装最新版编译器。然后启动emsdk的控制台。
+
+
 
 
 
