@@ -34,41 +34,69 @@ def SBI( str_name , b_download ,dict_config, getLibrary ):
     source_dir = os.getcwd() + '/../prebuild/boost_1_71_0'
     os.chdir( source_dir )
     
-    my_exec( "bootstrap.bat" )
-    
-    str = 'b2 --toolset=msvc install debug release threading=multi runtime-link=shared'
-    str += ' architecture=' + BOOST_ARCH + ' address-model=' + BOOST_ADDRESS_MODEL
-    # str += ' --stagedir=../../3rdparty --includedir=../../3rdparty/include'
-    # str += ' --prefix=../../3rdparty/'
-    str += ' --prefix=' + install_dir
-    str += ' --layout=tagged'
-    # str += ' --layout=tagged'
-    # str += ' --without-system'
-    if( dict_config['dynamic'] ):
-        str += ' link=shared'
-    else:
-        str += ' link=static'
-    
-    if(True):
-        str += ' -s ZLIB_INCLUDE="' +install_dir+ '/include"'
-        str += ' -s ZLIB_LIBPATH="' +install_dir+ '/lib"'
-        # str += ' -s ZLIB_BINARY=zlib' 
-        str += ' -s ZLIB_SOURCE="../zlib"'
-        # str += ' -s ZLIB_SOURCE="' +install_dir+ '/include"'
+    if(dict_config['arch'][:2]=="vs"):
+        my_exec( "bootstrap.bat" )
+
+        str = 'b2 --toolset=msvc install debug release threading=multi runtime-link=shared'
+        str += ' architecture=' + BOOST_ARCH + ' address-model=' + BOOST_ADDRESS_MODEL
+        # str += ' --stagedir=../../3rdparty --includedir=../../3rdparty/include'
+        # str += ' --prefix=../../3rdparty/'
+        str += ' --prefix=' + install_dir
+        str += ' --layout=tagged'
+        # str += ' --layout=tagged'
+        # str += ' --without-system'
+        if( dict_config['dynamic'] ):
+            str += ' link=shared'
+        else:
+            str += ' link=static'
+        
+        if(True):
+            str += ' -s ZLIB_INCLUDE="' +install_dir+ '/include"'
+            str += ' -s ZLIB_LIBPATH="' +install_dir+ '/lib"'
+            # str += ' -s ZLIB_BINARY=zlib' 
+            str += ' -s ZLIB_SOURCE="../zlib"'
+            # str += ' -s ZLIB_SOURCE="' +install_dir+ '/include"'
+            
+        my_exec( str )
         
 
-    my_exec( str )
-    
+        #move dll to bin
+        # os.chdir( "../../3rdparty/" )
+        # os.system( "mkdir bin" )
+        # os.chdir( "../prebuild/" + boost_DIR_NAME )
+        # os.system( 'move /y ../../3rdparty/lib/*.dll ../../3rdparty/bin/' )
+        
+        str_move = 'move /y '+install_dir+'\\lib\\*.dll '+install_dir+'\\bin\\'
+        print(str_move)
+        os.system( str_move )
 
-    #move dll to bin
-    # os.chdir( "../../3rdparty/" )
-    # os.system( "mkdir bin" )
-    # os.chdir( "../prebuild/" + boost_DIR_NAME )
-    # os.system( 'move /y ../../3rdparty/lib/*.dll ../../3rdparty/bin/' )
-    
-    str_move = 'move /y '+install_dir+'\\lib\\*.dll '+install_dir+'\\bin\\'
-    print(str_move)
-    os.system( str_move )
+    if(dict_config['arch']=="unix"):
+        my_exec( "chmod 777 bootstrap.sh" )
+        my_exec( "chmod 777 ./tools/build/src/engine/build.sh" )
+        my_exec( "./bootstrap.sh" )
+
+        str = './b2 --toolset=gcc install debug release threading=multi runtime-link=shared'
+        str += ' architecture=' + BOOST_ARCH + ' address-model=' + BOOST_ADDRESS_MODEL
+        # str += ' --stagedir=../../3rdparty --includedir=../../3rdparty/include'
+        # str += ' --prefix=../../3rdparty/'
+        str += ' --prefix=' + install_dir
+        str += ' --layout=tagged'
+        # str += ' --layout=tagged'
+        # str += ' --without-system'
+        if( dict_config['dynamic'] ):
+            str += ' link=shared'
+        else:
+            str += ' link=static'
+        
+        if(True):
+            str += ' -s ZLIB_INCLUDE="' +install_dir+ '/include"'
+            str += ' -s ZLIB_LIBPATH="' +install_dir+ '/lib"'
+            # str += ' -s ZLIB_BINARY=zlib' 
+            str += ' -s ZLIB_SOURCE="../zlib"'
+            # str += ' -s ZLIB_SOURCE="' +install_dir+ '/include"'
+            
+        my_exec( str )
+
 
     # os.chdir( ".." )
     # os.chdir( ".." )
