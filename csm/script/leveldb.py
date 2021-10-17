@@ -17,17 +17,26 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         # return
         
         
+   
+    STR_CFG = ''
+    if(dict_config['arch'][:2]=="vs"):
+        STR_CFG += " -DLEVELDB_BUILD_TEST=0"
+        if(dict_config['static']):
+            STR_CFG += " -DLEVELDB_BUILD_STATIC=1"
+        else:
+            STR_CFG += " -DLEVELDB_BUILD_STATIC=1" #只能编译静态库
+    
+    if(dict_config['arch']=="unix"):
+        STR_CFG += " -DLEVELDB_BUILD_TEST=0"
+        if(dict_config['static']):
+            STR_CFG += " -DLEVELDB_BUILD_STATIC=1"
+        else:
+            STR_CFG += " -DLEVELDB_BUILD_STATIC=0"
+
     if(dict_config['arch']=="em"):
         # em根本无法在本地建立leveldb数据库
         return
-        
-    STR_CFG = ''
-    STR_CFG += " -DLEVELDB_BUILD_TEST=0"
-    if(dict_config['static']):
-        STR_CFG += " -DLEVELDB_BUILD_STATIC=1"
-    else:
-        STR_CFG += " -DLEVELDB_BUILD_STATIC=1" #只能编译静态库
-    
+     
     source_dir = os.getcwd() + '/../prebuild/leveldb-master'
     
     configure(str_name,dict_config,STR_CFG,"",source_dir)

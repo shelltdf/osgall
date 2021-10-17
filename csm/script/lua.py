@@ -16,9 +16,9 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         
     STR_CFG = ''
     if(dict_config['static']):
-        STR_CFG = " -DLUA_BUILD_STATIC=1";
+        STR_CFG = " -DLUA_BUILD_STATIC=1"
     else:
-        STR_CFG = " -DLUA_BUILD_STATIC=0";
+        STR_CFG = " -DLUA_BUILD_STATIC=0"
         
     source_dir = os.getcwd() + '/../prebuild/lua-5.2.3'
     

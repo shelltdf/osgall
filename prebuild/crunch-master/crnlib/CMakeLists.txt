@@ -58,7 +58,7 @@ set(CRN_SOURCES
     crn_texture_file_types.cpp
     crn_threaded_resampler.cpp
     # crn_threading_pthreads.cpp
-    crn_threading_win32.cpp
+    # crn_threading_win32.cpp
     crn_timer.cpp
     crn_utils.cpp
     crn_value.cpp
@@ -77,12 +77,18 @@ set(CRN_SOURCES
     lzma_Bra86.cpp
     lzma_BraIA64.cpp
     lzma_LzFind.cpp
-    lzma_LzFindMt.cpp
+    # lzma_LzFindMt.cpp
     lzma_LzmaDec.cpp
     lzma_LzmaEnc.cpp
     lzma_LzmaLib.cpp
-    lzma_Threads.cpp
+    # lzma_Threads.cpp
 )
+
+if(WIN32)
+set(CRN_SOURCES ${CRN_SOURCES} crn_threading_win32.cpp lzma_Threads.cpp lzma_LzFindMt.cpp)
+else(WIN32)
+set(CRN_SOURCES ${CRN_SOURCES} crn_threading_pthreads.cpp )
+endif(WIN32)
 
 
 if(CRUNCH_BUILD_SHARED)

@@ -17,17 +17,21 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     
         # return
         
-    # STR_CGG = ''
+    STR_CFG = ''
+    STR_CFG += ' -DBUILD_TESTING=0'
+    STR_CFG += ' -DEIGEN_BUILD_BTL=0'
     # if(dict_config['static']):
-        # STR_CGG += ''
+        # STR_CFG += ''
     # else:
-        # STR_CGG += ''
+        # STR_CFG += ''
     
+    if(dict_config['arch']=="unix"):
+        return #error for -lpthreads
     
     # source_dir = os.getcwd() + '/../prebuild/eigen-eigen-5a0156e40feb'
     source_dir = os.getcwd() + '/../prebuild/eigen-3.4-rc1'
     
-    configure(str_name,dict_config,"","",source_dir)
+    configure(str_name,dict_config,STR_CFG,"",source_dir)
     build(str_name,dict_config)
     install(str_name,dict_config)
     

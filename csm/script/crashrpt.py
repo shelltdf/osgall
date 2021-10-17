@@ -19,6 +19,10 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         # STR_CGG += ''
     # else:
         # STR_CGG += ''
+
+
+    if(dict_config['arch']=="unix"):
+        return
         
     source_dir = os.getcwd() + '/../prebuild/crashrpt-code-4616504670be5a425a525376648d912a72ce18f2'
     
