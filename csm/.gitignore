@@ -2,3 +2,5 @@
 /install
 /script/__pycache__
 *.pyc
+/rootfs
+

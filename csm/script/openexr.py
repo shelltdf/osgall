@@ -46,9 +46,9 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
                 # STR_CFG += ' -DZLIB_LIBRARY_DEBUG=' + install_dir + '/lib/zlibd.lib'
             # else:
                 # STR_CFG += ' -DZLIB_LIBRARY_DEBUG=' + install_dir + '/lib/zlib.lib'
-            
+
     if(dict_config['arch']=="unix"):
-        STR_CFG += ' -DNAMESPACE_VERSIONING=OFF'
+        STR_CFG += ' -DNAMESPACE_VERSIONING=ON'
         STR_CFG += ' -DILMBASE_PACKAGE_PREFIX=' + install_dir
         STR_CFG += ' -DPACK_BINARY_NSIS=OFF'
         

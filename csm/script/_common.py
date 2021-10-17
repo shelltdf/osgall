@@ -136,6 +136,8 @@ def configure(str_name ,dict_config, str_config = "",str_subdir="",str_local_dir
     my_into_build_dir( str_name ,dict_config )
     dir_name = my_build_and_install_dir(dict_config)
     
+    global CWD
+
     BUILD_TYPE = ""
     BUILD_STATIC_LIB = ""
     if(dict_config['static']==True):
@@ -168,7 +170,9 @@ def configure(str_name ,dict_config, str_config = "",str_subdir="",str_local_dir
         dict_config['cmake_cfg'] + BUILD_TYPE + BUILD_STATIC_LIB + str_config )
     else:
         my_exec( "cmake "+source_dir+
-        " -DCMAKE_USE_RELATIVE_PATHS=1 -DCMAKE_INSTALL_PREFIX='../../../install/" + dir_name + "' " +
+        " -DCMAKE_USE_RELATIVE_PATHS=1" +
+        # " -DCMAKE_SYSROOT=" + CWD + "'/rootfs'" +
+        " -DCMAKE_INSTALL_PREFIX='../../../install/" + dir_name + "' " +
         dict_config['cmake_cfg'] + BUILD_TYPE + BUILD_STATIC_LIB + str_config )
     
     my_out_build_dir( str_name )

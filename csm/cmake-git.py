@@ -160,8 +160,11 @@ def main():
         dict_config['cmake_cfg'] = ' -G "NMake Makefiles" '
         
     if(ARG_ARCH == "unix"):
-        dict_config['cmake_cfg'] = ' -G "Unix Makefiles" '
-    
+        #dict_config['cmake_cfg'] = ' -G "Unix Makefiles" '
+        #dict_config['cmake_cfg'] = ' -G "Kate - Unix Makefiles" '
+        dict_config['cmake_cfg'] = ' -G "CodeBlocks - Unix Makefiles" '
+        #dict_config['cmake_cfg'] = ' -G "CodeBlocks - Ninja" '
+
     if(ARG_ARCH == "ninja"):
         dict_config['cmake_cfg'] = ' -G Ninja'
         
