@@ -69,9 +69,9 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += " -DBoost_USE_STATIC_LIBS=0"
             
             if(dict_config['release']):
-                STR_CFG += " -DGEOTIFF_LIBRARY='" + install_dir + "/lib/geotiff.so'"
+                STR_CFG += " -DGEOTIFF_LIBRARY='" + install_dir + "/lib/libgeotiff.so'"
             else:
-                STR_CFG += " -DGEOTIFF_LIBRARY='" + install_dir + "/lib/geotiff.so'"
+                STR_CFG += " -DGEOTIFF_LIBRARY='" + install_dir + "/lib/libgeotiff.so'"
 
     
     source_dir = os.getcwd() + '/../prebuild/libLAS-1.8.1'

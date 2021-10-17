@@ -46,7 +46,30 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
                 # STR_CFG += ' -DZLIB_LIBRARY_DEBUG=' + install_dir + '/lib/zlibd.lib'
             # else:
                 # STR_CFG += ' -DZLIB_LIBRARY_DEBUG=' + install_dir + '/lib/zlib.lib'
-            
+
+    if(dict_config['arch']=="unix"):
+        STR_CFG += ' -DNAMESPACE_VERSIONING=ON'
+        STR_CFG += ' -DILMBASE_PACKAGE_PREFIX=' + install_dir
+        STR_CFG += ' -DPACK_BINARY_NSIS=OFF'
+        
+        if(dict_config['static']):
+            # STR_CFG = " -DBUILD_SHARED_LIBS=0"
+            STR_CFG += ' -DZLIB_LIBRARY=' + install_dir + '/lib/zlibstatic.lib'
+            STR_CFG += ' -DZLIB_LIBRARY_DEBUG=' + install_dir + '/lib/zlibstaticd.lib'
+            # if(dict_config['debug']==True):
+                # STR_CFG += ' -DZLIB_LIBRARY_DEBUG=' + install_dir + '/lib/zlibstaticd.lib'
+            # else:
+                # STR_CFG += ' -DZLIB_LIBRARY_DEBUG=' + install_dir + '/lib/zlibstatic.lib'
+        else:
+            # STR_CFG = " -DBUILD_SHARED_LIBS=1"
+            STR_CFG += ' -DZLIB_LIBRARY=' + install_dir + '/lib/libz.so'
+            STR_CFG += ' -DZLIB_LIBRARY_DEBUG=' + install_dir + '/lib/libz.so'
+            # if(dict_config['debug']==True):
+                # STR_CFG += ' -DZLIB_LIBRARY_DEBUG=' + install_dir + '/lib/zlibd.lib'
+            # else:
+                # STR_CFG += ' -DZLIB_LIBRARY_DEBUG=' + install_dir + '/lib/zlib.lib'
+
+
     if(dict_config['arch']=="em"):
         STR_CFG += ' -DNAMESPACE_VERSIONING=OFF'
         STR_CFG += ' -DILMBASE_PACKAGE_PREFIX=' + install_dir
