@@ -50,7 +50,7 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         if(dict_config['release']):
             STR_CFG += ' -DJPEG_LIBRARY=' + install_dir + '/lib/libjpeg.so'
         else:
-            STR_CFG += ' -DJPEG_LIBRARY=' + install_dir + '/lib/libjpegd.so'
+            STR_CFG += ' -DJPEG_LIBRARY=' + install_dir + '/lib/libjpeg.so'
 
     if(dict_config['arch']=="em"):
         STR_CFG += " -DJAS_ENABLE_SHARED=0"

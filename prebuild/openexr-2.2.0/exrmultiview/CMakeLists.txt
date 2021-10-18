@@ -8,7 +8,7 @@ ADD_EXECUTABLE ( exrmultiview
 
 TARGET_LINK_LIBRARIES ( exrmultiview
   IlmImf
-  optimized Half${ILMBASE_LIBSUFFIX}                            debug Half${ILMBASE_LIBSUFFIX}HalfHalfd
+  optimized Half${ILMBASE_LIBSUFFIX}                            debug Half${ILMBASE_LIBSUFFIX}d
   optimized Iex${ILMBASE_LIBSUFFIX}         debug Iex${ILMBASE_LIBSUFFIX}d
   optimized IlmThread${ILMBASE_LIBSUFFIX}   debug IlmThread${ILMBASE_LIBSUFFIX}d
   optimized Imath${ILMBASE_LIBSUFFIX}       debug Imath${ILMBASE_LIBSUFFIX}d

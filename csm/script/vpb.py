@@ -36,7 +36,7 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         STR_CFG += ' -D3rdPartyRoot=' + install_dir + '/'
         STR_CFG += ' -DGDAL_INCLUDE_DIR=' + install_dir + '/include/gdal'
         STR_CFG += ' -DGDAL_LIBRARY=' + install_dir + '/lib/libgdal31.so'
-        STR_CFG += ' -DGDAL_LIBRARY_DEBUG=' + install_dir + '/lib/libgdal31d.so'
+        STR_CFG += ' -DGDAL_LIBRARY_DEBUG=' + install_dir + '/lib/libgdal31.so'
         
         if(dict_config['static']):
             STR_CFG += " -DDYNAMIC_VIRTUALPLANETBUILDER=0"

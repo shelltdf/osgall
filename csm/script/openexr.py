@@ -60,10 +60,10 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             # STR_CFG = " -DBUILD_SHARED_LIBS=1"
             if(dict_config['release']==True):
                 STR_CFG += ' -DZLIB_LIBRARY=' + install_dir + '/lib/libz.so'
-                STR_CFG += ' -DZLIB_LIBRARY_DEBUG=' + install_dir + '/lib/libz.so'
+                STR_CFG += ' -DZLIB_LIBRARY_DEBUG=' + install_dir + '/lib/lib.so'
             else:
                 STR_CFG += ' -DZLIB_LIBRARY=' + install_dir + '/lib/libzd.so'
-                STR_CFG += ' -DZLIB_LIBRARY_DEBUG=' + install_dir + '/lib/libzd.so'
+                STR_CFG += ' -DZLIB_LIBRARY_DEBUG=' + install_dir + '/lib/libz.so'
 
     if(dict_config['arch']=="em"):
         STR_CFG += ' -DNAMESPACE_VERSIONING=OFF'

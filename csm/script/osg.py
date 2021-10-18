@@ -112,9 +112,9 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += " -DBoost_INCLUDE_DIR=''"
 
         else:
-            STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/libgdal31d.so'"
+            STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/libgdal31.so'"
             # STR_CFG += " -DCURL_LIBRARY_RELEASE='" + install_dir + "/lib/libcurld_imp.lib'"
-            STR_CFG += " -DCURL_LIBRARY_DEBUG='" + install_dir + "/lib/libcurl.so'"
+            STR_CFG += " -DCURL_LIBRARY_DEBUG='" + install_dir + "/lib/libcurld.so'"
             #STR_CFG += " -DNVSQUISH_LIBRARY_DEBUG='" + install_dir + "/lib/squishd.so'"
             #STR_CFG += " -DNVTT_LIBRARY_DEBUG='" + install_dir + "/lib/nvttd.so'"
             STR_CFG += " -DGIFLIB_LIBRARY='" + install_dir + "/lib/libgiflibd.so'"

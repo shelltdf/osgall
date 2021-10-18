@@ -88,8 +88,10 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += " -DSQLITE3_LIBRARY='" + install_dir + "/lib/libsqlite.so'"
             
         else:
-            STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/libgdal31d.so'"
+            STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/libgdal31.so'"
             STR_CFG += " -DCURL_LIBRARY='" + install_dir + "/lib/libcurld.so'"
+            STR_CFG += " -DSQLITE3_LIBRARY='" + install_dir + "/lib/libsqlite.so'"
+
             STR_CFG += " -DOPENTHREADS_LIBRARY='" + install_dir + "/lib/libOpenThreadsd.so'"
             STR_CFG += " -DOSG_LIBRARY='" + install_dir + "/lib/libosgd.so'"
             STR_CFG += " -DOSGDB_LIBRARY='" + install_dir + "/lib/libosgDBd.so'"
@@ -104,7 +106,7 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += " -DOSGVIEWER_LIBRARY='" + install_dir + "/lib/libosgViewerd.so'"
             STR_CFG += " -DOSGWIDGET_LIBRARY='" + install_dir + "/lib/libosgWidgetd.so'"
             
-            STR_CFG += " -DSQLITE3_LIBRARY='" + install_dir + "/lib/libsqlited.so'"
+            
 
     if(dict_config['arch']=="em"):
     
