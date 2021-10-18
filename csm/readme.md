@@ -50,6 +50,31 @@ cmake-git.py install zlib -arch vs2017-64 [-release] [-debug] [-dynamic] [-stati
 
 这个编译流程跟wsl不能兼容，因为wsl有很多系统设置和换行符号都不一致。
 
+```
+sudo debootstrap focal rootfs2
+```
+
+
+```
+sudo apt install git
+sudo apt install python-is-python3
+sudo apt install cmake
+sudo apt install g++
+
+sudo apt install libgl1-mesa-dev
+sudo apt install libglu1-mesa-dev
+
+sudo apt install libxi-dev
+sudo apt install libpthread-stubs0-dev
+```
+
+
+```
+CMAKE_CODEBLOCKS_MAKE_ARGUMENTS 
+
+pthreads
+
+```
 
 
 ### NDK（windows host）
