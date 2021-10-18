@@ -17,3 +17,8 @@ OPENCV_DIR = "D:/opencv/build/x64/vc14/lib"
 ENABLE_CGAL = True
 CGAL_DIR = "D:/CGAL-4.11.2"
 
+#android ndk setting
+ANDROID_NDK_STANDALONE_TOOLCHAIN_PATH = "D:/ndk-toolchain/"    #ndk dir
+ANDROID_NDK_PATH = "D:/Android/Sdk/ndk/23.0.7599858/"    #ndk dir
+ANDROID_API_LEVEL = 23 #9 15 21 android6-23
+ANDROID_ABI = "arm64-v8a" # armeabi-v7a arm64-v8a

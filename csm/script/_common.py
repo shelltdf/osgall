@@ -5,6 +5,8 @@ import os
 import sys
 import glob
 import shutil
+from _config import * 
+
 
 CWD = ""
 
@@ -164,7 +166,26 @@ def configure(str_name ,dict_config, str_config = "",str_subdir="",str_local_dir
     # else:
     # my_exec( "cmake "+source_dir+"/" + str_name + "/" + str_subdir +
     
-    if(dict_config['arch']=="em"):
+    if(dict_config['arch']=="ndk"):
+        # pass
+        cmake_string = "cmake " + source_dir
+        cmake_string += ' -DCMAKE_TOOLCHAIN_FILE=' + ANDROID_NDK_PATH + '/build/cmake/android.toolchain.cmake'+ dict_config['cmake_cfg']
+        # cmake_string += ' -DANDROID_ABI=' + ANDROID_ABI
+        cmake_string += ' -DCMAKE_INSTALL_PREFIX="../../../install/' + dir_name + '"'
+        # cmake_string += ' -DJ=4' #+ str(CPU_NUM)
+        # cmake_string += ' -DANDROID_NATIVE_API_LEVEL=' + str(ANDROID_API_LEVEL)
+        # cmake_string += " -DCMAKE_ANDROID_API="+str(ANDROID_API_LEVEL)
+        # cmake_string += " -DCMAKE_ANDROID_API_MIN="+str(ANDROID_API_LEVEL)
+        # cmake_string += ' -DANDROID_NDK=' + ANDROID_NDK_PATH
+        
+        # if(dict_config['dynamic']==True):
+            # cmake_string += ' -DANDROID_STL=gnustl_shared '
+        # else:
+            # cmake_string += ' -DANDROID_STL=gnustl_static '
+            
+        my_exec(cmake_string)
+        
+    elif(dict_config['arch']=="em"):
         my_exec( "emcmake cmake "+source_dir+
         " -DCMAKE_USE_RELATIVE_PATHS=1 -DCMAKE_INSTALL_PREFIX='../../../install/" + dir_name + "' " +
         dict_config['cmake_cfg'] + BUILD_TYPE + BUILD_STATIC_LIB + str_config )
@@ -196,6 +217,8 @@ def build(str_name,dict_config):
         system_ret = os.system('make -j 8')
     elif(dict_config['arch']=="ninja"):
         system_ret = os.system('ninja -j 8')
+    elif(dict_config['arch']=="ndk"):
+        system_ret = os.system('nmake')
     elif(dict_config['arch']=="em"):
         # system_ret = os.system('set CL=/MP nmake')
         system_ret = os.system('ninja -j 8')
@@ -225,6 +248,8 @@ def install(str_name,dict_config):
         os.system('make install')
     elif(dict_config['arch']=="ninja"):
         os.system('ninja install')
+    elif(dict_config['arch']=="ndk"):
+        os.system('nmake install')
     elif(dict_config['arch']=="em"):
         # os.system('nmake install')
         os.system('ninja install')

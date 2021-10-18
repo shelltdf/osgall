@@ -95,6 +95,27 @@ pthreads 在Ubuntu上是有问题的，主要是eigen3的需求。
 
 安装 Android Studio 安装对应的ADK和NDK版本。
 
+直接 cmake toolchain 早就行不通了，所以目前采用 standalone 方式比较简单。目前最新的是NDK 23版本。
+
+```
+make_standalone_toolchain.py --arch arm64 --api 28 --install-dir=d:/ndk-toolchain
+
+然后直接在windows控制台里执行 build 命令。
+
+如果不设置就会默认
+Android: Targeting API '16' with architecture 'arm', ABI 'armeabi-v7a', and processor 'armv7-a'
+
+```
+
+这里有几个必要属性：
+
+1. API 这里限制API LEVEL也就是安卓版本的最低兼容。
+2. ARCH
+3. ABI 这个就是arch的子定义，一个arch可以包含多种ABI。
+4. 处理器类型
+
+
+
 
 
 ### EMCC（windows host）
