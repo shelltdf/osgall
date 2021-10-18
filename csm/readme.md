@@ -40,9 +40,17 @@ cmake-git.py install zlib -arch vs2017-64 [-release] [-debug] [-dynamic] [-stati
 
 
 
-### Ninjia
+### Ninja（不打算支持了）
 
 因为ninja在不同系统上的连接库设置不一致，所以暂时不实现这个功能。
+
+make命令是直接支持 -j 多线程的，msbuild也支持多线程命令行。所以貌似没有了必要。
+
+
+
+### MinGW
+
+这里分msys 和 msys2 两个情况。
 
 
 
@@ -50,31 +58,37 @@ cmake-git.py install zlib -arch vs2017-64 [-release] [-debug] [-dynamic] [-stati
 
 这个编译流程跟wsl不能兼容，因为wsl有很多系统设置和换行符号都不一致。
 
+这里测试的是focal版本的gcc 9.4版本。
+
 ```
-sudo debootstrap focal rootfs2
+sudo debootstrap focal rootfs
 ```
 
 
 ```
+
+//必要的工具
 sudo apt install git
 sudo apt install python-is-python3
 sudo apt install cmake
 sudo apt install g++
 
+//必要的库
 sudo apt install libgl1-mesa-dev
 sudo apt install libglu1-mesa-dev
-
-sudo apt install libxi-dev
-sudo apt install libpthread-stubs0-dev
-```
-
+sudo apt install libxi-dev //这个是针对x11丢失头文件的情况
+sudo apt install libpthread-stubs0-dev //这个没用
 
 ```
-CMAKE_CODEBLOCKS_MAKE_ARGUMENTS 
 
-pthreads
 
 ```
+CMAKE_CODEBLOCKS_MAKE_ARGUMENTS 这个无法决定j的数量，优先级没有make -j 高。
+
+pthreads 在Ubuntu上是有问题的，主要是eigen3的需求。
+
+```
+
 
 
 ### NDK（windows host）
@@ -83,13 +97,13 @@ pthreads
 
 
 
-
-
 ### EMCC（windows host）
 
 下载emsdk 并且初始化安装最新版编译器。然后启动emsdk的控制台。
 
 
+
+### XCode
 
 
 
