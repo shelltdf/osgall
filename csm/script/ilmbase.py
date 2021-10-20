@@ -24,7 +24,10 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             # str_ops = " -DBUILD_SHARED_LIBS=0"
         # else:
             # str_ops = " -DBUILD_SHARED_LIBS=1"
-            
+    
+    if(dict_config['arch']=="ndk"):
+        return
+        
     if(dict_config['arch']=="em"):
         STR_CFG += ' -DNAMESPACE_VERSIONING=OFF -DPACK_BINARY_NSIS=OFF'
     

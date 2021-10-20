@@ -33,6 +33,7 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         
         if(dict_config['static']):
             STR_CFG += " -DBUILD_LIBPROJ_SHARED=0"
+            STR_CFG += " -DBUILD_SHARED_LIBS=0"
             
             STR_CFG += " -DBUILD_CCT=0"
             STR_CFG += " -DBUILD_CS2CS=0"
@@ -47,6 +48,7 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             
         else:
             STR_CFG += " -DBUILD_LIBPROJ_SHARED=1"
+            STR_CFG += " -DBUILD_SHARED_LIBS=1"
             
             STR_CFG += ' -DCURL_LIBRARY=' + install_dir + '/lib/libcurl_imp.lib'
             STR_CFG += ' -DCURL_LIBRARY_DEBUG=' + install_dir + '/lib/libcurld_imp.lib'
@@ -58,6 +60,7 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         
         if(dict_config['static']):
             STR_CFG += " -DBUILD_LIBPROJ_SHARED=0"
+            STR_CFG += " -DBUILD_SHARED_LIBS=0"
             # STR_CFG += " -DPROJ_TESTS=0"
             
             STR_CFG += " -DBUILD_CCT=0"
@@ -72,6 +75,7 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             
         else:
             STR_CFG += " -DBUILD_LIBPROJ_SHARED=1"
+            STR_CFG += " -DBUILD_SHARED_LIBS=1"
             # STR_CFG += " -DPROJ_TESTS=0"
             
             STR_CFG += ' -DSQLITE3_LIBRARY=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/libsqlite.so'
@@ -79,8 +83,65 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             
             STR_CFG += ' -DCURL_LIBRARY=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/libcurl.so'
             STR_CFG += ' -DCURL_LIBRARY_DEBUG=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/libcurld.so'
+    
+    if(dict_config['arch']=="ndk"):
+        STR_CFG += " -DPROJ_TESTS=0"
+        STR_CFG += " -DBUILD_TESTING=0"
+        
+        if(dict_config['static']):
+            STR_CFG += " -DBUILD_LIBPROJ_SHARED=0"
+            STR_CFG += " -DBUILD_SHARED_LIBS=0"
+            # STR_CFG += " -DPROJ_TESTS=0"
+            
+            STR_CFG += " -DBUILD_CCT=0"
+            STR_CFG += " -DBUILD_CS2CS=0"
+            STR_CFG += " -DBUILD_GEOD=0"
+            STR_CFG += " -DBUILD_GIE=0"
+            STR_CFG += " -DBUILD_PROJ=0"
+            STR_CFG += " -DBUILD_PROJINFO=0"
+            STR_CFG += " -DBUILD_PROJSYNC=0"
+            
+            STR_CFG += ' -DSQLITE3_INCLUDE_DIR=' +os.getcwd() +'/install/'+ my_build_and_install_dir(dict_config) + '/include'
+            STR_CFG += ' -DSQLITE3_LIBRARY=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/libsqlite.a'
+            STR_CFG += ' -DSQLITE3_LIBRARY_DEBUG=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/libsqlite.a'
+            
+            STR_CFG += ' -DCURL_INCLUDE_DIR=' +os.getcwd() +'/install/'+ my_build_and_install_dir(dict_config) + '/include'
+            STR_CFG += ' -DCURL_LIBRARY=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/libcurl.so'
+            STR_CFG += ' -DCURL_LIBRARY_DEBUG=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/libcurld.so'
+            
+            STR_CFG += ' -DTIFF_INCLUDE_DIR=' +os.getcwd() +'/install/'+ my_build_and_install_dir(dict_config) + '/include'
+            STR_CFG += ' -DTIFF_LIBRARY=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/libtiff.so'
+            STR_CFG += ' -DTIFF_LIBRARY_DEBUG=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/libtiffd.so'
+            
+        else:
+            STR_CFG += " -DBUILD_LIBPROJ_SHARED=1"
+            STR_CFG += " -DBUILD_SHARED_LIBS=1"
+            # STR_CFG += " -DPROJ_TESTS=0"
+            
+            STR_CFG += " -DBUILD_CCT=0"
+            STR_CFG += " -DBUILD_CS2CS=0"
+            STR_CFG += " -DBUILD_GEOD=0"
+            STR_CFG += " -DBUILD_GIE=0"
+            STR_CFG += " -DBUILD_PROJ=0"
+            STR_CFG += " -DBUILD_PROJINFO=0"
+            STR_CFG += " -DBUILD_PROJSYNC=0"
+            
+            STR_CFG += " -DCMAKE_USE_PTHREADS_INIT=0"
+            
+            STR_CFG += ' -DSQLITE3_INCLUDE_DIR=' +os.getcwd() +'/install/'+ my_build_and_install_dir(dict_config) + '/include'
+            STR_CFG += ' -DSQLITE3_LIBRARY=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/libsqlite.so'
+            STR_CFG += ' -DSQLITE3_LIBRARY_DEBUG=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/libsqlite.so'
+            
+            STR_CFG += ' -DCURL_INCLUDE_DIR=' +os.getcwd() +'/install/'+ my_build_and_install_dir(dict_config) + '/include'
+            STR_CFG += ' -DCURL_LIBRARY=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/libcurl.so'
+            STR_CFG += ' -DCURL_LIBRARY_DEBUG=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/libcurld.so'
+            
+            STR_CFG += ' -DTIFF_INCLUDE_DIR=' +os.getcwd() +'/install/'+ my_build_and_install_dir(dict_config) + '/include'
+            STR_CFG += ' -DTIFF_LIBRARY=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/libtiff.so'
+            STR_CFG += ' -DTIFF_LIBRARY_DEBUG=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/libtiffd.so'
             
     if(dict_config['arch']=="em"):
+        STR_CFG += " -DBUILD_SHARED_LIBS=0"
         STR_CFG += " -DPROJ_TESTS=0"
         STR_CFG += ' -DSQLITE3_INCLUDE_DIR="' + install_dir + '"/include'
         STR_CFG += ' -DSQLITE3_LIBRARY=' +os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config) + '/lib/libsqlite.a'

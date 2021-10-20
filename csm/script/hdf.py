@@ -39,6 +39,10 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         # STR_CFG += " -DBUILD_CURL_TESTS=0"
         # STR_CFG += ' -DZLIB_LIBRARY=' + install_dir + '/lib/zlib.lib'
         # STR_CFG += ' -DZLIB_LIBRARY_DEBUG=' + install_dir + '/lib/zlibd.lib'
+    
+
+    if(dict_config['arch']=="ndk"):
+        return
         
     source_dir = os.getcwd() + '/../prebuild/hdf5-1.12.0'
     

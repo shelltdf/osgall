@@ -43,7 +43,10 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             return
         else:
             STR_CFG += " -DDYNAMIC_VIRTUALPLANETBUILDER=1"
-        
+    
+    if(dict_config['arch']=="ndk"):
+        return
+    
     source_dir = os.getcwd() + '/../prebuild/VirtualPlanetBuilder-master'
     
     configure(str_name,dict_config,STR_CFG,"",source_dir)

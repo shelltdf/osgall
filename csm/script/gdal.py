@@ -149,6 +149,51 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         STR_CFG += ' -DICONV_INCLUDE_DIR="' + install_dir + '"/include'
         STR_CFG += " -DICONV_LIBRARIES='" + install_dir + "/lib/liblibiconv.so'"
         
+    if(dict_config['arch']=="ndk"):
+
+        if(dict_config['static']):
+            STR_CFG += " -DGDAL_BUILD_SHARED=0"
+            STR_CFG += " -DGDAL_BUILD_APPS=0"
+        else:
+            STR_CFG += " -DGDAL_BUILD_SHARED=1"
+            STR_CFG += ' -DGDAL_BUILD_APPS=0'
+            
+        STR_CFG += ' -DGDAL_USE_ICONV=1'
+        
+        STR_CFG += ' -DGEOTIFF_INCLUDE_DIR="' + install_dir + '"/include'
+        STR_CFG += " -DGEOTIFF_LIBRARY='" + install_dir + "/lib/libgeotiff.so'"        
+        STR_CFG += " -DGEOTIFF_LIBRARY_DEBUG='" + install_dir + "/lib/libgeotiff.so'"    
+        
+        STR_CFG += ' -DJPEG_INCLUDE_DIR="' + install_dir + '"/include'
+        STR_CFG += " -DJPEG_LIBRARY='" + install_dir + "/lib/libjpeg.so'"        
+        STR_CFG += " -DJPEG_LIBRARY_DEBUG='" + install_dir + "/lib/libjpegd.so'"        
+        
+        STR_CFG += ' -DTIFF_INCLUDE_DIR="' + install_dir + '"/include'
+        STR_CFG += " -DTIFF_LIBRARY='" + install_dir + "/lib/libtiff.so'"
+        STR_CFG += " -DTIFF_LIBRARY_DEBUG='" + install_dir + "/lib/libtiff.so'"
+        
+        STR_CFG += ' -DGEOS_INCLUDE_DIR="' + install_dir + '"/include'
+        STR_CFG += " -DGEOS_LIBRARY='" + install_dir + "/lib/libgeos_c.so'"
+        STR_CFG += " -DGEOS_LIBRARY_DEBUG='" + install_dir + "/lib/libgeos_cd.so'"
+        
+        STR_CFG += ' -DSQLITE3_INCLUDE_DIR="' + install_dir + '"/include'
+        STR_CFG += " -DSQLITE3_LIBRARY='" + install_dir + "/lib/libsqlite.so'"
+        STR_CFG += " -DSQLITE3_LIBRARY_DEBUG='" + install_dir + "/lib/libsqlite.so'"
+        
+        STR_CFG += ' -DPROJ_INCLUDE_DIR="' + install_dir + '"/include'
+        STR_CFG += " -DPROJ_LIBRARY='" + install_dir + "/lib/libproj.so'"
+        STR_CFG += " -DPROJ_LIBRARY_DEBUG='" + install_dir + "/lib/libproj.so'"
+        
+        STR_CFG += ' -DEXPAT_INCLUDE_DIR="' + install_dir + '"/include'
+        STR_CFG += " -DEXPAT_LIBRARY='" + install_dir + "/lib/libexpat.so'"
+        STR_CFG += " -DEXPAT_LIBRARY_DEBUG='" + install_dir + "/lib/libexpatd.so'"
+        
+        STR_CFG += ' -DZLIB_INCLUDE_DIR="' + install_dir + '"/include'
+        STR_CFG += " -DZLIB_LIBRARY='" + install_dir + "/lib/libz.so'"
+        STR_CFG += " -DZLIB_LIBRARY_DEBUG='" + install_dir + "/lib/libz.so'"
+        
+        STR_CFG += ' -DICONV_INCLUDE_DIR="' + install_dir + '"/include'
+        STR_CFG += " -DICONV_LIBRARIES='" + install_dir + "/lib/liblibiconv.so'"
         
     if(dict_config['arch']=="em"):
         STR_CFG += " -DGDAL_BUILD_SHARED=0"

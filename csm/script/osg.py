@@ -31,6 +31,22 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     
     STR_CFG = ''
     
+    if( GLES_VER == 1 ):
+        STR_CFG += " -DOPENGL_PROFILE=\"GLES1\""
+    if( GLES_VER == 2 ):
+        STR_CFG += " -DOPENGL_PROFILE=\"GLES2\""
+    if( GLES_VER == 3 ):
+        STR_CFG += " -DOPENGL_PROFILE=\"GLES3\""
+        
+    if( GL_VER == 1 ):
+        STR_CFG += " -DOPENGL_PROFILE=\"GL1\""   
+    if( GL_VER == 2 ):
+        STR_CFG += " -DOPENGL_PROFILE=\"GL2\""           
+    if( GL_VER == 3 ):
+        STR_CFG += " -DOPENGL_PROFILE=\"GLCORE\""   
+        # STR_CFG += ' -DGLCORE_ROOT=' + os.getcwd() + '/../../../3rdparty/include'   
+        STR_CFG += ' -DGLCORE_INCLUDE_DIR=' + os.getcwd() + '/../../../3rdparty/include'   
+        
     
     if(dict_config['arch'][:2]=="vs"):
         STR_CFG += ' -DOSG_USE_UTF8_FILENAME=1'
@@ -120,6 +136,61 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += " -DGIFLIB_LIBRARY='" + install_dir + "/lib/libgiflibd.so'"
             STR_CFG += " -DLIBLAS_LIBRARY='" + install_dir + "/lib/liblasd.so'"
 
+    if(dict_config['arch']=="ndk"):
+    
+        STR_CFG += " -DOPENGL_PROFILE=\"GLES1\""
+        STR_CFG += " -DCMAKE_INSTALL_COMPONENT=0"
+        
+        STR_CFG += ' -DOSG_USE_UTF8_FILENAME=0'
+        
+        STR_CFG += " -DGDAL_INCLUDE_DIR='" + install_dir + "/include/gdal'"
+        STR_CFG += " -DOPENEXR_INCLUDE_DIR='" + install_dir + "/include'"
+        STR_CFG += " -DGIFLIB_INCLUDE_DIR='" + install_dir + "/include'"
+    
+        # STR_CFG += ' -DNVTT_SHARED=1'
+        
+        if(dict_config['static']):
+            STR_CFG += ' -DBUILD_OSG_APPLICATIONS=0'
+            STR_CFG += ' -DBUILD_OSG_EXAMPLES=0'
+            
+            STR_CFG += ' -DDYNAMIC_OPENSCENEGRAPH=0'
+            STR_CFG += ' -DDYNAMIC_OPENTHREADS=0'
+            STR_CFG += ' -DOSG_GL_LIBRARY_STATIC=0'
+        else:
+            STR_CFG += ' -DBUILD_OSG_APPLICATIONS=1'
+            STR_CFG += ' -DBUILD_OSG_EXAMPLES=0'
+            
+            STR_CFG += ' -DDYNAMIC_OPENSCENEGRAPH=1'
+            STR_CFG += ' -DDYNAMIC_OPENTHREADS=1'
+            STR_CFG += ' -DOSG_GL_LIBRARY_STATIC=0'
+            
+        if(dict_config['release']):
+            STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/libgdal31.so'"
+            STR_CFG += " -DGIFLIB_LIBRARY='" + install_dir + "/lib/libgiflib.so'"
+            STR_CFG += " -DLIBLAS_LIBRARY='" + install_dir + "/lib/liblas.so'"
+
+            STR_CFG += " -DFREETYPE_INCLUDE_DIR_freetype2='" + install_dir + "/include/freetype2'"
+            STR_CFG += " -DFREETYPE_INCLUDE_DIR_ft2build='" + install_dir + "/include/freetype2'"
+            STR_CFG += " -DFREETYPE_LIBRARY_RELEASE='" + install_dir + "/lib/libfreetype.so'"
+
+            STR_CFG += " -DZLIB_INCLUDE_DIR='" + install_dir + "/include'"
+            STR_CFG += " -DZLIB_LIBRARY_RELEASE='" + install_dir + "/lib/libz.so'"
+
+            STR_CFG += " -DPNG_PNG_INCLUDE_DIR='" + install_dir + "/include'"
+            STR_CFG += " -DPNG_LIBRARY_RELEASE='" + install_dir + "/lib/libpng.so'"
+
+            STR_CFG += " -DBoost_DIR=''"
+            STR_CFG += " -DBoost_INCLUDE_DIR=''"
+
+        else:
+            STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/libgdal31.so'"
+            # STR_CFG += " -DCURL_LIBRARY_RELEASE='" + install_dir + "/lib/libcurld_imp.lib'"
+            STR_CFG += " -DCURL_LIBRARY_DEBUG='" + install_dir + "/lib/libcurld.so'"
+            #STR_CFG += " -DNVSQUISH_LIBRARY_DEBUG='" + install_dir + "/lib/squishd.so'"
+            #STR_CFG += " -DNVTT_LIBRARY_DEBUG='" + install_dir + "/lib/nvttd.so'"
+            STR_CFG += " -DGIFLIB_LIBRARY='" + install_dir + "/lib/libgiflibd.so'"
+            STR_CFG += " -DLIBLAS_LIBRARY='" + install_dir + "/lib/liblasd.so'"
+            
     if(dict_config['arch']=="em"):
         # STR_CFG += ' -DOSG_USE_UTF8_FILENAME=1'
         

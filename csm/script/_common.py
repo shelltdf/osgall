@@ -170,19 +170,29 @@ def configure(str_name ,dict_config, str_config = "",str_subdir="",str_local_dir
         # pass
         cmake_string = "cmake " + source_dir
         cmake_string += ' -DCMAKE_TOOLCHAIN_FILE=' + ANDROID_NDK_PATH + '/build/cmake/android.toolchain.cmake'+ dict_config['cmake_cfg']
-        # cmake_string += ' -DANDROID_ABI=' + ANDROID_ABI
         cmake_string += ' -DCMAKE_INSTALL_PREFIX="../../../install/' + dir_name + '"'
-        # cmake_string += ' -DJ=4' #+ str(CPU_NUM)
-        # cmake_string += ' -DANDROID_NATIVE_API_LEVEL=' + str(ANDROID_API_LEVEL)
+        cmake_string += ' -DANDROID_ABI=' + ANDROID_ABI
+        cmake_string += ' -DANDROID_NATIVE_API_LEVEL=' + str(ANDROID_API_LEVEL)
+        
+        # cmake_string += ' -DANDROID'
+        cmake_string += ' -DJ=8' #+ str(CPU_NUM)
         # cmake_string += " -DCMAKE_ANDROID_API="+str(ANDROID_API_LEVEL)
         # cmake_string += " -DCMAKE_ANDROID_API_MIN="+str(ANDROID_API_LEVEL)
         # cmake_string += ' -DANDROID_NDK=' + ANDROID_NDK_PATH
         
-        # if(dict_config['dynamic']==True):
+        if(dict_config['dynamic']==True):
             # cmake_string += ' -DANDROID_STL=gnustl_shared '
-        # else:
+            cmake_string += ' -DANDROID_STL=c++_shared '
+        else:
             # cmake_string += ' -DANDROID_STL=gnustl_static '
+            cmake_string += ' -DANDROID_STL=c++_static '
+        
+        if(dict_config['debug']==True):
+            cmake_string += ' -DCMAKE_BUILD_TYPE=debug'
+        if(dict_config['release']==True):
+            cmake_string += ' -DCMAKE_BUILD_TYPE=release'
             
+        cmake_string += str_config
         my_exec(cmake_string)
         
     elif(dict_config['arch']=="em"):

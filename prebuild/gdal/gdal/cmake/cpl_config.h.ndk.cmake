@@ -65,10 +65,14 @@
 /* Define to 1 if you have the <direct.h> header file. */
 #undef HAVE_DIRECT_H
 
+#define HAVE_LONG_LONG 1
+
+#define HAVE_UINTPTR_T 1
+
 /* Define to 1 if you have the `localtime_r' function. */
 #undef HAVE_LOCALTIME_R
 
-#undef HAVE_DLFCN_H
+#define HAVE_DLFCN_H
 #undef HAVE_DBMALLOC_H
 #undef HAVE_LIBDBMALLOC
 #undef WORDS_BIGENDIAN
@@ -92,11 +96,16 @@
 #define SIZEOF_UNSIGNED_LONG 4
 
 /* The size of `void*', as computed by sizeof. */
+/* 
 #ifdef _WIN64
 # define SIZEOF_VOIDP 8
 #else
 # define SIZEOF_VOIDP 4
 #endif
+*/
+
+# define SIZEOF_VOIDP 8
+
 
 /* Set the native cpu bit order */
 #define HOST_FILLORDER FILLORDER_LSB2MSB

@@ -22,3 +22,8 @@ ANDROID_NDK_STANDALONE_TOOLCHAIN_PATH = "D:/ndk-toolchain/"    #ndk dir
 ANDROID_NDK_PATH = "D:/Android/Sdk/ndk/23.0.7599858/"    #ndk dir
 ANDROID_API_LEVEL = 23 #9 15 21 android6-23
 ANDROID_ABI = "arm64-v8a" # armeabi-v7a arm64-v8a
+
+ANDROID_LIB_NAME = 'aarch64-linux-android'
+
+GL_VER = 0 # 0-AUTO 1-GL1 2-GL2 3-GL3
+GLES_VER = 0 # 0-GL 1-GLES1 2-GLES2 3-GLES3

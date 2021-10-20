@@ -53,6 +53,24 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += ' -DZLIB_LIBRARY=' + install_dir + '/lib/libz.so'
             STR_CFG += ' -DZLIB_LIBRARY_DEBUG=' + install_dir + '/lib/libz.so'
     
+    if(dict_config['arch']=="ndk"):
+        if(dict_config['static']):
+            STR_CFG += " -DCURL_STATICLIB=1"
+            STR_CFG += " -DBUILD_CURL_EXE=0"
+            STR_CFG += " -DBUILD_CURL_TESTS=0"
+            STR_CFG += " -DHAVE_POSIX_STRERROR_R=1"
+            STR_CFG += " -DCMAKE_USE_OPENSSL=0" #版本问题暂时关闭
+            # STR_CFG += ' -DZLIB_LIBRARY=' + install_dir + '/lib/libz.a'
+            # STR_CFG += ' -DZLIB_LIBRARY_DEBUG=' + install_dir + '/lib/libz.a'
+        else:
+            STR_CFG += " -DCURL_STATICLIB=0"
+            STR_CFG += " -DBUILD_CURL_EXE=0"
+            STR_CFG += " -DBUILD_CURL_TESTS=0"
+            STR_CFG += " -DHAVE_POSIX_STRERROR_R=1"
+            STR_CFG += " -DCMAKE_USE_OPENSSL=0" #版本问题暂时关闭
+            STR_CFG += ' -DZLIB_LIBRARY=' + install_dir + '/lib/libz.so'
+            STR_CFG += ' -DZLIB_LIBRARY_DEBUG=' + install_dir + '/lib/libz.so'
+            
         
     source_dir = os.getcwd() + '/../prebuild/curl-7.33.0'
     

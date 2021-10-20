@@ -8,7 +8,8 @@ project(Libiconv)
 #
 # Options
 #
-set(BUILD_SHARED_LIBS ON CACHE BOOL "Build shared libraries, Always ON since this code is LGPL" FORCE)
+# set(BUILD_SHARED_LIBS ON CACHE BOOL "Build shared libraries, Always ON since this code is LGPL" FORCE)
+set(BUILD_SHARED_LIBS ON CACHE BOOL "Build shared libraries, Always ON since this code is LGPL")
 
 # Config file
 configure_file(
@@ -54,6 +55,9 @@ set(libcharset_source_dir ${Libiconv_SOURCE_DIR}/libcharset)
   # add_definitions(-DLIBDIR)
 # endif()
 
+if(ANDROID)
+  add_definitions(-DLIBICONV_PLUG)
+endif()
 
 # Hack: to be able to configure the localcharset.h.build.in correctly, we
 # inject code in the variable have visibility

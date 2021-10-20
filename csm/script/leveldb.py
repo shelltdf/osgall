@@ -32,7 +32,14 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += " -DLEVELDB_BUILD_STATIC=1"
         else:
             STR_CFG += " -DLEVELDB_BUILD_STATIC=0"
-
+    
+    if(dict_config['arch']=="ndk"):
+        STR_CFG += " -DLEVELDB_BUILD_TEST=0"
+        if(dict_config['static']):
+            STR_CFG += " -DLEVELDB_BUILD_STATIC=1"
+        else:
+            STR_CFG += " -DLEVELDB_BUILD_STATIC=0"
+            
     if(dict_config['arch']=="em"):
         # em根本无法在本地建立leveldb数据库
         return

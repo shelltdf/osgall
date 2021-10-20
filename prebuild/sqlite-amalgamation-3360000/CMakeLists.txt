@@ -19,10 +19,10 @@ if (EMSCRIPTEN)
      set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-pthread")
 endif (EMSCRIPTEN)
 
-if (NOT WIN32)
+if (NOT WIN32 AND NOT ANDROID)
      set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS} "-pthread")
      set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-pthread")
-endif (NOT WIN32)
+endif (NOT WIN32 AND NOT ANDROID)
 
 OPTION(SQLITE_BUILD_STATIC "Enable build static library" OFF)
 

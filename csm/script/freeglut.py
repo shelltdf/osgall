@@ -28,6 +28,9 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += " -DFREEGLUT_BUILD_SHARED_LIBS=1"
             STR_CFG += " -DFREEGLUT_BUILD_STATIC_LIBS=0"
     
+    if(dict_config['arch']=="ndk"):
+        return
+        
     if(dict_config['arch']=="em"):
         STR_CFG += '-DFREEGLUT_BUILD_DEMOS=0 -DINSTALL_PDB=0'
         STR_CFG += " -DFREEGLUT_BUILD_STATIC_LIBS=1"

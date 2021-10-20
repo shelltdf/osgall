@@ -39,6 +39,15 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         STR_CFG += ' -DZLIB_LIBRARY=' + install_dir + '/lib/libz.so'
         STR_CFG += ' -DZLIB_LIBRARY_DEBUG=' + install_dir + '/lib/libz.so'
     
+    if(dict_config['arch']=="ndk"):
+        if(dict_config['static']):
+            STR_CFG += " -DPNG_SHARED=0 -DPNG_STATIC=1";
+        else:
+            STR_CFG += " -DPNG_SHARED=1 -DPNG_STATIC=0";
+            
+        STR_CFG += ' -DZLIB_LIBRARY=' + install_dir + '/lib/libz.so'
+        STR_CFG += ' -DZLIB_LIBRARY_DEBUG=' + install_dir + '/lib/libz.so'
+        
     if(dict_config['arch']=="em"):
     
         STR_CFG += " -DPNG_TESTS=0";

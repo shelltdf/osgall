@@ -106,7 +106,78 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += " -DOSGVIEWER_LIBRARY='" + install_dir + "/lib/libosgViewerd.so'"
             STR_CFG += " -DOSGWIDGET_LIBRARY='" + install_dir + "/lib/libosgWidgetd.so'"
             
+    if(dict_config['arch']=="ndk"):
+    
+        STR_CFG += ' -DOPENGL_INCLUDE_DIR='+ ANDROID_NDK_PATH +'/sysroot/usr/include'
+        # STR_CFG += ' -DOPENGL_gl_LIBRARY=' + NACL_GLES_LIB 
+        
+        STR_CFG += ' -DOPENGL_gl_LIBRARY=' + ANDROID_NDK_STANDALONE_TOOLCHAIN_PATH +'/sysroot/usr/lib/'+ANDROID_LIB_NAME+'/'+str(ANDROID_API_LEVEL)+'/libGLESv1_CM.so'
+        
+        # if(GLES_VER == 1):
+            # STR_CFG += ' -DOPENGL_gl_LIBRARY=' + ANDROID_NDK_STANDALONE_TOOLCHAIN_PATH +'/sysroot/usr/lib/'+ANDROID_LIB_NAME+'/'+ANDROID_API_LEVEL+'/libGLESv1_CM.so'
+        # if(GLES_VER == 2):
+            # STR_CFG += ' -DOPENGL_gl_LIBRARY=' + ANDROID_NDK_STANDALONE_TOOLCHAIN_PATH +'/sysroot/usr/lib/'+ANDROID_LIB_NAME+'/'+ANDROID_API_LEVEL+'/libGLESv2.so'
+        # if(GLES_VER == 3):
+            # STR_CFG += ' -DOPENGL_gl_LIBRARY=' + ANDROID_NDK_STANDALONE_TOOLCHAIN_PATH +'/sysroot/usr/lib/'+ANDROID_LIB_NAME+'/'+ANDROID_API_LEVEL+'/libGLESv3.so'
             
+        STR_CFG += ' -DOSG_INCLUDE_DIR="' + install_dir + '/include/"'
+        STR_CFG += ' -DOSG_GEN_INCLUDE_DIR="' + install_dir + '/include/"'
+        
+        STR_CFG += ' -DGDAL_INCLUDE_DIR="' + install_dir + '/include/gdal"'
+        STR_CFG += ' -DCURL_INCLUDE_DIR="' + install_dir + '/include/"'
+        
+        if(dict_config['static']):
+            STR_CFG += " -DDYNAMIC_OSGEARTH=0"
+            
+            STR_CFG += " -DBUILD_OSGEARTH_EXAMPLES=0"
+            STR_CFG += " -DBUILD_APPLICATIONS=0"
+            STR_CFG += " -DBUILD_TESTS=0"
+            
+        else:
+            STR_CFG += " -DDYNAMIC_OSGEARTH=1"
+            
+        STR_CFG += " -DGDAL_INCLUDE_DIR='" + install_dir + "/include/gdal'"
+        STR_CFG += " -DSQLITE3_INCLUDE_DIR='" + install_dir + "/include'"
+        
+        if(dict_config['release']):
+            STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/libgdal31.so'"
+            STR_CFG += " -DCURL_LIBRARY='" + install_dir + "/lib/libcurl.so'"
+            
+            STR_CFG += " -DSQLITE3_LIBRARY='" + install_dir + "/lib/libsqlite.so'"
+            
+            STR_CFG += " -DOPENTHREADS_LIBRARY='" + install_dir + "/lib/libOpenThreads.so'"
+            STR_CFG += " -DOSG_LIBRARY='" + install_dir + "/lib/libosg.so'"
+            STR_CFG += " -DOSGDB_LIBRARY='" + install_dir + "/lib/libosgDB.so'"
+            STR_CFG += " -DOSGFX_LIBRARY='" + install_dir + "/lib/libosgFX.so'"
+            STR_CFG += " -DOSGGA_LIBRARY='" + install_dir + "/lib/libosgGA.so'"
+            STR_CFG += " -DOSGMANIPULATOR_LIBRARY='" + install_dir + "/lib/libosgManipulator.so'"
+            STR_CFG += " -DOSGSHADOW_LIBRARY='" + install_dir + "/lib/libosgShadow.so'"
+            STR_CFG += " -DOSGSIM_LIBRARY='" + install_dir + "/lib/libosgSim.so'"
+            STR_CFG += " -DOSGTERRAIN_LIBRARY='" + install_dir + "/lib/libosgTerrain.so'"
+            STR_CFG += " -DOSGTEXT_LIBRARY='" + install_dir + "/lib/libosgText.so'"
+            STR_CFG += " -DOSGUTIL_LIBRARY='" + install_dir + "/lib/libosgUtil.so'"
+            STR_CFG += " -DOSGVIEWER_LIBRARY='" + install_dir + "/lib/libosgViewer.so'"
+            STR_CFG += " -DOSGWIDGET_LIBRARY='" + install_dir + "/lib/libosgWidget.so'"       
+            
+        else:
+            STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/libgdal31.so'"
+            STR_CFG += " -DCURL_LIBRARY='" + install_dir + "/lib/libcurld.so'"
+            STR_CFG += " -DSQLITE3_LIBRARY='" + install_dir + "/lib/libsqlite.so'"
+
+            STR_CFG += " -DOPENTHREADS_LIBRARY='" + install_dir + "/lib/libOpenThreadsd.so'"
+            STR_CFG += " -DOSG_LIBRARY='" + install_dir + "/lib/libosgd.so'"
+            STR_CFG += " -DOSGDB_LIBRARY='" + install_dir + "/lib/libosgDBd.so'"
+            STR_CFG += " -DOSGFX_LIBRARY='" + install_dir + "/lib/libosgFXd.so'"
+            STR_CFG += " -DOSGGA_LIBRARY='" + install_dir + "/lib/libosgGAd.so'"
+            STR_CFG += " -DOSGMANIPULATOR_LIBRARY='" + install_dir + "/lib/libosgManipulatord.so'"
+            STR_CFG += " -DOSGSHADOW_LIBRARY='" + install_dir + "/lib/libosgShadowd.so'"
+            STR_CFG += " -DOSGSIM_LIBRARY='" + install_dir + "/lib/libosgSimd.so'"
+            STR_CFG += " -DOSGTERRAIN_LIBRARY='" + install_dir + "/lib/libosgTerraind.so'"
+            STR_CFG += " -DOSGTEXT_LIBRARY='" + install_dir + "/lib/libosgTextd.so'"
+            STR_CFG += " -DOSGUTIL_LIBRARY='" + install_dir + "/lib/libosgUtild.so'"
+            STR_CFG += " -DOSGVIEWER_LIBRARY='" + install_dir + "/lib/libosgViewerd.so'"
+            STR_CFG += " -DOSGWIDGET_LIBRARY='" + install_dir + "/lib/libosgWidgetd.so'"        
+
 
     if(dict_config['arch']=="em"):
     

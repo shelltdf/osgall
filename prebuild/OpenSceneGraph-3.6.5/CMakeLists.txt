@@ -735,7 +735,7 @@ OPTION(OSG_USE_LOCAL_LUA_SOURCE "Enable to use local Lua source when building th
 # cmake -DCMAKE_DISABLE_FIND_PACKAGE_PythonLibs=1 .
 #
 IF(ANDROID)
-    ANDROID_3RD_PARTY()
+    # ANDROID_3RD_PARTY()
 ELSE()
 # Common to all platforms except android:
     FIND_PACKAGE(Freetype)

@@ -16,11 +16,19 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         
     STR_CFG = ''
     if(dict_config['static']):
-        STR_CFG = " -DLIBXML_BUILD_STATIC=1";
+        STR_CFG += " -DLIBXML_BUILD_STATIC=1"
+        STR_CFG += " -DBUILD_SHARED_LIBS=0"
     else:
-        STR_CFG = " -DLIBXML_BUILD_STATIC=0";
+        STR_CFG += " -DLIBXML_BUILD_STATIC=0"
+        STR_CFG += " -DBUILD_SHARED_LIBS=1"
         
-    source_dir = os.getcwd() + '/../prebuild/libxml2-2.9.2'
+    STR_CFG += " -DLIBXML2_WITH_ICONV=0"
+    STR_CFG += " -DLIBXML2_WITH_LZMA=0"
+    STR_CFG += " -DLIBXML2_WITH_PYTHON=0"
+    STR_CFG += " -DLIBXML2_WITH_TESTS=0"
+        
+    # source_dir = os.getcwd() + '/../prebuild/libxml2-2.9.2'
+    source_dir = os.getcwd() + '/../prebuild/libxml2-master'
     
     configure(str_name,dict_config,STR_CFG,"",source_dir)
     build(str_name,dict_config)

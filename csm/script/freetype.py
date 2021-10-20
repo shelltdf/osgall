@@ -26,6 +26,12 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         else:
             STR_CFG += " -DFT2_BUILD_STATIC=0"
     
+    if(dict_config['arch']=="ndk"):
+        if(dict_config['static']):
+            STR_CFG += " -DFT2_BUILD_STATIC=1"
+        else:
+            STR_CFG += " -DFT2_BUILD_STATIC=0"
+            
     if(dict_config['arch']=="em"):
         if(dict_config['static']):
             STR_CFG += " -DFT2_BUILD_STATIC=1"

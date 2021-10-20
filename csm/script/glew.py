@@ -21,6 +21,9 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     # else:
         # STR_CGG += ''
     
+    if(dict_config['arch']=="ndk"):
+        return
+        
     source_dir = os.getcwd() + '/../prebuild/glew-2.1.0/build/cmake'
     
     configure(str_name,dict_config,STR_CFG,"",source_dir)

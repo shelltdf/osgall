@@ -28,6 +28,12 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += " -DBUILD_SHARED_LIBS=0"
         else:
             STR_CFG += " -DBUILD_SHARED_LIBS=1"
+    
+    if(dict_config['arch']=="ndk"):
+        if(dict_config['static']):
+            STR_CFG += " -DBUILD_SHARED_LIBS=0"
+        else:
+            STR_CFG += " -DBUILD_SHARED_LIBS=1"
             
     if(dict_config['arch']=="em"):
         STR_CFG += " -DBUILD_SHARED_LIBS=0"

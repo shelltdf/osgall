@@ -21,6 +21,9 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     # else:
         # STR_CGG += ''
         
+    if(dict_config['arch']=="ndk"):
+        return
+        
     source_dir = os.getcwd() + '/../prebuild/crunch-master'
     
     configure(str_name,dict_config,STR_CGG,"",source_dir)

@@ -56,6 +56,9 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += " -DBUILD_SHARED_LIBS=0" #只能静态
     
     
+    if(dict_config['arch']=="ndk"):
+        return
+        
     if(dict_config['arch']=="unix"):
         return
         
