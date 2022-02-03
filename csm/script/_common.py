@@ -5,7 +5,7 @@ import os
 import sys
 import glob
 import shutil
-from _config import * 
+from ._config import * 
 
 
 CWD = ""

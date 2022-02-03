@@ -67,6 +67,7 @@ def getDependency( str_name ,getDependency):
     # list_name = addDependency("vcg" , list_name,getDependency)
     list_name = addDependency("vpb" , list_name,getDependency)
     list_name = addDependency("zlib" , list_name,getDependency)
+    list_name = addDependency("zmq" , list_name,getDependency)
     
     
     return list_name + [str_name]
