@@ -241,6 +241,8 @@ SET(GDAL_TARGET_LINK_LIB "")
     optimized ${PROJ_LIBRARY} debug ${PROJ_LIBRARY_DEBUG}
     optimized ${EXPAT_LIBRARY} debug ${EXPAT_LIBRARY_DEBUG}
     optimized ${ZLIB_LIBRARY} debug ${ZLIB_LIBRARY_DEBUG}
+    optimized ${PNG_LIBRARY_RELEASE} debug ${PNG_LIBRARY_DEBUG}
+    optimized ${JPEG_LIBRARY_RELEASE} debug ${JPEG_LIBRARY_DEBUG}
     ${ICONV_LIBRARIES}
     )
 # endif(GDAL_TARGET_LINK_LIB)
