@@ -19,6 +19,13 @@ endif()
 
 message("Configuration: ${CMAKE_BUILD_TYPE}")
 
+# set postfix
+SET(CMAKE_DEBUG_POSTFIX "d" CACHE STRING "add a postfix, usually d on windows")
+SET(CMAKE_RELEASE_POSTFIX "" CACHE STRING "add a postfix, usually empty on windows")
+SET(CMAKE_RELWITHDEBINFO_POSTFIX "rd" CACHE STRING "add a postfix, usually empty on windows")
+SET(CMAKE_MINSIZEREL_POSTFIX "s" CACHE STRING "add a postfix, usually empty on windows")
+
+
 ## needs define:
 ## 	COMPILER_MSVC
 ## 	LEVELDB_PLATFORM_POSIX
@@ -213,12 +220,14 @@ set(LIB_NAME "")
 if(LEVELDB_BUILD_STATIC)
 
     add_library(leveldb_static STATIC ${SRCS} ${HDRS} ${SNAPPY_SRCS} ${SNAPPY_HDRS})
+    SET_TARGET_PROPERTIES(leveldb_static PROPERTIES DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX})
     target_link_libraries(leveldb_static ${CMAKE_THREAD_LIBS_INIT} ${LIBS})
 	set(LIB_NAME leveldb_static)
 	
 else(LEVELDB_BUILD_STATIC)
 
     add_library(leveldb SHARED ${SRCS} ${HDRS} ${SNAPPY_SRCS} ${SNAPPY_HDRS})
+    SET_TARGET_PROPERTIES(leveldb PROPERTIES DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX})
     set_target_properties(leveldb PROPERTIES
       VERSION ${VERSION_STRING}
       SOVERSION ${VERSION_MAJOR}
@@ -242,6 +251,7 @@ set(TESTHARNESS_HDRS
 )
 
 add_library(leveldb-testharness STATIC ${TESTHARNESS_SRCS})
+SET_TARGET_PROPERTIES(leveldb-testharness PROPERTIES DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX})
 
 macro(leveldb_tests)
   foreach(t ${ARGN})

@@ -62,6 +62,13 @@ if(${CMAKE_CXX_COMPILER_ID} MATCHES GNU
   draco_enable_feature(FEATURE "DRACO_OLD_GCC")
 endif()
 
+# set postfix
+SET(CMAKE_DEBUG_POSTFIX "d" CACHE STRING "add a postfix, usually d on windows")
+SET(CMAKE_RELEASE_POSTFIX "" CACHE STRING "add a postfix, usually empty on windows")
+SET(CMAKE_RELWITHDEBINFO_POSTFIX "rd" CACHE STRING "add a postfix, usually empty on windows")
+SET(CMAKE_MINSIZEREL_POSTFIX "s" CACHE STRING "add a postfix, usually empty on windows")
+
+
 if(BUILD_FOR_GLTF)
   # Override settings when building for GLTF.
   draco_enable_feature(FEATURE "DRACO_MESH_COMPRESSION_SUPPORTED")
@@ -969,6 +976,7 @@ else()
               $<TARGET_OBJECTS:draco_animation_dec>
               $<TARGET_OBJECTS:draco_point_cloud>
               $<TARGET_OBJECTS:draco_points_dec>)
+  SET_TARGET_PROPERTIES(dracodec PROPERTIES DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX})
   add_library(dracoenc
               ${draco_version_sources}
               $<TARGET_OBJECTS:draco_attributes>
@@ -988,6 +996,7 @@ else()
               $<TARGET_OBJECTS:draco_animation_enc>
               $<TARGET_OBJECTS:draco_point_cloud>
               $<TARGET_OBJECTS:draco_points_enc>)
+  SET_TARGET_PROPERTIES(dracoenc PROPERTIES DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX})
   add_library(draco
               ${draco_version_sources}
               $<TARGET_OBJECTS:draco_attributes>

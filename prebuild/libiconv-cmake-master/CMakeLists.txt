@@ -11,6 +11,14 @@ project(Libiconv)
 # set(BUILD_SHARED_LIBS ON CACHE BOOL "Build shared libraries, Always ON since this code is LGPL" FORCE)
 set(BUILD_SHARED_LIBS ON CACHE BOOL "Build shared libraries, Always ON since this code is LGPL")
 
+
+# set postfix
+SET(CMAKE_DEBUG_POSTFIX "d" CACHE STRING "add a postfix, usually d on windows")
+SET(CMAKE_RELEASE_POSTFIX "" CACHE STRING "add a postfix, usually empty on windows")
+SET(CMAKE_RELWITHDEBINFO_POSTFIX "rd" CACHE STRING "add a postfix, usually empty on windows")
+SET(CMAKE_MINSIZEREL_POSTFIX "s" CACHE STRING "add a postfix, usually empty on windows")
+
+
 # Config file
 configure_file(
   ${Libiconv_SOURCE_DIR}/config.h.in
@@ -75,6 +83,7 @@ set(${libname}_sources
 )
 
 add_library(${libname} ${${libname}_sources})
+SET_TARGET_PROPERTIES(${libname} PROPERTIES DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX})
 list(APPEND Libiconv_TARGETS ${libname})
 list(APPEND Libiconv_headers ${Libiconv_BINARY_DIR}/localcharset.h)
 
@@ -111,6 +120,7 @@ set(${libname}_sources
 )
 
 add_library(${libname} ${${libname}_sources})
+SET_TARGET_PROPERTIES(${libname} PROPERTIES DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX})
 target_link_libraries(${libname} libcharset)
 list(APPEND Libiconv_TARGETS ${libname})
 list(APPEND Libiconv_headers ${Libiconv_BINARY_DIR}/iconv.h)
