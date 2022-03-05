@@ -37,6 +37,8 @@ ELSE(NVCORE_SHARED)
     ADD_LIBRARY(nvcore ${CORE_SRCS})
 ENDIF(NVCORE_SHARED)
 
+SET_TARGET_PROPERTIES(nvcore PROPERTIES DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX})
+
 TARGET_LINK_LIBRARIES(nvcore ${LIBS})
 
 # On NetBSD and FreeBSD backtrace() is provided by libexecinfo, not libc.
