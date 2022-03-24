@@ -25,7 +25,7 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         
         
     dir_name = my_build_and_install_dir(dict_config)
-    install_dir = os.getcwd() +"/install/"+ my_build_and_install_dir(dict_config)
+    install_dir = dict_config['install_dir'] + '/' + my_build_and_install_dir(dict_config)
         
     STR_CFG = ''
     

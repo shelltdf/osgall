@@ -28,7 +28,7 @@ def SBI( str_name , b_download ,dict_config, getLibrary ):
     BOOST_ARCH = 'x86' # -march setting
     BOOST_ADDRESS_MODEL = '64'  # 32 64
 
-    install_dir = os.getcwd() + '/install/' + my_build_and_install_dir(dict_config)
+    install_dir = dict_config['install_dir'] + '/' + my_build_and_install_dir(dict_config)
     install_dir = install_dir.replace('\\','/')	
     
     source_dir = os.getcwd() + '/../prebuild/boost_1_71_0'

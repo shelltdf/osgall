@@ -18,7 +18,8 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         
         # return
         
-    install_dir = os.getcwd().replace('\\','/') +"/install/"+ my_build_and_install_dir(dict_config)
+    install_dir = dict_config['install_dir'] + '/' + my_build_and_install_dir(dict_config)
+    install_dir = install_dir.replace('\\','/')
     
     STR_CFG = ''
     

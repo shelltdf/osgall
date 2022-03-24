@@ -24,13 +24,14 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     # build(str_name,dict_config)
     # install(str_name,dict_config)
     
-    dist_dir = my_build_and_install_dir(dict_config)
-    dist_dir = os.getcwd() + '/install/' + dist_dir
+    install_dir = dict_config['install_dir'] + '/' + my_build_and_install_dir(dict_config)
+    # dist_dir = my_build_and_install_dir(dict_config)
+    # dist_dir = os.getcwd() + '/install/' + dist_dir
     # source_dir = my_build_and_install_dir(dict_config)
     # source_dir = os.getcwd() + "/source/" + str_name
     source_dir = os.getcwd() + '/../prebuild/stb-master'
     print (source_dir)
-    print (dist_dir)
-    copyfiles(source_dir,dist_dir+"/include","*.h")
+    print (install_dir)
+    copyfiles(source_dir,install_dir+"/include","*.h")
     
     

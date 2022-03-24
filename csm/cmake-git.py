@@ -42,6 +42,7 @@ def main():
     ARG_CMD = "" # "source" / "install" 
     ARG_NAME = ""
     ARG_ARCH = ""
+    ARG_INSTALL_DIR = "c:/dev"
     ARG_RELEASE = True
     ARG_DEBUG = False
     ARG_DYNAMIC = True
@@ -62,6 +63,9 @@ def main():
         if sys.argv[arg_num].strip('\r') == "-a" or sys.argv[arg_num].strip('\r') == "-arch":
             if(arg_num < len(sys.argv)-1):
                 ARG_ARCH = sys.argv[arg_num+1].strip('\r')
+        if sys.argv[arg_num].strip('\idir') == "-a" or sys.argv[arg_num].strip('\r') == "-install_dir":
+            if(arg_num < len(sys.argv)-1):
+                ARG_INSTALL_DIR = sys.argv[arg_num+1].strip('\r')
         if sys.argv[arg_num].strip('\r') == "-release":
             ARG_RELEASE = True
         if sys.argv[arg_num].strip('\r') == "-debug":
@@ -80,6 +84,7 @@ def main():
     print( "ARG_CMD=" + ARG_CMD )
     print( "ARG_NAME=" + ARG_NAME )
     print( "ARG_ARCH=" + ARG_ARCH )
+    print( "ARG_INSTALL_DIR=" + ARG_INSTALL_DIR )
     print( "ARG_RELEASE=" + str(ARG_RELEASE) )
     print( "ARG_DEBUG=" + str(ARG_DEBUG) )
     print( "ARG_DYNAMIC=" + str(ARG_DYNAMIC) )
@@ -104,6 +109,7 @@ def main():
     dict_config['dynamic'] = ARG_DYNAMIC
     dict_config['static'] = ARG_STATIC
     dict_config['arch'] = ARG_ARCH
+    dict_config['install_dir'] = ARG_INSTALL_DIR
     
     if(dict_config['debug']):
         dict_config['release'] = False

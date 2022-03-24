@@ -170,7 +170,7 @@ def configure(str_name ,dict_config, str_config = "",str_subdir="",str_local_dir
         # pass
         cmake_string = "cmake " + source_dir
         cmake_string += ' -DCMAKE_TOOLCHAIN_FILE=' + ANDROID_NDK_PATH + '/build/cmake/android.toolchain.cmake'+ dict_config['cmake_cfg']
-        cmake_string += ' -DCMAKE_INSTALL_PREFIX="../../../install/' + dir_name + '"'
+        cmake_string += ' -DCMAKE_INSTALL_PREFIX="' + dict_config['install_dir'] + '/' + dir_name + '"'
         cmake_string += ' -DANDROID_ABI=' + ANDROID_ABI
         cmake_string += ' -DANDROID_NATIVE_API_LEVEL=' + str(ANDROID_API_LEVEL)
         
@@ -197,14 +197,14 @@ def configure(str_name ,dict_config, str_config = "",str_subdir="",str_local_dir
         
     elif(dict_config['arch']=="em"):
         my_exec( "emcmake cmake "+source_dir+
-        " -DCMAKE_USE_RELATIVE_PATHS=1 -DCMAKE_INSTALL_PREFIX='../../../install/" + dir_name + "' " +
+        " -DCMAKE_USE_RELATIVE_PATHS=1 -DCMAKE_INSTALL_PREFIX='" + dict_config['install_dir'] + '/' + dir_name + "' " +
         dict_config['cmake_cfg'] + BUILD_TYPE + BUILD_STATIC_LIB + str_config )
     else:
         my_exec( "cmake "+source_dir+
         " -DCMAKE_USE_RELATIVE_PATHS=1" +
         # " -DCMAKE_CODEBLOCKS_MAKE_ARGUMENTS=-j2" +
         # " -DCMAKE_SYSROOT=" + CWD + "'/rootfs'" +
-        " -DCMAKE_INSTALL_PREFIX='../../../install/" + dir_name + "' " +
+        " -DCMAKE_INSTALL_PREFIX='" + dict_config['install_dir'] + '/' + dir_name + "' " +
         dict_config['cmake_cfg'] + BUILD_TYPE + BUILD_STATIC_LIB + str_config )
     
     my_out_build_dir( str_name )
