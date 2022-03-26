@@ -38,8 +38,14 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += " -DBUILD_APPLICATIONS=0"
             STR_CFG += " -DBUILD_TESTS=0"
             
+            STR_CFG += " -DLEVELDB_LIBRARY='" + install_dir + "/lib/leveldb_static.lib'"
+            STR_CFG += " -DLEVELDB_LIBRARY_DEBUG='" + install_dir + "/lib/leveldb_staticd.lib'"
+            
         else:
             STR_CFG += " -DDYNAMIC_OSGEARTH=1"
+            
+            STR_CFG += " -DLEVELDB_LIBRARY='" + install_dir + "/lib/leveldb_static.lib'"
+            STR_CFG += " -DLEVELDB_LIBRARY_DEBUG='" + install_dir + "/lib/leveldb_staticd.lib'"
             
         STR_CFG += " -DGDAL_INCLUDE_DIR='" + install_dir + "/include/gdal'"
         STR_CFG += " -DSQLITE3_INCLUDE_DIR='" + install_dir + "/include'"
