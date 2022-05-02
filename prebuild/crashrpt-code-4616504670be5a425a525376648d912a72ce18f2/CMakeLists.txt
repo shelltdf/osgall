@@ -1,7 +1,7 @@
 # Preserve backwards compatibility
 cmake_minimum_required (VERSION 2.8)
 
-set(CMAKE_CONFIGURATION_TYPES Debug Release CACHE TYPE INTERNAL FORCE )
+# set(CMAKE_CONFIGURATION_TYPES Debug Release CACHE TYPE INTERNAL FORCE )
 
 project (CrashRpt)
 
@@ -17,6 +17,7 @@ set (CRASHRPT_VER 1403)
 # Build options
 option(CRASHRPT_BUILD_SHARED_LIBS "If set (default), CrashRpt modules are built as dynamic-link libraries, otherwise as static libs." ON)
 option(CRASHRPT_LINK_CRT_AS_DLL "If set (default), CrashRpt modules link C run-time (CRT) as multi-threaded dynamic libraries, otherwise as multi-threaded static libs." ON)
+option(CRASHRPT_BUILD_DEMO "" ON)
 
 # Set output directory for executable files
 if(CMAKE_CL_64)
@@ -96,9 +97,11 @@ endmacro()
 
 # Other CMakeLists are located in project subdirectories 
 
+if(CRASHRPT_BUILD_DEMO)
 add_subdirectory("demos/ConsoleDemo")
 add_subdirectory("demos/WTLDemo")
 add_subdirectory("demos/MFCDemo")
+endif(CRASHRPT_BUILD_DEMO)
 
 add_subdirectory("reporting/crashrpt")
 add_subdirectory("reporting/crashsender")

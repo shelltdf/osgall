@@ -29,7 +29,7 @@ cmake_minimum_required (VERSION 2.8.10)
 set(PROJECT_NAME "gdallib")
 project(${PROJECT_NAME})
 
-set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Configs" FORCE)
+# set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Configs" FORCE)
 set(CMAKE_COLOR_MAKEFILE ON)
 
 # parse the version number from gdal_version.h and include in GDAL_MAJOR_VERSION and GDAL_MINOR_VERSION
