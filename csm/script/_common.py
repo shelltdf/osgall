@@ -7,6 +7,7 @@ import glob
 import shutil
 from ._config import * 
 
+# Debug;Release;MinSizeRel;RelWithDebInfo
 
 CWD = ""
 
@@ -33,6 +34,8 @@ def my_build_and_install_dir(dict_config):
         
     if(dict_config['debug']==True):
         dir_name += '_debug'
+    if(dict_config['debuginfo']==True):
+        dir_name += '_debuginfo'
     if(dict_config['release']==True):
         dir_name += '_release'
     return dir_name
@@ -152,9 +155,11 @@ def configure(str_name ,dict_config, str_config = "",str_subdir="",str_local_dir
     
     if(dict_config['arch'][:2]!="vs"):
         if(dict_config['debug']==True):
-            BUILD_TYPE = ' -DCMAKE_BUILD_TYPE=debug'
+            BUILD_TYPE = ' -DCMAKE_BUILD_TYPE=Debug'
+        if(dict_config['debuginfo']==True):
+            BUILD_TYPE = ' -DCMAKE_BUILD_TYPE=RelWithDebInfo'
         if(dict_config['release']==True):
-            BUILD_TYPE = ' -DCMAKE_BUILD_TYPE=release'
+            BUILD_TYPE = ' -DCMAKE_BUILD_TYPE=Release'
         
     source_dir = str_local_dir
     if(source_dir == ""):
@@ -188,9 +193,11 @@ def configure(str_name ,dict_config, str_config = "",str_subdir="",str_local_dir
             cmake_string += ' -DANDROID_STL=c++_static '
         
         if(dict_config['debug']==True):
-            cmake_string += ' -DCMAKE_BUILD_TYPE=debug'
+            cmake_string += ' -DCMAKE_BUILD_TYPE=Debug'        
+        if(dict_config['debuginfo']==True):
+            cmake_string += ' -DCMAKE_BUILD_TYPE=RelWithDebInfo'
         if(dict_config['release']==True):
-            cmake_string += ' -DCMAKE_BUILD_TYPE=release'
+            cmake_string += ' -DCMAKE_BUILD_TYPE=Release'
             
         cmake_string += str_config
         my_exec(cmake_string)
@@ -218,6 +225,9 @@ def build(str_name,dict_config):
         if(dict_config['debug']==True):
             system_ret = os.system('msbuild ALL_BUILD.vcxproj -maxcpucount:16 /p:Configuration=Debug')
             # system_ret = os.system('msbuild ALL_BUILD.vcxproj /p:Configuration=Debug')
+        if(dict_config['debuginfo']==True):
+            system_ret = os.system('msbuild ALL_BUILD.vcxproj -maxcpucount:16 /p:Configuration=RelWithDebInfo')
+            # system_ret = os.system('msbuild ALL_BUILD.vcxproj /p:Configuration=RelWithDebInfo')
         if(dict_config['release']==True):
             system_ret = os.system('msbuild ALL_BUILD.vcxproj -maxcpucount:16 /p:Configuration=Release')
             # system_ret = os.system('msbuild ALL_BUILD.vcxproj /p:Configuration=Release')
@@ -250,6 +260,8 @@ def install(str_name,dict_config):
     if(dict_config['arch'][:2]=="vs"):
         if(dict_config['debug']==True):
             os.system('msbuild INSTALL.vcxproj /p:Configuration=Debug')
+        if(dict_config['debuginfo']==True):
+            os.system('msbuild INSTALL.vcxproj /p:Configuration=RelWithDebInfo')
         if(dict_config['release']==True):
             os.system('msbuild INSTALL.vcxproj /p:Configuration=Release')
     elif(dict_config['arch']=="nmake"):

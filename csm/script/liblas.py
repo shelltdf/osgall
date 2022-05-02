@@ -40,7 +40,9 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             
             if(dict_config['release']):
                 STR_CFG += " -DGEOTIFF_LIBRARY='" + install_dir + "/lib/geotiff.lib'"
-            else:
+            if(dict_config['debuginfo']):
+                STR_CFG += " -DGEOTIFF_LIBRARY='" + install_dir + "/lib/geotiff.lib'"
+            if(dict_config['debug']):
                 STR_CFG += " -DGEOTIFF_LIBRARY='" + install_dir + "/lib/geotiff_d.lib'"
                 
         else:
@@ -49,7 +51,9 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             
             if(dict_config['release']):
                 STR_CFG += " -DGEOTIFF_LIBRARY='" + install_dir + "/lib/geotiff_i.lib'"
-            else:
+            if(dict_config['debuginfo']):
+                STR_CFG += " -DGEOTIFF_LIBRARY='" + install_dir + "/lib/geotiff_i.lib'"
+            if(dict_config['debug']):
                 STR_CFG += " -DGEOTIFF_LIBRARY='" + install_dir + "/lib/geotiff_d_i.lib'"
             
     if(dict_config['arch']=="unix"):
@@ -62,7 +66,9 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             
             if(dict_config['release']):
                 STR_CFG += " -DGEOTIFF_LIBRARY='" + install_dir + "/lib/geotiff.so'"
-            else:
+            if(dict_config['debuginfo']):
+                STR_CFG += " -DGEOTIFF_LIBRARY='" + install_dir + "/lib/geotiff.so'"
+            if(dict_config['debug']):
                 STR_CFG += " -DGEOTIFF_LIBRARY='" + install_dir + "/lib/geotiff.so'"
                 
         else:
@@ -71,7 +77,9 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             
             if(dict_config['release']):
                 STR_CFG += " -DGEOTIFF_LIBRARY='" + install_dir + "/lib/libgeotiff.so'"
-            else:
+            if(dict_config['debuginfo']):
+                STR_CFG += " -DGEOTIFF_LIBRARY='" + install_dir + "/lib/libgeotiff.so'"
+            if(dict_config['debug']):
                 STR_CFG += " -DGEOTIFF_LIBRARY='" + install_dir + "/lib/libgeotiff.so'"
     
     if(dict_config['arch']=="ndk"):

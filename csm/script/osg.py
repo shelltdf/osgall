@@ -72,11 +72,11 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += ' -DDYNAMIC_OPENTHREADS=1'
             STR_CFG += ' -DOSG_GL_LIBRARY_STATIC=0'
             
-        if(dict_config['release']):
+        if(dict_config['release'] or dict_config['debuginfo']):
             STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/gdal31.lib'"
             STR_CFG += " -DGIFLIB_LIBRARY='" + install_dir + "/lib/giflib.lib'"
             STR_CFG += " -DLIBLAS_LIBRARY='" + install_dir + "/lib/liblas.lib'"
-        else:
+        if(dict_config['debug']):
             STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/gdal31d.lib'"
             # STR_CFG += " -DCURL_LIBRARY_RELEASE='" + install_dir + "/lib/libcurld_imp.lib'"
             STR_CFG += " -DCURL_LIBRARY_DEBUG='" + install_dir + "/lib/libcurld_imp.lib'"
@@ -109,7 +109,7 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += ' -DDYNAMIC_OPENTHREADS=1'
             STR_CFG += ' -DOSG_GL_LIBRARY_STATIC=0'
             
-        if(dict_config['release']):
+        if(dict_config['release'] or dict_config['debuginfo']):
             STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/libgdal31.so'"
             STR_CFG += " -DGIFLIB_LIBRARY='" + install_dir + "/lib/libgiflib.so'"
             STR_CFG += " -DLIBLAS_LIBRARY='" + install_dir + "/lib/liblas.so'"
@@ -127,7 +127,7 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += " -DBoost_DIR=''"
             STR_CFG += " -DBoost_INCLUDE_DIR=''"
 
-        else:
+        if(dict_config['debug']):
             STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/libgdal31.so'"
             # STR_CFG += " -DCURL_LIBRARY_RELEASE='" + install_dir + "/lib/libcurld_imp.lib'"
             STR_CFG += " -DCURL_LIBRARY_DEBUG='" + install_dir + "/lib/libcurld.so'"
@@ -164,7 +164,7 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += ' -DDYNAMIC_OPENTHREADS=1'
             STR_CFG += ' -DOSG_GL_LIBRARY_STATIC=0'
             
-        if(dict_config['release']):
+        if(dict_config['release'] or dict_config['debuginfo']):
             STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/libgdal31.so'"
             STR_CFG += " -DGIFLIB_LIBRARY='" + install_dir + "/lib/libgiflib.so'"
             STR_CFG += " -DLIBLAS_LIBRARY='" + install_dir + "/lib/liblas.so'"
@@ -182,7 +182,7 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += " -DBoost_DIR=''"
             STR_CFG += " -DBoost_INCLUDE_DIR=''"
 
-        else:
+        if(dict_config['debug']):
             STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/libgdal31.so'"
             # STR_CFG += " -DCURL_LIBRARY_RELEASE='" + install_dir + "/lib/libcurld_imp.lib'"
             STR_CFG += " -DCURL_LIBRARY_DEBUG='" + install_dir + "/lib/libcurld.so'"

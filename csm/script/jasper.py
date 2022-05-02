@@ -34,7 +34,9 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         
         if(dict_config['release']):
             STR_CFG += ' -DJPEG_LIBRARY=' + install_dir + '/lib/jpeg.lib'
-        else:
+        if(dict_config['debuginfo']):
+            STR_CFG += ' -DJPEG_LIBRARY=' + install_dir + '/lib/jpeg.lib'
+        if(dict_config['debug']):
             STR_CFG += ' -DJPEG_LIBRARY=' + install_dir + '/lib/jpegd.lib'
     
     if(dict_config['arch']=="unix"):
@@ -49,7 +51,9 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         STR_CFG += ' -DJPEG_INCLUDE_DIR=' + install_dir + '/include'
         if(dict_config['release']):
             STR_CFG += ' -DJPEG_LIBRARY=' + install_dir + '/lib/libjpeg.so'
-        else:
+        if(dict_config['debuginfo']):
+            STR_CFG += ' -DJPEG_LIBRARY=' + install_dir + '/lib/libjpeg.so'
+        if(dict_config['debug']):
             STR_CFG += ' -DJPEG_LIBRARY=' + install_dir + '/lib/libjpeg.so'
 
     if(dict_config['arch']=="ndk"):
@@ -64,7 +68,9 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         STR_CFG += ' -DJPEG_INCLUDE_DIR=' + install_dir + '/include'
         if(dict_config['release']):
             STR_CFG += ' -DJPEG_LIBRARY=' + install_dir + '/lib/libjpeg.so'
-        else:
+        if(dict_config['debuginfo']):
+            STR_CFG += ' -DJPEG_LIBRARY=' + install_dir + '/lib/libjpeg.so'
+        if(dict_config['debug']):
             STR_CFG += ' -DJPEG_LIBRARY=' + install_dir + '/lib/libjpeg.so'
             
     if(dict_config['arch']=="em"):

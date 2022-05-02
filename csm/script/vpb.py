@@ -31,7 +31,19 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             return
         else:
             STR_CFG += " -DDYNAMIC_VIRTUALPLANETBUILDER=1"
-
+        
+        if(dict_config['debuginfo']):
+            STR_CFG += " -DOPENTHREADS_LIBRARY_RELEASE='" + install_dir + "/lib/OpenThreadsrd.lib'"
+            STR_CFG += " -DOSG_LIBRARY_RELEASE='" + install_dir + "/lib/osgrd.lib'"
+            STR_CFG += " -DOSGDB_LIBRARY_RELEASE='" + install_dir + "/lib/osgDBrd.lib'"
+            STR_CFG += " -DOSGUTIL_LIBRARY_RELEASE='" + install_dir + "/lib/osgUtilrd.lib'"
+            STR_CFG += " -DOSGSIM_LIBRARY_RELEASE='" + install_dir + "/lib/osgSimrd.lib'"
+            STR_CFG += " -DOSGTERRAIN_LIBRARY_RELEASE='" + install_dir + "/lib/osgTerrainrd.lib'"
+            STR_CFG += " -DOSGVIEWER_LIBRARY_RELEASE='" + install_dir + "/lib/osgViewerrd.lib'"
+            STR_CFG += " -DOSGGA_LIBRARY_RELEASE='" + install_dir + "/lib/osgGArd.lib'"
+            STR_CFG += " -DOSGTEXT_LIBRARY_RELEASE='" + install_dir + "/lib/osgTextrd.lib'"
+            STR_CFG += " -DOSGFX_LIBRARY_RELEASE='" + install_dir + "/lib/osgFXrd.lib'"
+            
     if(dict_config['arch']=="unix"):
         STR_CFG += ' -D3rdPartyRoot=' + install_dir + '/'
         STR_CFG += ' -DGDAL_INCLUDE_DIR=' + install_dir + '/include/gdal'

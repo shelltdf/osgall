@@ -47,15 +47,33 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += " -DLEVELDB_LIBRARY='" + install_dir + "/lib/leveldb_static.lib'"
             STR_CFG += " -DLEVELDB_LIBRARY_DEBUG='" + install_dir + "/lib/leveldb_staticd.lib'"
             
+        if(dict_config['debuginfo']):
+            STR_CFG += " -DLEVELDB_LIBRARY='" + install_dir + "/lib/leveldb_staticrd.lib'"
+            
         STR_CFG += " -DGDAL_INCLUDE_DIR='" + install_dir + "/include/gdal'"
         STR_CFG += " -DSQLITE3_INCLUDE_DIR='" + install_dir + "/include'"
-        if(dict_config['release']):
+        
+        if(dict_config['release'] or dict_config['debuginfo']):
             STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/gdal31.lib'"
             STR_CFG += " -DCURL_LIBRARY='" + install_dir + "/lib/libcurl_imp.lib'"
-            
             STR_CFG += " -DSQLITE3_LIBRARY='" + install_dir + "/lib/sqlite.lib'"
+        
+        if(dict_config['debuginfo']):
+            STR_CFG += " -DOPENTHREADS_LIBRARY='" + install_dir + "/lib/OpenThreadsrd.lib'"
+            STR_CFG += " -DOSG_LIBRARY='" + install_dir + "/lib/osgrd.lib'"
+            STR_CFG += " -DOSGDB_LIBRARY='" + install_dir + "/lib/osgDBrd.lib'"
+            STR_CFG += " -DOSGFX_LIBRARY='" + install_dir + "/lib/osgFXrd.lib'"
+            STR_CFG += " -DOSGGA_LIBRARY='" + install_dir + "/lib/osgGArd.lib'"
+            STR_CFG += " -DOSGMANIPULATOR_LIBRARY='" + install_dir + "/lib/osgManipulatorrd.lib'"
+            STR_CFG += " -DOSGSHADOW_LIBRARY='" + install_dir + "/lib/osgShadowrd.lib'"
+            STR_CFG += " -DOSGSIM_LIBRARY='" + install_dir + "/lib/osgSimrd.lib'"
+            STR_CFG += " -DOSGTERRAIN_LIBRARY='" + install_dir + "/lib/osgTerrainrd.lib'"
+            STR_CFG += " -DOSGTEXT_LIBRARY='" + install_dir + "/lib/osgTextrd.lib'"
+            STR_CFG += " -DOSGUTIL_LIBRARY='" + install_dir + "/lib/osgUtilrd.lib'"
+            STR_CFG += " -DOSGVIEWER_LIBRARY='" + install_dir + "/lib/osgViewerrd.lib'"
+            STR_CFG += " -DOSGWIDGET_LIBRARY='" + install_dir + "/lib/osgWidgetrd.lib'" 
             
-        else:
+        if(dict_config['debug']):
             STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/gdal31d.lib'"
             STR_CFG += " -DCURL_LIBRARY='" + install_dir + "/lib/libcurld_imp.lib'"
             STR_CFG += " -DOPENTHREADS_LIBRARY='" + install_dir + "/lib/OpenThreadsd.lib'"
@@ -87,13 +105,28 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             
         STR_CFG += " -DGDAL_INCLUDE_DIR='" + install_dir + "/include/gdal'"
         STR_CFG += " -DSQLITE3_INCLUDE_DIR='" + install_dir + "/include'"
-        if(dict_config['release']):
+        
+        if(dict_config['release'] or dict_config['debuginfo']):
             STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/libgdal31.so'"
             STR_CFG += " -DCURL_LIBRARY='" + install_dir + "/lib/libcurl.so'"
-            
             STR_CFG += " -DSQLITE3_LIBRARY='" + install_dir + "/lib/libsqlite.so'"
             
-        else:
+        if(dict_config['debuginfo']):
+            STR_CFG += " -DOPENTHREADS_LIBRARY='" + install_dir + "/lib/libOpenThreadsrd.so'"
+            STR_CFG += " -DOSG_LIBRARY='" + install_dir + "/lib/libosgrd.so'"
+            STR_CFG += " -DOSGDB_LIBRARY='" + install_dir + "/lib/libosgDBrd.so'"
+            STR_CFG += " -DOSGFX_LIBRARY='" + install_dir + "/lib/libosgFXrd.so'"
+            STR_CFG += " -DOSGGA_LIBRARY='" + install_dir + "/lib/libosgGArd.so'"
+            STR_CFG += " -DOSGMANIPULATOR_LIBRARY='" + install_dir + "/lib/libosgManipulatorrd.so'"
+            STR_CFG += " -DOSGSHADOW_LIBRARY='" + install_dir + "/lib/libosgShadowrd.so'"
+            STR_CFG += " -DOSGSIM_LIBRARY='" + install_dir + "/lib/libosgSimrd.so'"
+            STR_CFG += " -DOSGTERRAIN_LIBRARY='" + install_dir + "/lib/libosgTerrainrd.so'"
+            STR_CFG += " -DOSGTEXT_LIBRARY='" + install_dir + "/lib/libosgTextrd.so'"
+            STR_CFG += " -DOSGUTIL_LIBRARY='" + install_dir + "/lib/libosgUtilrd.so'"
+            STR_CFG += " -DOSGVIEWER_LIBRARY='" + install_dir + "/lib/libosgViewerrd.so'"
+            STR_CFG += " -DOSGWIDGET_LIBRARY='" + install_dir + "/lib/libosgWidgetrd.so'"
+            
+        if(dict_config['debug']):
             STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/libgdal31.so'"
             STR_CFG += " -DCURL_LIBRARY='" + install_dir + "/lib/libcurld.so'"
             STR_CFG += " -DSQLITE3_LIBRARY='" + install_dir + "/lib/libsqlite.so'"
@@ -148,7 +181,6 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         if(dict_config['release']):
             STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/libgdal31.so'"
             STR_CFG += " -DCURL_LIBRARY='" + install_dir + "/lib/libcurl.so'"
-            
             STR_CFG += " -DSQLITE3_LIBRARY='" + install_dir + "/lib/libsqlite.so'"
             
             STR_CFG += " -DOPENTHREADS_LIBRARY='" + install_dir + "/lib/libOpenThreads.so'"
@@ -164,8 +196,28 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += " -DOSGUTIL_LIBRARY='" + install_dir + "/lib/libosgUtil.so'"
             STR_CFG += " -DOSGVIEWER_LIBRARY='" + install_dir + "/lib/libosgViewer.so'"
             STR_CFG += " -DOSGWIDGET_LIBRARY='" + install_dir + "/lib/libosgWidget.so'"       
+        
+        if(dict_config['debuginfo']):
+        
+            STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/libgdal31.so'"
+            STR_CFG += " -DCURL_LIBRARY='" + install_dir + "/lib/libcurl.so'"
+            STR_CFG += " -DSQLITE3_LIBRARY='" + install_dir + "/lib/libsqlite.so'"
             
-        else:
+            STR_CFG += " -DOPENTHREADS_LIBRARY='" + install_dir + "/lib/libOpenThreadsrd.so'"
+            STR_CFG += " -DOSG_LIBRARY='" + install_dir + "/lib/libosgrd.so'"
+            STR_CFG += " -DOSGDB_LIBRARY='" + install_dir + "/lib/libosgDBrd.so'"
+            STR_CFG += " -DOSGFX_LIBRARY='" + install_dir + "/lib/libosgFXrd.so'"
+            STR_CFG += " -DOSGGA_LIBRARY='" + install_dir + "/lib/libosgGArd.so'"
+            STR_CFG += " -DOSGMANIPULATOR_LIBRARY='" + install_dir + "/lib/libosgManipulatorrd.so'"
+            STR_CFG += " -DOSGSHADOW_LIBRARY='" + install_dir + "/lib/libosgShadowrd.so'"
+            STR_CFG += " -DOSGSIM_LIBRARY='" + install_dir + "/lib/libosgSimrd.so'"
+            STR_CFG += " -DOSGTERRAIN_LIBRARY='" + install_dir + "/lib/libosgTerrainrd.so'"
+            STR_CFG += " -DOSGTEXT_LIBRARY='" + install_dir + "/lib/libosgTextrd.so'"
+            STR_CFG += " -DOSGUTIL_LIBRARY='" + install_dir + "/lib/libosgUtilrd.so'"
+            STR_CFG += " -DOSGVIEWER_LIBRARY='" + install_dir + "/lib/libosgViewerrd.so'"
+            STR_CFG += " -DOSGWIDGET_LIBRARY='" + install_dir + "/lib/libosgWidgetrd.so'"       
+        
+        if(dict_config['debug']):
             STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/libgdal31.so'"
             STR_CFG += " -DCURL_LIBRARY='" + install_dir + "/lib/libcurld.so'"
             STR_CFG += " -DSQLITE3_LIBRARY='" + install_dir + "/lib/libsqlite.so'"

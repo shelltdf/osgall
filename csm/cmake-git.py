@@ -43,8 +43,10 @@ def main():
     ARG_NAME = ""
     ARG_ARCH = ""
     ARG_INSTALL_DIR = "c:/dev"
-    ARG_RELEASE = True
-    ARG_DEBUG = False
+    ARG_RELEASE = True      #Release
+    ARG_DEBUG = False       #Debug
+    # ARG_MINSIZE = False     #MinSizeRel
+    ARG_DEBUGINFO = False   #RelWithDebInfo
     ARG_DYNAMIC = True
     ARG_STATIC = False
     ARG_ONLIY = False
@@ -69,7 +71,9 @@ def main():
         if sys.argv[arg_num].strip('\r') == "-release":
             ARG_RELEASE = True
         if sys.argv[arg_num].strip('\r') == "-debug":
-            ARG_DEBUG = True
+            ARG_DEBUG = True        
+        if sys.argv[arg_num].strip('\r') == "-debuginfo":
+            ARG_DEBUGINFO = True
         if sys.argv[arg_num].strip('\r') == "-dynamic":
             ARG_DYNAMIC = True
         if sys.argv[arg_num].strip('\r') == "-static":
@@ -87,6 +91,7 @@ def main():
     print( "ARG_INSTALL_DIR=" + ARG_INSTALL_DIR )
     print( "ARG_RELEASE=" + str(ARG_RELEASE) )
     print( "ARG_DEBUG=" + str(ARG_DEBUG) )
+    print( "ARG_DEBUGINFO=" + str(ARG_DEBUGINFO) )
     print( "ARG_DYNAMIC=" + str(ARG_DYNAMIC) )
     print( "ARG_STATIC=" + str(ARG_STATIC) )
     print( "ARG_ONLIY=" + str(ARG_ONLIY) )
@@ -106,6 +111,7 @@ def main():
     dict_config = {}
     dict_config['release'] = ARG_RELEASE
     dict_config['debug'] = ARG_DEBUG
+    dict_config['debuginfo'] = ARG_DEBUGINFO
     dict_config['dynamic'] = ARG_DYNAMIC
     dict_config['static'] = ARG_STATIC
     dict_config['arch'] = ARG_ARCH
@@ -113,6 +119,10 @@ def main():
     
     if(dict_config['debug']):
         dict_config['release'] = False
+        dict_config['debuginfo'] = False
+    if(dict_config['debuginfo']):
+        dict_config['release'] = False
+        dict_config['debug'] = False
     if(dict_config['static']):
         dict_config['dynamic'] = False
         
