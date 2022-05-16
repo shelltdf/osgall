@@ -11,6 +11,7 @@ def getDependency( str_name ,getDependency):
     list_name = addDependency("libtiff" , list_name,getDependency)
     list_name = addDependency("libjpeg" , list_name,getDependency)
     list_name = addDependency("zlib" , list_name,getDependency)
+    list_name = addDependency("laszip" , list_name,getDependency)
 
     return list_name + [str_name]
     
@@ -34,10 +35,14 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         STR_CFG += " -DWITH_TESTS=0"
         STR_CFG += " -DWITH_UTILITIES=0"
         STR_CFG += " -DBUILD_OSGEO4W=0"
-        STR_CFG += " -DWITH_LASZIP=1"
+        
         if(dict_config['static']):
             STR_CFG += " -DBUILD_STATIC_LIBRARY=1"
             STR_CFG += " -DBoost_USE_STATIC_LIBS=1"
+            
+            STR_CFG += " -DWITH_LASZIP=0"
+            STR_CFG += " -DWITH_STATIC_LASZIP=1"
+            STR_CFG += " -DLASZIP_INCLUDE_DIR='" + install_dir + "/include'"
             
             if(dict_config['release']):
                 STR_CFG += " -DGEOTIFF_LIBRARY='" + install_dir + "/lib/geotiff.lib'"
@@ -49,6 +54,10 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         else:
             STR_CFG += " -DBUILD_STATIC_LIBRARY=0"
             STR_CFG += " -DBoost_USE_STATIC_LIBS=0"
+            
+            STR_CFG += " -DWITH_LASZIP=1"
+            STR_CFG += " -DWITH_STATIC_LASZIP=0"
+            STR_CFG += " -DLASZIP_INCLUDE_DIR='" + install_dir + "/include'"
             
             if(dict_config['release']):
                 STR_CFG += " -DGEOTIFF_LIBRARY='" + install_dir + "/lib/geotiff_i.lib'"
