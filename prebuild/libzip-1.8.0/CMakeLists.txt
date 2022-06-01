@@ -176,6 +176,7 @@ int main(int argc, char *argv[]) { }" HAVE_NULLABLE)
 test_big_endian(WORDS_BIGENDIAN)
 
 find_package(ZLIB 1.1.2 REQUIRED)
+INCLUDE_DIRECTORIES(AFTER ${ZLIB_INCLUDE_DIR})
 
 if(ENABLE_BZIP2)
   find_package(BZip2)

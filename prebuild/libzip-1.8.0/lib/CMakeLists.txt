@@ -175,7 +175,13 @@ if(SHARED_LIB_VERSIONNING)
   set_target_properties(zip PROPERTIES VERSION 5.4 SOVERSION 5)
 endif()
 
-target_link_libraries(zip PRIVATE ZLIB::ZLIB)
+#target_link_libraries(zip PRIVATE ZLIB::ZLIB)
+target_link_libraries(zip 
+    PRIVATE 
+    debug ${ZLIB_LIBRARY_DEBUG} optimized ${ZLIB_LIBRARY}
+    )
+SET_TARGET_PROPERTIES(zip PROPERTIES DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX})
+
 target_include_directories(zip
   PUBLIC
   $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/lib>
