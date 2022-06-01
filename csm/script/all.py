@@ -72,6 +72,8 @@ def getDependency( str_name ,getDependency):
     list_name = addDependency("raknet" , list_name,getDependency)
     list_name = addDependency("assimp" , list_name,getDependency)
     
+    list_name = addDependency("libzip" , list_name,getDependency)
+    
     
     return list_name + [str_name]
     
