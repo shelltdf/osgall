@@ -22,6 +22,9 @@ ELSE(WIN32 AND NOT UNIX)
 	set(RAKNET_LIBRARY_LIBS pthread)
 ENDIF(WIN32 AND NOT UNIX)
 
+if(ANDROID)
+    set(RAKNET_LIBRARY_LIBS "")
+endif(ANDROID)
 
 # Options
 option( RAKNET_ENABLE_SAMPLES 	"Generate RakNet sample projects if true." 		TRUE  )
