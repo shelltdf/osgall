@@ -234,14 +234,16 @@ def build(str_name,dict_config):
     elif(dict_config['arch']=="nmake"):
         system_ret = os.system('nmake')
     elif(dict_config['arch']=="unix"):
-        system_ret = os.system('make -j 8')
+        system_ret = os.system('make -j 32')
     elif(dict_config['arch']=="ninja"):
-        system_ret = os.system('ninja -j 8')
+        system_ret = os.system('ninja -j 32')
     elif(dict_config['arch']=="ndk"):
-        system_ret = os.system('nmake')
+        # system_ret = os.system('nmake')
+        # os.system('set CL=/MP & nmake')
+        system_ret = os.system('ninja -j 32')
     elif(dict_config['arch']=="em"):
         # system_ret = os.system('set CL=/MP nmake')
-        system_ret = os.system('ninja -j 8')
+        system_ret = os.system('ninja -j 32')
     else:
         system_ret = os.system('make')
     my_out_build_dir( str_name )
@@ -271,7 +273,9 @@ def install(str_name,dict_config):
     elif(dict_config['arch']=="ninja"):
         os.system('ninja install')
     elif(dict_config['arch']=="ndk"):
-        os.system('nmake install')
+        # os.system('nmake install')
+        # os.system('set CL=/MP & nmake install')
+        os.system('ninja install')
     elif(dict_config['arch']=="em"):
         # os.system('nmake install')
         os.system('ninja install')

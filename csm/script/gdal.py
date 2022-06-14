@@ -166,7 +166,11 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         
         STR_CFG += ' -DJPEG_INCLUDE_DIR="' + install_dir + '"/include'
         STR_CFG += " -DJPEG_LIBRARY='" + install_dir + "/lib/libjpeg.so'"        
-        STR_CFG += " -DJPEG_LIBRARY_DEBUG='" + install_dir + "/lib/libjpegd.so'"        
+        STR_CFG += " -DJPEG_LIBRARY_DEBUG='" + install_dir + "/lib/libjpegd.so'"                
+        
+        STR_CFG += ' -DPNG_PNG_INCLUDE_DIR="' + install_dir + '"/include'
+        STR_CFG += " -DPNG_LIBRARY='" + install_dir + "/lib/libpng16.so'"        
+        STR_CFG += " -DPNG_LIBRARY_DEBUG='" + install_dir + "/lib/libpng16d.so'"        
         
         STR_CFG += ' -DTIFF_INCLUDE_DIR="' + install_dir + '"/include'
         STR_CFG += " -DTIFF_LIBRARY='" + install_dir + "/lib/libtiff.so'"

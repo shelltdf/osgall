@@ -2,13 +2,8 @@
 set st=%time%
 echo %time%
 
-REM python cmake-git.py install osg -arch ndk
-REM python cmake-git.py install libxml2 -arch ndk
-REM python cmake-git.py install leveldb -arch ndk
-REM python cmake-git.py install libiconv -arch ndk
-
-python cmake-git.py install all -arch ndk
-python cmake-git.py install all -arch ndk -debug
+REM python cmake-git.py install all -arch ndk
+REM python cmake-git.py install all -arch ndk -debug
 
 python cmake-git.py install all -arch ndk -static
 python cmake-git.py install all -arch ndk -debug -static

@@ -15,7 +15,7 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         # return
         
     STR_CGG = ''
-    STR_CGG += '-DFREEGLUT_BUILD_DEMOS=0 -DINSTALL_PDB=0'
+    STR_CGG += ' -DFREEGLUT_BUILD_DEMOS=0 -DINSTALL_PDB=0'
     if(dict_config['static']):
         STR_CGG += " -DGIFLIB_BUILD_STATIC=1"
     else:

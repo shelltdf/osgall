@@ -35,6 +35,16 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += ' -DZLIB_LIBRARY_REL=' + install_dir + '/lib/zlib.lib'
             STR_CFG += ' -DZLIB_LIBRARY_DBG=' + install_dir + '/lib/zlibd.lib'
     
+    if(dict_config['arch']=="ndk"):
+        if(dict_config['static']):
+            pass
+            # STR_CFG += " -DGDAL_BUILD_SHARED=0"
+            # STR_CFG += " -DGDAL_BUILD_APPS=0"
+        else:
+            pass
+            # STR_CFG += " -DGDAL_BUILD_SHARED=1"
+            # STR_CFG += ' -DGDAL_BUILD_APPS=0'
+            
     source_dir = os.getcwd() + '/../prebuild/assimp'
     
     configure(str_name,dict_config,STR_CFG,"",source_dir)

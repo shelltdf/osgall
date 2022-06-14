@@ -182,7 +182,8 @@ def main():
         #dict_config['cmake_cfg'] = ' -G "CodeBlocks - Ninja" '
 
     if(ARG_ARCH == "ndk"):
-        dict_config['cmake_cfg'] = ' -G "NMake Makefiles" '
+        dict_config['cmake_cfg'] = ' -G Ninja'
+        # dict_config['cmake_cfg'] = ' -G "NMake Makefiles" '
         # dict_config['cmake_cfg'] = ' -G "MSYS Makefiles" '
         # dict_config['cmake_cfg'] = ' -G "Unix Makefiles" '
         
