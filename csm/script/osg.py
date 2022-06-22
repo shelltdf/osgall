@@ -6,14 +6,15 @@ from ._common import *
 def getDependency( str_name ,getDependency):
     list_name = []
     
-    list_name = addDependency("nvtt" , list_name,getDependency)
-    list_name = addDependency("openexr" , list_name,getDependency)
+    list_name = addDependency("nvtt" , list_name,getDependency) #no support ndk
+    list_name = addDependency("openexr" , list_name,getDependency) #no support ndk
     list_name = addDependency("gdal" , list_name,getDependency)
     list_name = addDependency("libpng" , list_name,getDependency)
     list_name = addDependency("freetype" , list_name,getDependency)
     list_name = addDependency("jasper" , list_name,getDependency)
     list_name = addDependency("giflib" , list_name,getDependency)
-    list_name = addDependency("liblas" , list_name,getDependency)
+    list_name = addDependency("libtiff" , list_name,getDependency)
+    list_name = addDependency("liblas" , list_name,getDependency) #no support ndk
 
     return list_name + [str_name]
     
@@ -31,6 +32,9 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     
     STR_CFG = ''
     
+    STR_CFG += ' -DOSG_USE_LOCAL_LUA_SOURCE=0'
+    STR_CFG += ' -DOSG_CPP_EXCEPTIONS_AVAILABLE=1'
+    
     if( GLES_VER == 1 ):
         STR_CFG += " -DOPENGL_PROFILE=\"GLES1\""
     if( GLES_VER == 2 ):
@@ -47,7 +51,7 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         # STR_CFG += ' -DGLCORE_ROOT=' + os.getcwd() + '/../../../3rdparty/include'   
         STR_CFG += ' -DGLCORE_INCLUDE_DIR=' + os.getcwd() + '/../../../3rdparty/include'   
         
-    
+    STR_CFG += ' -DBUILD_OSG_EXAMPLES=0'
     if(dict_config['arch'][:2]=="vs"):
         STR_CFG += ' -DOSG_USE_UTF8_FILENAME=1'
         
@@ -156,6 +160,83 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += ' -DDYNAMIC_OPENSCENEGRAPH=0'
             STR_CFG += ' -DDYNAMIC_OPENTHREADS=0'
             STR_CFG += ' -DOSG_GL_LIBRARY_STATIC=0'
+            
+            if(dict_config['release'] or dict_config['debuginfo']):
+                STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/libgdal31.a'"
+                
+                STR_CFG += " -DGIFLIB_LIBRARY='" + install_dir + "/lib/libgiflib.a'"
+                
+                # STR_CFG += " -DLIBLAS_LIBRARY='" + install_dir + "/lib/liblas.a'"
+
+                STR_CFG += " -DFREETYPE_INCLUDE_DIR_freetype2='" + install_dir + "/include/freetype2'"
+                STR_CFG += " -DFREETYPE_INCLUDE_DIR_ft2build='" + install_dir + "/include/freetype2'"
+                STR_CFG += " -DFREETYPE_LIBRARY_RELEASE='" + install_dir + "/lib/libfreetype.a'"
+
+                STR_CFG += " -DZLIB_INCLUDE_DIR='" + install_dir + "/include'"
+                STR_CFG += " -DZLIB_LIBRARY_RELEASE='" + install_dir + "/lib/libz.a'"
+
+                STR_CFG += " -DPNG_PNG_INCLUDE_DIR='" + install_dir + "/include'"
+                STR_CFG += " -DPNG_LIBRARY_RELEASE='" + install_dir + "/lib/libpng16.a'"
+                
+                STR_CFG += " -DJASPER_INCLUDE_DIR='" + install_dir + "/include'"
+                STR_CFG += " -DJASPER_LIBRARY_RELEASE='" + install_dir + "/lib/jasper.a'"
+                
+                STR_CFG += " -DJPEG_INCLUDE_DIR='" + install_dir + "/include'"
+                STR_CFG += " -DJPEG_LIBRARY_RELEASE='" + install_dir + "/lib/jpeg.a'"
+                
+                STR_CFG += " -DCURL_INCLUDE_DIR='" + install_dir + "/include/curl'"
+                STR_CFG += " -DCURL_LIBRARY_RELEASE='" + install_dir + "/lib/libcurl.a'"
+                
+                STR_CFG += " -DTIFF_INCLUDE_DIR='" + install_dir + "/include'"
+                STR_CFG += " -DTIFF_LIBRARY_RELEASE='" + install_dir + "/lib/libtiff.a'"
+                
+                # STR_CFG += " -DNVSQUISH_LIBRARY_DEBUG='" + install_dir + "/lib/squishd.a'"
+                # STR_CFG += " -DNVTT_LIBRARY_DEBUG='" + install_dir + "/lib/nvttd.a'"
+
+                # STR_CFG += " -DOPENEXR_INCLUDE_DIR='" + install_dir + "/include'"
+                # STR_CFG += " -DOPENEXR_IlmImf_LIBRARY_RELEASE='" + install_dir + "/lib/IlmImf.a'"
+                
+                STR_CFG += " -DBoost_DIR=''"
+                STR_CFG += " -DBoost_INCLUDE_DIR=''"
+
+            if(dict_config['debug']):
+                STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/libgdal31.a'"
+                
+                STR_CFG += " -DGIFLIB_LIBRARY='" + install_dir + "/lib/libgiflib.a'"
+                
+                # STR_CFG += " -DLIBLAS_LIBRARY='" + install_dir + "/lib/liblas.a'"
+
+                STR_CFG += " -DFREETYPE_INCLUDE_DIR_freetype2='" + install_dir + "/include/freetype2'"
+                STR_CFG += " -DFREETYPE_INCLUDE_DIR_ft2build='" + install_dir + "/include/freetype2'"
+                STR_CFG += " -DFREETYPE_LIBRARY_RELEASE='" + install_dir + "/lib/libfreetype.a'"
+
+                STR_CFG += " -DZLIB_INCLUDE_DIR='" + install_dir + "/include'"
+                STR_CFG += " -DZLIB_LIBRARY_RELEASE='" + install_dir + "/lib/libz.a'"
+
+                STR_CFG += " -DPNG_PNG_INCLUDE_DIR='" + install_dir + "/include'"
+                STR_CFG += " -DPNG_LIBRARY_RELEASE='" + install_dir + "/lib/libpng16.a'"
+                
+                STR_CFG += " -DJASPER_INCLUDE_DIR='" + install_dir + "/include'"
+                STR_CFG += " -DJASPER_LIBRARY_RELEASE='" + install_dir + "/lib/jasper.a'"
+                
+                STR_CFG += " -DJPEG_INCLUDE_DIR='" + install_dir + "/include'"
+                STR_CFG += " -DJPEG_LIBRARY_RELEASE='" + install_dir + "/lib/jpeg.a'"
+                
+                STR_CFG += " -DCURL_INCLUDE_DIR='" + install_dir + "/include/curl'"
+                STR_CFG += " -DCURL_LIBRARY_RELEASE='" + install_dir + "/lib/libcurl.a'"
+                
+                STR_CFG += " -DTIFF_INCLUDE_DIR='" + install_dir + "/include'"
+                STR_CFG += " -DTIFF_LIBRARY_RELEASE='" + install_dir + "/lib/libtiff.a'"
+                
+                # STR_CFG += " -DNVSQUISH_LIBRARY_DEBUG='" + install_dir + "/lib/squishd.a'"
+                # STR_CFG += " -DNVTT_LIBRARY_DEBUG='" + install_dir + "/lib/nvttd.a'"
+
+                # STR_CFG += " -DOPENEXR_INCLUDE_DIR='" + install_dir + "/include'"
+                # STR_CFG += " -DOPENEXR_IlmImf_LIBRARY_RELEASE='" + install_dir + "/lib/IlmImf.a'"
+                
+                STR_CFG += " -DBoost_DIR=''"
+                STR_CFG += " -DBoost_INCLUDE_DIR=''"
+                
         else:
             STR_CFG += ' -DBUILD_OSG_APPLICATIONS=1'
             STR_CFG += ' -DBUILD_OSG_EXAMPLES=0'
@@ -164,32 +245,32 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += ' -DDYNAMIC_OPENTHREADS=1'
             STR_CFG += ' -DOSG_GL_LIBRARY_STATIC=0'
             
-        if(dict_config['release'] or dict_config['debuginfo']):
-            STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/libgdal31.so'"
-            STR_CFG += " -DGIFLIB_LIBRARY='" + install_dir + "/lib/libgiflib.so'"
-            STR_CFG += " -DLIBLAS_LIBRARY='" + install_dir + "/lib/liblas.so'"
+            if(dict_config['release'] or dict_config['debuginfo']):
+                STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/libgdal31.so'"
+                STR_CFG += " -DGIFLIB_LIBRARY='" + install_dir + "/lib/libgiflib.so'"
+                STR_CFG += " -DLIBLAS_LIBRARY='" + install_dir + "/lib/liblas.so'"
 
-            STR_CFG += " -DFREETYPE_INCLUDE_DIR_freetype2='" + install_dir + "/include/freetype2'"
-            STR_CFG += " -DFREETYPE_INCLUDE_DIR_ft2build='" + install_dir + "/include/freetype2'"
-            STR_CFG += " -DFREETYPE_LIBRARY_RELEASE='" + install_dir + "/lib/libfreetype.so'"
+                STR_CFG += " -DFREETYPE_INCLUDE_DIR_freetype2='" + install_dir + "/include/freetype2'"
+                STR_CFG += " -DFREETYPE_INCLUDE_DIR_ft2build='" + install_dir + "/include/freetype2'"
+                STR_CFG += " -DFREETYPE_LIBRARY_RELEASE='" + install_dir + "/lib/libfreetype.so'"
 
-            STR_CFG += " -DZLIB_INCLUDE_DIR='" + install_dir + "/include'"
-            STR_CFG += " -DZLIB_LIBRARY_RELEASE='" + install_dir + "/lib/libz.so'"
+                STR_CFG += " -DZLIB_INCLUDE_DIR='" + install_dir + "/include'"
+                STR_CFG += " -DZLIB_LIBRARY_RELEASE='" + install_dir + "/lib/libz.so'"
 
-            STR_CFG += " -DPNG_PNG_INCLUDE_DIR='" + install_dir + "/include'"
-            STR_CFG += " -DPNG_LIBRARY_RELEASE='" + install_dir + "/lib/libpng.so'"
+                STR_CFG += " -DPNG_PNG_INCLUDE_DIR='" + install_dir + "/include'"
+                STR_CFG += " -DPNG_LIBRARY_RELEASE='" + install_dir + "/lib/libpng.so'"
 
-            STR_CFG += " -DBoost_DIR=''"
-            STR_CFG += " -DBoost_INCLUDE_DIR=''"
+                STR_CFG += " -DBoost_DIR=''"
+                STR_CFG += " -DBoost_INCLUDE_DIR=''"
 
-        if(dict_config['debug']):
-            STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/libgdal31.so'"
-            # STR_CFG += " -DCURL_LIBRARY_RELEASE='" + install_dir + "/lib/libcurld_imp.lib'"
-            STR_CFG += " -DCURL_LIBRARY_DEBUG='" + install_dir + "/lib/libcurld.so'"
-            #STR_CFG += " -DNVSQUISH_LIBRARY_DEBUG='" + install_dir + "/lib/squishd.so'"
-            #STR_CFG += " -DNVTT_LIBRARY_DEBUG='" + install_dir + "/lib/nvttd.so'"
-            STR_CFG += " -DGIFLIB_LIBRARY='" + install_dir + "/lib/libgiflibd.so'"
-            STR_CFG += " -DLIBLAS_LIBRARY='" + install_dir + "/lib/liblasd.so'"
+            if(dict_config['debug']):
+                STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/libgdal31.so'"
+                # STR_CFG += " -DCURL_LIBRARY_RELEASE='" + install_dir + "/lib/libcurld_imp.lib'"
+                STR_CFG += " -DCURL_LIBRARY_DEBUG='" + install_dir + "/lib/libcurld.so'"
+                #STR_CFG += " -DNVSQUISH_LIBRARY_DEBUG='" + install_dir + "/lib/squishd.so'"
+                #STR_CFG += " -DNVTT_LIBRARY_DEBUG='" + install_dir + "/lib/nvttd.so'"
+                STR_CFG += " -DGIFLIB_LIBRARY='" + install_dir + "/lib/libgiflibd.so'"
+                STR_CFG += " -DLIBLAS_LIBRARY='" + install_dir + "/lib/liblasd.so'"
             
     if(dict_config['arch']=="em"):
         # STR_CFG += ' -DOSG_USE_UTF8_FILENAME=1'
