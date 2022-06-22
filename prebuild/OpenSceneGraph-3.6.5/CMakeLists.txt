@@ -734,9 +734,9 @@ OPTION(OSG_USE_LOCAL_LUA_SOURCE "Enable to use local Lua source when building th
 # you can use the following style of command line option when invoking Cmake (here illustrating ignoring PythonLibs) :
 # cmake -DCMAKE_DISABLE_FIND_PACKAGE_PythonLibs=1 .
 #
-IF(ANDROID)
+# IF(ANDROID)
     # ANDROID_3RD_PARTY()
-ELSE()
+# ELSE()
 # Common to all platforms except android:
     FIND_PACKAGE(Freetype)
     FIND_PACKAGE(ilmbase)
@@ -780,7 +780,7 @@ ELSE()
     # V8 and Python plugins are tests for linking against these libraries but aren't functionality beyond this.
     # FIND_PACKAGE(V8)
     # FIND_PACKAGE(PythonLibs)
-ENDIF()
+# ENDIF()
 
 # Include macro utilities here
 INCLUDE(OsgMacroUtils)
@@ -811,7 +811,7 @@ ENDIF(BUILD_OSG_EXAMPLES AND NOT ANDROID)
 
 # Image readers/writers depend on 3rd party libraries except for OS X which
 # can use Quicktime.
-IF(NOT ANDROID)
+# IF(NOT ANDROID)
     IF(NOT APPLE)
         FIND_PACKAGE(GIFLIB)
         FIND_PACKAGE(JPEG)
@@ -831,7 +831,7 @@ IF(NOT ANDROID)
         FIND_PACKAGE(QuartzCore)
         FIND_PACKAGE(AVFoundation)
     ENDIF()
-ENDIF()
+# ENDIF()
 
 ################################################################################
 # Create bin and lib directories if required
