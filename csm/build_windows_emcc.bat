@@ -2,11 +2,11 @@
 set st=%time%
 echo %time%
 
-REM python cmake-git.py install all -arch ninja
-REM python cmake-git.py install all -arch ninja -debug
+REM python cmake-git.py install all -arch em
+REM python cmake-git.py install all -arch em -debug
 
-REM python cmake-git.py install all -arch ninja -static
-REM python cmake-git.py install all -arch ninja -debug -static
+python cmake-git.py install all -arch em -static
+REM python cmake-git.py install all -arch em -debug -static
 
 set et=%time%
 echo %time%

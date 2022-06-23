@@ -143,12 +143,34 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += ' -DTIFF_LIBRARY_DEBUG=' + install_dir + '/lib/libtiffd.so'
             
     if(dict_config['arch']=="em"):
+    
         STR_CFG += " -DBUILD_SHARED_LIBS=0"
         STR_CFG += " -DPROJ_TESTS=0"
+        STR_CFG += " -DBUILD_TESTING=0"
+        
+        # STR_CFG += " -DENABLE_TIFF=0"
+        STR_CFG += " -DENABLE_CURL=0"
+        
+        STR_CFG += " -DBUILD_CCT=0"
+        STR_CFG += " -DBUILD_CS2CS=0"
+        STR_CFG += " -DBUILD_GEOD=0"
+        STR_CFG += " -DBUILD_GIE=0"
+        STR_CFG += " -DBUILD_PROJ=0"
+        STR_CFG += " -DBUILD_PROJINFO=0"
+        STR_CFG += " -DBUILD_PROJSYNC=0"
+        
         STR_CFG += ' -DSQLITE3_INCLUDE_DIR="' + install_dir + '"/include'
         STR_CFG += ' -DSQLITE3_LIBRARY=' + install_dir + '/lib/libsqlite.a'
         STR_CFG += ' -DSQLITE3_LIBRARY_DEBUG=' + install_dir + '/lib/libsqlite.a'
         
+        STR_CFG += ' -DTIFF_INCLUDE_DIR=' + install_dir + '/include'
+        STR_CFG += ' -DTIFF_LIBRARY=' + install_dir + '/lib/libtiff.a'
+        STR_CFG += ' -DTIFF_LIBRARY_DEBUG=' + install_dir + '/lib/libtiffd.a'
+        
+        # STR_CFG += ' -DCURL_INCLUDE_DIR=' + install_dir + '/include'
+        # STR_CFG += ' -DCURL_LIBRARY=' + install_dir + '/lib/libcurl.a'
+        # STR_CFG += ' -DCURL_LIBRARY_DEBUG=' + install_dir  + '/lib/libcurld.a'
+
     # source_dir = os.getcwd() + '/../prebuild/proj-6.1.1'
     source_dir = os.getcwd() + '/../prebuild/proj-8.0.1'
     

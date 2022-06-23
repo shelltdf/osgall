@@ -205,6 +205,10 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             
         STR_CFG += ' -DGDAL_USE_ICONV=1'
         
+        STR_CFG += ' -DPNG_PNG_INCLUDE_DIR="' + install_dir + '"/include'
+        STR_CFG += " -DPNG_LIBRARY_RELEASE='" + install_dir + "/lib/libpng16.a'"        
+        STR_CFG += " -DPNG_LIBRARY_DEBUG='" + install_dir + "/lib/libpng16d.a'"   
+        
         STR_CFG += ' -DGEOTIFF_INCLUDE_DIR="' + install_dir + '"/include'
         STR_CFG += " -DGEOTIFF_LIBRARY='" + install_dir + "/lib/libgeotiff.a'"        
         STR_CFG += " -DGEOTIFF_LIBRARY_DEBUG='" + install_dir + "/lib/libgeotiffd.a'"    

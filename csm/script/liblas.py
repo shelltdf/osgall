@@ -94,6 +94,9 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     
     if(dict_config['arch']=="ndk"):
         return
+        
+    if(dict_config['arch']=="em"):
+        return
     
     source_dir = os.getcwd() + '/../prebuild/libLAS-1.8.1'
     

@@ -48,13 +48,15 @@ make命令是直接支持 -j 多线程的，msbuild也支持多线程命令行�
 
 
 
-### MinGW
+### MinGW（不打算支持了）
 
 这里分msys 和 msys2 两个情况。
 
+但是MinGW不管什么版本，跟windows代码级别不兼容，跟linux代码级别也不兼容，真的没有支持的必要了。
 
 
-### ubuntu 64bit
+
+### ubuntu 64bit（其他linux不再赘述）
 
 这个编译流程跟wsl不能兼容，因为wsl有很多系统设置和换行符号都不一致。
 
@@ -164,11 +166,20 @@ build_windows_ndk.bat
 
 ### EMCC（windows host）
 
-下载emsdk 并且初始化安装最新版编译器。然后启动emsdk的控制台。
+下载emsdk 并且初始化安装最新版编译器。然后启动emsdk的控制台。(emcmdprompt.bat)
+
+```
+./emsdk install latest
+./emsdk activate latest
+```
+
+因为版本差异较大，所以只能针对一个版本确认。当前版本 3.1.14
 
 
 
 ### XCode
+
+未测试
 
 
 

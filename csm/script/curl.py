@@ -71,6 +71,9 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += ' -DZLIB_LIBRARY=' + install_dir + '/lib/libz.so'
             STR_CFG += ' -DZLIB_LIBRARY_DEBUG=' + install_dir + '/lib/libz.so'
             
+    
+    if(dict_config['arch']=="em"):
+        return
         
     source_dir = os.getcwd() + '/../prebuild/curl-7.33.0'
     

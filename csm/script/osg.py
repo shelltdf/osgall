@@ -285,6 +285,45 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         STR_CFG += ' -DEGL_LIBRARY=egl' #这里应该无所谓是什么，只要赋值就行了。
     
     
+        STR_CFG += " -DGDAL_INCLUDE_DIR='" + install_dir + "/include/gdal'"
+        STR_CFG += " -DOPENEXR_INCLUDE_DIR='" + install_dir + "/include'"
+        STR_CFG += " -DGIFLIB_INCLUDE_DIR='" + install_dir + "/include'"
+        
+        STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/libgdal31.a'"
+                    
+        STR_CFG += " -DGIFLIB_LIBRARY='" + install_dir + "/lib/libgiflib.a'"
+        
+        # STR_CFG += " -DLIBLAS_LIBRARY='" + install_dir + "/lib/liblas.a'"
+
+        STR_CFG += " -DFREETYPE_INCLUDE_DIR_freetype2='" + install_dir + "/include/freetype2'"
+        STR_CFG += " -DFREETYPE_INCLUDE_DIR_ft2build='" + install_dir + "/include/freetype2'"
+        STR_CFG += " -DFREETYPE_LIBRARY_RELEASE='" + install_dir + "/lib/libfreetype.a'"
+
+        STR_CFG += " -DZLIB_INCLUDE_DIR='" + install_dir + "/include'"
+        STR_CFG += " -DZLIB_LIBRARY_RELEASE='" + install_dir + "/lib/libz.a'"
+
+        STR_CFG += " -DPNG_PNG_INCLUDE_DIR='" + install_dir + "/include'"
+        STR_CFG += " -DPNG_LIBRARY_RELEASE='" + install_dir + "/lib/libpng16.a'"
+        
+        STR_CFG += " -DJASPER_INCLUDE_DIR='" + install_dir + "/include'"
+        STR_CFG += " -DJASPER_LIBRARY_RELEASE='" + install_dir + "/lib/jasper.a'"
+        
+        STR_CFG += " -DJPEG_INCLUDE_DIR='" + install_dir + "/include'"
+        STR_CFG += " -DJPEG_LIBRARY_RELEASE='" + install_dir + "/lib/jpeg.a'"
+        
+        # STR_CFG += " -DCURL_INCLUDE_DIR='" + install_dir + "/include/curl'"
+        # STR_CFG += " -DCURL_LIBRARY_RELEASE='" + install_dir + "/lib/libcurl.a'"
+        
+        STR_CFG += " -DTIFF_INCLUDE_DIR='" + install_dir + "/include'"
+        STR_CFG += " -DTIFF_LIBRARY_RELEASE='" + install_dir + "/lib/libtiff.a'"
+        
+        # STR_CFG += " -DNVSQUISH_LIBRARY_DEBUG='" + install_dir + "/lib/squishd.a'"
+        # STR_CFG += " -DNVTT_LIBRARY_DEBUG='" + install_dir + "/lib/nvttd.a'"
+
+        # STR_CFG += " -DOPENEXR_INCLUDE_DIR='" + install_dir + "/include'"
+        # STR_CFG += " -DOPENEXR_IlmImf_LIBRARY_RELEASE='" + install_dir + "/lib/IlmImf.a'"
+        
+    
     source_dir = os.getcwd() + '/../prebuild/OpenSceneGraph-3.6.5'
     
     configure(str_name,dict_config,STR_CFG,"",source_dir)
