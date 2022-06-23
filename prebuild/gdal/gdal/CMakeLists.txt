@@ -78,8 +78,8 @@ SET(CMAKE_CXX_CREATE_STATIC_LIBRARY "<CMAKE_AR> rc <TARGET> <LINK_FLAGS> <OBJECT
 endif(NACL)
 
 if (EMSCRIPTEN)
-     set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS} "-pthread")
-     set(CMAKE_CXX_FLAGS ${CMAKE_C_FLAGS} "-pthread")
+    # set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS} "-pthread")
+    # set(CMAKE_CXX_FLAGS ${CMAKE_C_FLAGS} "-pthread")
 endif (EMSCRIPTEN)
 
 if(ANDROID)

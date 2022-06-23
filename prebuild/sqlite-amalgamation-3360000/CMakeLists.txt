@@ -15,8 +15,8 @@ ElSE(MSVC) #android
 ENDIF(MSVC)
 
 if (EMSCRIPTEN)
-     set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS} "-pthread")
-     set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-pthread")
+     #set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS} "-pthread")
+     #set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-pthread")
 endif (EMSCRIPTEN)
 
 if (NOT WIN32 AND NOT ANDROID)
