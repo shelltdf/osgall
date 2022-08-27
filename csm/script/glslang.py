@@ -18,7 +18,7 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     if(dict_config['static']):
         STR_CFG += ' -DBUILD_SHARED_LIBS=0'
     else:
-        STR_CFG += ' -DBUILD_SHARED_LIBS=1'
+        STR_CFG += ' -DBUILD_SHARED_LIBS=0' # only staitc
 
         
     source_dir = os.getcwd() + '/../prebuild/glslang'
