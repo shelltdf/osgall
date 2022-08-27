@@ -74,6 +74,9 @@ def getDependency( str_name ,getDependency):
     
     list_name = addDependency("libzip" , list_name,getDependency)
     
+    list_name = addDependency("glslang" , list_name,getDependency)
+    list_name = addDependency("spirvcross" , list_name,getDependency)
+    
     
     return list_name + [str_name]
     
