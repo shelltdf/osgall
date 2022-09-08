@@ -78,7 +78,7 @@ INSTALL(TARGETS ${LIBRARY_NAME}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
         )
 INSTALL(
-        FILES       ${HEADERS}
+        FILES       ${LUA_HEADERS}
         DESTINATION ${CMAKE_INSTALL_PREFIX}/include
         )
 

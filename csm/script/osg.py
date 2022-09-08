@@ -14,6 +14,7 @@ def getDependency( str_name ,getDependency):
     list_name = addDependency("jasper" , list_name,getDependency)
     list_name = addDependency("giflib" , list_name,getDependency)
     list_name = addDependency("libtiff" , list_name,getDependency)
+    list_name = addDependency("lua" , list_name,getDependency)
     list_name = addDependency("liblas" , list_name,getDependency) #no support ndk
 
     return list_name + [str_name]
@@ -58,7 +59,8 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         STR_CFG += " -DGDAL_INCLUDE_DIR='" + install_dir + "/include/gdal'"
         STR_CFG += " -DOPENEXR_INCLUDE_DIR='" + install_dir + "/include'"
         STR_CFG += " -DGIFLIB_INCLUDE_DIR='" + install_dir + "/include'"
-    
+        STR_CFG += " -DLUA_INCLUDE_DIR='" + install_dir + "/include'"
+        
         # STR_CFG += ' -DNVTT_SHARED=1'
         
         if(dict_config['static']):
@@ -80,6 +82,8 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/gdal31.lib'"
             STR_CFG += " -DGIFLIB_LIBRARY='" + install_dir + "/lib/giflib.lib'"
             STR_CFG += " -DLIBLAS_LIBRARY='" + install_dir + "/lib/liblas.lib'"
+            STR_CFG += " -DLUA_LIBRARY='" + install_dir + "/lib/lua.lib'"
+            
         if(dict_config['debug']):
             STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/gdal31d.lib'"
             # STR_CFG += " -DCURL_LIBRARY_RELEASE='" + install_dir + "/lib/libcurld_imp.lib'"
@@ -88,6 +92,7 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += " -DNVTT_LIBRARY_DEBUG='" + install_dir + "/lib/nvttd.lib'"
             STR_CFG += " -DGIFLIB_LIBRARY='" + install_dir + "/lib/giflibd.lib'"
             STR_CFG += " -DLIBLAS_LIBRARY='" + install_dir + "/lib/liblasd.lib'"
+            STR_CFG += " -DLUA_LIBRARY='" + install_dir + "/lib/luad.lib'"
 
     if(dict_config['arch']=="unix"):
         STR_CFG += ' -DOSG_USE_UTF8_FILENAME=0'
@@ -95,7 +100,8 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         STR_CFG += " -DGDAL_INCLUDE_DIR='" + install_dir + "/include/gdal'"
         STR_CFG += " -DOPENEXR_INCLUDE_DIR='" + install_dir + "/include'"
         STR_CFG += " -DGIFLIB_INCLUDE_DIR='" + install_dir + "/include'"
-    
+        STR_CFG += " -DLUA_INCLUDE_DIR='" + install_dir + "/include'"
+        
         # STR_CFG += ' -DNVTT_SHARED=1'
         
         if(dict_config['static']):
@@ -150,7 +156,8 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         STR_CFG += " -DGDAL_INCLUDE_DIR='" + install_dir + "/include/gdal'"
         STR_CFG += " -DOPENEXR_INCLUDE_DIR='" + install_dir + "/include'"
         STR_CFG += " -DGIFLIB_INCLUDE_DIR='" + install_dir + "/include'"
-    
+        STR_CFG += " -DLUA_INCLUDE_DIR='" + install_dir + "/include'"
+        
         # STR_CFG += ' -DNVTT_SHARED=1'
         
         if(dict_config['static']):
@@ -288,6 +295,7 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         STR_CFG += " -DGDAL_INCLUDE_DIR='" + install_dir + "/include/gdal'"
         STR_CFG += " -DOPENEXR_INCLUDE_DIR='" + install_dir + "/include'"
         STR_CFG += " -DGIFLIB_INCLUDE_DIR='" + install_dir + "/include'"
+        STR_CFG += " -DLUA_INCLUDE_DIR='" + install_dir + "/include'"
         
         STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/libgdal31.a'"
                     
