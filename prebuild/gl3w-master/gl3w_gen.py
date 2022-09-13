@@ -31,6 +31,7 @@ from __future__ import print_function
 import argparse
 import os
 import re
+import ssl
 
 # Try to import Python 3 library urllib.request
 # and if it fails, fall back to Python 2 urllib2
@@ -86,6 +87,8 @@ def download(url, dst):
     if os.path.exists(dst):
         print('Reusing {0}...'.format(dst))
         return
+
+    ssl._create_default_https_context = ssl._create_unverified_context
 
     print('Downloading {0}...'.format(dst))
     web = urllib2.urlopen(urllib2.Request(url, headers={'User-Agent': 'Mozilla/5.0'}))
