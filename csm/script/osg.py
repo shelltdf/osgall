@@ -16,6 +16,7 @@ def getDependency( str_name ,getDependency):
     list_name = addDependency("libtiff" , list_name,getDependency)
     list_name = addDependency("lua" , list_name,getDependency)
     list_name = addDependency("liblas" , list_name,getDependency) #no support ndk
+    list_name = addDependency("gl3w" , list_name,getDependency) # support glcore
 
     return list_name + [str_name]
     
