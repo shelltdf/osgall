@@ -20,6 +20,9 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         
     STR_CFG = ''
 
+    if( GL_VER == 3 ):
+        STR_CFG += ' -DOPENGL_INCLUDE_DIR=' + install_dir + '/include/gl3w'
+        
     if(dict_config['arch'][:2]=="vs"):
         STR_CFG += ' -D3rdPartyRoot=' + install_dir + '/'
         STR_CFG += ' -DGDAL_INCLUDE_DIR=' + install_dir + '/include/gdal'

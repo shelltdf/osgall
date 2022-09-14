@@ -25,5 +25,5 @@ ANDROID_ABI = "arm64-v8a" # armeabi-v7a arm64-v8a
 
 ANDROID_LIB_NAME = 'aarch64-linux-android'
 
-GL_VER = 0 # 0-AUTO 1-GL1 2-GL2 3-GL3
+GL_VER = 3 # 0-AUTO 1-GL1 2-GL2 3-GL3
 GLES_VER = 0 # 0-GL 1-GLES1 2-GLES2 3-GLES3

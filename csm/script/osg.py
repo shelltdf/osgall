@@ -51,7 +51,7 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     if( GL_VER == 3 ):
         STR_CFG += " -DOPENGL_PROFILE=\"GLCORE\""   
         # STR_CFG += ' -DGLCORE_ROOT=' + os.getcwd() + '/../../../3rdparty/include'   
-        STR_CFG += ' -DGLCORE_INCLUDE_DIR=' + os.getcwd() + '/../../../3rdparty/include'   
+        STR_CFG += ' -DGLCORE_INCLUDE_DIR=' + install_dir + '/include/gl3w'   
         
     STR_CFG += ' -DBUILD_OSG_EXAMPLES=0'
     if(dict_config['arch'][:2]=="vs"):

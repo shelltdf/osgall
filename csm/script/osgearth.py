@@ -29,6 +29,9 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     # STR_CFG += " -DINSTALL_TO_OSG_DIR=1"
     STR_CFG += " -DAPPEND_OPENSCENEGRAPH_VERSION=1"
     
+    if( GL_VER == 3 ):
+        STR_CFG += ' -DGLCORE_INCLUDE_DIR=' + install_dir + '/include/gl3w'
+        
     if(dict_config['arch'][:2]=="vs"):
     
         if(dict_config['static']):
