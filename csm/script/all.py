@@ -78,6 +78,7 @@ def getDependency( str_name ,getDependency):
     list_name = addDependency("spirvcross" , list_name,getDependency)
     
     list_name = addDependency("gl3w" , list_name,getDependency)
+    list_name = addDependency("httplib" , list_name,getDependency)
     
     
     return list_name + [str_name]
