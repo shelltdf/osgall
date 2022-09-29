@@ -14,16 +14,15 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         # download_source(str_name,"https://github.com/google/googletest.git")
         # return
         
-    # STR_CGG = ''
-    # if(dict_config['static']):
-        # STR_CGG += ''
-    # else:
-        # STR_CGG += ''
-    
+    STR_CFG = ''
+    if(dict_config['static']):
+        STR_CFG += ' -Dgtest_force_shared_crt=1'
+    else:
+        STR_CFG += ' -Dgtest_force_shared_crt=1'
     
     source_dir = os.getcwd() + '/../prebuild/googletest-master'
     
-    configure(str_name,dict_config,"","",source_dir)
+    configure(str_name,dict_config,STR_CFG,"",source_dir)
     build(str_name,dict_config)
     install(str_name,dict_config)
     

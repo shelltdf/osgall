@@ -36,6 +36,10 @@ include_directories(${GDAL_ROOT_SOURCE_DIR}/gcore)
 include_directories(${JPEG_INCLUDE_DIR})
 include_directories(${GDAL_ROOT_SOURCE_DIR}/frmts/mem)
 
+if(GDAL_BUILD_SHARED)
+else(GDAL_BUILD_SHARED)
+    ADD_DEFINITIONS(-DJPEG_LIBRARY_STATIC)
+endif(GDAL_BUILD_SHARED)
 
 set(LIB_CSOURCES
 	vsidataio.cpp
