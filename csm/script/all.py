@@ -80,6 +80,10 @@ def getDependency( str_name ,getDependency):
     list_name = addDependency("gl3w" , list_name,getDependency)
     list_name = addDependency("httplib" , list_name,getDependency)
     
+    list_name = addDependency("basisuniversal" , list_name,getDependency)
+    list_name = addDependency("libktx" , list_name,getDependency)
+    list_name = addDependency("openctm" , list_name,getDependency)
+    
     
     return list_name + [str_name]
     
