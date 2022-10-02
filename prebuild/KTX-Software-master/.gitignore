@@ -1,0 +1,54 @@
+# Copyright 2015-2020 The Khronos Group Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+# vi
+.*.swp
+*~
+*.bak
+
+/CMakeUserPresets.json
+/build*/
+/install*/
+
+# /include/
+/include/imdebug.h
+
+# /lib/
+/lib/astc-encoder/.gitmodules
+/lib/astc-encoder/Source/GoogleTest
+/lib/basisu/bin_osx
+/lib/basisu/bin
+/lib/basisu/build
+/lib/src
+
+# /testimages/
+/testimages/*.png
+/testimages/Thumbs.db
+/testimages/hi_mark.ppm
+/testimages/hi_mark_sq.ppm
+/testimages/hi_mark_sq_unpack_alignment_1.ktx
+
+/.project
+
+# macOS noise
+.DS_Store
+
+# version files
+version.h
+
+# Visual Studio
+.vs/
+CMakeSettings.json
+
+# Build bindings & maven
+/interface/java_binding/build/
+/interface/java_binding/target/
+/interface/java_binding/libktx.iml
+
+# CLion
+.idea
+cmake-build-*
+
+# Temps used for Windows signing on CI
+appveyor-tools
+the_khronos_group_inc.p12

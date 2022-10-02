@@ -1,0 +1,9 @@
+# Copyright 2020 The Khronos Group Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+libktx.js
+libktx.wasm
+msc_basis_transcoder.js
+msc_basis_transcoder.wasm
+
+libktx-webgl/ktx_app.png

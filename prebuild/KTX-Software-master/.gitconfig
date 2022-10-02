@@ -1,0 +1,11 @@
+# Copyright 2016-2020 The Khronos Group Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+# Filters used by KTX repo
+[filter "keyworder"]
+    smudge = bash expand_kw %f
+    clean = bash -c \"sed -e 's/\\$Date.*\\$/\\$Date\\$/'\"
+
+# Needed to avoid merge conflicts
+[merge]
+    renormalize = true

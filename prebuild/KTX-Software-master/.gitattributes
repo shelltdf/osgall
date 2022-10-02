@@ -1,0 +1,77 @@
+# Copyright 2015-2020 The Khronos Group Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+# Set default behaviour, in case users don't have core.autocrlf set.
+# N.B. This only causes normalization of files to LF on commit. It says nothing
+# about working directory line endings.
+* text=auto
+
+# Explicitly declare text files we want to always be normalized and converted
+# to native line endings on checkout.
+*.cpp text
+*.cxx text
+*.c++ text
+*.c text
+*.h text
+*.inl text
+*.json text
+
+# Declare files that will always have CRLF line endings on checkout.
+*.bat text eol=crlf
+*.sln text eol=crlf
+*.vcproj text eol=crlf
+*.vcxproj text eol=crlf
+*.vcxproj.filters text eol=crlf
+*.vsprops text eol=crlf
+build/msvs/* eol=crlf
+
+# Denote all files that are truly binary and should not be modified.
+*.ktx binary
+*.ktx2 binary
+*.jpg binary
+*.lib binary
+*.png binary
+*.pspimage binary
+
+# Force line endings for unix shell scripts and other specific files
+tests/toktx-tests eol=lf
+expandkw eol=lf
+mkversion eol=lf
+.ktx-stamp eol=lf
+GNUmakefile eol=lf
+
+# Keyword expansion
+GNUmakefile ident
+TODO.md filter=keyworder
+lib/*.[ch] ident
+lib/*.cxx ident
+lib/mainpage.md filter=keyworder
+pkgdoc/pages.md filter=keyworder
+tests/loadtests/common/at.[ch] ident
+tests/loadtests/common/egltowgl.c ident
+tests/loadtests/gles1/*.c ident
+tests/loadtests/shader-based/*.c ident
+tools/ktx2ktx2/ktx2ktx2.cpp ident
+tools/ktxinfo/ktxinfo.cpp ident
+tools/toktx/toktx.cpp filter=keyworder ident
+
+# LFS attributes
+*.a filter=lfs -text
+*.dll filter=lfs -text
+*.dylib filter=lfs -text
+*.lib filter=lfs -text
+*.pdb filter=lfs -text
+# Use LFS only on the actual shared object. *.so and
+# *.so.? are symbolic links to *.so.?.?.?.
+*.so.*.*.* filter=lfs -text
+# Because of the / in the middle of this path, we need
+# to prefix with '**/' otherwise git will try to match
+# the path relative to this .gitattributes file.
+**/*.framework/[Vv]ersions/[A-Za-z]/* filter=lfs -text
+# Large images. Well they're not all large but trying to put
+# only the truly large ones in LFS is too fragile.
+tests/testimages/*.ktx filter=lfs -text
+tests/testimages/*.ktx2 filter=lfs -text
+tests/srcimages/**/*.jpg filter=lfs -text
+tests/srcimages/**/*.png filter=lfs -text
+tests/webgl/**/*.ktx2 filter=lfs -text
