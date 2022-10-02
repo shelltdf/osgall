@@ -53,7 +53,6 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         # STR_CFG += ' -DGLCORE_ROOT=' + os.getcwd() + '/../../../3rdparty/include'   
         STR_CFG += ' -DGLCORE_INCLUDE_DIR=' + install_dir + '/include/gl3w'   
         
-    STR_CFG += ' -DBUILD_OSG_EXAMPLES=0'
     if(dict_config['arch'][:2]=="vs"):
         STR_CFG += ' -DOSG_USE_UTF8_FILENAME=1'
         
@@ -73,7 +72,7 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += ' -DOSG_GL_LIBRARY_STATIC=0'
         else:
             STR_CFG += ' -DBUILD_OSG_APPLICATIONS=1'
-            STR_CFG += ' -DBUILD_OSG_EXAMPLES=0'
+            STR_CFG += ' -DBUILD_OSG_EXAMPLES=1'
             
             STR_CFG += ' -DDYNAMIC_OPENSCENEGRAPH=1'
             STR_CFG += ' -DDYNAMIC_OPENTHREADS=1'
