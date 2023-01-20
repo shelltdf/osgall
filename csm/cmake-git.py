@@ -198,6 +198,18 @@ def main():
         
     print (dict_config)
     
+    title_info = dict_config['arch']
+    if(dict_config['dynamic']):
+        title_info += ' dynamic'
+    else:
+        title_info += ' static'
+    if(dict_config['debug']):
+        title_info += ' debug'
+    elif(dict_config['debuginfo']):
+        title_info += ' debuginfo'
+    else:
+        title_info += ' release'
+    
     if(ARG_ONLIY):
     
         getLibrary( ARG_NAME , ARG_CMD == "source" , dict_config )
@@ -209,9 +221,12 @@ def main():
         print ("Dependency -> " + str(list_name))
         
         # download and build install
+        name_index = 0
         for x in list_name:
             print("==> " + x)
+            script._common.TITLE = "[" + str(name_index) + "/" + str(len(list_name)) + "]" + ":" + x + " " + title_info
             getLibrary( x , ARG_CMD == "source" , dict_config )
+            name_index+=1
     
     
 if __name__ == "__main__":

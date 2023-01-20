@@ -10,11 +10,16 @@ from ._config import *
 # Debug;Release;MinSizeRel;RelWithDebInfo
 
 CWD = ""
+TITLE = ""
 
 def my_exec( str_cmd ):
     print ("exec - "  + str_cmd)
     
+    global TITLE
+    
     if(True):
+        if(len(TITLE)>0):
+            os.system("title "+ TITLE)
         os.system(str_cmd)
     else:
         ps = subprocess.Popen(str_cmd)

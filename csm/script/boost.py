@@ -24,7 +24,8 @@ def SBI( str_name , b_download ,dict_config, getLibrary ):
         # download_source(str_name,"https://github.com/boostorg/boost.git",'master','boost-1.67.0')
         
         # return
-        
+    
+    '''
     BOOST_ARCH = 'x86' # -march setting
     BOOST_ADDRESS_MODEL = '64'  # 32 64
 
@@ -132,5 +133,32 @@ def SBI( str_name , b_download ,dict_config, getLibrary ):
     # print dist_dir
     # copyfiles(source_dir,dist_dir+"/include/","*.hpp")
     
+    '''
     
+    STR_CFG = ''
+    if(dict_config['arch'][:2]=="vs"):
+        # STR_CFG += '-DFREEGLUT_BUILD_DEMOS=0 -DINSTALL_PDB=0'
+        if(dict_config['static']):
+            # STR_CFG += " -DFREEGLUT_BUILD_STATIC_LIBS=1"
+            # STR_CFG += " -DFREEGLUT_BUILD_SHARED_LIBS=0"
+            pass
+        else:
+            # STR_CFG += " -DFREEGLUT_BUILD_SHARED_LIBS=1"
+            # STR_CFG += " -DFREEGLUT_BUILD_STATIC_LIBS=0"
+            pass
+    
+    if(dict_config['arch']=="ndk"):
+        pass
+        
+    if(dict_config['arch']=="em"):
+        # STR_CFG += '-DFREEGLUT_BUILD_DEMOS=0 -DINSTALL_PDB=0'
+        # STR_CFG += " -DFREEGLUT_BUILD_STATIC_LIBS=1"
+        # STR_CFG += " -DFREEGLUT_BUILD_SHARED_LIBS=0"
+        pass
+    
+    source_dir = os.getcwd() + '/../prebuild/boost_1_82_0'
+    
+    configure(str_name,dict_config,STR_CFG,"",source_dir)
+    build(str_name,dict_config)
+    install(str_name,dict_config)
     

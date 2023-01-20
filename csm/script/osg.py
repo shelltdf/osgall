@@ -56,6 +56,8 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     if(dict_config['arch'][:2]=="vs"):
         STR_CFG += ' -DOSG_USE_UTF8_FILENAME=1'
         
+        # STR_CFG += ' -DOPENTHREADS_ATOMIC_USE_MUTEX=1'
+        
         STR_CFG += " -DGDAL_INCLUDE_DIR='" + install_dir + "/include/gdal'"
         STR_CFG += " -DOPENEXR_INCLUDE_DIR='" + install_dir + "/include'"
         STR_CFG += " -DGIFLIB_INCLUDE_DIR='" + install_dir + "/include'"
