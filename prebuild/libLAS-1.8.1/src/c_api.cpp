@@ -498,7 +498,7 @@ LAS_DLL LASErrorEnum LASReader_SetOutputSRS(LASReaderH hReader, const LASSRSH hS
         
         transforms.erase( std::remove_if( transforms.begin(), 
                                   transforms.end(),
-                                  boost::bind( &IsReprojectionTransform, _1 ) ),
+                                  boost::bind( &IsReprojectionTransform, boost::placeholders::_1 ) ),
                   transforms.end());
         
         liblas::TransformPtr srs_transform = liblas::TransformPtr(new liblas::ReprojectionTransform(in_ref, *out_ref, &h));
@@ -1840,7 +1840,7 @@ LAS_DLL LASErrorEnum LASWriter_SetOutputSRS(LASWriterH hWriter, const LASSRSH hS
         
         transforms.erase( std::remove_if( transforms.begin(), 
                                   transforms.end(),
-                                  boost::bind( &IsReprojectionTransform, _1 ) ),
+                                  boost::bind( &IsReprojectionTransform, boost::placeholders::_1 ) ),
                   transforms.end());
         
         liblas::TransformPtr srs_transform = liblas::TransformPtr(new liblas::ReprojectionTransform(in_ref, *out_ref, &h));

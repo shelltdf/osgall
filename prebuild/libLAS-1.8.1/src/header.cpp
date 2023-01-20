@@ -610,7 +610,7 @@ void Header::DeleteVLRs(std::string const& name, uint16_t id)
 
     m_vlrs.erase( std::remove_if( m_vlrs.begin(),
                                   m_vlrs.end(),
-                                  boost::bind( &SameVLRs, name, id, _1 ) ),
+                                  boost::bind( &SameVLRs, name, id, boost::placeholders::_1 ) ),
                   m_vlrs.end());
 
     m_recordsCount = static_cast<uint32_t>(m_vlrs.size());
