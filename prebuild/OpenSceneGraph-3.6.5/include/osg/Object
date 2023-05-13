@@ -19,6 +19,11 @@
 #include <osg/ref_ptr>
 #include <osg/Notify>
 
+//#define USE_OSG_PATCH
+#ifdef USE_OSG_PATCH
+#include <osg/ObjectUID.h>
+#endif
+
 #include <string>
 #include <vector>
 
@@ -59,16 +64,29 @@ class ValueObject;
 */
 class OSG_EXPORT Object : public Referenced
 {
-    public:
+#ifdef USE_OSG_PATCH
+#include <osg/ObjectPatch.h>
+#endif
 
+    public:
 
         /** Construct an object. Note Object is a pure virtual base class
             and therefore cannot be constructed on its own, only derived
             classes which override the clone and className methods are
             concrete classes and can be constructed.*/
-        inline Object():Referenced(),_dataVariance(UNSPECIFIED), _userDataContainer(0) {}
+        inline Object():Referenced(),_dataVariance(UNSPECIFIED), _userDataContainer(0)
+        { 
+#ifdef USE_OSG_PATCH
+            UID_increment
+#endif
+        }
 
-        inline explicit Object(bool threadSafeRefUnref):Referenced(threadSafeRefUnref),_dataVariance(UNSPECIFIED),_userDataContainer(0) {}
+        inline explicit Object(bool threadSafeRefUnref):Referenced(threadSafeRefUnref),_dataVariance(UNSPECIFIED),_userDataContainer(0) 
+        {
+#ifdef USE_OSG_PATCH
+            UID_increment
+#endif
+        }
 
         /** Copy constructor, optional CopyOp object can be used to control
           * shallow vs deep copying of dynamic data.*/

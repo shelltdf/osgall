@@ -309,6 +309,8 @@ INCLUDE_DIRECTORIES(${OpenSceneGraph_SOURCE_DIR}/include/)
 
 INCLUDE_DIRECTORIES(SYSTEM ${OPENGL_INCLUDE_DIR})
 
+INCLUDE_DIRECTORIES(${ZLIB_INCLUDE_DIR})
+
 # Common global definitions
 #ADD_DEFINITIONS(-D)
 # Platform specific definitions

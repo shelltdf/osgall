@@ -15,7 +15,9 @@
 
 namespace osg
 {
-
+#ifdef USE_OSG_PATCH
+    UID_implementation
+#endif
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // Object
@@ -37,6 +39,10 @@ Object::Object(const Object& obj,const CopyOp& copyop):
             setUserDataContainer(obj._userDataContainer);
         }
     }
+
+#ifdef USE_OSG_PATCH
+    UID_increment
+#endif
 }
 
 Object::~Object()
