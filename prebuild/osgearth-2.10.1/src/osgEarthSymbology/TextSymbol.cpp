@@ -220,7 +220,7 @@ TextSymbol::parseSLD(const Config& c, Style& style)
         style.getOrCreate<TextSymbol>()->fill()->color() = Color(c.value());
     }
     else if ( match(c.key(), "text-fill-opacity") ) {
-        style.getOrCreate<TextSymbol>()->fill()->color().a() = as<float>( c.value(), 1.0f );
+        style.getOrCreate<TextSymbol>()->fill()->color().a() = osgEarth::as<float>( c.value(), 1.0f );
     }
     else if ( match(c.key(), "text-size") ) {
         style.getOrCreate<TextSymbol>()->size() = NumericExpression( c.value() );
@@ -232,7 +232,7 @@ TextSymbol::parseSLD(const Config& c, Style& style)
         style.getOrCreate<TextSymbol>()->halo()->color() = htmlColorToVec4f( c.value() );
     }
     else if ( match(c.key(), "text-halo-offset") ) {
-        style.getOrCreate<TextSymbol>()->haloOffset() = as<float>(c.value(), defaults.haloOffset().get() );
+        style.getOrCreate<TextSymbol>()->haloOffset() = osgEarth::as<float>(c.value(), defaults.haloOffset().get() );
     }
     else if ( match(c.key(), "text-halo-backdrop-type") ) {
         if      ( match(c.value(), "right-bottom") )
@@ -332,22 +332,22 @@ TextSymbol::parseSLD(const Config& c, Style& style)
             style.getOrCreate<TextSymbol>()->encoding() = TextSymbol::ENCODING_ASCII;
     }
     else if ( match(c.key(), "text-declutter") ) {
-        style.getOrCreate<TextSymbol>()->declutter() = as<bool>(c.value(), defaults.declutter().get() );
+        style.getOrCreate<TextSymbol>()->declutter() = osgEarth::as<bool>(c.value(), defaults.declutter().get() );
     }
     else if ( match(c.key(), "text-occlusion-cull") ) {
-        style.getOrCreate<TextSymbol>()->occlusionCull() = as<bool>(c.value(), defaults.occlusionCull().get() );
+        style.getOrCreate<TextSymbol>()->occlusionCull() = osgEarth::as<bool>(c.value(), defaults.occlusionCull().get() );
     }
     else if ( match(c.key(), "text-occlusion-cull-altitude") ) {
-        style.getOrCreate<TextSymbol>()->occlusionCullAltitude() = as<double>(c.value(), defaults.occlusionCullAltitude().get() );
+        style.getOrCreate<TextSymbol>()->occlusionCullAltitude() = osgEarth::as<double>(c.value(), defaults.occlusionCullAltitude().get() );
     }
     else if ( match(c.key(), "text-script") ) {
         style.getOrCreate<TextSymbol>()->script() = StringExpression(c.value());
     }
     else if ( match(c.key(), "text-offset-x") ) {
-        style.getOrCreate<TextSymbol>()->pixelOffset()->x() = as<double>(c.value(), defaults.pixelOffset()->x() );
+        style.getOrCreate<TextSymbol>()->pixelOffset()->x() = osgEarth::as<double>(c.value(), defaults.pixelOffset()->x() );
     }
     else if ( match(c.key(), "text-offset-y") ) {
-        style.getOrCreate<TextSymbol>()->pixelOffset()->y() = as<double>(c.value(), defaults.pixelOffset()->y() );
+        style.getOrCreate<TextSymbol>()->pixelOffset()->y() = osgEarth::as<double>(c.value(), defaults.pixelOffset()->y() );
     }
     else if ( match(c.key(), "text-rotation") ) {
         style.getOrCreate<TextSymbol>()->onScreenRotation() = NumericExpression( c.value() );

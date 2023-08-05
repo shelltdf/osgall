@@ -45,7 +45,7 @@ namespace osgEarth { namespace Drivers { namespace MPTerrainEngine
             _profiling = 0;
             const char* p = ::getenv("OSGEARTH_MP_PROFILE");
             if ( p )
-                _profiling = as<int>(std::string(p), 1);
+                _profiling = osgEarth::as<int>(std::string(p), 1);
         }
 
         virtual const char* className() const

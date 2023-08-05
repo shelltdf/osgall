@@ -77,7 +77,7 @@ ExtrusionSymbol::parseSLD(const Config& c, Style& style)
         style.getOrCreate<ExtrusionSymbol>()->heightExpression() = NumericExpression(c.value());
     }
     else if ( match(c.key(), "extrusion-flatten") ) {
-        style.getOrCreate<ExtrusionSymbol>()->flatten() = as<bool>(c.value(), true);
+        style.getOrCreate<ExtrusionSymbol>()->flatten() = osgEarth::as<bool>(c.value(), true);
     }
     else if ( match(c.key(), "extrusion-wall-style") ) {
         style.getOrCreate<ExtrusionSymbol>()->wallStyleName() = c.value();
@@ -86,7 +86,7 @@ ExtrusionSymbol::parseSLD(const Config& c, Style& style)
         style.getOrCreate<ExtrusionSymbol>()->roofStyleName() = c.value();
     }
     else if ( match(c.key(), "extrusion-wall-gradient") ) {
-        style.getOrCreate<ExtrusionSymbol>()->wallGradientPercentage() = as<float>(c.value(), 0.0f);
+        style.getOrCreate<ExtrusionSymbol>()->wallGradientPercentage() = osgEarth::as<float>(c.value(), 0.0f);
     }
     else if ( match(c.key(), "extrusion-script") ) {
         style.getOrCreate<ExtrusionSymbol>()->script() = StringExpression(c.value());

@@ -167,10 +167,10 @@ IconSymbol::parseSLD(const Config& c, Style& style)
             style.getOrCreate<IconSymbol>()->placement() = ModelSymbol::PLACEMENT_CENTROID;
     }
     else if ( match(c.key(), "icon-density") ) {
-        style.getOrCreate<IconSymbol>()->density() = as<float>(c.value(), *defaults.density() );
+        style.getOrCreate<IconSymbol>()->density() = osgEarth::as<float>(c.value(), *defaults.density() );
     }
     else if ( match(c.key(), "icon-random-seed") ) {
-        style.getOrCreate<IconSymbol>()->randomSeed() = as<unsigned>(c.value(), *defaults.randomSeed());
+        style.getOrCreate<IconSymbol>()->randomSeed() = osgEarth::as<unsigned>(c.value(), *defaults.randomSeed());
     }
     else if ( match(c.key(), "icon-scale") ) {
         style.getOrCreate<IconSymbol>()->scale() = NumericExpression(c.value());
@@ -199,13 +199,13 @@ IconSymbol::parseSLD(const Config& c, Style& style)
         style.getOrCreate<IconSymbol>()->heading() = NumericExpression(c.value());
     }
     else if ( match(c.key(), "icon-declutter") ) {
-        style.getOrCreate<IconSymbol>()->declutter() = as<bool>(c.value(), *defaults.declutter());
+        style.getOrCreate<IconSymbol>()->declutter() = osgEarth::as<bool>(c.value(), *defaults.declutter());
     }
     else if ( match(c.key(), "icon-occlusion-cull") ) {
-        style.getOrCreate<IconSymbol>()->occlusionCull() = as<bool>(c.value(), *defaults.occlusionCull());
+        style.getOrCreate<IconSymbol>()->occlusionCull() = osgEarth::as<bool>(c.value(), *defaults.occlusionCull());
     }
     else if ( match(c.key(), "icon-occlusion-cull-altitude") ) {
-        style.getOrCreate<IconSymbol>()->occlusionCullAltitude() = as<float>(c.value(), *defaults.occlusionCullAltitude());
+        style.getOrCreate<IconSymbol>()->occlusionCullAltitude() = osgEarth::as<float>(c.value(), *defaults.occlusionCullAltitude());
     }
     else if ( match(c.key(), "icon-script") ) {
         style.getOrCreate<IconSymbol>()->script() = StringExpression(c.value());

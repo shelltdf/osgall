@@ -272,7 +272,7 @@ RexTerrainEngineNode::setMap(const Map* map, const TerrainOptions& options)
     const char* val = ::getenv("OSGEARTH_EXPIRATION_THRESHOLD");
     if ( val )
     {
-        _terrainOptions.expirationThreshold() = as<unsigned>(val, _terrainOptions.expirationThreshold().get());
+        _terrainOptions.expirationThreshold() = osgEarth::as<unsigned>(val, _terrainOptions.expirationThreshold().get());
         OE_INFO << LC << "Expiration threshold set by env var = " << _terrainOptions.expirationThreshold().get() << "\n";
     }
 

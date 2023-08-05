@@ -289,7 +289,7 @@ TerrainLayer::open()
         char const* l2env = ::getenv( "OSGEARTH_L2_CACHE_SIZE" );
         if ( l2env )
         {
-            l2CacheSize = as<int>( std::string(l2env), 0 );
+            l2CacheSize = osgEarth::as<int>( std::string(l2env), 0 );
             OE_INFO << LC << "L2 cache size set from environment = " << l2CacheSize << "\n";
         }
 

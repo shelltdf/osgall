@@ -148,7 +148,7 @@ AltitudeSymbol::parseSLD(const Config& c, Style& style)
             style.getOrCreate<AltitudeSymbol>()->binding() = BINDING_CENTROID;
     }
     else if ( match(c.key(), "altitude-resolution") ) {
-        style.getOrCreate<AltitudeSymbol>()->clampingResolution() = as<float>( c.value(), 0.0f );
+        style.getOrCreate<AltitudeSymbol>()->clampingResolution() = osgEarth::as<float>( c.value(), 0.0f );
     }
     else if ( match(c.key(), "altitude-offset") ) {
         style.getOrCreate<AltitudeSymbol>()->verticalOffset() = NumericExpression( c.value() );

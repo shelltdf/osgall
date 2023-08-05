@@ -64,7 +64,7 @@ PolygonSymbol::parseSLD(const Config& c, Style& style)
         style.getOrCreate<PolygonSymbol>()->fill()->color() = Color(c.value());
     }
     else if ( match(c.key(), "fill-opacity") ) {
-        style.getOrCreate<PolygonSymbol>()->fill()->color().a() = as<float>( c.value(), 1.0f );
+        style.getOrCreate<PolygonSymbol>()->fill()->color().a() = osgEarth::as<float>( c.value(), 1.0f );
     }
     else if ( match(c.key(), "fill-script") ) {
         style.getOrCreate<PolygonSymbol>()->script() = StringExpression(c.value());

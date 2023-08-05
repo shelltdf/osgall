@@ -379,7 +379,7 @@ public:
             for (FeatureList::iterator itr = features.begin(); itr != features.end(); ++itr)
             {
                 std::string attr = itr->get()->getString(_options.fidAttribute().get());                
-                FeatureID fid = as<long>(attr, 0);
+                FeatureID fid = osgEarth::as<long>(attr, 0);
                 itr->get()->setFID( fid );
             }
         }

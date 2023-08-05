@@ -137,10 +137,10 @@ ModelSymbol::parseSLD(const Config& c, Style& style)
             style.getOrCreate<ModelSymbol>()->placement() = ModelSymbol::PLACEMENT_CENTROID;
     }
     else if ( match(c.key(), "model-density") ) {
-        style.getOrCreate<ModelSymbol>()->density() = as<float>(c.value(), 1.0f);
+        style.getOrCreate<ModelSymbol>()->density() = osgEarth::as<float>(c.value(), 1.0f);
     }
     else if ( match(c.key(), "model-random-seed") ) {
-        style.getOrCreate<ModelSymbol>()->randomSeed() = as<unsigned>(c.value(), 0);
+        style.getOrCreate<ModelSymbol>()->randomSeed() = osgEarth::as<unsigned>(c.value(), 0);
     }
     else if ( match(c.key(), "model-scale") ) {
         if ( match(c.value(), "auto") )
@@ -149,10 +149,10 @@ ModelSymbol::parseSLD(const Config& c, Style& style)
             style.getOrCreate<ModelSymbol>()->scale() = NumericExpression(c.value());
     }
 	else if (match(c.key(), "model-min-auto-scale")) {
-		style.getOrCreate<ModelSymbol>()->minAutoScale() = as<double>(c.value(), 0.0f);
+		style.getOrCreate<ModelSymbol>()->minAutoScale() = osgEarth::as<double>(c.value(), 0.0f);
 	}
 	else if (match(c.key(), "model-max-auto-scale")) {
-		style.getOrCreate<ModelSymbol>()->maxAutoScale() = as<double>(c.value(), DBL_MAX);
+		style.getOrCreate<ModelSymbol>()->maxAutoScale() = osgEarth::as<double>(c.value(), DBL_MAX);
 	}
     else if ( match(c.key(), "model-scale-x") ) {
         style.getOrCreate<ModelSymbol>()->scaleX() = NumericExpression(c.value());
@@ -173,10 +173,10 @@ ModelSymbol::parseSLD(const Config& c, Style& style)
         style.getOrCreate<ModelSymbol>()->name() = StringExpression(c.value());
     }
     else if ( match(c.key(), "model-max-size-x") ) {
-        style.getOrCreate<ModelSymbol>()->maxSizeX() = as<float>(c.value(), FLT_MAX);
+        style.getOrCreate<ModelSymbol>()->maxSizeX() = osgEarth::as<float>(c.value(), FLT_MAX);
     }
     else if ( match(c.key(), "model-max-size-y") ) {
-        style.getOrCreate<ModelSymbol>()->maxSizeY() = as<float>(c.value(), FLT_MAX);
+        style.getOrCreate<ModelSymbol>()->maxSizeY() = osgEarth::as<float>(c.value(), FLT_MAX);
     }
 }
 

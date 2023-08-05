@@ -351,7 +351,7 @@ MapNode::init()
         if ( _mapNodeOptions.overlayBlending().isSet() )
             draping->setOverlayBlending( *_mapNodeOptions.overlayBlending() );
         if ( envOverlayTextureSize )
-            draping->setTextureSize( as<int>(envOverlayTextureSize, 1024) );
+            draping->setTextureSize(osgEarth::as<int>(envOverlayTextureSize, 1024) );
         else if ( _mapNodeOptions.overlayTextureSize().isSet() )
             draping->setTextureSize( *_mapNodeOptions.overlayTextureSize() );
         if ( _mapNodeOptions.overlayMipMapping().isSet() )

@@ -100,13 +100,13 @@ RenderSymbol::parseSLD(const Config& c, Style& style)
     RenderSymbol defaults;
 
     if ( match(c.key(), "render-depth-test") ) {
-        style.getOrCreate<RenderSymbol>()->depthTest() = as<bool>(c.value(), *defaults.depthTest());
+        style.getOrCreate<RenderSymbol>()->depthTest() = osgEarth::as<bool>(c.value(), *defaults.depthTest());
     }
     else if ( match(c.key(), "render-lighting") ) {
-        style.getOrCreate<RenderSymbol>()->lighting() = as<bool>(c.value(), *defaults.lighting());
+        style.getOrCreate<RenderSymbol>()->lighting() = osgEarth::as<bool>(c.value(), *defaults.lighting());
     }
     else if ( match(c.key(), "render-depth-offset") ) {
-        style.getOrCreate<RenderSymbol>()->depthOffset()->enabled() = as<bool>(c.value(), *defaults.depthOffset()->enabled() );
+        style.getOrCreate<RenderSymbol>()->depthOffset()->enabled() = osgEarth::as<bool>(c.value(), *defaults.depthOffset()->enabled() );
     }
     else if ( match(c.key(), "render-depth-offset-min-bias") ) {
         float value; Units units;
@@ -130,28 +130,28 @@ RenderSymbol::parseSLD(const Config& c, Style& style)
             style.getOrCreate<RenderSymbol>()->depthOffset()->maxRange() = Distance(value, units);
     }
     else if ( match(c.key(), "render-depth-offset-auto") ) {
-        style.getOrCreate<RenderSymbol>()->depthOffset()->automatic() = as<bool>(c.value(), *defaults.depthOffset()->automatic() );
+        style.getOrCreate<RenderSymbol>()->depthOffset()->automatic() = osgEarth::as<bool>(c.value(), *defaults.depthOffset()->automatic() );
     }
     else if ( match(c.key(), "render-backface-culling") ) {
-        style.getOrCreate<RenderSymbol>()->backfaceCulling() = as<bool>(c.value(), *defaults.backfaceCulling() );
+        style.getOrCreate<RenderSymbol>()->backfaceCulling() = osgEarth::as<bool>(c.value(), *defaults.backfaceCulling() );
     }
     else if ( match(c.key(), "render-order") ) {
         style.getOrCreate<RenderSymbol>()->order() = !c.value().empty() ? NumericExpression(c.value()) : *defaults.order();
     }
     else if ( match(c.key(), "render-clip-plane") ) {
-        style.getOrCreate<RenderSymbol>()->clipPlane() = as<unsigned>(c.value(), *defaults.clipPlane() );
+        style.getOrCreate<RenderSymbol>()->clipPlane() = osgEarth::as<unsigned>(c.value(), *defaults.clipPlane() );
     }
     else if ( match(c.key(), "render-min-alpha") ) {
-        style.getOrCreate<RenderSymbol>()->minAlpha() = as<float>(c.value(), *defaults.minAlpha() );
+        style.getOrCreate<RenderSymbol>()->minAlpha() = osgEarth::as<float>(c.value(), *defaults.minAlpha() );
     }
     else if ( match(c.key(), "render-bin") ) {
         style.getOrCreate<RenderSymbol>()->renderBin() = c.value();
     }
     else if ( match(c.key(), "render-transparent") ) {
-        style.getOrCreate<RenderSymbol>()->transparent() = as<bool>(c.value(), *defaults.transparent() );
+        style.getOrCreate<RenderSymbol>()->transparent() = osgEarth::as<bool>(c.value(), *defaults.transparent() );
     }
     else if (match(c.key(), "render-decal")) {
-        style.getOrCreate<RenderSymbol>()->decal() = as<bool>(c.value(), *defaults.decal());
+        style.getOrCreate<RenderSymbol>()->decal() = osgEarth::as<bool>(c.value(), *defaults.decal());
     }
     else if (match(c.key(), "render-max-crease-angle")) {
         float value; Units units;

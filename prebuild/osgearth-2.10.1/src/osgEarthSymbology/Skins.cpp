@@ -315,19 +315,19 @@ SkinSymbol::parseSLD(const Config& c, Style& style)
         style.getOrCreate<SkinSymbol>()->addTags( c.value() );
     }
     else if ( match(c.key(), "skin-tiled") ) {
-        style.getOrCreate<SkinSymbol>()->isTiled() = as<bool>( c.value(), false );
+        style.getOrCreate<SkinSymbol>()->isTiled() = osgEarth::as<bool>( c.value(), false );
     }
     else if ( match(c.key(), "skin-object-height") ) {
-        style.getOrCreate<SkinSymbol>()->objectHeight() = as<float>( c.value(), 0.0f );
+        style.getOrCreate<SkinSymbol>()->objectHeight() = osgEarth::as<float>( c.value(), 0.0f );
     }
     else if (match(c.key(), "skin-min-object-height") ) {
-        style.getOrCreate<SkinSymbol>()->minObjectHeight() = as<float>( c.value(), 0.0f );
+        style.getOrCreate<SkinSymbol>()->minObjectHeight() = osgEarth::as<float>( c.value(), 0.0f );
     }
     else if (match(c.key(), "skin-max-object-height") ) {
-        style.getOrCreate<SkinSymbol>()->maxObjectHeight() = as<float>( c.value(), 0.0f );
+        style.getOrCreate<SkinSymbol>()->maxObjectHeight() = osgEarth::as<float>( c.value(), 0.0f );
     }
     else if (match(c.key(), "skin-random-seed") ) {
-        style.getOrCreate<SkinSymbol>()->randomSeed() = as<unsigned>( c.value(), 0u );
+        style.getOrCreate<SkinSymbol>()->randomSeed() = osgEarth::as<unsigned>( c.value(), 0u );
     }
     else if (match(c.key(), "skin-name")) {
         style.getOrCreate<SkinSymbol>()->name() = StringExpression(c.value());

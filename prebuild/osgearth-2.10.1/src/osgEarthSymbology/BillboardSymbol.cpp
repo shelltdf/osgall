@@ -79,10 +79,10 @@ BillboardSymbol::parseSLD(const Config& c, Style& style)
         style.getOrCreate<BillboardSymbol>()->topURL()->setURIContext(c.referrer());
     }
     else if ( match(c.key(), "billboard-width") ) {
-        style.getOrCreate<BillboardSymbol>()->width() = as<float>(c.value(), 10.0f);
+        style.getOrCreate<BillboardSymbol>()->width() = osgEarth::as<float>(c.value(), 10.0f);
     }
     else if ( match(c.key(), "billboard-height") ) {
-        style.getOrCreate<BillboardSymbol>()->height() = as<float>(c.value(), 10.0f);
+        style.getOrCreate<BillboardSymbol>()->height() = osgEarth::as<float>(c.value(), 10.0f);
     }
 }
 

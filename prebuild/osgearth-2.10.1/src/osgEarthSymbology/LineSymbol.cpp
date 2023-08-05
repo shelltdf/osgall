@@ -90,7 +90,7 @@ LineSymbol::parseSLD(const Config& c, Style& style)
         style.getOrCreate<LineSymbol>()->stroke()->color() = Color(c.value());
     }
     else if ( match(c.key(), "stroke-opacity") ) {
-        style.getOrCreate<LineSymbol>()->stroke()->color().a() = as<float>( c.value(), 1.0f );
+        style.getOrCreate<LineSymbol>()->stroke()->color().a() = osgEarth::as<float>( c.value(), 1.0f );
     }
     else if ( match(c.key(), "stroke-width") ) {
         float width;
@@ -114,10 +114,10 @@ LineSymbol::parseSLD(const Config& c, Style& style)
             /*c.value() == "round"  ?*/ Stroke::LINEJOIN_ROUND;
     }
     else if ( match(c.key(), "stroke-rounding-ratio") ) {
-        style.getOrCreate<LineSymbol>()->stroke()->roundingRatio() = as<float>(c.value(), 0.4f);
+        style.getOrCreate<LineSymbol>()->stroke()->roundingRatio() = osgEarth::as<float>(c.value(), 0.4f);
     }
     else if ( match(c.key(), "stroke-tessellation-segments") ) {
-        style.getOrCreate<LineSymbol>()->tessellation() = as<unsigned>( c.value(), 0 );
+        style.getOrCreate<LineSymbol>()->tessellation() = osgEarth::as<unsigned>( c.value(), 0 );
     }
     else if ( match(c.key(), "stroke-tessellation-size") ) {
         float value;
@@ -127,17 +127,17 @@ LineSymbol::parseSLD(const Config& c, Style& style)
         }
     }        
     else if ( match(c.key(), "stroke-min-pixels") ) {
-        style.getOrCreate<LineSymbol>()->stroke()->minPixels() = as<float>(c.value(), 0.0f);
+        style.getOrCreate<LineSymbol>()->stroke()->minPixels() = osgEarth::as<float>(c.value(), 0.0f);
     }
     else if ( match(c.key(), "stroke-stipple-factor") ) {
-        style.getOrCreate<LineSymbol>()->stroke()->stippleFactor() = as<unsigned>(c.value(), 1);
+        style.getOrCreate<LineSymbol>()->stroke()->stippleFactor() = osgEarth::as<unsigned>(c.value(), 1);
     }
     else if ( match(c.key(), "stroke-stipple-pattern") ||
               match(c.key(), "stroke-stipple") ) {
-        style.getOrCreate<LineSymbol>()->stroke()->stipplePattern() = as<unsigned short>(c.value(), 0xFFFF);
+        style.getOrCreate<LineSymbol>()->stroke()->stipplePattern() = osgEarth::as<unsigned short>(c.value(), 0xFFFF);
     }
     else if ( match(c.key(), "stroke-crease-angle") ) {
-        style.getOrCreate<LineSymbol>()->creaseAngle() = as<float>(c.value(), 0.0);
+        style.getOrCreate<LineSymbol>()->creaseAngle() = osgEarth::as<float>(c.value(), 0.0);
     }
     else if ( match(c.key(), "stroke-script") ) {
         style.getOrCreate<LineSymbol>()->script() = StringExpression(c.value());
@@ -146,6 +146,6 @@ LineSymbol::parseSLD(const Config& c, Style& style)
         style.getOrCreate<LineSymbol>()->imageURI() = StringExpression(stripQuotes(c.value()), c.referrer());
     }
     else if (match(c.key(), "stroke-smooth")) {
-        style.getOrCreate<LineSymbol>()->stroke()->smooth() = as<bool>(c.value(), false);
+        style.getOrCreate<LineSymbol>()->stroke()->smooth() = osgEarth::as<bool>(c.value(), false);
     }
 }

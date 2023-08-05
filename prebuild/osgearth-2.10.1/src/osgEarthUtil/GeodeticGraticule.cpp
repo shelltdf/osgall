@@ -155,7 +155,7 @@ GeodeticGraticule::init()
         tok.tokenize(*options().resolutions(), tokens);
         for (unsigned int i = 0; i < tokens.size(); i++)
         {
-            double r = as<double>(tokens[i], -1.0);
+            double r = osgEarth::as<double>(tokens[i], -1.0);
             if (r > 0)
             {
                 _resolutions.push_back( r );

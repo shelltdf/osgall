@@ -71,7 +71,7 @@ _active        ( true )
     const char* maxsize = ::getenv(OSGEARTH_ENV_CACHE_MAX_SIZE_MB);
     if ( maxsize )
     {
-        unsigned mb = as<unsigned>(std::string(maxsize), 0u);
+        unsigned mb = osgEarth::as<unsigned>(std::string(maxsize), 0u);
         if ( mb > 0 )
         {
             _options.maxSizeMB() = mb;

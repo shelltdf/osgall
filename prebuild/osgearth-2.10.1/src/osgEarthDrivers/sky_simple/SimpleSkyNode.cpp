@@ -801,7 +801,7 @@ SimpleSkyNode::makeStars()
 {
     const char* magEnv = ::getenv("OSGEARTH_MIN_STAR_MAGNITUDE");
     if (magEnv)
-        _minStarMagnitude = as<float>(std::string(magEnv), -1.0f);
+        _minStarMagnitude = osgEarth::as<float>(std::string(magEnv), -1.0f);
     else
         _minStarMagnitude = -1.0f;
 

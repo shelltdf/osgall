@@ -68,16 +68,16 @@ PointSymbol::parseSLD(const Config& c, Style& style)
         style.getOrCreate<PointSymbol>()->fill()->color() = Color(c.value());
     }
     else if ( match(c.key(), "point-fill-opacity") ) {
-        style.getOrCreate<PointSymbol>()->fill()->color().a() = as<float>( c.value(), 1.0f );
+        style.getOrCreate<PointSymbol>()->fill()->color().a() = osgEarth::as<float>( c.value(), 1.0f );
     }
     else if ( match(c.key(), "point-size") ) {
-        style.getOrCreate<PointSymbol>()->size() = as<float>(c.value(), 1.0f);
+        style.getOrCreate<PointSymbol>()->size() = osgEarth::as<float>(c.value(), 1.0f);
     }
     else if ( match(c.key(), "point-script") ) {
         style.getOrCreate<PointSymbol>()->script() = StringExpression(c.value());
     }
     else if (match(c.key(), "point-smooth")) {
-        style.getOrCreate<PointSymbol>()->smooth() = as<bool>(c.value(), false);
+        style.getOrCreate<PointSymbol>()->smooth() = osgEarth::as<bool>(c.value(), false);
     }
 }
 

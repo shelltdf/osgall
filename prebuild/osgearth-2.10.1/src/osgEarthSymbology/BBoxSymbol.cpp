@@ -80,10 +80,10 @@ BBoxSymbol::parseSLD(const Config& c, Style& style)
         style.getOrCreate<BBoxSymbol>()->border()->color() = Color(c.value());
     }
     else if ( match(c.key(), "text-bbox-border-width") ) {
-        style.getOrCreate<BBoxSymbol>()->border()->width() = as<float>( c.value(), 1.0f );
+        style.getOrCreate<BBoxSymbol>()->border()->width() = osgEarth::as<float>( c.value(), 1.0f );
     }
     else if ( match(c.key(), "text-bbox-margin") ) {
-        style.getOrCreate<BBoxSymbol>()->margin() = as<float>(c.value(), 3.0f);
+        style.getOrCreate<BBoxSymbol>()->margin() = osgEarth::as<float>(c.value(), 3.0f);
     }
     else if ( match(c.key(), "text-bbox-geom") ) {
         if      ( match(c.value(), "box") )

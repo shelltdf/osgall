@@ -132,7 +132,7 @@ public:
                 }
             }
 
-            _tileSize = as<unsigned int>(tileCacheInfo.value("tilecols"), 256);
+            _tileSize = osgEarth::as<unsigned int>(tileCacheInfo.value("tilecols"), 256);
 
             std::string format = conf.child("cacheinfo").child("tileimageinfo").value("cachetileformat");
             if (format == "JPEG")
@@ -145,7 +145,7 @@ public:
                 _extension = "png";
             }
 
-            _bundleSize = as<unsigned int>(conf.child("cacheinfo").child("cachestorageinfo").value("packetsize"), 128);
+            _bundleSize = osgEarth::as<unsigned int>(conf.child("cacheinfo").child("cachestorageinfo").value("packetsize"), 128);
         }
     }
 

@@ -254,7 +254,7 @@ TileSource::open(const Mode&           openMode,
         char const* l2env = ::getenv( "OSGEARTH_L2_CACHE_SIZE" );
         if ( l2env )
         {
-            l2CacheSize = as<int>( std::string(l2env), 0 );
+            l2CacheSize = osgEarth::as<int>( std::string(l2env), 0 );
         }
 
         // Env cache-only mode also disables the L2 cache.
