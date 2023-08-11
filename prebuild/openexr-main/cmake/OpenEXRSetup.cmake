@@ -216,7 +216,7 @@ if(NOT TARGET PkgConfig::deflate AND NOT deflate_FOUND)
   set(EXR_DEFLATE_LIB)
 else()
   set(EXR_DEFLATE_INCLUDE_DIR)
-  set(EXR_DEFLATE_LIB PkgConfig::deflate)
+  # set(EXR_DEFLATE_LIB PkgConfig::deflate)
   set(EXR_DEFLATE_SOURCES)
 endif()
 
