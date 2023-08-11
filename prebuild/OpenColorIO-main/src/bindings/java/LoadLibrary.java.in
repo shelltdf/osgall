@@ -1,0 +1,15 @@
+// SPDX-License-Identifier: BSD-3-Clause
+// Copyright Contributors to the OpenColorIO Project.
+
+package org.OpenColorIO;
+
+public class LoadLibrary
+{
+    public LoadLibrary() { }
+    protected LoadLibrary(long impl) { m_impl = impl; }
+    public long m_impl = 0;
+    static
+    {
+        System.loadLibrary("OpenColorIO-JNI.@OpenColorIO_VERSION@");
+    }
+}
