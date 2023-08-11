@@ -5,20 +5,22 @@
 # Author: Mateusz Loskot <mateusz@loskot.net>
 #
 ###############################################################################
+CMAKE_MINIMUM_REQUIRED(VERSION 3.0.0)
+
 PROJECT(GeoTIFF)
+
+include(GNUInstallDirs)
 
 SET(GEOTIFF_LIB_NAME geotiff)
 SET(GEOTIFF_LIBRARY_TARGET geotiff_library)
 
 ##############################################################################
 # CMake settings
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6.0)
-
 SET(CMAKE_COLOR_MAKEFILE ON)
 
 # Version information
 set(PROJECT_VERSION_MAJOR 1)
-set(PROJECT_VERSION_MINOR 5)
+set(PROJECT_VERSION_MINOR 7)
 set(PROJECT_VERSION_PATCH 1)
 set(PROJECT_VERSION
   "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}")
@@ -29,7 +31,7 @@ set(GeoTIFF_VERSION ${PROJECT_VERSION})
 # libgeotiff.so.2 -> libgeotiff.so.2.2.0
 # libgeotiff.so.2.2.0
 set(LINK_SOVERSION "5")
-set(LINK_VERSION "5.0.0")
+set(LINK_VERSION "5.2.0")
 
 string (TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER)
 string (TOUPPER ${PROJECT_NAME} PROJECT_NAME_UPPER)
@@ -54,12 +56,6 @@ IF(CMAKE_BUILD_TYPE MATCHES Debug)
     SET(GEOTIFF_BUILD_PEDANTIC TRUE)
 ENDIF()
 
-if (CMAKE_MAJOR_VERSION GREATER 2)
-cmake_policy(SET CMP0022 OLD) # interface link libraries
-cmake_policy(SET CMP0042 OLD) # osx rpath
-endif()
-
-
 # TODO: Still testing the output paths --mloskot
 SET(GEOTIFF_BUILD_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 
@@ -79,12 +75,10 @@ SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 # Platform and compiler specific settings
 
 IF(WIN32)
-    IF(MSVC)
-    
-        if(NOT BUILD_STATIC_LIBRARY)
+    IF(BUILD_SHARED_LIBS)
         ADD_DEFINITIONS(-DBUILD_AS_DLL=1)
-        endif(NOT BUILD_STATIC_LIBRARY)
-        
+    ENDIF()
+    IF(MSVC)
         ADD_DEFINITIONS(/DW4)
         if (NOT (MSVC_VERSION VERSION_LESS 1400))
             ADD_DEFINITIONS(-D_CRT_SECURE_NO_DEPRECATE)
@@ -107,10 +101,7 @@ ENDIF()
 
 # Check required standard headers
 INCLUDE(CheckIncludeFiles)
-CHECK_INCLUDE_FILES(stdio.h HAVE_STDIO_H)
-CHECK_INCLUDE_FILES(stdlib.h HAVE_STDLIB_H)
-CHECK_INCLUDE_FILES(string.h HAVE_STRING_H)
-CHECK_INCLUDE_FILES(strings.h HAVE_STRINGS_H)
+CHECK_INCLUDE_FILES(strings.h GEOTIFF_HAVE_STRINGS_H)
 
 ###############################################################################
 # User-defined build settings
@@ -180,7 +171,6 @@ IF(WITH_TIFF)
         INCLUDE(CheckFunctionExists)
         SET(CMAKE_REQUIRED_LIBRARIES ${TIFF_LIBRARIES})
 
-if(WIN32 AND NOT EMSCRIPTEN)
         CHECK_FUNCTION_EXISTS(TIFFOpen HAVE_TIFFOPEN)
         IF(NOT HAVE_TIFFOPEN)
             SET(TIFF_FOUND) # ReSET to NOT found for TIFF library
@@ -192,7 +182,6 @@ if(WIN32 AND NOT EMSCRIPTEN)
             SET(TIFF_FOUND) # ReSET to NOT found for TIFF library
             MESSAGE(FATAL_ERROR "Failed to link with libtiff - TIFFMergeFieldInfo function not found. libtiff 3.6.0 Beta or later required. Please upgrade or use an older version of libgeotiff")
         ENDIF()
-endif()
 
         INCLUDE_DIRECTORIES(${TIFF_INCLUDE_DIR})
         ADD_DEFINITIONS(-DHAVE_TIFF=1)
@@ -252,57 +241,17 @@ SET(GEOTIFF_MAN_PAGES
 
 #    ${PROJECT_BINARY_DIR}/geotiff_version.h
 
-IF(WIN32)
-    SET(DEFAULT_LIB_SUBDIR lib)
-    SET(DEFAULT_DATA_SUBDIR .)
-    SET(DEFAULT_INCLUDE_SUBDIR include)
-
-    IF(MSVC)
-        SET(DEFAULT_BIN_SUBDIR bin)
-    ELSE()
-        SET(DEFAULT_BIN_SUBDIR .)
-    ENDIF()
-ELSE()
-    # Common locatoins for Unix and Mac OS X
-    SET(DEFAULT_BIN_SUBDIR bin)
-    SET(DEFAULT_LIB_SUBDIR lib)
-    SET(DEFAULT_DATA_SUBDIR share)
-    SET(DEFAULT_INCLUDE_SUBDIR include)
-ENDIF()
-
-# Locations are changeable by user to customize layout of GeoTIFF installation
-# (default values are platform-specIFic)
-SET(GEOTIFF_BIN_SUBDIR ${DEFAULT_BIN_SUBDIR} CACHE STRING
-    "Subdirectory where executables will be installed")
-SET(GEOTIFF_LIB_SUBDIR ${DEFAULT_LIB_SUBDIR} CACHE STRING
-    "Subdirectory where libraries will be installed")
-SET(GEOTIFF_INCLUDE_SUBDIR ${DEFAULT_INCLUDE_SUBDIR} CACHE STRING
-    "Subdirectory where header files will be installed")
-SET(GEOTIFF_DATA_SUBDIR ${DEFAULT_DATA_SUBDIR} CACHE STRING
-    "Subdirectory where data will be installed")
-
-# Mark *_SUBDIR variables as advanced and dedicated to use by power-users only.
-MARK_AS_ADVANCED(GEOTIFF_BIN_SUBDIR GEOTIFF_LIB_SUBDIR GEOTIFF_INCLUDE_SUBDIR GEOTIFF_DATA_SUBDIR)
-
-# Full paths for the installation
-SET(GEOTIFF_BIN_DIR ${GEOTIFF_BIN_SUBDIR})
-SET(GEOTIFF_LIB_DIR ${GEOTIFF_LIB_SUBDIR})
-SET(GEOTIFF_INCLUDE_DIR ${GEOTIFF_INCLUDE_SUBDIR})
-SET(GEOTIFF_DATA_DIR ${GEOTIFF_DATA_SUBDIR})
-
 # Install doc files
 INSTALL(FILES
     AUTHORS ChangeLog COPYING INSTALL LICENSE README README_BIN README.WIN
-    DESTINATION doc)
-#    DESTINATION ${GEOTIFF_DATA_DIR}/doc)
+    DESTINATION ${CMAKE_INSTALL_DOCDIR})
 
 # Install man pages
-INSTALL(FILES ${GEOTIFF_MAN_PAGES} DESTINATION share/man/man1)
+INSTALL(FILES ${GEOTIFF_MAN_PAGES} DESTINATION ${CMAKE_INSTALL_MANDIR}/man1)
 
 
 # Install header files for development distribution
-# INSTALL(FILES ${GEOTIFF_LIB_HEADERS} DESTINATION ${GEOTIFF_INCLUDE_DIR})
-INSTALL(FILES ${GEOTIFF_LIB_HEADERS} DESTINATION include)
+INSTALL(FILES ${GEOTIFF_LIB_HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 ###############################################################################
 # Build libxtiff library
@@ -336,26 +285,18 @@ if (MSVC OR CMAKE_CONFIGURATION_TYPES)
   set (CMAKE_DEBUG_POSTFIX _d)
 endif ()
 
-option(BUILD_STATIC_LIBRARY "static library" ON)
-
-if(BUILD_STATIC_LIBRARY)
-ADD_LIBRARY(${GEOTIFF_LIBRARY_TARGET} STATIC
+ADD_LIBRARY(${GEOTIFF_LIBRARY_TARGET}
     ${GEOTIFF_LIB_SOURCES} ${XTIFF_SOURCES})
-else(BUILD_STATIC_LIBRARY)
-ADD_LIBRARY(${GEOTIFF_LIBRARY_TARGET} SHARED
-    ${GEOTIFF_LIB_SOURCES} ${XTIFF_SOURCES})
-endif(BUILD_STATIC_LIBRARY)
 
 IF(WIN32 AND MSVC)
     SET_TARGET_PROPERTIES(${GEOTIFF_LIBRARY_TARGET} PROPERTIES IMPORT_SUFFIX "_i.lib")
 ENDIF(WIN32 AND MSVC)
 
 # Unix, linux:
-IF(UNIX)
+if(UNIX)
    SET_TARGET_PROPERTIES(
       ${GEOTIFF_LIBRARY_TARGET}
       PROPERTIES
-      OUTPUT_NAME ${GEOTIFF_LIB_NAME}
       VERSION ${LINK_VERSION}
       SOVERSION ${LINK_SOVERSION}
       CLEAN_DIRECT_OUTPUT 1 )
@@ -363,34 +304,40 @@ IF(UNIX)
       set_target_properties(
         ${GEOTIFF_LIBRARY_TARGET}
         PROPERTIES
-        INSTALL_NAME_DIR "${CMAKE_INSTALL_PREFIX}/lib")
+        INSTALL_NAME_DIR "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
    endif()
-
-ELSE(UNIX)
-# Default:
-   SET_TARGET_PROPERTIES(${GEOTIFF_LIBRARY_TARGET} PROPERTIES
-   OUTPUT_NAME ${GEOTIFF_LIB_NAME})
-ENDIF(UNIX)
+endif()
 
 SET_TARGET_PROPERTIES(${GEOTIFF_LIBRARY_TARGET} PROPERTIES
    OUTPUT_NAME ${GEOTIFF_LIB_NAME})
 
-TARGET_LINK_LIBRARIES(${GEOTIFF_LIBRARY_TARGET}
-    ${TIFF_LIBRARIES}
-    ${PROJ_LIBRARIES}
-    ${ZLIB_LIBRARIES}
-    ${JPEG_LIBRARIES})
+set(CONFIG_PUBLIC_DEPENDENCIES "")
+set(CONFIG_PRIVATE_DEPENDENCIES "")
+if(TARGET TIFF::TIFF)
+    set(TIFF_LIBRARIES TIFF::TIFF)
+    string(APPEND CONFIG_PUBLIC_DEPENDENCIES "find_dependency(TIFF)\n")
+endif()
+target_link_libraries(${GEOTIFF_LIBRARY_TARGET} PUBLIC
+    ${TIFF_LIBRARIES})
 
-# INSTALL(TARGETS ${GEOTIFF_ARCHIVE_TARGET} ${GEOTIFF_LIBRARY_TARGET}
-#	RUNTIME DESTINATION ${GEOTIFF_BIN_DIR}
-#   LIBRARY DESTINATION ${GEOTIFF_LIB_DIR}
-#   ARCHIVE DESTINATION ${GEOTIFF_LIB_DIR})
+if(TARGET PROJ::proj)
+    set(PROJ_LIBRARIES PROJ::proj)
+    string(APPEND CONFIG_PRIVATE_DEPENDENCIES "  find_dependency(PROJ CONFIG)\n")
+endif()
+target_link_libraries(${GEOTIFF_LIBRARY_TARGET} PRIVATE
+    ${PROJ_LIBRARIES})
+
+target_include_directories(
+  ${GEOTIFF_LIBRARY_TARGET}
+  PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
 INSTALL( TARGETS ${GEOTIFF_LIBRARY_TARGET}
-	 EXPORT depends
-	 RUNTIME DESTINATION bin
-         LIBRARY DESTINATION lib
-	 ARCHIVE DESTINATION lib )
+     EXPORT depends
+     RUNTIME DESTINATION ${CMAKE_INSTALLL_BINDIR}
+     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+     PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} )
 
 # Define grouping of source files in PROJECT file (e.g. Visual Studio)
 SOURCE_GROUP("CMake Files" FILES CMakeLists.txt)

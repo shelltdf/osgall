@@ -59,11 +59,11 @@ $EXE ${DATA_DIR}/ProjLinearUnitsGeoKey_9036.tif >>${OUT}
 echo "" >>${OUT}
 
 echo "Testing listgeo ProjectedCSTypeGeoKey_28191_cassini_soldner.tif" >> ${OUT}
-$EXE ${DATA_DIR}/ProjectedCSTypeGeoKey_28191_cassini_soldner.tif >>${OUT}
+$EXE -no_corners ${DATA_DIR}/ProjectedCSTypeGeoKey_28191_cassini_soldner.tif >>${OUT}
 echo "" >>${OUT}
 
 echo "Testing listgeo cassini_soldner.tif" >> ${OUT}
-$EXE ${DATA_DIR}/cassini_soldner.tif >>${OUT}
+$EXE -no_corners ${DATA_DIR}/cassini_soldner.tif >>${OUT}
 echo "" >>${OUT}
 
 echo "Testing listgeo ProjectedCSTypeGeoKey_27200_new_zealand_mapping_grid.tif" >> ${OUT}
@@ -210,10 +210,22 @@ echo "Testing listgeo equidistant_cylindrical.tif" >> ${OUT}
 $EXE ${DATA_DIR}/equidistant_cylindrical.tif >>${OUT}
 echo "" >>${OUT}
 
+echo "Testing listgeo pixel_is_point_wgs84.tif" >> ${OUT}
+$EXE ${DATA_DIR}/pixel_is_point_wgs84.tif >>${OUT}
+echo "" >>${OUT}
+
+# Normalize for results depending on the exact version of PROJ / EPSG database
+sed "s/ETRS89-extended/ETRS89/g" < ${OUT} > ${OUT}.tmp
+mv ${OUT}.tmp ${OUT}
+
+sed "s/ETRS89-extended/ETRS89/g" < ${TEST_CLI_DIR}/testlistgeo_out.dist > testlistgeo_out.dist.tmp
 
 # do 'diff' with distribution results
+# after cleaning for avoid spurios result due 
+# to different build dir
+sed -e "s/Testing listgeo .*test/Testing listgeo ..\/test/"  -i ${OUT}
 echo "diff ${OUT} with testlistgeo_out.dist"
-diff -u ${OUT} ${TEST_CLI_DIR}/testlistgeo_out.dist
+diff -u ${OUT} testlistgeo_out.dist.tmp
 if [ $? -ne 0 ] ; then
     echo  ""
     echo "PROBLEMS HAVE OCCURRED"
@@ -224,6 +236,7 @@ else
     echo "TEST OK"
     echo "test file ${OUT} removed"
     echo
+    rm testlistgeo_out.dist.tmp
     /bin/rm -f ${OUT}
     exit 0
 fi
