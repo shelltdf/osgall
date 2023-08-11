@@ -7,6 +7,7 @@ def getDependency( str_name ,getDependency):
     list_name = addDependency("libtiff" , list_name,getDependency)
     list_name = addDependency("proj4" , list_name,getDependency)
     list_name = addDependency("zlib" , list_name,getDependency)
+    list_name = addDependency("libjpeg" , list_name,getDependency)
 
     return list_name + [str_name]
     
@@ -22,6 +23,10 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     install_dir = install_dir.replace('\\','/')
     
     STR_CFG = ''
+    STR_CFG += ' -DWITH_JPEG=1'
+    STR_CFG += ' -DWITH_ZLIB=1'
+    STR_CFG += ' -Dtiff-tools=0'
+    STR_CFG += ' -Dtiff-tests=0'
     
     if(dict_config['arch'][:2]=="vs"):
         if(dict_config['static']):
@@ -35,8 +40,12 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += " -DBUILD_STATIC_LIBRARY=0"
             STR_CFG += ' -DPROJ_LIBRARY=' + install_dir + '/lib/proj_6_1.lib'
             STR_CFG += ' -DPROJ_LIBRARY_DEBUG=' + install_dir + '/lib/proj_6_1_d.lib'
-            STR_CFG += ' -DZLIB_LIBRARY=' + install_dir + '/lib/zlib.lib'
-            STR_CFG += ' -DZLIB_LIBRARY_DEBUG=' + install_dir + '/lib/zlibd.lib'
+            # STR_CFG += ' -DZLIB_LIBRARY=' + install_dir + '/lib/zlib.lib'
+            # STR_CFG += ' -DZLIB_LIBRARY_DEBUG=' + install_dir + '/lib/zlibd.lib'
+            if(dict_config['debug']):
+                STR_CFG += ' -DZLIB_LIBRARY=' + install_dir + '/lib/zlibd.lib'
+            else:
+                STR_CFG += ' -DZLIB_LIBRARY=' + install_dir + '/lib/zlib.lib'
             
     if(dict_config['arch']=="unix"):
         if(dict_config['static']):

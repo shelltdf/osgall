@@ -6,7 +6,7 @@ def getDependency( str_name ,getDependency):
     list_name = []
     
     list_name = addDependency("zlib" , list_name,getDependency)
-    # list_name = addDependency("libiconv" , list_name,getDependency)
+    list_name = addDependency("libiconv" , list_name,getDependency)
     # list_name = addDependency("libbzip2" , list_name,getDependency)
     
     return list_name + [str_name]
@@ -136,6 +136,7 @@ def SBI( str_name , b_download ,dict_config, getLibrary ):
     '''
     
     STR_CFG = ''
+    STR_CFG += ' -DBOOST_ENABLE_PYTHON=1'
     if(dict_config['arch'][:2]=="vs"):
         # STR_CFG += '-DFREEGLUT_BUILD_DEMOS=0 -DINSTALL_PDB=0'
         if(dict_config['static']):

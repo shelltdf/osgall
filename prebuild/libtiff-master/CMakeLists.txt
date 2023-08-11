@@ -108,7 +108,10 @@ include(PixarLogCodec)
 
 # Check for JPEG codec
 include(JPEGCodec)
-
+IF(BUILD_STATIC_LIBRARY)
+	ADD_DEFINITIONS(-DJPEG_LIBRARY_STATIC)
+ENDIF()
+	
 # Check for JBIG codec
 include(JBIGCodec)
 

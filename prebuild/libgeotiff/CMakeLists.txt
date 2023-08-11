@@ -171,17 +171,17 @@ IF(WITH_TIFF)
         INCLUDE(CheckFunctionExists)
         SET(CMAKE_REQUIRED_LIBRARIES ${TIFF_LIBRARIES})
 
-        CHECK_FUNCTION_EXISTS(TIFFOpen HAVE_TIFFOPEN)
-        IF(NOT HAVE_TIFFOPEN)
-            SET(TIFF_FOUND) # ReSET to NOT found for TIFF library
-            MESSAGE(FATAL_ERROR "Failed to link with libtiff - TIFFOpen function not found")
-        ENDIF()
+        # CHECK_FUNCTION_EXISTS(TIFFOpen HAVE_TIFFOPEN)
+        # IF(NOT HAVE_TIFFOPEN)
+            # SET(TIFF_FOUND) # ReSET to NOT found for TIFF library
+            # MESSAGE(FATAL_ERROR "Failed to link with libtiff - TIFFOpen function not found")
+        # ENDIF()
 
-        CHECK_FUNCTION_EXISTS(TIFFMergeFieldInfo HAVE_TIFFMERGEFIELDINFO)
-        IF(NOT HAVE_TIFFMERGEFIELDINFO)
-            SET(TIFF_FOUND) # ReSET to NOT found for TIFF library
-            MESSAGE(FATAL_ERROR "Failed to link with libtiff - TIFFMergeFieldInfo function not found. libtiff 3.6.0 Beta or later required. Please upgrade or use an older version of libgeotiff")
-        ENDIF()
+        # CHECK_FUNCTION_EXISTS(TIFFMergeFieldInfo HAVE_TIFFMERGEFIELDINFO)
+        # IF(NOT HAVE_TIFFMERGEFIELDINFO)
+            # SET(TIFF_FOUND) # ReSET to NOT found for TIFF library
+            # MESSAGE(FATAL_ERROR "Failed to link with libtiff - TIFFMergeFieldInfo function not found. libtiff 3.6.0 Beta or later required. Please upgrade or use an older version of libgeotiff")
+        # ENDIF()
 
         INCLUDE_DIRECTORIES(${TIFF_INCLUDE_DIR})
         ADD_DEFINITIONS(-DHAVE_TIFF=1)

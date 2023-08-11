@@ -15,18 +15,13 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         # return
         
     STR_CFG = ''
+    STR_CFG += ' -DBUILD_TESTING=0'
     if(dict_config['static']):
-        STR_CFG += ' -DBUILD_EXECUTABLE=0'
-        STR_CFG += ' -DBUILD_STAITC_LIBRARY=1'
-        STR_CFG += ' -DBUILD_DYNAMIC_LIBRARY=0'
+        STR_CFG += " -DBUILD_SHARED_LIBS=0"
     else:
-        STR_CFG += ' -DBUILD_EXECUTABLE=0'
-        STR_CFG += ' -DBUILD_STAITC_LIBRARY=0'
-        STR_CFG += ' -DBUILD_DYNAMIC_LIBRARY=1'
+        STR_CFG += " -DBUILD_SHARED_LIBS=1"
         
-    source_dir = os.getcwd() + '/../prebuild/zlib-1.2.8'
-    # source_dir = os.getcwd() + '/../prebuild/zlib-1.2.13'
-    # source_dir = os.getcwd() + '/../prebuild/zlib-master'
+    source_dir = os.getcwd() + '/../prebuild/Imath-main'
     
     configure(str_name,dict_config,STR_CFG,"",source_dir)
     build(str_name,dict_config)
