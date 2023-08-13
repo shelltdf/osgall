@@ -7,7 +7,8 @@ def getDependency( str_name ,getDependency):
     
     list_name = addDependency("zlib" , list_name,getDependency)
     list_name = addDependency("libiconv" , list_name,getDependency)
-    # list_name = addDependency("libbzip2" , list_name,getDependency)
+    list_name = addDependency("bzip2" , list_name,getDependency)
+    list_name = addDependency("xz" , list_name,getDependency)
     
     return list_name + [str_name]
     
