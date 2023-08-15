@@ -109,6 +109,10 @@ plugin_option(OpenJPEG_DECODER OpenJPEG "OpenJPEG_Decoder" "JPEG2000 decoder" OF
 
 option(WITH_UNCOMPRESSED_CODEC "Support internal ISO/IEC 23001-17 uncompressed codec (experimental)" OFF)
 
+if(NOT BUILD_SHARED_LIBS)
+add_definitions(-DJPEG_LIBRARY_STATIC)
+endif(NOT BUILD_SHARED_LIBS)
+
 # Libsharpyuv
 option(WITH_LIBSHARPYUV "Build libsharpyuv" ON)
 if (WITH_LIBSHARPYUV)
