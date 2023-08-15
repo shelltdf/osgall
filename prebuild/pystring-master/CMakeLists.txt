@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.2)
 project(pystring CXX)
 
-set(BUILD_SHARED_LIBS YES)
+# set(BUILD_SHARED_LIBS YES)
 
 add_library(pystring
     pystring.cpp
@@ -20,3 +20,8 @@ install(TARGETS pystring
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
 
+INSTALL(
+		FILES       pystring.h
+		DESTINATION include/pystring
+	)
+	
