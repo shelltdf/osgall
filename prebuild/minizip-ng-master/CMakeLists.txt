@@ -65,6 +65,10 @@ option(MZ_CODE_COVERAGE "Builds with code coverage flags" OFF)
 set(MZ_SANITIZER AUTO CACHE STRING "Enable sanitizer support")
 set_property(CACHE MZ_SANITIZER PROPERTY STRINGS "Memory" "Address" "Undefined" "Thread")
 
+if(BUILD_SHARED_LIBS)
+    add_definitions(-DMZ_EXPORTS)
+endif(BUILD_SHARED_LIBS)
+
 # Backwards compatibility
 if(DEFINED MZ_BUILD_TEST)
     set(MZ_BUILD_TESTS ${MZ_BUILD_TEST})
