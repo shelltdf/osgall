@@ -434,6 +434,7 @@ if(BUILD_SHARED_LIBS)
     message(STATUS " Libraw will be compiled as a shared library")
 else()
     message(STATUS " Libraw will be compiled as a static library")
+	add_definitions(-DJPEG_LIBRARY_STATIC)
 endif()
 
 message(STATUS "----------------------------------------------------------------------------------")
