@@ -15,6 +15,8 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         # return
         
     STR_CFG = ''
+    STR_CFG += ' -DWITH_PERF_TOOL=0'
+    
     if(dict_config['static']):
         STR_CFG += " -DBUILD_SHARED=0"
         STR_CFG += " -DBUILD_STATIC=1"
