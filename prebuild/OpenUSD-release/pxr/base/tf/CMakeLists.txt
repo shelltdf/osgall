@@ -6,6 +6,7 @@ set(PXR_PREFIX pxr/base)
 
 if(WIN32)
     set(WINLIBS Shlwapi.lib)
+	add_definitions(-D__TBB_NO_IMPLICIT_LINKAGE=1)
 endif()
 
 pxr_library(tf
