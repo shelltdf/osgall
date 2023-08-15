@@ -120,6 +120,9 @@ include(LERCCodec)
 
 # Check for LZMA codec
 include(LZMACodec)
+IF(BUILD_STATIC_LIBRARY)
+	ADD_DEFINITIONS(-DLZMA_API_STATIC)
+ENDIF()
 
 # Check for ZSTD codec
 include(ZSTDCodec)

@@ -17,11 +17,9 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     STR_CFG = ''
     STR_CFG += ' -DBUILD_TESTS=0'
     if(dict_config['static']):
-        STR_CFG += " -DBUILD_STATIC=1"
-        STR_CFG += " -DBUILD_SHARED=0"
+        STR_CFG += " -DBZIP2_BUILD_STATIC=1"
     else:
-        STR_CFG += " -DBUILD_STATIC=0"
-        STR_CFG += " -DBUILD_SHARED=1"
+        STR_CFG += " -DBZIP2_BUILD_STATIC=0"
         
     source_dir = os.getcwd() + '/../prebuild/bzip2-1.0.8'
     
