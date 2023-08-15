@@ -1,0 +1,42 @@
+# EUC
+EUC-CN                          EUC/EUC-CN.esdb
+EUC-KR                          EUC/EUC-KR.esdb
+
+# GB
+GB18030                         GB/GB18030.esdb
+GBK                             GB/GBK.esdb
+
+# ISO-8859
+ISO-8859-1                      ISO-8859/ISO-8859-1.esdb
+ISO-8859-2                      ISO-8859/ISO-8859-2.esdb
+ISO-8859-3                      ISO-8859/ISO-8859-3.esdb
+ISO-8859-4                      ISO-8859/ISO-8859-4.esdb
+ISO-8859-5                      ISO-8859/ISO-8859-5.esdb
+ISO-8859-6                      ISO-8859/ISO-8859-6.esdb
+ISO-8859-7                      ISO-8859/ISO-8859-7.esdb
+ISO-8859-8                      ISO-8859/ISO-8859-8.esdb
+ISO-8859-9                      ISO-8859/ISO-8859-9.esdb
+ISO-8859-11                     ISO-8859/ISO-8859-11.esdb
+ISO-8859-15                     ISO-8859/ISO-8859-15.esdb
+
+# ISO646
+ISO646-US                       ISO646/ISO646-US.esdb
+
+# MISC
+JISX0201-KANA                   MISC/JISX0201-KANA.esdb
+JISX0208:1990                   MISC/JISX0208@1990.esdb
+JISX0212                        MISC/JISX0212.esdb
+Shift_JIS                       MISC/Shift_JIS.esdb
+
+# UTF
+UTF-8                           UTF/UTF-8.esdb
+UTF-16                          UTF/UTF-16.esdb
+UTF-16BE                        UTF/UTF-16BE.esdb
+UTF-16LE                        UTF/UTF-16LE.esdb
+UTF-16-INTERNAL                 UTF/UTF-16-INTERNAL.esdb
+UTF-16-SWAPPED                  UTF/UTF-16-SWAPPED.esdb
+UTF-32                          UTF/UTF-32.esdb
+UTF-32BE                        UTF/UTF-32BE.esdb
+UTF-32LE                        UTF/UTF-32LE.esdb
+UTF-32-INTERNAL                 UTF/UTF-32-INTERNAL.esdb
+UTF-32-SWAPPED                  UTF/UTF-32-SWAPPED.esdb

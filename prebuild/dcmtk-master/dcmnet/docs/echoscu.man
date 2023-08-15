@@ -1,0 +1,393 @@
+/*!
+
+\if MANPAGES
+\page echoscu DICOM verification (C-ECHO) SCU
+\else
+\page echoscu echoscu: DICOM verification (C-ECHO) SCU
+\endif
+
+\section echoscu_synopsis SYNOPSIS
+
+\verbatim
+echoscu [options] peer port
+\endverbatim
+
+\section echoscu_description DESCRIPTION
+
+The \b echoscu application implements a Service Class User (SCU) for the
+Verification SOP Class.  It sends a DICOM C-ECHO message to a Service Class
+Provider (SCP) and waits for a response.  The application can be used to verify
+basic DICOM connectivity.
+
+\section echoscu_parameters PARAMETERS
+
+\verbatim
+peer  hostname of DICOM peer
+
+port  tcp/ip port number of peer
+\endverbatim
+
+\section echoscu_options OPTIONS
+
+\subsection echoscu_general_options general options
+\verbatim
+  -h    --help
+          print this help text and exit
+
+        --version
+          print version information and exit
+
+        --arguments
+          print expanded command line arguments
+
+  -q    --quiet
+          quiet mode, print no warnings and errors
+
+  -v    --verbose
+          verbose mode, print processing details
+
+  -d    --debug
+          debug mode, print debug information
+
+  -ll   --log-level  [l]evel: string constant
+          (fatal, error, warn, info, debug, trace)
+          use level l for the logger
+
+  -lc   --log-config  [f]ilename: string
+          use config file f for the logger
+\endverbatim
+
+\subsection echoscu_network_options network options
+\verbatim
+application entity titles:
+
+  -aet  --aetitle  [a]etitle: string
+          set my calling AE title (default: ECHOSCU)
+
+  -aec  --call  [a]etitle: string
+          set called AE title of peer (default: ANY-SCP)
+
+association negotiation debugging:
+
+  -pts  --propose-ts  [n]umber: integer (1..45)
+          propose n transfer syntaxes
+
+  -ppc  --propose-pc  [n]umber: integer (1..128)
+          propose n presentation contexts
+
+other network options:
+
+  -to   --timeout  [s]econds: integer (default: unlimited)
+          timeout for connection requests
+
+  -ts   --socket-timeout  [s]econds: integer (default: 60)
+          timeout for network socket (0 for none)
+
+  -ta   --acse-timeout  [s]econds: integer (default: 30)
+          timeout for ACSE messages
+
+  -td   --dimse-timeout  [s]econds: integer (default: unlimited)
+          timeout for DIMSE messages
+
+  -pdu  --max-pdu  [n]umber of bytes: integer (4096..131072)
+          set max receive pdu to n bytes (default: 16384)
+
+        --repeat  [n]umber: integer
+          repeat n times
+
+        --abort
+          abort association instead of releasing it
+\endverbatim
+
+\subsection echoscu_tls_options transport layer security (TLS) options
+\verbatim
+transport protocol stack:
+
+  -tls  --disable-tls
+          use normal TCP/IP connection (default)
+
+  +tls  --enable-tls  [p]rivate key file, [c]ertificate file: string
+          use authenticated secure TLS connection
+
+  +tla  --anonymous-tls
+          use secure TLS connection without certificate
+
+private key password (only with --enable-tls):
+
+  +ps   --std-passwd
+          prompt user to type password on stdin (default)
+
+  +pw   --use-passwd  [p]assword: string
+          use specified password
+
+  -pw   --null-passwd
+          use empty string as password
+
+key and certificate file format:
+
+  -pem  --pem-keys
+          read keys and certificates as PEM file (default)
+
+  -der  --der-keys
+          read keys and certificates as DER file
+
+certification authority:
+
+  +cf   --add-cert-file  [f]ilename: string
+          add certificate file to list of certificates
+
+  +cd   --add-cert-dir  [d]irectory: string
+          add certificates in d to list of certificates
+
+  +crl  --add-crl-file  [f]ilename: string
+          add certificate revocation list file
+          (implies --enable-crl-vfy)
+
+  +crv  --enable-crl-vfy
+          enable leaf CRL verification
+
+  +cra  --enable-crl-all
+          enable full chain CRL verification
+
+security profile:
+
+  +pg   --profile-8996
+          BCP 195 RFC 8996 TLS Profile (default)
+
+  +pm   --profile-8996-mod
+          Modified BCP 195 RFC 8996 TLS Profile
+
+          # only available if underlying TLS library supports
+          # all TLS features required for this profile
+
+  +py   --profile-bcp195-nd
+          Non-downgrading BCP 195 TLS Profile (retired)
+
+  +px   --profile-bcp195
+          BCP 195 TLS Profile (retired)
+
+  +pz   --profile-bcp195-ex
+          Extended BCP 195 TLS Profile (retired)
+
+  +pb   --profile-basic
+          Basic TLS Secure Transport Connection Profile (retired)
+
+          # only available if underlying TLS library supports 3DES
+
+  +pa   --profile-aes
+          AES TLS Secure Transport Connection Profile (retired)
+
+  +pn   --profile-null
+          Authenticated unencrypted communication
+          (retired, was used in IHE ATNA)
+
+ciphersuite:
+
+  +cc   --list-ciphers
+          show list of supported TLS ciphersuites and exit
+
+  +cs   --cipher  [c]iphersuite name: string
+          add ciphersuite to list of negotiated suites
+
+server name indication:
+
+        --no-sni
+          do not use SNI (default)
+
+        --request-sni  [s]erver name: string
+          request server name s
+
+pseudo random generator:
+
+  +rs   --seed  [f]ilename: string
+          seed random generator with contents of f
+
+  +ws   --write-seed
+          write back modified seed (only with --seed)
+
+  +wf   --write-seed-file  [f]ilename: string (only with --seed)
+          write modified seed to file f
+
+peer authentication:
+
+  -rc   --require-peer-cert
+          verify peer certificate, fail if absent (default)
+
+  -ic   --ignore-peer-cert
+          don't verify peer certificate
+
+offline certificate verification:
+
+  +vc   --verify-cert  [f]ilename: string
+          verify certificate against CA settings
+
+          # Load a client certificate and check whether it would be accepted
+          # when received during a TLS handshake. Print result and exit.
+
+  +rc   --is-root-cert  [f]ilename: string
+          check if certificate is self-signed root CA
+
+          # Load a client certificate and check whether it is a valid,
+          # self-signed root CA certificate. Print result and exit.
+\endverbatim
+
+\section echoscu_notes NOTES
+
+\subsection echoscu_dicom_conformance DICOM Conformance
+
+The \b echoscu application supports the following SOP Classes as an SCU:
+
+\verbatim
+VerificationSOPClass                                1.2.840.10008.1.1
+\endverbatim
+
+By default, the \b echoscu application will only propose this transfer syntax:
+
+\verbatim
+LittleEndianImplicitTransferSyntax                  1.2.840.10008.1.2
+\endverbatim
+
+If the \e --propose-ts option is used, the following transfer syntaxes will
+also be proposed, depending on the numeric value "n" that is passed to this
+option:
+
+\verbatim
+LittleEndianExplicitTransferSyntax                  1.2.840.10008.1.2.1
+BigEndianExplicitTransferSyntax                     1.2.840.10008.1.2.2
+JPEGProcess1TransferSyntax                          1.2.840.10008.1.2.4.50
+JPEGProcess2_4TransferSyntax                        1.2.840.10008.1.2.4.51
+JPEGProcess3_5TransferSyntax                        1.2.840.10008.1.2.4.52
+JPEGProcess6_8TransferSyntax                        1.2.840.10008.1.2.4.53
+JPEGProcess7_9TransferSyntax                        1.2.840.10008.1.2.4.54
+JPEGProcess10_12TransferSyntax                      1.2.840.10008.1.2.4.55
+JPEGProcess11_13TransferSyntax                      1.2.840.10008.1.2.4.56
+JPEGProcess14TransferSyntax                         1.2.840.10008.1.2.4.57
+JPEGProcess15TransferSyntax                         1.2.840.10008.1.2.4.58
+JPEGProcess16_18TransferSyntax                      1.2.840.10008.1.2.4.59
+JPEGProcess17_19TransferSyntax                      1.2.840.10008.1.2.4.60
+JPEGProcess20_22TransferSyntax                      1.2.840.10008.1.2.4.61
+JPEGProcess21_23TransferSyntax                      1.2.840.10008.1.2.4.62
+JPEGProcess24_26TransferSyntax                      1.2.840.10008.1.2.4.63
+JPEGProcess25_27TransferSyntax                      1.2.840.10008.1.2.4.64
+JPEGProcess28TransferSyntax                         1.2.840.10008.1.2.4.65
+JPEGProcess29TransferSyntax                         1.2.840.10008.1.2.4.66
+JPEGProcess14SV1TransferSyntax                      1.2.840.10008.1.2.4.70
+RLELosslessTransferSyntax                           1.2.840.10008.1.2.5
+DeflatedExplicitVRLittleEndianTransferSyntax        1.2.840.10008.1.2.1.99
+JPEGLSLosslessTransferSyntax                        1.2.840.10008.1.2.4.80
+JPEGLSLossyTransferSyntax                           1.2.840.10008.1.2.4.81
+JPEG2000LosslessOnlyTransferSyntax                  1.2.840.10008.1.2.4.90
+JPEG2000TransferSyntax                              1.2.840.10008.1.2.4.91
+JPEG2000Part2MulticomponentImageComp.LosslessOnlyT. 1.2.840.10008.1.2.4.92
+JPEG2000Part2MulticomponentImageComp.TransferSyntax 1.2.804.10008.1.2.4.93
+MPEG2MainProfileAtMainLevelTransferSyntax           1.2.840.10008.1.2.4.100
+MPEG2MainProfileAtHighLevelTransferSyntax           1.2.840.10008.1.2.4.101
+MPEG4HighProfileLevel4_1TransferSyntax              1.2.840.10008.1.2.4.102
+MPEG4BDcompatibleHighProfileLevel4_1TransferSyntax  1.2.840.10008.1.2.4.103
+MPEG4HighProfileLevel4_2_For2DVideoTransferSyntax   1.2.840.10008.1.2.4.104
+MPEG4HighProfileLevel4_2_For3DVideoTransferSyntax   1.2.840.10008.1.2.4.105
+MPEG4StereoHighProfileLevel4_2TransferSyntax        1.2.840.10008.1.2.4.106
+HEVCMainProfileLevel5_1TransferSyntax               1.2.840.10008.1.2.4.107
+HEVCMain10ProfileLevel5_1TransferSyntax             1.2.840.10008.1.2.4.108
+FragmentableMPEG2MainProfileMainLevelTransferSyntax 1.2.840.10008.1.2.4.100.1
+FragmentableMPEG2MainProfileHighLevelTransferSyntax 1.2.840.10008.1.2.4.101.1
+FragmentableMPEG4HighProfileLevel4_1TransferSyntax  1.2.840.10008.1.2.4.102.1
+FragmentableMPEG4BDcompatibleHighProfileLevel4_1Tr. 1.2.840.10008.1.2.4.103.1
+FragmentableMPEG4HighProfileLevel4_2_For2DVideoTr.S 1.2.840.10008.1.2.4.104.1
+FragmentableMPEG4HighProfileLevel4_2_For3DVideoTr.S 1.2.840.10008.1.2.4.105.1
+FragmentableMPEG4StereoHighProfileLevel4_2TransferS 1.2.840.10008.1.2.4.106.1
+\endverbatim
+
+\section echoscu_logging LOGGING
+
+The level of logging output of the various command line tools and underlying
+libraries can be specified by the user.  By default, only errors and warnings
+are written to the standard error stream.  Using option \e --verbose also
+informational messages like processing details are reported.  Option
+\e --debug can be used to get more details on the internal activity, e.g. for
+debugging purposes.  Other logging levels can be selected using option
+\e --log-level.  In \e --quiet mode only fatal errors are reported.  In such
+very severe error events, the application will usually terminate.  For more
+details on the different logging levels, see documentation of module "oflog".
+
+In case the logging output should be written to file (optionally with logfile
+rotation), to syslog (Unix) or the event log (Windows) option \e --log-config
+can be used.  This configuration file also allows for directing only certain
+messages to a particular output stream and for filtering certain messages
+based on the module or application where they are generated.  An example
+configuration file is provided in <em>\<etcdir\>/logger.cfg</em>.
+
+\section echoscu_command_line COMMAND LINE
+
+All command line tools use the following notation for parameters: square
+brackets enclose optional values (0-1), three trailing dots indicate that
+multiple values are allowed (1-n), a combination of both means 0 to n values.
+
+Command line options are distinguished from parameters by a leading '+' or '-'
+sign, respectively.  Usually, order and position of command line options are
+arbitrary (i.e. they can appear anywhere).  However, if options are mutually
+exclusive the rightmost appearance is used.  This behavior conforms to the
+standard evaluation rules of common Unix shells.
+
+In addition, one or more command files can be specified using an '@' sign as a
+prefix to the filename (e.g. <em>\@command.txt</em>).  Such a command argument
+is replaced by the content of the corresponding text file (multiple
+whitespaces are treated as a single separator unless they appear between two
+quotation marks) prior to any further evaluation.  Please note that a command
+file cannot contain another command file.  This simple but effective approach
+allows one to summarize common combinations of options/parameters and avoids
+longish and confusing command lines (an example is provided in file
+<em>\<datadir\>/dumppat.txt</em>).
+
+\section echoscu_exit_codes EXIT CODES
+
+The \b echoscu utility uses the following exit codes when terminating.  This
+enables the user to check for the reason why the application terminated.
+
+\subsection echoscu_exit_codes_general general
+\verbatim
+EXITCODE_NO_ERROR                         0
+EXITCODE_COMMANDLINE_SYNTAX_ERROR         1
+\endverbatim
+
+\subsection echoscu_exit_codes_input_file_errors input file errors
+\verbatim
+EXITCODE_CANNOT_READ_INPUT_FILE          20 (*)
+EXITCODE_INVALID_INPUT_FILE              22
+\endverbatim
+
+\subsection echoscu_exit_codes_output_file_errors output file errors
+\verbatim
+EXITCODE_CANNOT_WRITE_OUTPUT_FILE        40 (*)
+\endverbatim
+
+\subsection echoscu_exit_codes_network_errors network errors
+\verbatim
+EXITCODE_CANNOT_INITIALIZE_NETWORK       60 (*)
+EXITCODE_ASSOCIATION_ABORTED             70
+\endverbatim
+
+(*) Actually, these codes are currently not used by \b echoscu but serve as a
+placeholder for the corresponding group of exit codes.
+
+\section echoscu_environment ENVIRONMENT
+
+The \b echoscu utility will attempt to load DICOM data dictionaries specified
+in the \e DCMDICTPATH environment variable.  By default, i.e. if the
+\e DCMDICTPATH environment variable is not set, the file
+<em>\<datadir\>/dicom.dic</em> will be loaded unless the dictionary is built
+into the application (default for Windows).
+
+The default behavior should be preferred and the \e DCMDICTPATH environment
+variable only used when alternative data dictionaries are required.  The
+\e DCMDICTPATH environment variable has the same format as the Unix shell
+\e PATH variable in that a colon (":") separates entries.  On Windows systems,
+a semicolon (";") is used as a separator.  The data dictionary code will
+attempt to load each file specified in the \e DCMDICTPATH environment variable.
+It is an error if no data dictionary can be loaded.
+
+\section echoscu_copyright COPYRIGHT
+
+Copyright (C) 1994-2023 by OFFIS e.V., Escherweg 2, 26121 Oldenburg, Germany.
+
+*/
