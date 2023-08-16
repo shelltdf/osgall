@@ -27,6 +27,7 @@ def getDependency( str_name ,getDependency):
     list_name = addDependency("libheif" , list_name,getDependency)
     list_name = addDependency("dcmtk" , list_name,getDependency)
     # list_name = addDependency("field3d" , list_name,getDependency)
+    list_name = addDependency("robin-map" , list_name,getDependency)
     
     return list_name + [str_name]
     

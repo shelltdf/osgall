@@ -58,12 +58,13 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     if(system_ret == 0):
         # pass
         
-        # source_dir = my_build_and_install_dir(dict_config)
-        source_dir = os.getcwd() + "/bin/"
-        dist_dir = install_dir + '/bin/'
-        print(source_dir)
-        print(dist_dir)
-        copyfiles(source_dir,dist_dir+"/","*.dll")
+        if( not dict_config['static']):
+            # source_dir = my_build_and_install_dir(dict_config)
+            source_dir = os.getcwd() + "/bin/"
+            dist_dir = install_dir + '/bin/'
+            print(source_dir)
+            print(dist_dir)
+            copyfiles(source_dir,dist_dir+"/","*.dll")
         
         source_dir = os.getcwd() + "/bin/"
         dist_dir = install_dir + '/lib/'

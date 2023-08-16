@@ -19,7 +19,8 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         # download_source(str_name,"https://github.com/madler/zlib.git")
         # return
     
-    
+    install_dir = dict_config['install_dir'] + '/' + my_build_and_install_dir(dict_config)
+    install_dir = install_dir.replace('\\','/')	
     
     STR_CFG = ''
     if(dict_config['static']):
@@ -28,6 +29,11 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     else:
         STR_CFG += " -DBUILD_SHARED_LIBS=1"
         STR_CFG += " -DUSE_STATIC_DEPENDENCIES=0"
+    
+    if(dict_config['arch'][:2]=="vs"):
+        if(dict_config['static']):
+            STR_CFG += ' -DBlosc_LIBRARY_RELEASE=' + install_dir + '/lib/libblosc.lib'
+            STR_CFG += ' -DBlosc_LIBRARY_DEBUG=' + install_dir + '/lib/libblosc.lib'
 
     # source_dir = os.getcwd() + '/../prebuild/openvdb-master'
     # source_dir = os.getcwd() + '/../prebuild/openvdb-7.1.0'

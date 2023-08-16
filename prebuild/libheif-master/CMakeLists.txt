@@ -111,6 +111,7 @@ option(WITH_UNCOMPRESSED_CODEC "Support internal ISO/IEC 23001-17 uncompressed c
 
 if(NOT BUILD_SHARED_LIBS)
 add_definitions(-DJPEG_LIBRARY_STATIC)
+add_definitions(-DOPJ_STATIC)
 endif(NOT BUILD_SHARED_LIBS)
 
 # Libsharpyuv

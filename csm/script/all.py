@@ -84,6 +84,9 @@ def getDependency( str_name ,getDependency):
     list_name = addDependency("libktx" , list_name,getDependency)
     list_name = addDependency("openctm" , list_name,getDependency)
     
+    # 
+    list_name = addDependency("openusd" , list_name,getDependency)
+    
     
     return list_name + [str_name]
     

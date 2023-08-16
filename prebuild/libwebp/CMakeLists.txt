@@ -23,6 +23,7 @@ if(BUILD_SHARED_LIBS)
   set(WEBP_LINK_STATIC_DEFAULT OFF)
 else()
   set(WEBP_LINK_STATIC_DEFAULT ON)
+  add_definitions(-DGIF_LIBRARY_STATIC)
 endif()
 option(WEBP_LINK_STATIC
        "Link using static libraries. If OFF, use dynamic libraries."

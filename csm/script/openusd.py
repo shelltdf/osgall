@@ -38,6 +38,7 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     STR_CFG = ''
     if(dict_config['static']):
         STR_CFG += " -DBUILD_SHARED_LIBS=0"
+        STR_CFG += " -DPXR_ENABLE_PYTHON_SUPPORT=0"
     else:
         STR_CFG += " -DBUILD_SHARED_LIBS=1"
     
