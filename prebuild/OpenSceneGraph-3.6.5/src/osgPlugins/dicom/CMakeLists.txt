@@ -6,6 +6,7 @@ IF  (DCMTK_FOUND)
     SET(TARGET_SRC ReaderWriterDICOM.cpp )
 
     LINK_LIBRARIES(${DCMTK_LIBRARIES})
+    link_directories(${DCMTK_INCLUDE_DIRS}/../lib)
 
     ADD_DEFINITIONS(-DUSE_DCMTK)
 
