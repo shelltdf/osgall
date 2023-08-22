@@ -1,0 +1,13 @@
+// Copyright Contributors to the Open Shading Language project.
+// SPDX-License-Identifier: BSD-3-Clause
+// https://github.com/AcademySoftwareFoundation/OpenShadingLanguage
+
+
+surface test_texture
+(
+    string TexFile    = "../common/textures/mandrill.tif",
+    output color Cout = color(0),
+)
+{
+    Cout = texture(TexFile, u, v, "interp", "linear", "wrap", "clamp");
+}

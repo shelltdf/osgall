@@ -1,0 +1,2 @@
+test.osl:6: error: shader parameter 'a' requires a default initializer
+FAILED test.osl

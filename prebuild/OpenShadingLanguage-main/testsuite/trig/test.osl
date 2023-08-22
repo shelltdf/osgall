@@ -1,0 +1,202 @@
+// Copyright Contributors to the Open Shading Language project.
+// SPDX-License-Identifier: BSD-3-Clause
+// https://github.com/AcademySoftwareFoundation/OpenShadingLanguage
+
+#ifndef M_PI
+#define M_PI 3.14159265358979
+#endif
+
+#include "../common/shaders/pretty.h"
+
+shader
+test ()
+{
+    {
+        float a = -M_PI;
+        float b = 2.0*a;
+        float s, c;
+        sincos(a, s, c);
+        printf ("  cos (%g) = %g\n", pretty(a), pretty(cos(a)));
+        printf ("  sin (%g) = %g\n", pretty(a), pretty(sin(a)));
+        printf ("  sincos (%g) = %g %g\n", pretty(a), pretty(s), pretty(c));
+        printf ("  tan (%g) = %g\n", pretty(a), pretty(tan(a)));
+        printf ("  acos (%g) = %g\n", pretty(a), pretty(acos(a)));
+        printf ("  asin (%g) = %g\n", pretty(a), pretty(asin(a)));
+        printf ("  atan (%g) = %g\n", pretty(a), pretty(atan(a)));
+        printf ("  atan2 (%g, %g) = %g\n", pretty(a), pretty(b), pretty(atan2(a,b)));
+        printf ("  degrees (%g) = %g\n", pretty(a), pretty(degrees(a)));
+        printf ("  radians (%g) = %g\n", pretty(a), pretty(radians(a)));
+        a = -M_PI/2;
+        b = 2.0*a;
+        sincos(a, s, c);
+        printf ("  cos (%g) = %g\n", pretty(a), pretty(cos(a)));
+        printf ("  sin (%g) = %g\n", pretty(a), pretty(sin(a)));
+        printf ("  sincos (%g) = %g %g\n", pretty(a), pretty(s), pretty(c));
+        printf ("  tan (%g) = %g\n", pretty(a), pretty(tan(a)));
+        printf ("  acos (%g) = %g\n", pretty(a), pretty(acos(a)));
+        printf ("  asin (%g) = %g\n", pretty(a), pretty(asin(a)));
+        printf ("  atan (%g) = %g\n", pretty(a), pretty(atan(a)));
+        printf ("  atan2 (%g, %g) = %g\n", pretty(a), pretty(b), pretty(atan2(a,b)));
+        printf ("  degrees (%g) = %g\n", pretty(a), pretty(degrees(a)));
+        printf ("  radians (%g) = %g\n", pretty(a), pretty(radians(a)));
+        a = -M_PI/4;
+        b = 2.0*a;
+        sincos(a, s, c);
+        printf ("  cos (%g) = %g\n", pretty(a), pretty(cos(a)));
+        printf ("  sin (%g) = %g\n", pretty(a), pretty(sin(a)));
+        printf ("  sincos (%g) = %g %g\n", pretty(a), pretty(s), pretty(c));
+        printf ("  tan (%g) = %g\n", pretty(a), pretty(tan(a)));
+        printf ("  acos (%g) = %g\n", pretty(a), pretty(acos(a)));
+        printf ("  asin (%g) = %g\n", pretty(a), pretty(asin(a)));
+        printf ("  atan (%g) = %g\n", pretty(a), pretty(atan(a)));
+        printf ("  atan2 (%g, %g) = %g\n", pretty(a), pretty(b), pretty(atan2(a,b)));
+        printf ("  degrees (%g) = %g\n", pretty(a), pretty(degrees(a)));
+        printf ("  radians (%g) = %g\n", pretty(a), pretty(radians(a)));
+        a = 0;
+        b = 2.0*a;
+        sincos(a, s, c);
+        printf ("  cos (%g) = %g\n", pretty(a), pretty(cos(a)));
+        printf ("  sin (%g) = %g\n", pretty(a), pretty(sin(a)));
+        printf ("  sincos (%g) = %g %g\n", pretty(a), pretty(s), pretty(c));
+        printf ("  tan (%g) = %g\n", pretty(a), pretty(tan(a)));
+        printf ("  acos (%g) = %g\n", pretty(a), pretty(acos(a)));
+        printf ("  asin (%g) = %g\n", pretty(a), pretty(asin(a)));
+        printf ("  atan (%g) = %g\n", pretty(a), pretty(atan(a)));
+        printf ("  atan2 (%g, %g) = %g\n", pretty(a), pretty(b), pretty(atan2(a,b)));
+        printf ("  degrees (%g) = %g\n", pretty(a), pretty(degrees(a)));
+        printf ("  radians (%g) = %g\n", pretty(a), pretty(radians(a)));
+        a = M_PI/4;
+        b = 2.0*a;
+        sincos(a, s, c);
+        printf ("  cos (%g) = %g\n", pretty(a), pretty(cos(a)));
+        printf ("  sin (%g) = %g\n", pretty(a), pretty(sin(a)));
+        printf ("  tan (%g) = %g\n", pretty(a), pretty(tan(a)));
+        printf ("  acos (%g) = %g\n", pretty(a), pretty(acos(a)));
+        printf ("  asin (%g) = %g\n", pretty(a), pretty(asin(a)));
+        printf ("  atan (%g) = %g\n", pretty(a), pretty(atan(a)));
+        printf ("  atan2 (%g, %g) = %g\n", pretty(a), pretty(b), pretty(atan2(a,b)));
+        printf ("  degrees (%g) = %g\n", pretty(a), pretty(degrees(a)));
+        printf ("  radians (%g) = %g\n", pretty(a), pretty(radians(a)));
+        a = M_PI/2;
+        b = 2.0*a;
+        sincos(a, s, c);
+        printf ("  cos (%g) = %g\n", pretty(a), pretty(cos(a)));
+        printf ("  sin (%g) = %g\n", pretty(a), pretty(sin(a)));
+        printf ("  sincos (%g) = %g %g\n", pretty(a), pretty(s), pretty(c));
+        printf ("  tan (%g) = %g\n", pretty(a), pretty(tan(a)));
+        printf ("  acos (%g) = %g\n", pretty(a), pretty(acos(a)));
+        printf ("  asin (%g) = %g\n", pretty(a), pretty(asin(a)));
+        printf ("  atan (%g) = %g\n", pretty(a), pretty(atan(a)));
+        printf ("  atan2 (%g, %g) = %g\n", pretty(a), pretty(b), pretty(atan2(a,b)));
+        printf ("  degrees (%g) = %g\n", pretty(a), pretty(degrees(a)));
+        printf ("  radians (%g) = %g\n", pretty(a), pretty(radians(a)));
+        a = M_PI;
+        b = 2.0*a;
+        sincos(a, s, c);
+        printf ("  cos (%g) = %g\n", pretty(a), pretty(cos(a)));
+        printf ("  sin (%g) = %g\n", pretty(a), pretty(sin(a)));
+        printf ("  sincos (%g) = %g %g\n", pretty(a), pretty(s), pretty(c));
+        printf ("  tan (%g) = %g\n", pretty(a), pretty(tan(a)));
+        printf ("  acos (%g) = %g\n", pretty(a), pretty(acos(a)));
+        printf ("  asin (%g) = %g\n", pretty(a), pretty(asin(a)));
+        printf ("  atan (%g) = %g\n", pretty(a), pretty(atan(a)));
+        printf ("  atan2 (%g, %g) = %g\n", pretty(a), pretty(b), pretty(atan2(a,b)));
+        printf ("  degrees (%g) = %g\n", pretty(a), pretty(degrees(a)));
+        printf ("  radians (%g) = %g\n", pretty(a), pretty(radians(a)));
+    }
+
+    { 
+        vector a = -M_PI;
+        vector b = 2.0*a;
+        vector s, c;
+        sincos(a, s, c);
+        printf ("  cos (%g) = %g\n", pretty(a), pretty(cos(a)));
+        printf ("  sin (%g) = %g\n", pretty(a), pretty(sin(a)));
+        printf ("  sincos (%g) = %g %g\n", pretty(a), pretty(s), pretty(c));
+        printf ("  tan (%g) = %g\n", pretty(a), pretty(tan(a)));
+        printf ("  acos (%g) = %g\n", pretty(a), pretty(acos(a)));
+        printf ("  asin (%g) = %g\n", pretty(a), pretty(asin(a)));
+        printf ("  atan (%g) = %g\n", pretty(a), pretty(atan(a)));
+        printf ("  atan2 (%g, %g) = %g\n", pretty(a), pretty(b), pretty(atan2(a,b)));
+        printf ("  degrees (%g) = %g\n", pretty(a), pretty(degrees(a)));
+        printf ("  radians (%g) = %g\n", pretty(a), pretty(radians(a)));
+        a = -M_PI/2;
+        b = 2.0*a;
+        sincos(a, s, c);
+        printf ("  cos (%g) = %g\n", pretty(a), pretty(cos(a)));
+        printf ("  sin (%g) = %g\n", pretty(a), pretty(sin(a)));
+        printf ("  sincos (%g) = %g %g\n", pretty(a), pretty(s), pretty(c));
+        printf ("  tan (%g) = %g\n", pretty(a), pretty(tan(a)));
+        printf ("  acos (%g) = %g\n", pretty(a), pretty(acos(a)));
+        printf ("  asin (%g) = %g\n", pretty(a), pretty(asin(a)));
+        printf ("  atan (%g) = %g\n", pretty(a), pretty(atan(a)));
+        printf ("  atan2 (%g, %g) = %g\n", pretty(a), pretty(b), pretty(atan2(a,b)));
+        printf ("  degrees (%g) = %g\n", pretty(a), pretty(degrees(a)));
+        printf ("  radians (%g) = %g\n", pretty(a), pretty(radians(a)));
+        a = -M_PI/4;
+        b = 2.0*a;
+        sincos(a, s, c);
+        printf ("  cos (%g) = %g\n", pretty(a), pretty(cos(a)));
+        printf ("  sin (%g) = %g\n", pretty(a), pretty(sin(a)));
+        printf ("  sincos (%g) = %g %g\n", pretty(a), pretty(s), pretty(c));
+        printf ("  tan (%g) = %g\n", pretty(a), pretty(tan(a)));
+        printf ("  acos (%g) = %g\n", pretty(a), pretty(acos(a)));
+        printf ("  asin (%g) = %g\n", pretty(a), pretty(asin(a)));
+        printf ("  atan (%g) = %g\n", pretty(a), pretty(atan(a)));
+        printf ("  atan2 (%g, %g) = %g\n", pretty(a), pretty(b), pretty(atan2(a,b)));
+        printf ("  degrees (%g) = %g\n", pretty(a), pretty(degrees(a)));
+        printf ("  radians (%g) = %g\n", pretty(a), pretty(radians(a)));
+        a = 0;
+        b = 2.0*a;
+        sincos(a, s, c);
+        printf ("  cos (%g) = %g\n", pretty(a), pretty(cos(a)));
+        printf ("  sin (%g) = %g\n", pretty(a), pretty(sin(a)));
+        printf ("  sincos (%g) = %g %g\n", pretty(a), pretty(s), pretty(c));
+        printf ("  tan (%g) = %g\n", pretty(a), pretty(tan(a)));
+        printf ("  acos (%g) = %g\n", pretty(a), pretty(acos(a)));
+        printf ("  asin (%g) = %g\n", pretty(a), pretty(asin(a)));
+        printf ("  atan (%g) = %g\n", pretty(a), pretty(atan(a)));
+        printf ("  atan2 (%g, %g) = %g\n", pretty(a), pretty(b), pretty(atan2(a,b)));
+        printf ("  degrees (%g) = %g\n", pretty(a), pretty(degrees(a)));
+        printf ("  radians (%g) = %g\n", pretty(a), pretty(radians(a)));
+        a = M_PI/4;
+        b = 2.0*a;
+        sincos(a, s, c);
+        printf ("  cos (%g) = %g\n", pretty(a), pretty(cos(a)));
+        printf ("  sin (%g) = %g\n", pretty(a), pretty(sin(a)));
+        printf ("  sincos (%g) = %g %g\n", pretty(a), pretty(s), pretty(c));
+        printf ("  tan (%g) = %g\n", pretty(a), pretty(tan(a)));
+        printf ("  acos (%g) = %g\n", pretty(a), pretty(acos(a)));
+        printf ("  asin (%g) = %g\n", pretty(a), pretty(asin(a)));
+        printf ("  atan (%g) = %g\n", pretty(a), pretty(atan(a)));
+        printf ("  atan2 (%g, %g) = %g\n", pretty(a), pretty(b), pretty(atan2(a,b)));
+        printf ("  degrees (%g) = %g\n", pretty(a), pretty(degrees(a)));
+        printf ("  radians (%g) = %g\n", pretty(a), pretty(radians(a)));
+        a = M_PI/2;
+        b = 2.0*a;
+        sincos(a, s, c);
+        printf ("  cos (%g) = %g\n", pretty(a), pretty(cos(a)));
+        printf ("  sin (%g) = %g\n", pretty(a), pretty(sin(a)));
+        printf ("  sincos (%g) = %g %g\n", pretty(a), pretty(s), pretty(c));
+        printf ("  tan (%g) = %g\n", pretty(a), pretty(tan(a)));
+        printf ("  acos (%g) = %g\n", pretty(a), pretty(acos(a)));
+        printf ("  asin (%g) = %g\n", pretty(a), pretty(asin(a)));
+        printf ("  atan (%g) = %g\n", pretty(a), pretty(atan(a)));
+        printf ("  atan2 (%g, %g) = %g\n", pretty(a), pretty(b), pretty(atan2(a,b)));
+        printf ("  degrees (%g) = %g\n", pretty(a), pretty(degrees(a)));
+        printf ("  radians (%g) = %g\n", pretty(a), pretty(radians(a)));
+        a = M_PI;
+        b = 2.0*a;
+        sincos(a, s, c);
+        printf ("  cos (%g) = %g\n", pretty(a), pretty(cos(a)));
+        printf ("  sin (%g) = %g\n", pretty(a), pretty(sin(a)));
+        printf ("  sincos (%g) = %g %g\n", pretty(a), pretty(s), pretty(c));
+        printf ("  tan (%g) = %g\n", pretty(a), pretty(tan(a)));
+        printf ("  acos (%g) = %g\n", pretty(a), pretty(acos(a)));
+        printf ("  asin (%g) = %g\n", pretty(a), pretty(asin(a)));
+        printf ("  atan (%g) = %g\n", pretty(a), pretty(atan(a)));
+        printf ("  atan2 (%g, %g) = %g\n", pretty(a), pretty(b), pretty(atan2(a,b)));
+        printf ("  degrees (%g) = %g\n", pretty(a), pretty(degrees(a)));
+        printf ("  radians (%g) = %g\n", pretty(a), pretty(radians(a)));
+    }
+}

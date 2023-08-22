@@ -1,0 +1,10 @@
+// Copyright Contributors to the Open Shading Language project.
+// SPDX-License-Identifier: BSD-3-Clause
+// https://github.com/AcademySoftwareFoundation/OpenShadingLanguage
+
+
+shader
+noisetest (string noise_type="uperlin", float scale = 25, output color Cout = 0)
+{
+   Cout = noise (noise_type, scale * u, scale * v);
+}

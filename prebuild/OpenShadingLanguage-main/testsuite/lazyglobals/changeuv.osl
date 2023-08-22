@@ -1,0 +1,10 @@
+// Copyright Contributors to the Open Shading Language project.
+// SPDX-License-Identifier: BSD-3-Clause
+// https://github.com/AcademySoftwareFoundation/OpenShadingLanguage
+
+shader changeuv ()
+{
+    printf ("old uv = %g %g\n", u, v);
+    u *= 2;
+    v *= 2;
+}

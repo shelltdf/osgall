@@ -1,0 +1,18 @@
+// Copyright Contributors to the Open Shading Language project.
+// SPDX-License-Identifier: BSD-3-Clause
+// https://github.com/AcademySoftwareFoundation/OpenShadingLanguage
+
+
+surface
+bumptest
+    [[ string description = "Lambertian diffuse material" ]]
+(
+    float scale = 1,
+    float height = 1
+  )
+{
+        float h = height * noise(scale * P);
+        vector Nb = calculatenormal(P + N * h);
+        color Cb = (color) normalize(Nb) / 2 + color(0.5, 0.5, 0.5);
+        Ci = M_PI * Cb * emission();
+}

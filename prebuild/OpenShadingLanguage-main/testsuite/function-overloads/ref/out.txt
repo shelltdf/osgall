@@ -1,0 +1,170 @@
+test.osl:230: warning: Ambiguous call to 'freturn ()'
+  Chosen function is:
+    test.osl:77	float freturn ()
+  Other candidates are:
+    test.osl:74	int freturn ()
+    test.osl:78	color freturn ()
+    test.osl:80	vector freturn ()
+    test.osl:75	point freturn ()
+    test.osl:81	normal freturn ()
+    test.osl:82	matrix freturn ()
+    test.osl:76	string freturn ()
+    test.osl:79	closure color freturn ()
+    test.osl:84	struct A freturn ()
+    test.osl:83	void freturn ()
+test.osl:231: warning: Ambiguous call to 'ireturn ()'
+  Chosen function is:
+    test.osl:91	int ireturn ()
+  Other candidates are:
+    test.osl:88	color ireturn ()
+    test.osl:92	vector ireturn ()
+    test.osl:89	point ireturn ()
+    test.osl:93	normal ireturn ()
+    test.osl:95	matrix ireturn ()
+    test.osl:90	string ireturn ()
+    test.osl:87	closure color ireturn ()
+    test.osl:86	struct A ireturn ()
+    test.osl:94	void ireturn ()
+test.osl:232: warning: Ambiguous call to 'creturn ()'
+  Chosen function is:
+    test.osl:102	color creturn ()
+  Other candidates are:
+    test.osl:97	vector creturn ()
+    test.osl:101	point creturn ()
+    test.osl:98	normal creturn ()
+    test.osl:104	matrix creturn ()
+    test.osl:103	string creturn ()
+    test.osl:105	closure color creturn ()
+    test.osl:100	struct A creturn ()
+    test.osl:99	void creturn ()
+test.osl:233: warning: Ambiguous call to 'vreturn ()'
+  Chosen function is:
+    test.osl:109	vector vreturn ()
+  Other candidates are:
+    test.osl:107	point vreturn ()
+    test.osl:113	normal vreturn ()
+    test.osl:110	matrix vreturn ()
+    test.osl:114	string vreturn ()
+    test.osl:108	closure color vreturn ()
+    test.osl:111	struct A vreturn ()
+    test.osl:112	void vreturn ()
+test.osl:234: warning: Ambiguous call to 'preturn ()'
+  Chosen function is:
+    test.osl:122	point preturn ()
+  Other candidates are:
+    test.osl:118	normal preturn ()
+    test.osl:120	matrix preturn ()
+    test.osl:116	string preturn ()
+    test.osl:119	closure color preturn ()
+    test.osl:121	struct A preturn ()
+    test.osl:117	void preturn ()
+test.osl:235: warning: Ambiguous call to 'nreturn ()'
+  Chosen function is:
+    test.osl:126	normal nreturn ()
+  Other candidates are:
+    test.osl:124	matrix nreturn ()
+    test.osl:127	string nreturn ()
+    test.osl:128	closure color nreturn ()
+    test.osl:125	struct A nreturn ()
+    test.osl:129	void nreturn ()
+test.osl:236: warning: Ambiguous call to 'mreturn ()'
+  Chosen function is:
+    test.osl:134	matrix mreturn ()
+  Other candidates are:
+    test.osl:135	string mreturn ()
+    test.osl:132	closure color mreturn ()
+    test.osl:133	struct A mreturn ()
+    test.osl:131	void mreturn ()
+test.osl:237: warning: Ambiguous call to 'strreturn ()'
+  Chosen function is:
+    test.osl:140	string strreturn ()
+  Other candidates are:
+    test.osl:138	closure color strreturn ()
+    test.osl:137	struct A strreturn ()
+    test.osl:139	void strreturn ()
+test.osl:238: warning: Ambiguous call to 'ccreturn ()'
+  Chosen function is:
+    test.osl:142	closure color ccreturn ()
+  Other candidates are:
+    test.osl:144	struct A ccreturn ()
+    test.osl:143	void ccreturn ()
+test.osl:239: warning: Ambiguous call to 'structreturn ()'
+  Chosen function is:
+    test.osl:146	struct A structreturn ()
+  Other candidates are:
+    test.osl:147	void structreturn ()
+test.osl:240: warning: Ambiguous call to 'structreturn1 ()'
+  Chosen function is:
+    test.osl:150	struct A structreturn1 ()
+  Other candidates are:
+    test.osl:149	void structreturn1 ()
+Compiled test.osl -> test.oso
+testA int
+testB int
+testC int
+testD int
+testA int
+testB int
+testC int
+testD int2
+
+testA float
+testB float
+testC float
+testD float
+testA float
+testB float
+testC float
+testD float
+
+testD int
+testD int2
+testD float
+testD vector
+testD int
+testD int2
+testD float
+testD point
+testD int
+testD int2
+testD float
+testD color
+testD int
+testD int2
+testD float
+testD normal
+testD int
+testD int2
+testD float
+testD int
+testD int2
+testD float
+
+testE color
+testE vector
+testE vector
+
+funcb.color
+funcb.float
+funcb.int
+
+freturn.float
+ireturn.int
+creturn.color
+vreturn.vector
+preturn.point
+nreturn.normal
+mreturn.matrix
+strreturn.string
+ccreturn.ccolor
+structreturn.struct
+structreturn1.struct
+
+aaa.Bint
+aaa.Afloat
+bbb.Bint
+bbb.Afloat
+ccc.Aint
+ccc.Bfloat
+
+

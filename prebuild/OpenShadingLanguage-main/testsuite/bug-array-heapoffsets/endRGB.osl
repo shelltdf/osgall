@@ -1,0 +1,12 @@
+// Copyright Contributors to the Open Shading Language project.
+// SPDX-License-Identifier: BSD-3-Clause
+// https://github.com/AcademySoftwareFoundation/OpenShadingLanguage
+
+shader endRGB(    
+    float Cin[3] = { 0.0, 0.0, 0.0 },  
+    output color Cfinal = 0.25 )
+{
+    Cfinal[0] = Cin[0];
+    Cfinal[1] = Cin[1];
+    Cfinal[2] = Cin[2];
+}

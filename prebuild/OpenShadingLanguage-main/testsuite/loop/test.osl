@@ -1,0 +1,86 @@
+// Copyright Contributors to the Open Shading Language project.
+// SPDX-License-Identifier: BSD-3-Clause
+// https://github.com/AcademySoftwareFoundation/OpenShadingLanguage
+
+shader
+test ()
+{
+    {
+        printf ("\nCount 0 to 4 using 'while':\n");
+        int i = 0;
+        while (i < 5) {
+            printf ("  i = %d\n", i);
+            ++i;
+        }
+        printf ("After loop, i = %d\n", i);
+    }
+
+    {
+        printf ("\nVarying 'while', count up until < 5:\n");
+        float i = 0.5 + u + v;
+        printf (" Start with i = %g\n", i);
+        while (i < 5) {
+            printf (" iteration:\n");
+            printf ("  i = %g\n", i);
+            ++i;
+        }
+        printf ("After loop, i = %g\n", i);
+    }
+
+    {
+        printf ("\nCount 0 to 4 using 'for':\n");
+        for (int i = 0; i < 5; ++i) {
+            printf ("  i = %d\n", i);
+        }
+    }
+
+    {
+        printf ("\nVarying 'for', count up until < 5:\n");
+        float i = 15;
+        printf (" outer scope i = %g\n", i);  // test scoping rules
+        for (float i = 0.5+u+v;  i < 5;  ++i) {
+            printf (" iteration:\n");
+            printf ("  i = %g\n", i);
+        }
+        printf (" outer scope i = %g\n", i);
+    }
+
+    {
+        printf ("\nCount using 'do...while(i<5)':\n");
+        int i = 0;
+        do {
+            printf ("  i = %d\n", i);
+            ++i;
+        } while (i < 5);
+        printf ("After loop, i = %d\n", i);
+    }
+
+    {
+        printf ("\nVarying do...while(i<5):\n");
+        float i = 0.5 + u + v;
+        printf (" Start with i = %g\n", i);
+        do {
+            printf (" iteration:\n");
+            printf ("  i = %g\n", i);
+            ++i;
+        } while (i < 5);
+        printf ("After loop, i = %g\n", i);
+    }
+
+
+    // Regression test -- codegen problem made this an infinite loop, a
+    // problem when an int variable was directly used instead of a
+    // comparison.
+    {
+        int hit=1;
+        int i = 0;
+        printf ("\nTesting while(var) hit=%d\n", hit);
+        while (hit) {
+            printf ("  first loop, i=%d, hit=%d\n", i, hit);
+            hit = 0;
+            ++i;
+        }
+        printf ("  loop exited, hit is %d\n", hit);
+    }
+
+}

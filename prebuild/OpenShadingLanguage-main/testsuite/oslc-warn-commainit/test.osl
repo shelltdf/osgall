@@ -1,0 +1,10 @@
+// Copyright Contributors to the Open Shading Language project.
+// SPDX-License-Identifier: BSD-3-Clause
+// https://github.com/AcademySoftwareFoundation/OpenShadingLanguage
+
+shader test ( output color Cout = 0 )
+{
+    vector x = (1, 2, 3);
+    Cout = (u, v, 0);
+    Cout *= (0, 1, 2);
+}

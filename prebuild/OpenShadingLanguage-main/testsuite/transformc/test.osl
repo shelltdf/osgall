@@ -1,0 +1,45 @@
+// Copyright Contributors to the Open Shading Language project.
+// SPDX-License-Identifier: BSD-3-Clause
+// https://github.com/AcademySoftwareFoundation/OpenShadingLanguage
+
+#include "../common/shaders/pretty.h"
+
+void test_ctransform (string space, color c)
+{
+    color cs = transformc (space, c);
+    printf ("rgb %0.3f = %s %0.3f\n", pretty(c), space, pretty(cs));
+    color crgb = transformc (space, "rgb", cs);
+    printf ("%s %0.3f = rgb %0.3f\n", space, pretty(cs), pretty(crgb));
+    printf ("    residual = %0.3f\n", pretty(abs(crgb - c)));
+}
+
+
+
+surface test ()
+{
+    color c = color (0.5, 1, 0);
+    color uv = color (u, v, 0.5);
+    test_ctransform ("hsv", c);
+    test_ctransform ("hsv", uv);
+    test_ctransform ("hsl", c);
+    test_ctransform ("hsl", uv);
+    test_ctransform ("YIQ", c);
+    test_ctransform ("YIQ", uv);
+    test_ctransform ("XYZ", c);
+    test_ctransform ("XYZ", uv);
+    test_ctransform ("xyY", c);
+    test_ctransform ("xyY", uv);
+
+    printf ("transformc (\"linear\",\"sRGB\",(%0.3f)) = %0.3f\n",
+            pretty(c), pretty(transformc("linear","sRGB",c)));
+    printf ("transformc (\"sRGB\",\"linear\",(%0.3f)) = %0.3f\n",
+            pretty(c), pretty(transformc("sRGB","linear",c)));
+
+    color uv_YIQ = transformc("rgb","YIQ",uv);
+    printf ("transformc (\"rgb\",\"YIQ\",(%0.3f / %0.3f / %0.3f)) = %0.3f / %0.3f / %0.3f\n",
+            pretty(uv), pretty(Dx(uv)), pretty(Dy(uv)), pretty(uv_YIQ), pretty(Dx(uv_YIQ)), pretty(Dy(uv_YIQ)));
+    color uv_sRGB = transformc("rgb","sRGB",uv);
+    printf ("transformc (\"rgb\",\"sRGB\",(%0.3f / %0.3f / %0.3f)) = %0.3f / %0.3f / %0.3f\n",
+            pretty(uv), pretty(Dx(uv)), pretty(Dy(uv)), pretty(uv_sRGB), pretty(Dx(uv_sRGB)), pretty(Dy(uv_sRGB)));
+    printf ("\n");
+}

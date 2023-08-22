@@ -1,0 +1,14 @@
+// Copyright Contributors to the Open Shading Language project.
+// SPDX-License-Identifier: BSD-3-Clause
+// https://github.com/AcademySoftwareFoundation/OpenShadingLanguage
+
+// Engineer an ambiguous case that should be a warning
+
+normal func () { return 1; }
+vector func () { return 2; }
+
+shader test ()
+{
+    #pragma osl nowarn
+    point p = func();
+}
