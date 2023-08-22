@@ -26,7 +26,7 @@ if(Boost_SERIALIZATION_FOUND)
 endif()
 
 # Required boost modules
-set(BOOST_REQUIRED_MODULES filesystem iostreams system)
+set(BOOST_REQUIRED_MODULES filesystem iostreams)
 find_package(Boost 1.65.0 REQUIRED COMPONENTS ${BOOST_REQUIRED_MODULES})
 
 if(Boost_FOUND)
