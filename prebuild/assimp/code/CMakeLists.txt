@@ -988,6 +988,8 @@ IF(3MF IN_LIST ASSIMP_EXPORTERS_LIST)
   ENDIF()
 ENDIF()
 
+INCLUDE_DIRECTORIES(${ZLIB_INCLUDE_DIR})
+
 # openddlparser
 IF(ASSIMP_HUNTER_ENABLED)
   hunter_add_package(openddlparser)
