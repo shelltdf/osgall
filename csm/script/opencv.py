@@ -45,4 +45,17 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     build(str_name,dict_config)
     install(str_name,dict_config)
     
+    source_dir = install_dir + "/x64/vc16/bin/"
+    dist_dir = install_dir + "/bin/"
+    print(source_dir)
+    print(dist_dir)
+    movefiles(source_dir,dist_dir,"*.dll")
+    movefiles(source_dir,dist_dir,"*.exe")
+    
+    source_dir = install_dir + "/x64/vc16/lib/"
+    dist_dir = install_dir + "/lib/"
+    print(source_dir)
+    print(dist_dir)
+    movefiles(source_dir,dist_dir,"*.lib")
+    movefiles(source_dir,dist_dir+"/cmake/opencv","*.cmake")
     
