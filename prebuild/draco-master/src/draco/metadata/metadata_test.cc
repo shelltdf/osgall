@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
+#include "draco/metadata/metadata.h"
+
 #include <memory>
 #include <string>
 
 #include "draco/core/draco_test_base.h"
 #include "draco/metadata/geometry_metadata.h"
-#include "draco/metadata/metadata.h"
 
 namespace {
 
@@ -103,12 +104,16 @@ TEST_F(MetadataTest, TestNestedMetadata) {
   sub_metadata->AddEntryInt("int", 100);
 
   metadata.AddSubMetadata("sub0", std::move(sub_metadata));
-  const auto sub_metadata_ptr = metadata.GetSubMetadata("sub0");
+  const auto sub_metadata_ptr = metadata.sub_metadata("sub0");
   ASSERT_NE(sub_metadata_ptr, nullptr);
 
   int32_t int_value = 0;
   ASSERT_TRUE(sub_metadata_ptr->GetEntryInt("int", &int_value));
   ASSERT_EQ(int_value, 100);
+
+  sub_metadata_ptr->AddEntryInt("new_entry", 20);
+  ASSERT_TRUE(sub_metadata_ptr->GetEntryInt("new_entry", &int_value));
+  ASSERT_EQ(int_value, 20);
 }
 
 TEST_F(MetadataTest, TestHardCopyMetadata) {

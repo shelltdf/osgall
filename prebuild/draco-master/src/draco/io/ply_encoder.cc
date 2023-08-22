@@ -14,8 +14,11 @@
 //
 #include "draco/io/ply_encoder.h"
 
-#include <fstream>
+#include <memory>
 #include <sstream>
+
+#include "draco/io/file_writer_factory.h"
+#include "draco/io/file_writer_interface.h"
 
 namespace draco {
 
@@ -24,15 +27,18 @@ PlyEncoder::PlyEncoder()
 
 bool PlyEncoder::EncodeToFile(const PointCloud &pc,
                               const std::string &file_name) {
-  std::ofstream file(file_name, std::ios::binary);
-  if (!file)
+  std::unique_ptr<FileWriterInterface> file =
+      FileWriterFactory::OpenWriter(file_name);
+  if (!file) {
     return false;  // File couldn't be opened.
+  }
   // Encode the mesh into a buffer.
   EncoderBuffer buffer;
-  if (!EncodeToBuffer(pc, &buffer))
+  if (!EncodeToBuffer(pc, &buffer)) {
     return false;
+  }
   // Write the buffer into the file.
-  file.write(buffer.data(), buffer.size());
+  file->Write(buffer.data(), buffer.size());
   return true;
 }
 
@@ -45,8 +51,9 @@ bool PlyEncoder::EncodeToBuffer(const PointCloud &pc,
                                 EncoderBuffer *out_buffer) {
   in_point_cloud_ = &pc;
   out_buffer_ = out_buffer;
-  if (!EncodeInternal())
+  if (!EncodeInternal()) {
     return ExitAndCleanup(false);
+  }
   return ExitAndCleanup(true);
 }
 
@@ -71,19 +78,22 @@ bool PlyEncoder::EncodeInternal() {
   const int color_att_id =
       in_point_cloud_->GetNamedAttributeId(GeometryAttribute::COLOR);
 
-  if (pos_att_id < 0)
+  if (pos_att_id < 0) {
     return false;
+  }
 
   // Ensure normals are 3 component. Don't encode them otherwise.
   if (normal_att_id >= 0 &&
-      in_point_cloud_->attribute(normal_att_id)->num_components() != 3)
+      in_point_cloud_->attribute(normal_att_id)->num_components() != 3) {
     normal_att_id = -1;
+  }
 
   // Ensure texture coordinates have only 2 components. Don't encode them
   // otherwise. TODO(ostava): Add support for 3 component normals (uvw).
   if (tex_coord_att_id >= 0 &&
-      in_point_cloud_->attribute(tex_coord_att_id)->num_components() != 2)
+      in_point_cloud_->attribute(tex_coord_att_id)->num_components() != 2) {
     tex_coord_att_id = -1;
+  }
 
   out << "property " << GetAttributeDataType(pos_att_id) << " x" << std::endl;
   out << "property " << GetAttributeDataType(pos_att_id) << " y" << std::endl;
@@ -133,7 +143,8 @@ bool PlyEncoder::EncodeInternal() {
   buffer()->Encode(header_str.data(), header_str.length());
 
   // Store point attributes.
-  for (PointIndex v(0); v < in_point_cloud_->num_points(); ++v) {
+  const int num_points = in_point_cloud_->num_points();
+  for (PointIndex v(0); v < num_points; ++v) {
     const auto *const pos_att = in_point_cloud_->attribute(pos_att_id);
     buffer()->Encode(pos_att->GetAddress(pos_att->mapped_index(v)),
                      pos_att->byte_stride());
@@ -156,9 +167,13 @@ bool PlyEncoder::EncodeInternal() {
       buffer()->Encode(static_cast<uint8_t>(3));
 
       const auto &f = in_mesh_->face(i);
-      buffer()->Encode(f[0]);
-      buffer()->Encode(f[1]);
-      buffer()->Encode(f[2]);
+      for (int c = 0; c < 3; ++c) {
+        if (f[c] >= num_points) {
+          // Invalid point stored on the |in_mesh_| face.
+          return false;
+        }
+        buffer()->Encode(f[c]);
+      }
 
       if (tex_coord_att_id >= 0) {
         // Two coordinates for every corner -> 6.

@@ -25,8 +25,9 @@ SequentialIntegerAttributeEncoder::SequentialIntegerAttributeEncoder() {}
 
 bool SequentialIntegerAttributeEncoder::Init(PointCloudEncoder *encoder,
                                              int attribute_id) {
-  if (!SequentialAttributeEncoder::Init(encoder, attribute_id))
+  if (!SequentialAttributeEncoder::Init(encoder, attribute_id)) {
     return false;
+  }
   if (GetUniqueId() == SEQUENTIAL_ATTRIBUTE_ENCODER_INTEGER) {
     // When encoding integers, this encoder currently works only for integer
     // attributes up to 32 bits.
@@ -58,11 +59,13 @@ bool SequentialIntegerAttributeEncoder::Init(PointCloudEncoder *encoder,
 bool SequentialIntegerAttributeEncoder::TransformAttributeToPortableFormat(
     const std::vector<PointIndex> &point_ids) {
   if (encoder()) {
-    if (!PrepareValues(point_ids, encoder()->point_cloud()->num_points()))
+    if (!PrepareValues(point_ids, encoder()->point_cloud()->num_points())) {
       return false;
+    }
   } else {
-    if (!PrepareValues(point_ids, 0))
+    if (!PrepareValues(point_ids, 0)) {
       return false;
+    }
   }
 
   // Update point to attribute mapping with the portable attribute if the
@@ -77,6 +80,9 @@ bool SequentialIntegerAttributeEncoder::TransformAttributeToPortableFormat(
     for (int i = 0; i < point_ids.size(); ++i) {
       value_to_value_map[orig_att->mapped_index(point_ids[i])] =
           AttributeValueIndex(i);
+    }
+    if (portable_att->is_mapping_identity()) {
+      portable_att->SetExplicitMapping(encoder()->point_cloud()->num_points());
     }
     // Go over all points of the original attribute and update the mapping in
     // the portable attribute.
@@ -100,8 +106,9 @@ bool SequentialIntegerAttributeEncoder::EncodeValues(
     const std::vector<PointIndex> &point_ids, EncoderBuffer *out_buffer) {
   // Initialize general quantization data.
   const PointAttribute *const attrib = attribute();
-  if (attrib->size() == 0)
+  if (attrib->size() == 0) {
     return true;
+  }
 
   int8_t prediction_scheme_method = PREDICTION_NONE;
   if (prediction_scheme_) {
@@ -131,9 +138,11 @@ bool SequentialIntegerAttributeEncoder::EncodeValues(
   // All integer values are initialized. Process them using the prediction
   // scheme if we have one.
   if (prediction_scheme_) {
-    prediction_scheme_->ComputeCorrectionValues(
-        portable_attribute_data, &encoded_data[0], num_values, num_components,
-        point_ids.data());
+    if (!prediction_scheme_->ComputeCorrectionValues(
+            portable_attribute_data, &encoded_data[0], num_values,
+            num_components, point_ids.data())) {
+      return false;
+    }
   }
 
   if (prediction_scheme_ == nullptr ||
@@ -202,8 +211,9 @@ bool SequentialIntegerAttributeEncoder::PrepareValues(
   for (PointIndex pi : point_ids) {
     const AttributeValueIndex att_id = attrib->mapped_index(pi);
     if (!attrib->ConvertValue<int32_t>(att_id,
-                                       portable_attribute_data + dst_index))
+                                       portable_attribute_data + dst_index)) {
       return false;
+    }
     dst_index += num_components;
   }
   return true;

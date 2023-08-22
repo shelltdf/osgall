@@ -1,11 +1,16 @@
 // Interface exposed to emscripten's WebIDL Binder.
 // http://kripken.github.io/emscripten-site/docs/porting/connecting_cpp_and_javascript/WebIDL-Binder.html
+
+// Deprecated: DecoderBuffer is no longer supported and will be removed in
+//             future releases. Please refer to Decoder declaration below for
+//             new decoding functions that do not use DecoderBuffer.
 [Prefix="draco::"]
 interface DecoderBuffer {
   void DecoderBuffer();
   void Init([Const] byte[] data, unsigned long data_size);
 };
 
+// TODO(fgalligan): Can we remove this?
 enum draco_AttributeTransformType {
   "draco::ATTRIBUTE_INVALID_TRANSFORM",
   "draco::ATTRIBUTE_NO_TRANSFORM",
@@ -37,6 +42,22 @@ enum draco_EncodedGeometryType {
   "draco::INVALID_GEOMETRY_TYPE",
   "draco::POINT_CLOUD",
   "draco::TRIANGULAR_MESH"
+};
+
+enum draco_DataType {
+  "draco::DT_INVALID",
+  "draco::DT_INT8",
+  "draco::DT_UINT8",
+  "draco::DT_INT16",
+  "draco::DT_UINT16",
+  "draco::DT_INT32",
+  "draco::DT_UINT32",
+  "draco::DT_INT64",
+  "draco::DT_UINT64",
+  "draco::DT_FLOAT32",
+  "draco::DT_FLOAT64",
+  "draco::DT_BOOL",
+  "draco::DT_TYPES_COUNT"
 };
 
 [Prefix="draco::"]
@@ -176,11 +197,14 @@ interface MetadataQuerier {
 
 interface Decoder {
   void Decoder();
-  draco_EncodedGeometryType GetEncodedGeometryType(DecoderBuffer in_buffer);
 
-  [Const] Status DecodeBufferToPointCloud(DecoderBuffer in_buffer,
-                                          PointCloud out_point_cloud);
-  [Const] Status DecodeBufferToMesh(DecoderBuffer in_buffer, Mesh out_mesh);
+  [Const] Status DecodeArrayToPointCloud([Const] byte[] data,
+                                         unsigned long data_size,
+                                         PointCloud out_point_cloud);
+
+  [Const] Status DecodeArrayToMesh([Const] byte[] data,
+                                   unsigned long data_size,
+                                   Mesh out_mesh);
 
   long GetAttributeId([Ref, Const] PointCloud pc,
                       draco_GeometryAttribute_Type type);
@@ -201,6 +225,11 @@ interface Decoder {
                           DracoInt32Array out_values);
   long GetTriangleStripsFromMesh([Ref, Const] Mesh m,
                                  DracoInt32Array strip_values);
+
+  boolean GetTrianglesUInt16Array([Ref, Const] Mesh m,
+                                  long out_size, VoidPtr out_values);
+  boolean GetTrianglesUInt32Array([Ref, Const] Mesh m,
+                                  long out_size, VoidPtr out_values);
 
   boolean GetAttributeFloat([Ref, Const] PointAttribute pa,
                             long att_index,
@@ -234,5 +263,21 @@ interface Decoder {
                                          [Ref, Const] PointAttribute pa,
                                          DracoUInt32Array out_values);
 
+  boolean GetAttributeDataArrayForAllPoints([Ref, Const] PointCloud pc,
+                                            [Ref, Const] PointAttribute pa,
+                                            draco_DataType data_type,
+                                            long out_size, VoidPtr out_values);
+
   void SkipAttributeTransform(draco_GeometryAttribute_Type att_type);
+
+  // Deprecated: Use decoder.GetEncodedGeometryType(array) instead, where
+  //             |array| is an Int8Array containing the encoded data.
+  draco_EncodedGeometryType GetEncodedGeometryType_Deprecated(
+                                DecoderBuffer in_buffer);
+
+  // Deprecated: UseDecodeArrayToPointCloud instead.
+  [Const] Status DecodeBufferToPointCloud(DecoderBuffer in_buffer,
+                                          PointCloud out_point_cloud);
+  // Deprecated: UseDecodeArrayToMesh instead.
+  [Const] Status DecodeBufferToMesh(DecoderBuffer in_buffer, Mesh out_mesh);
 };

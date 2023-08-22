@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-#ifndef DRACO_JAVASCRIPT_EMSCRITPEN_ENCODER_WEBIDL_WRAPPER_H_
-#define DRACO_JAVASCRIPT_EMSCRITPEN_ENCODER_WEBIDL_WRAPPER_H_
+#ifndef DRACO_JAVASCRIPT_EMSCRIPTEN_ENCODER_WEBIDL_WRAPPER_H_
+#define DRACO_JAVASCRIPT_EMSCRIPTEN_ENCODER_WEBIDL_WRAPPER_H_
 
 #include <vector>
 
@@ -48,6 +48,8 @@ class MetadataBuilder {
                       const char *entry_value);
   bool AddIntEntry(draco::Metadata *metadata, const char *entry_name,
                    long entry_value);
+  bool AddIntEntryArray(draco::Metadata *metadata, const char *entry_name,
+                        const int32_t *entry_values, int32_t num_values);
   bool AddDoubleEntry(draco::Metadata *metadata, const char *entry_name,
                       double entry_value);
 };
@@ -86,15 +88,13 @@ class PointCloudBuilder {
                    long num_vertices, long num_components,
                    const DataTypeT *att_values,
                    draco::DataType draco_data_type) {
-    if (!pc)
+    if (!pc) {
       return -1;
-    draco::PointAttribute att;
-    att.Init(type, NULL, num_components, draco_data_type,
-             /* normalized */ false,
-             /* stride */ sizeof(DataTypeT) * num_components,
-             /* byte_offset */ 0);
-    const int att_id =
-        pc->AddAttribute(att, /* identity_mapping */ true, num_vertices);
+    }
+    std::unique_ptr<draco::PointAttribute> att(new draco::PointAttribute());
+    att->Init(type, num_components, draco_data_type,
+              /* normalized */ false, num_vertices);
+    const int att_id = pc->AddAttribute(std::move(att));
     draco::PointAttribute *const att_ptr = pc->attribute(att_id);
 
     for (draco::PointIndex i(0); i < num_vertices; ++i) {
@@ -183,4 +183,4 @@ class ExpertEncoder {
   draco::PointCloud *pc_;
 };
 
-#endif  // DRACO_JAVASCRIPT_EMSCRITPEN_ENCODER_WEBIDL_WRAPPER_H_
+#endif  // DRACO_JAVASCRIPT_EMSCRIPTEN_ENCODER_WEBIDL_WRAPPER_H_

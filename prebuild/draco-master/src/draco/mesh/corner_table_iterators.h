@@ -15,15 +15,23 @@
 #ifndef DRACO_MESH_CORNER_TABLE_ITERATORS_H_
 #define DRACO_MESH_CORNER_TABLE_ITERATORS_H_
 
+#include <iterator>
+
 #include "draco/mesh/corner_table.h"
 
 namespace draco {
 
 // Class for iterating over vertices in a 1-ring around the specified vertex.
 template <class CornerTableT>
-class VertexRingIterator
-    : public std::iterator<std::forward_iterator_tag, VertexIndex> {
+class VertexRingIterator {
  public:
+  // Iterator traits expected by std libraries.
+  using iterator_category = std::forward_iterator_tag;
+  using value_type = VertexIndex;
+  using difference_type = std::ptrdiff_t;
+  using pointer = VertexIndex *;
+  using reference = VertexIndex &;
+
   // std::iterator interface requires a default constructor.
   VertexRingIterator()
       : corner_table_(nullptr),
@@ -43,6 +51,13 @@ class VertexRingIterator
     CornerIndex ring_corner = left_traversal_ ? corner_table_->Previous(corner_)
                                               : corner_table_->Next(corner_);
     return corner_table_->Vertex(ring_corner);
+  }
+
+  // Returns one of the corners opposite to the edge connecting the currently
+  // iterated ring vertex with the central vertex.
+  CornerIndex EdgeCorner() const {
+    return left_traversal_ ? corner_table_->Next(corner_)
+                           : corner_table_->Previous(corner_);
   }
 
   // Returns true when all ring vertices have been visited.
@@ -104,9 +119,15 @@ class VertexRingIterator
 
 // Class for iterating over faces adjacent to the specified input face.
 template <class CornerTableT>
-class FaceAdjacencyIterator
-    : public std::iterator<std::forward_iterator_tag, FaceIndex> {
+class FaceAdjacencyIterator {
  public:
+  // Iterator traits expected by std libraries.
+  using iterator_category = std::forward_iterator_tag;
+  using value_type = FaceIndex;
+  using difference_type = std::ptrdiff_t;
+  using pointer = FaceIndex *;
+  using reference = FaceIndex &;
+
   // std::iterator interface requires a default constructor.
   FaceAdjacencyIterator()
       : corner_table_(nullptr),
@@ -120,8 +141,9 @@ class FaceAdjacencyIterator
         corner_(start_corner_) {
     // We need to start with a corner that has a valid opposite face (if
     // there is any such corner).
-    if (corner_table_->Opposite(corner_) == kInvalidCornerIndex)
+    if (corner_table_->Opposite(corner_) == kInvalidCornerIndex) {
       FindNextFaceNeighbor();
+    }
   }
 
   // Gets the last visited adjacent face.
@@ -185,9 +207,15 @@ class FaceAdjacencyIterator
 
 // Class for iterating over corners attached to a specified vertex.
 template <class CornerTableT = CornerTable>
-class VertexCornersIterator
-    : public std::iterator<std::forward_iterator_tag, CornerIndex> {
+class VertexCornersIterator {
  public:
+  // Iterator traits expected by std libraries.
+  using iterator_category = std::forward_iterator_tag;
+  using value_type = CornerIndex;
+  using difference_type = std::ptrdiff_t;
+  using pointer = CornerIndex *;
+  using reference = CornerIndex &;
+
   // std::iterator interface requires a default constructor.
   VertexCornersIterator()
       : corner_table_(nullptr),

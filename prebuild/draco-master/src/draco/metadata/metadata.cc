@@ -13,6 +13,7 @@
 // limitations under the License.
 //
 #include "draco/metadata/metadata.h"
+
 #include <utility>
 
 namespace draco {
@@ -29,8 +30,9 @@ EntryValue::EntryValue(const std::string &value) {
 
 template <>
 bool EntryValue::GetValue(std::string *value) const {
-  if (data_.empty())
+  if (data_.empty()) {
     return false;
+  }
   value->resize(data_.size());
   memcpy(&value->at(0), &data_[0], data_.size());
   return true;
@@ -113,6 +115,14 @@ bool Metadata::AddSubMetadata(const std::string &name,
 }
 
 const Metadata *Metadata::GetSubMetadata(const std::string &name) const {
+  auto sub_ptr = sub_metadatas_.find(name);
+  if (sub_ptr == sub_metadatas_.end()) {
+    return nullptr;
+  }
+  return sub_ptr->second.get();
+}
+
+Metadata *Metadata::sub_metadata(const std::string &name) {
   auto sub_ptr = sub_metadatas_.find(name);
   if (sub_ptr == sub_metadatas_.end()) {
     return nullptr;

@@ -25,7 +25,7 @@ namespace draco {
 // Sequencer that generates point sequence in an order given by a deterministic
 // traversal on the mesh surface. Note that all attributes encoded with this
 // sequence must share the same connectivity.
-// TODO(hemmer): Consider refactoring such that this is an observer.
+// TODO(b/199760123): Consider refactoring such that this is an observer.
 template <class TraverserT>
 class MeshTraversalSequencer : public PointsSequencer {
  public:
@@ -56,12 +56,13 @@ class MeshTraversalSequencer : public PointsSequencer {
         const PointIndex point_id = face[p];
         const VertexIndex vert_id =
             corner_table->Vertex(CornerIndex(3 * f.value() + p));
-        if (vert_id == kInvalidVertexIndex)
+        if (vert_id == kInvalidVertexIndex) {
           return false;
+        }
         const AttributeValueIndex att_entry_id(
             encoding_data_
                 ->vertex_to_encoded_attribute_value_index_map[vert_id.value()]);
-        if (att_entry_id.value() >= num_points) {
+        if (point_id >= num_points || att_entry_id.value() >= num_points) {
           // There cannot be more attribute values than the number of points.
           return false;
         }
@@ -80,14 +81,16 @@ class MeshTraversalSequencer : public PointsSequencer {
     traverser_.OnTraversalStart();
     if (corner_order_) {
       for (uint32_t i = 0; i < corner_order_->size(); ++i) {
-        if (!ProcessCorner(corner_order_->at(i)))
+        if (!ProcessCorner(corner_order_->at(i))) {
           return false;
+        }
       }
     } else {
       const int32_t num_faces = traverser_.corner_table()->num_faces();
       for (int i = 0; i < num_faces; ++i) {
-        if (!ProcessCorner(CornerIndex(3 * i)))
+        if (!ProcessCorner(CornerIndex(3 * i))) {
           return false;
+        }
       }
     }
     traverser_.OnTraversalEnd();

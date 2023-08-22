@@ -23,19 +23,22 @@ SequentialQuantizationAttributeEncoder::
 
 bool SequentialQuantizationAttributeEncoder::Init(PointCloudEncoder *encoder,
                                                   int attribute_id) {
-  if (!SequentialIntegerAttributeEncoder::Init(encoder, attribute_id))
+  if (!SequentialIntegerAttributeEncoder::Init(encoder, attribute_id)) {
     return false;
+  }
   // This encoder currently works only for floating point attributes.
   const PointAttribute *const attribute =
       encoder->point_cloud()->attribute(attribute_id);
-  if (attribute->data_type() != DT_FLOAT32)
+  if (attribute->data_type() != DT_FLOAT32) {
     return false;
+  }
 
   // Initialize AttributeQuantizationTransform.
   const int quantization_bits = encoder->options()->GetAttributeInt(
       attribute_id, "quantization_bits", -1);
-  if (quantization_bits < 1)
+  if (quantization_bits < 1) {
     return false;
+  }
   if (encoder->options()->IsAttributeOptionSet(attribute_id,
                                                "quantization_origin") &&
       encoder->options()->IsAttributeOptionSet(attribute_id,
@@ -47,13 +50,17 @@ bool SequentialQuantizationAttributeEncoder::Init(PointCloudEncoder *encoder,
                                            &quantization_origin[0]);
     const float range = encoder->options()->GetAttributeFloat(
         attribute_id, "quantization_range", 1.f);
-    attribute_quantization_transform_.SetParameters(
-        quantization_bits, quantization_origin.data(),
-        attribute->num_components(), range);
+    if (!attribute_quantization_transform_.SetParameters(
+            quantization_bits, quantization_origin.data(),
+            attribute->num_components(), range)) {
+      return false;
+    }
   } else {
     // Compute quantization settings from the attribute values.
-    attribute_quantization_transform_.ComputeParameters(*attribute,
-                                                        quantization_bits);
+    if (!attribute_quantization_transform_.ComputeParameters(
+            *attribute, quantization_bits)) {
+      return false;
+    }
   }
   return true;
 }
@@ -65,9 +72,14 @@ bool SequentialQuantizationAttributeEncoder::
 
 bool SequentialQuantizationAttributeEncoder::PrepareValues(
     const std::vector<PointIndex> &point_ids, int num_points) {
-  SetPortableAttribute(
-      attribute_quantization_transform_.GeneratePortableAttribute(
-          *(attribute()), point_ids, num_points));
+  auto portable_attribute =
+      attribute_quantization_transform_.InitTransformedAttribute(
+          *attribute(), point_ids.size());
+  if (!attribute_quantization_transform_.TransformAttribute(
+          *(attribute()), point_ids, portable_attribute.get())) {
+    return false;
+  }
+  SetPortableAttribute(std::move(portable_attribute));
   return true;
 }
 

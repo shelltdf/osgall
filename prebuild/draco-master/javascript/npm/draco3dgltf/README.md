@@ -6,46 +6,26 @@
 Description - glTF Draco Mesh Compression Extension
 ===================================================
 
+The `draco3dgltf` package is a subset of the `draco3d` package, containing only
+features of the Draco library that are relevant to compression in the glTF file
+format. glTF files (`.gltf`, `.glb`) can contain Draco-compressed mesh geometry,
+as defined by the glTF extension `KHR_draco_mesh_compression`.
 
-[Draco] is a library for compressing and decompressing 3D geometric [meshes] and [point clouds]. It is intended to improve the storage and transmission of 3D graphics.
-The [GL Transmission Format (glTF)](https://github.com/KhronosGroup/glTF) is an API-neutral runtime asset delivery format. glTF bridges the gap between 3D content creation tools and modern 3D applications by providing an efficient, extensible, interoperable format for the transmission and loading of 3D content.
+This library does not directly read/write glTF files, but is intended for use
+within tools and applications that deal with the glTF format. Examples of tools
+using the Draco library to apply compression to glTF files include:
 
-This package is a build for encoding/decoding [Draco mesh compression extension](https://github.com/KhronosGroup/glTF/pull/874) in glTF specification. It could be used to compress the meshes in glTF assets or to decode the buffer data that belongs to a Draco mesh compression extension. For more detail, please read the extension spec.
+[Blender](https://www.blender.org/),
+[glTF Transform](https://gltf-transform.donmccurdy.com/), and
+[glTF Pipeline](https://github.com/CesiumGS/gltf-pipeline).
 
 Draco github glTF branch URL: https://github.com/google/draco/tree/gltf_2.0_draco_extension
 
 News
 =======
-### Version 1.3.5 release
-* Added option to build Draco for Universal Scene Description
-* Code cleanup
-* Bug fixes
 
-### Version 1.3.4 release
-* Fixes for Unity
-
-### Version 1.3.3 release
-* Added ExpertEncoder to the JavaScript API
-  * Allows developers to set quantization options per attribute id
-* Bug fixes
-
-### Version 1.3.2 release
-* Bug fixes
-
-### Version 1.3.1 release
-* Fix issue with multiple attributes when skipping an attribute transform
-
-### Version 1.3.0 release
-* Improved kD-tree based point cloud encoding
-  * Now applicable to point clouds with any number of attributes
-  * Support for all integer attribute types and quantized floating point types
-* Improved mesh compression up to 10% (on average ~2%)
-  * For meshes, the 1.3.0 bitstream is fully compatible with 1.2.x decoders
-* Improved JavaScript API
-  * Added support for all signed and unsigned integer types
-  * Added support for point clouds to our JavaScript encoder API
-* Added support for integer properties to the PLY decoder
-* Bug fixes
+Check out the [README](https://github.com/google/draco/blob/1.5.6/README.md)
+file for news about this release.
 
 NPM Package
 ===========

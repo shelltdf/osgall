@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-#ifndef DRACO_CORE_ANS_H_
-#define DRACO_CORE_ANS_H_
+#ifndef DRACO_COMPRESSION_ENTROPY_ANS_H_
+#define DRACO_COMPRESSION_ENTROPY_ANS_H_
 // An implementation of Asymmetric Numeral Systems (rANS).
 // See http://arxiv.org/abs/1311.2540v2 for more information on rANS.
 // This file is based off libvpx's ans.h.
@@ -255,11 +255,12 @@ static inline void uabs_write(struct AnsCoder *ans, int val, AnsP8 p0) {
     ans->buf[ans->buf_offset++] = ans->state % DRACO_ANS_IO_BASE;
     ans->state /= DRACO_ANS_IO_BASE;
   }
-  if (!val)
+  if (!val) {
     ans->state = DRACO_ANS_DIV(ans->state * DRACO_ANS_P8_PRECISION, p0);
-  else
+  } else {
     ans->state =
         DRACO_ANS_DIV((ans->state + 1) * DRACO_ANS_P8_PRECISION + p - 1, p) - 1;
+  }
 }
 
 static inline int uabs_read(struct AnsDecoder *ans, AnsP8 p0) {
@@ -276,10 +277,11 @@ static inline int uabs_read(struct AnsDecoder *ans, AnsP8 p0) {
   xp = sp / DRACO_ANS_P8_PRECISION;
   // s = xp1 - xp;
   s = (sp & 0xFF) >= p0;
-  if (UNPREDICTABLE(s))
+  if (UNPREDICTABLE(s)) {
     ans->state = xp;
-  else
+  } else {
     ans->state = state - xp;
+  }
   return s;
 }
 
@@ -297,29 +299,33 @@ static inline int uabs_read_bit(struct AnsDecoder *ans) {
 static inline int ans_read_init(struct AnsDecoder *const ans,
                                 const uint8_t *const buf, int offset) {
   unsigned x;
-  if (offset < 1)
+  if (offset < 1) {
     return 1;
+  }
   ans->buf = buf;
   x = buf[offset - 1] >> 6;
   if (x == 0) {
     ans->buf_offset = offset - 1;
     ans->state = buf[offset - 1] & 0x3F;
   } else if (x == 1) {
-    if (offset < 2)
+    if (offset < 2) {
       return 1;
+    }
     ans->buf_offset = offset - 2;
     ans->state = mem_get_le16(buf + offset - 2) & 0x3FFF;
   } else if (x == 2) {
-    if (offset < 3)
+    if (offset < 3) {
       return 1;
+    }
     ans->buf_offset = offset - 3;
     ans->state = mem_get_le24(buf + offset - 3) & 0x3FFFFF;
   } else {
     return 1;
   }
   ans->state += DRACO_ANS_L_BASE;
-  if (ans->state >= DRACO_ANS_L_BASE * DRACO_ANS_IO_BASE)
+  if (ans->state >= DRACO_ANS_L_BASE * DRACO_ANS_IO_BASE) {
     return 1;
+  }
   return 0;
 }
 
@@ -385,7 +391,6 @@ class RAnsEncoder {
       ans_.buf[ans_.buf_offset++] = ans_.state % DRACO_ANS_IO_BASE;
       ans_.state /= DRACO_ANS_IO_BASE;
     }
-    // TODO(ostava): The division and multiplication should be optimized.
     ans_.state =
         (ans_.state / p) * rans_precision + ans_.state % p + sym->cum_prob;
   }
@@ -415,21 +420,24 @@ class RAnsDecoder {
   // error.
   inline int read_init(const uint8_t *const buf, int offset) {
     unsigned x;
-    if (offset < 1)
+    if (offset < 1) {
       return 1;
+    }
     ans_.buf = buf;
     x = buf[offset - 1] >> 6;
     if (x == 0) {
       ans_.buf_offset = offset - 1;
       ans_.state = buf[offset - 1] & 0x3F;
     } else if (x == 1) {
-      if (offset < 2)
+      if (offset < 2) {
         return 1;
+      }
       ans_.buf_offset = offset - 2;
       ans_.state = mem_get_le16(buf + offset - 2) & 0x3FFF;
     } else if (x == 2) {
-      if (offset < 3)
+      if (offset < 3) {
         return 1;
+      }
       ans_.buf_offset = offset - 3;
       ans_.state = mem_get_le24(buf + offset - 3) & 0x3FFFFF;
     } else if (x == 3) {
@@ -439,8 +447,9 @@ class RAnsDecoder {
       return 1;
     }
     ans_.state += l_rans_base;
-    if (ans_.state >= l_rans_base * DRACO_ANS_IO_BASE)
+    if (ans_.state >= l_rans_base * DRACO_ANS_IO_BASE) {
       return 1;
+    }
     return 0;
   }
 
@@ -514,4 +523,4 @@ class RAnsDecoder {
 
 }  // namespace draco
 
-#endif  // DRACO_CORE_ANS_H_
+#endif  // DRACO_COMPRESSION_ENTROPY_ANS_H_
