@@ -47,7 +47,7 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     STR_CFG += ' -DUSE_Nuke=0'
     STR_CFG += ' -DUSE_FFmpeg=0'
     STR_CFG += ' -DUSE_OpenEXR=1'
-    STR_CFG += ' -DUSE_Field3D=0'
+    STR_CFG += ' -DUSE_Field3D=0' # no pybind11
     STR_CFG += ' -DUSE_PYTHON=0'
     STR_CFG += ' -DBUILD_TESTING=0'
     STR_CFG += ' -DOIIO_BUILD_TOOLS=0'
@@ -56,8 +56,10 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     STR_CFG += ' -DBOOST_CUSTOM=1'
     if(dict_config['static']):
         STR_CFG += " -DBUILD_SHARED_LIBS=0"
+        STR_CFG += " -DBoost_USE_STATIC_LIBS=1"
     else:
         STR_CFG += " -DBUILD_SHARED_LIBS=1"
+        STR_CFG += " -DBoost_USE_STATIC_LIBS=0"
         
             
     # OPENEXR3 ILMBASE_INCLUDE_PATH
@@ -87,13 +89,13 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     
     STR_CFG += ' -DOpenCV_INCLUDE_DIR=' + install_dir + '/include/'
     if(dict_config['debug']==True):
-        STR_CFG += ' -Dopencv_core_lib=' + install_dir + '/x64/vc16/lib/opencv_core480d.lib'
-        STR_CFG += ' -Dopencv_imgproc_lib=' + install_dir + '/x64/vc16/lib/opencv_imgproc480d.lib'
-        STR_CFG += ' -Dopencv_videoio_lib=' + install_dir + '/x64/vc16/lib/opencv_videoio480d.lib'
+        STR_CFG += ' -Dopencv_core_lib=' + install_dir + '/lib/opencv_core480d.lib'
+        STR_CFG += ' -Dopencv_imgproc_lib=' + install_dir + '/lib/opencv_imgproc480d.lib'
+        STR_CFG += ' -Dopencv_videoio_lib=' + install_dir + '/lib/opencv_videoio480d.lib'
     else:
-        STR_CFG += ' -Dopencv_core_lib=' + install_dir + '/x64/vc16/lib/opencv_core480.lib'
-        STR_CFG += ' -Dopencv_imgproc_lib=' + install_dir + '/x64/vc16/lib/opencv_imgproc480.lib'
-        STR_CFG += ' -Dopencv_videoio_lib=' + install_dir + '/x64/vc16/lib/opencv_videoio480.lib'
+        STR_CFG += ' -Dopencv_core_lib=' + install_dir + '/lib/opencv_core480.lib'
+        STR_CFG += ' -Dopencv_imgproc_lib=' + install_dir + '/lib/opencv_imgproc480.lib'
+        STR_CFG += ' -Dopencv_videoio_lib=' + install_dir + '/lib/opencv_videoio480.lib'
     
     STR_CFG += ' -DDCMTK_INCLUDE_PATH=' + install_dir + '/include/'
     
@@ -105,7 +107,8 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         
     # source_dir = os.getcwd() + '/../prebuild/oiio-master'
     # source_dir = os.getcwd() + '/../prebuild/oiio-Release-2.1.16.0'
-    source_dir = os.getcwd() + '/../prebuild/oiio-Release-2.1.20.0'
+    # source_dir = os.getcwd() + '/../prebuild/oiio-Release-2.1.20.0'
+    source_dir = os.getcwd() + '/../prebuild/oiio-2.3.17.0'
     
     configure(str_name,dict_config,STR_CFG,"",source_dir)
     build(str_name,dict_config)
