@@ -42,7 +42,7 @@ macro (oslc_compile)
         COMMAND oslc ${oslc_args} "${oslfile}" -o "${osofile}"
         MAIN_DEPENDENCY ${oslsrc}
         DEPENDS ${_shader_DEPENDS} "${stdosl_header}" oslc
-        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}/bin
         COMMENT "oslc ${oslsrc_we}")
     if (_shader_OSO_LIST)
         list (APPEND ${_shader_OSO_LIST} ${osofile})

@@ -23,7 +23,7 @@ public:
     static PointCloud* get(ustringhash filename, bool write = false);
 
     typedef std::unordered_map<ustringhash,
-                               std::unique_ptr<Partio::ParticleAttribute>>
+                               std::shared_ptr<Partio::ParticleAttribute>>
         AttributeMap;
 
     const Partio::ParticlesData* read_access() const

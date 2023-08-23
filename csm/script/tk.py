@@ -4,6 +4,8 @@ from ._common import *
 def getDependency( str_name ,getDependency):
     list_name = []
     
+    list_name = addDependency("tcl" , list_name,getDependency)
+    
     return list_name + [str_name]
     
     

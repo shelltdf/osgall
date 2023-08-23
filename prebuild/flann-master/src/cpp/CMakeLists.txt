@@ -8,6 +8,7 @@ file(GLOB_RECURSE C_SOURCES flann.cpp)
 file(GLOB_RECURSE CPP_SOURCES flann_cpp.cpp)
 file(GLOB_RECURSE CU_SOURCES *.cu)
 
+if(CMAKE_BUILD_STATIC_LIBS)
 add_library(flann_cpp_s STATIC ${CPP_SOURCES})
 target_link_libraries(flann_cpp_s PUBLIC ${LZ4_LINK_LIBRARIES})
 if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_CLANG)
@@ -19,12 +20,15 @@ else()
     set_target_properties(flann_cpp_s PROPERTIES EXCLUDE_FROM_ALL true)
 endif()
 
+else(CMAKE_BUILD_STATIC_LIBS)
+
 add_library(flann_cpp SHARED ${CPP_SOURCES})
 target_link_libraries(flann_cpp ${LZ4_LINK_LIBRARIES})
 # export lz4 headers, so that MSVC to creates flann_cpp.lib
 set_target_properties(flann_cpp PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS YES)
 
 set(flann_install_targets flann_cpp)
+endif(CMAKE_BUILD_STATIC_LIBS)
 
 if (BUILD_CUDA_LIB)
     SET(CUDA_NVCC_FLAGS "${CUDA_NVCC_FLAGS};-DFLANN_USE_CUDA;-Xcudafe \"--diag_suppress=partial_override\" ;-gencode=arch=compute_52,code=\"sm_52,compute_52\";-gencode=arch=compute_61,code=\"sm_61,compute_61\"")
@@ -46,17 +50,25 @@ if (BUILD_CUDA_LIB)
 
     cuda_add_library(flann_cuda SHARED ${CU_SOURCES})
     list(APPEND flann_install_targets flann_cuda)
+	if(NOT CMAKE_BUILD_STATIC_LIBS)
     set_property(TARGET flann_cpp PROPERTY COMPILE_DEFINITIONS FLANN_USE_CUDA)
+	endif(NOT CMAKE_BUILD_STATIC_LIBS)
+	if(CMAKE_BUILD_STATIC_LIBS)
     set_property(TARGET flann_cpp_s PROPERTY COMPILE_DEFINITIONS FLANN_STATIC FLANN_USE_CUDA)
+	endif(CMAKE_BUILD_STATIC_LIBS)
 else()
+if(CMAKE_BUILD_STATIC_LIBS)
     set_property(TARGET flann_cpp_s PROPERTY COMPILE_DEFINITIONS FLANN_STATIC)
+endif(CMAKE_BUILD_STATIC_LIBS)
 endif()
 
+if(NOT CMAKE_BUILD_STATIC_LIBS)
 set_target_properties(flann_cpp PROPERTIES
    VERSION ${FLANN_VERSION}
    SOVERSION ${FLANN_SOVERSION}
    DEFINE_SYMBOL FLANN_EXPORTS
 )
+endif(NOT CMAKE_BUILD_STATIC_LIBS)
 
 if (BUILD_CUDA_LIB)
     set_target_properties(flann_cuda PROPERTIES
@@ -80,6 +92,7 @@ endif()
 
 
 if (BUILD_C_BINDINGS)
+if(CMAKE_BUILD_STATIC_LIBS)
     add_library(flann_s STATIC ${C_SOURCES})
     target_link_libraries(flann_s ${LZ4_LINK_LIBRARIES})
     if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_CLANG)
@@ -91,6 +104,8 @@ if (BUILD_C_BINDINGS)
     else()
         set_target_properties(flann_s PROPERTIES EXCLUDE_FROM_ALL true)
     endif()
+
+else(CMAKE_BUILD_STATIC_LIBS)
 
     add_library(flann SHARED ${C_SOURCES})
     target_link_libraries(flann ${LZ4_LINK_LIBRARIES})
@@ -105,14 +120,17 @@ if (BUILD_C_BINDINGS)
        SOVERSION ${FLANN_SOVERSION}
        DEFINE_SYMBOL FLANN_EXPORTS
     )
+endif(CMAKE_BUILD_STATIC_LIBS)
 endif()
 
 if(WIN32)
+if(NOT CMAKE_BUILD_STATIC_LIBS)
 if (BUILD_C_BINDINGS AND BUILD_MATLAB_BINDINGS)
     install (
         TARGETS flann
         RUNTIME DESTINATION share/flann/matlab
     )
+endif(NOT CMAKE_BUILD_STATIC_LIBS)
 endif()
 endif(WIN32)
 

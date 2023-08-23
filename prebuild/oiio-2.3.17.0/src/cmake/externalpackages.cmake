@@ -54,6 +54,7 @@ if (BOOST_CUSTOM)
     set (Boost_FOUND true)
     # N.B. For a custom version, the caller had better set up the variables
     # Boost_VERSION, Boost_INCLUDE_DIRS, Boost_LIBRARY_DIRS, Boost_LIBRARIES.
+    find_package (Boost REQUIRED filesystem system thread)
 else ()
     set (Boost_COMPONENTS filesystem system thread)
     # The FindBoost.cmake interface is broken if it uses boost's installed
@@ -69,11 +70,13 @@ else ()
                           PRINT Boost_INCLUDE_DIRS Boost_LIBRARIES )
 endif ()
 
+if(NOT WIN32)
 # On Linux, Boost 1.55 and higher seems to need to link against -lrt
 if (CMAKE_SYSTEM_NAME MATCHES "Linux"
       AND ${Boost_VERSION} VERSION_GREATER_EQUAL 105500)
     list (APPEND Boost_LIBRARIES "rt")
 endif ()
+endif(NOT WIN32)
 
 include_directories (SYSTEM "${Boost_INCLUDE_DIRS}")
 link_directories ("${Boost_LIBRARY_DIRS}")

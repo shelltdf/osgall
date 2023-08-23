@@ -555,6 +555,7 @@ target_link_libraries (${local_lib}
         ${Boost_LIBRARIES} ${CMAKE_DL_LIBS}
         ${CLANG_LIBRARIES}
         ${LLVM_LIBRARIES} ${LLVM_LDFLAGS} ${LLVM_SYSTEM_LIBRARIES}
+        ${ZLIB_LIBRARIES}
     )
 
 target_compile_features (${local_lib}

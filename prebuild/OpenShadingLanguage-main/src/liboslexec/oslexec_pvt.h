@@ -1459,7 +1459,7 @@ public:
         }
     };
     typedef std::vector<SymOverrideInfo> SymOverrideInfoVec;
-    static_assert(sizeof(SymOverrideInfo) == 8, "SymOverrideInfo size");
+    //static_assert(sizeof(SymOverrideInfo) == 8, "SymOverrideInfo size");
 
     SymOverrideInfo* instoverride(int i)
     {

@@ -22,21 +22,25 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     
     STR_CFG = ''
     STR_CFG += ' -DBUILD_TESTING=0'
-    # if(dict_config['static']):
+    if(dict_config['static']):
         # STR_CFG += " -DPARTIO_BUILD_SHARED_LIBS=0"
-    # else:
+        STR_CFG += " -DUSE_GLUT_SHARED_LIBS=0"
+    else:
         # STR_CFG += " -DPARTIO_BUILD_SHARED_LIBS=1"
+        STR_CFG += " -DUSE_GLUT_SHARED_LIBS=1"
     
     STR_CFG += " -DPARTIO_BUILD_SHARED_LIBS=0" # only staitc
     
-    # STR_CFG += ' -DGLUT_INCLUDE_DIR=' + install_dir + '/include/'
-    # STR_CFG += ' -DGLUT_glut_LIBRARY_RELEASE=' + install_dir + '/lib/freeglut_static.lib'
-    # STR_CFG += ' -DGLUT_glut_LIBRARY_DEBUG=' + install_dir + '/lib/freeglut_static.lib'
-    
-    # STR_CFG += ' -DGLUT_FOUND=0'
-    # STR_CFG += ' -DGLUT_INCLUDE_DIR=NOTFOUND'
-    # STR_CFG += ' -DGLUT_glut_LIBRARY_RELEASE=NOTFOUND'
-    # STR_CFG += ' -DGLUT_glut_LIBRARY_DEBUG=NOTFOUND'
+    if(dict_config['static']):
+        STR_CFG += ' -DGLUT_INCLUDE_DIR=' + install_dir + '/include/'
+        STR_CFG += ' -DGLUT_glut_LIBRARY=' + install_dir + '/lib/freeglut_static.lib'
+        STR_CFG += ' -DGLUT_glut_LIBRARY_RELEASE=' + install_dir + '/lib/freeglut_static.lib'
+        STR_CFG += ' -DGLUT_glut_LIBRARY_DEBUG=' + install_dir + '/lib/freeglut_staticd.lib'
+        
+        # STR_CFG += ' -DGLUT_FOUND=0'
+        # STR_CFG += ' -DGLUT_INCLUDE_DIR=NOTFOUND'
+        # STR_CFG += ' -DGLUT_glut_LIBRARY_RELEASE=NOTFOUND'
+        # STR_CFG += ' -DGLUT_glut_LIBRARY_DEBUG=NOTFOUND'
     
     source_dir = os.getcwd() + '/../prebuild/partio-main'
     

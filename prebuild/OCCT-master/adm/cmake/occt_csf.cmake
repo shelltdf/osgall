@@ -19,7 +19,8 @@ endif()
 
 # FREETYPE
 if (USE_FREETYPE)
-  set (CSF_FREETYPE "freetype")
+  # set (CSF_FREETYPE "freetype")
+  set (CSF_FREETYPE ${FREETYPE_NAME})
 else()
   set (CSF_FREETYPE)
 endif()

@@ -610,6 +610,11 @@ else()
   OCCT_CHECK_AND_UNSET ("INSTALL_FREETYPE")
 endif()
 
+if(BUILD_SHARED_LIBS)
+else(BUILD_SHARED_LIBS)
+	add_definitions (-DFT_LIBRARY_STATIC)
+endif(BUILD_SHARED_LIBS)
+
 # VTK
 if (USE_VTK)
   add_definitions (-DHAVE_VTK)
