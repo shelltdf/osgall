@@ -25,6 +25,7 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     if(dict_config['static']):
         STR_CFG += " -DBUILD_STATIC_LIBS=1"
         STR_CFG += " -DBUILD_SHARED_LIBS=0"
+        STR_CFG += " -DONLY_SHARED_LIBS=0"
         
         STR_CFG += " -DHDF5_BUILD_TOOLS=0"
         
@@ -34,6 +35,10 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     else:
         STR_CFG += " -DBUILD_STATIC_LIBS=0"
         STR_CFG += " -DBUILD_SHARED_LIBS=1"
+        STR_CFG += " -DONLY_SHARED_LIBS=1"
+        
+        STR_CFG += " -DHDF5_BUILD_TOOLS=0"
+        
         # STR_CFG += " -DONLY_SHARED_LIBS=1"
         # STR_CFG += " -DBUILD_CURL_EXE=0"
         # STR_CFG += " -DBUILD_CURL_TESTS=0"

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-#ifndef DRACO_MESH_MESH_IO_H_
-#define DRACO_MESH_MESH_IO_H_
+#ifndef DRACO_IO_MESH_IO_H_
+#define DRACO_IO_MESH_IO_H_
 
 #include "draco/compression/config/compression_shared.h"
 #include "draco/compression/decode.h"
@@ -93,10 +93,15 @@ StatusOr<std::unique_ptr<Mesh>> ReadMeshFromFile(const std::string &file_name,
 // Reads a mesh from a file. Reading is configured with |options|:
 // use_metadata  : Read obj file info like material names and object names into
 // metadata. Default is false.
+// The second form returns the files associated with the mesh via the
+// |mesh_files| argument.
 // Returns nullptr with an error status if the decoding failed.
 StatusOr<std::unique_ptr<Mesh>> ReadMeshFromFile(const std::string &file_name,
                                                  const Options &options);
+StatusOr<std::unique_ptr<Mesh>> ReadMeshFromFile(
+    const std::string &file_name, const Options &options,
+    std::vector<std::string> *mesh_files);
 
 }  // namespace draco
 
-#endif  // DRACO_MESH_MESH_IO_H_
+#endif  // DRACO_IO_MESH_IO_H_

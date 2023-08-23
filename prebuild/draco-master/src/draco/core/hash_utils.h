@@ -16,9 +16,9 @@
 #define DRACO_CORE_HASH_UTILS_H_
 
 #include <stdint.h>
-#include <functional>
 
-// TODO(fgalligan): Move this to core.
+#include <cstddef>
+#include <functional>
 
 namespace draco {
 

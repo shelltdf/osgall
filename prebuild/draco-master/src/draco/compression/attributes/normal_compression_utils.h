@@ -39,6 +39,7 @@
 #define DRACO_COMPRESSION_ATTRIBUTES_NORMAL_COMPRESSION_UTILS_H_
 
 #include <inttypes.h>
+
 #include <algorithm>
 #include <cmath>
 
@@ -52,14 +53,17 @@ class OctahedronToolBox {
       : quantization_bits_(-1),
         max_quantized_value_(-1),
         max_value_(-1),
+        dequantization_scale_(1.f),
         center_value_(-1) {}
 
   bool SetQuantizationBits(int32_t q) {
-    if (q < 2 || q > 30)
+    if (q < 2 || q > 30) {
       return false;
+    }
     quantization_bits_ = q;
-    max_quantized_value_ = (1 << quantization_bits_) - 1;
+    max_quantized_value_ = (1u << quantization_bits_) - 1;
     max_value_ = max_quantized_value_ - 1;
+    dequantization_scale_ = 2.f / max_value_;
     center_value_ = max_value_ / 2;
     return true;
   }
@@ -157,8 +161,9 @@ class OctahedronToolBox {
       int_vec[2] = 0;
     }
     // Take care of the sign.
-    if (scaled_vector[2] < 0)
+    if (scaled_vector[2] < 0) {
       int_vec[2] *= -1;
+    }
 
     IntegerVectorToQuantizedOctahedralCoords(int_vec, out_s, out_t);
   }
@@ -189,62 +194,11 @@ class OctahedronToolBox {
     }
   }
 
-  template <typename T>
-  void OctaherdalCoordsToUnitVector(T in_s, T in_t, T *out_vector) const {
-    DRACO_DCHECK_GE(in_s, 0);
-    DRACO_DCHECK_GE(in_t, 0);
-    DRACO_DCHECK_LE(in_s, 1);
-    DRACO_DCHECK_LE(in_t, 1);
-    T s = in_s;
-    T t = in_t;
-    T spt = s + t;
-    T smt = s - t;
-    T x_sign = 1.0;
-    if (spt >= 0.5 && spt <= 1.5 && smt >= -0.5 && smt <= 0.5) {
-      // Right hemisphere. Don't do anything.
-    } else {
-      // Left hemisphere.
-      x_sign = -1.0;
-      if (spt <= 0.5) {
-        s = 0.5 - in_t;
-        t = 0.5 - in_s;
-      } else if (spt >= 1.5) {
-        s = 1.5 - in_t;
-        t = 1.5 - in_s;
-      } else if (smt <= -0.5) {
-        s = in_t - 0.5;
-        t = in_s + 0.5;
-      } else {
-        s = in_t + 0.5;
-        t = in_s - 0.5;
-      }
-      spt = s + t;
-      smt = s - t;
-    }
-    const T y = 2.0 * s - 1.0;
-    const T z = 2.0 * t - 1.0;
-    const T x = std::min(std::min(2.0 * spt - 1.0, 3.0 - 2.0 * spt),
-                         std::min(2.0 * smt + 1.0, 1.0 - 2.0 * smt)) *
-                x_sign;
-    // Normalize the computed vector.
-    const T normSquared = x * x + y * y + z * z;
-    if (normSquared < 1e-6) {
-      out_vector[0] = 0;
-      out_vector[1] = 0;
-      out_vector[2] = 0;
-    } else {
-      const T d = 1.0 / std::sqrt(normSquared);
-      out_vector[0] = x * d;
-      out_vector[1] = y * d;
-      out_vector[2] = z * d;
-    }
-  }
-
-  template <typename T>
-  void QuantizedOctaherdalCoordsToUnitVector(int32_t in_s, int32_t in_t,
-                                             T *out_vector) const {
-    T scale = 1.0 / static_cast<T>(max_value_);
-    OctaherdalCoordsToUnitVector(in_s * scale, in_t * scale, out_vector);
+  inline void QuantizedOctahedralCoordsToUnitVector(int32_t in_s, int32_t in_t,
+                                                    float *out_vector) const {
+    OctahedralCoordsToUnitVector(in_s * dequantization_scale_ - 1.f,
+                                 in_t * dequantization_scale_ - 1.f,
+                                 out_vector);
   }
 
   // |s| and |t| are expected to be signed values.
@@ -254,7 +208,9 @@ class OctahedronToolBox {
     DRACO_DCHECK_LE(t, center_value_);
     DRACO_DCHECK_GE(s, -center_value_);
     DRACO_DCHECK_GE(t, -center_value_);
-    return std::abs(s) + std::abs(t) <= center_value_;
+    const uint32_t st =
+        static_cast<uint32_t>(std::abs(s)) + static_cast<uint32_t>(std::abs(t));
+    return st <= center_value_;
   }
 
   void InvertDiamond(int32_t *s, int32_t *t) const {
@@ -276,19 +232,29 @@ class OctahedronToolBox {
       sign_t = (*t > 0) ? 1 : -1;
     }
 
-    const int32_t corner_point_s = sign_s * center_value_;
-    const int32_t corner_point_t = sign_t * center_value_;
-    *s = 2 * *s - corner_point_s;
-    *t = 2 * *t - corner_point_t;
+    // Perform the addition and subtraction using unsigned integers to avoid
+    // signed integer overflows for bad data. Note that the result will be
+    // unchanged for non-overflowing cases.
+    const uint32_t corner_point_s = sign_s * center_value_;
+    const uint32_t corner_point_t = sign_t * center_value_;
+    uint32_t us = *s;
+    uint32_t ut = *t;
+    us = us + us - corner_point_s;
+    ut = ut + ut - corner_point_t;
     if (sign_s * sign_t >= 0) {
-      int32_t temp = *s;
-      *s = -*t;
-      *t = -temp;
+      uint32_t temp = us;
+      us = -ut;
+      ut = -temp;
     } else {
-      std::swap(*s, *t);
+      std::swap(us, ut);
     }
-    *s = (*s + corner_point_s) / 2;
-    *t = (*t + corner_point_t) / 2;
+    us = us + corner_point_s;
+    ut = ut + corner_point_t;
+
+    *s = us;
+    *t = ut;
+    *s /= 2;
+    *t /= 2;
   }
 
   void InvertDirection(int32_t *s, int32_t *t) const {
@@ -304,18 +270,21 @@ class OctahedronToolBox {
 
   // For correction values.
   int32_t ModMax(int32_t x) const {
-    if (x > this->center_value())
+    if (x > this->center_value()) {
       return x - this->max_quantized_value();
-    if (x < -this->center_value())
+    }
+    if (x < -this->center_value()) {
       return x + this->max_quantized_value();
+    }
     return x;
   }
 
   // For correction values.
   int32_t MakePositive(int32_t x) const {
     DRACO_DCHECK_LE(x, this->center_value() * 2);
-    if (x < 0)
+    if (x < 0) {
       return x + this->max_quantized_value();
+    }
     return x;
   }
 
@@ -325,9 +294,77 @@ class OctahedronToolBox {
   int32_t center_value() const { return center_value_; }
 
  private:
+  inline void OctahedralCoordsToUnitVector(float in_s_scaled, float in_t_scaled,
+                                           float *out_vector) const {
+    // Background about the encoding:
+    //   A normal is encoded in a normalized space <s, t> depicted below. The
+    //   encoding correponds to an octahedron that is unwrapped to a 2D plane.
+    //   During encoding, a normal is projected to the surface of the octahedron
+    //   and the projection is then unwrapped to the 2D plane. Decoding is the
+    //   reverse of this process.
+    //   All points in the central diamond are located on triangles on the
+    //   right "hemisphere" of the octahedron while all points outside of the
+    //   diamond are on the left hemisphere (basically, they would have to be
+    //   wrapped along the diagonal edges to form the octahedron). The central
+    //   point corresponds to the right most vertex of the octahedron and all
+    //   corners of the plane correspond to the left most vertex of the
+    //   octahedron.
+    //
+    // t
+    // ^ *-----*-----*
+    // | |    /|\    |
+    //   |   / | \   |
+    //   |  /  |  \  |
+    //   | /   |   \ |
+    //   *-----*---- *
+    //   | \   |   / |
+    //   |  \  |  /  |
+    //   |   \ | /   |
+    //   |    \|/    |
+    //   *-----*-----*  --> s
+
+    // Note that the input |in_s_scaled| and |in_t_scaled| are already scaled to
+    // <-1, 1> range. This way, the central point is at coordinate (0, 0).
+    float y = in_s_scaled;
+    float z = in_t_scaled;
+
+    // Remaining coordinate can be computed by projecting the (y, z) values onto
+    // the surface of the octahedron.
+    const float x = 1.f - std::abs(y) - std::abs(z);
+
+    // |x| is essentially a signed distance from the diagonal edges of the
+    // diamond shown on the figure above. It is positive for all points in the
+    // diamond (right hemisphere) and negative for all points outside the
+    // diamond (left hemisphere). For all points on the left hemisphere we need
+    // to update their (y, z) coordinates to account for the wrapping along
+    // the edges of the diamond.
+    float x_offset = -x;
+    x_offset = x_offset < 0 ? 0 : x_offset;
+
+    // This will do nothing for the points on the right hemisphere but it will
+    // mirror the (y, z) location along the nearest diagonal edge of the
+    // diamond.
+    y += y < 0 ? x_offset : -x_offset;
+    z += z < 0 ? x_offset : -x_offset;
+
+    // Normalize the computed vector.
+    const float norm_squared = x * x + y * y + z * z;
+    if (norm_squared < 1e-6) {
+      out_vector[0] = 0;
+      out_vector[1] = 0;
+      out_vector[2] = 0;
+    } else {
+      const float d = 1.0f / std::sqrt(norm_squared);
+      out_vector[0] = x * d;
+      out_vector[1] = y * d;
+      out_vector[2] = z * d;
+    }
+  }
+
   int32_t quantization_bits_;
   int32_t max_quantized_value_;
   int32_t max_value_;
+  float dequantization_scale_;
   int32_t center_value_;
 };
 }  // namespace draco

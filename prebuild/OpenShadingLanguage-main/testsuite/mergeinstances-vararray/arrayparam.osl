@@ -1,0 +1,9 @@
+// Copyright Contributors to the Open Shading Language project.
+// SPDX-License-Identifier: BSD-3-Clause
+// https://github.com/AcademySoftwareFoundation/OpenShadingLanguage
+
+shader arrayparam(
+	color in_value[] = { color(1) },
+	output color out_value = in_value[0] )
+{
+}

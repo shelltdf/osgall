@@ -1,0 +1,40 @@
+oiiotool ERROR: --colorconfig : Requested non-existant OCIO config "missing.ocio"
+Full command line was:
+> oiiotool -colorconfig ../common/OpenColorIO/nuke-default/config.ocio --nostderr --colorconfig missing.ocio -echo "Nonexistant config"
+oiiotool ERROR: --colorconfig : Error reading OCIO config "../common/OpenColorIO/ocio-v2_demo.ocio": Error: Loading the OCIO profile '../common/OpenColorIO/ocio-v2_demo.ocio' failed. Unsupported transform type !<BuiltinTransform> in OCIO profile. 
+Full command line was:
+> oiiotool -colorconfig ../common/OpenColorIO/nuke-default/config.ocio --nostderr --colorconfig ../common/OpenColorIO/ocio-v2_demo.ocio -echo "OCIOv2 config Ok"
+Comparing "colormap-inferno.tif" and "ref/colormap-inferno.tif"
+PASS
+Comparing "colormap-custom.tif" and "ref/colormap-custom.tif"
+PASS
+Comparing "unpremult.exr" and "ref/unpremult.exr"
+PASS
+Comparing "premult.exr" and "ref/premult.exr"
+PASS
+Comparing "contrast-stretch.tif" and "ref/contrast-stretch.tif"
+PASS
+Comparing "contrast-shrink.tif" and "ref/contrast-shrink.tif"
+PASS
+Comparing "contrast-inverse.tif" and "ref/contrast-inverse.tif"
+PASS
+Comparing "contrast-threshold.tif" and "ref/contrast-threshold.tif"
+PASS
+Comparing "contrast-sigmoid5.tif" and "ref/contrast-sigmoid5.tif"
+PASS
+Comparing "rgbfromtga.png" and "ref/rgbfromtga.png"
+PASS
+Comparing "greyalpha_sRGB.tif" and "ref/greyalpha_sRGB.tif"
+PASS
+Comparing "greyalpha_Cineon.tif" and "ref/greyalpha_Cineon.tif"
+PASS
+Comparing "greyalpha_sRGB_un.tif" and "ref/greyalpha_sRGB_un.tif"
+PASS
+Comparing "greyalpha_Cineon_un.tif" and "ref/greyalpha_Cineon_un.tif"
+PASS
+Comparing "tahoe-ccmatrix.tif" and "ref/tahoe-ccmatrix.tif"
+PASS
+Comparing "tahoe-sat0.tif" and "ref/tahoe-sat0.tif"
+PASS
+Comparing "tahoe-sat2.tif" and "ref/tahoe-sat2.tif"
+PASS

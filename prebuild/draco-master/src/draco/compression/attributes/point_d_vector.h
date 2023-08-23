@@ -16,9 +16,12 @@
 #ifndef DRACO_COMPRESSION_ATTRIBUTES_POINT_D_VECTOR_H_
 #define DRACO_COMPRESSION_ATTRIBUTES_POINT_D_VECTOR_H_
 
+#include <cstddef>
 #include <cstring>
+#include <iterator>
 #include <memory>
 #include <vector>
+
 #include "draco/core/macros.h"
 
 namespace draco {
@@ -42,8 +45,9 @@ class PseudoPointD {
 
   // Specifically copies referenced memory
   void swap(PseudoPointD &other) noexcept {
-    for (internal_t dim = 0; dim < dimension_; dim += 1)
+    for (internal_t dim = 0; dim < dimension_; dim += 1) {
       std::swap(mem_[dim], other.mem_[dim]);
+    }
   }
 
   PseudoPointD(const PseudoPointD &other)
@@ -59,9 +63,11 @@ class PseudoPointD {
   }
 
   bool operator==(const PseudoPointD &other) const {
-    for (auto dim = 0; dim < dimension_; dim += 1)
-      if (mem_[dim] != other.mem_[dim])
+    for (auto dim = 0; dim < dimension_; dim += 1) {
+      if (mem_[dim] != other.mem_[dim]) {
         return false;
+      }
+    }
     return true;
   }
   bool operator!=(const PseudoPointD &other) const {
@@ -95,11 +101,17 @@ class PointDVector {
         data_(n_items * dimensionality),
         data0_(data_.data()) {}
   // random access iterator
-  class PointDVectorIterator
-      : public std::iterator<std::random_access_iterator_tag, size_t, size_t> {
+  class PointDVectorIterator {
     friend class PointDVector;
 
    public:
+    // Iterator traits expected by std libraries.
+    using iterator_category = std::random_access_iterator_tag;
+    using value_type = size_t;
+    using difference_type = size_t;
+    using pointer = PointDVector *;
+    using reference = PointDVector &;
+
     // std::iter_swap is called inside of std::partition and needs this
     // specialized support
     PseudoPointD<internal_t> operator*() const {

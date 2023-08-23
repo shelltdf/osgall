@@ -18,13 +18,12 @@
 
 #include <cmath>
 
-#include "draco/draco_features.h"
-
 #include "draco/compression/attributes/normal_compression_utils.h"
 #include "draco/compression/attributes/prediction_schemes/prediction_scheme_normal_octahedron_transform_base.h"
 #include "draco/core/decoder_buffer.h"
 #include "draco/core/macros.h"
 #include "draco/core/vector_d.h"
+#include "draco/draco_features.h"
 
 namespace draco {
 
@@ -45,11 +44,13 @@ class PredictionSchemeNormalOctahedronDecodingTransform
   void Init(int num_components) {}
   bool DecodeTransformData(DecoderBuffer *buffer) {
     DataTypeT max_quantized_value, center_value;
-    if (!buffer->Decode(&max_quantized_value))
+    if (!buffer->Decode(&max_quantized_value)) {
       return false;
+    }
     if (buffer->bitstream_version() < DRACO_BITSTREAM_VERSION(2, 2)) {
-      if (!buffer->Decode(&center_value))
+      if (!buffer->Decode(&center_value)) {
         return false;
+      }
     }
     (void)center_value;
     return this->set_max_quantized_value(max_quantized_value);
@@ -79,19 +80,31 @@ class PredictionSchemeNormalOctahedronDecodingTransform
  private:
   Point2 ComputeOriginalValue(Point2 pred, const Point2 &corr) const {
     const Point2 t(this->center_value(), this->center_value());
-    pred = pred - t;
+    typedef typename std::make_unsigned<DataTypeT>::type UnsignedDataTypeT;
+    typedef VectorD<UnsignedDataTypeT, 2> Point2u;
+
+    // Perform the addition in unsigned type to avoid signed integer overflow.
+    // Note that the result will be the same (for non-overflowing values).
+    pred = Point2(Point2u(pred) - Point2u(t));
 
     const bool pred_is_in_diamond = this->IsInDiamond(pred[0], pred[1]);
     if (!pred_is_in_diamond) {
       this->InvertDiamond(&pred[0], &pred[1]);
     }
-    Point2 orig = pred + corr;
+
+    // Perform the addition in unsigned type to avoid signed integer overflow.
+    // Note that the result will be the same (for non-overflowing values).
+    Point2 orig(Point2u(pred) + Point2u(corr));
+
     orig[0] = this->ModMax(orig[0]);
     orig[1] = this->ModMax(orig[1]);
     if (!pred_is_in_diamond) {
       this->InvertDiamond(&orig[0], &orig[1]);
     }
-    orig = orig + t;
+
+    // Perform the addition in unsigned type to avoid signed integer overflow.
+    // Note that the result will be the same (for non-overflowing values).
+    orig = Point2(Point2u(orig) + Point2u(t));
     return orig;
   }
 };

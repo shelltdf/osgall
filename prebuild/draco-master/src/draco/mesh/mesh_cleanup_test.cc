@@ -15,6 +15,7 @@
 #include "draco/mesh/mesh_cleanup.h"
 
 #include "draco/core/draco_test_base.h"
+#include "draco/core/draco_test_utils.h"
 #include "draco/core/vector_d.h"
 #include "draco/mesh/triangle_soup_mesh_builder.h"
 
@@ -43,9 +44,7 @@ TEST_F(MeshCleanupTest, TestDegneratedFaces) {
   ASSERT_NE(mesh, nullptr) << "Failed to build the test mesh.";
   ASSERT_EQ(mesh->num_faces(), 2) << "Wrong number of faces in the input mesh.";
   MeshCleanupOptions cleanup_options;
-  MeshCleanup cleanup;
-  ASSERT_TRUE(cleanup(mesh.get(), cleanup_options))
-      << "Failed to cleanup the mesh.";
+  DRACO_ASSERT_OK(MeshCleanup::Cleanup(mesh.get(), cleanup_options));
   ASSERT_EQ(mesh->num_faces(), 1) << "Failed to remove degenerated faces.";
 }
 
@@ -56,29 +55,44 @@ TEST_F(MeshCleanupTest, TestDegneratedFacesAndIsolatedVertices) {
   mb.Start(2);
   const int pos_att_id =
       mb.AddAttribute(GeometryAttribute::POSITION, 3, DT_FLOAT32);
+
+  // Dummy integer attribute for which we do not expect the number of entries
+  // to change after the degnerate face and isolated vertex are removed.
+  const int int_att_id =
+      mb.AddAttribute(GeometryAttribute::GENERIC, 2, DT_INT32);
+
   // clang-format off
   mb.SetAttributeValuesForFace(pos_att_id, FaceIndex(0),
                                Vector3f(0.f, 0.f, 0.f).data(),
                                Vector3f(1.f, 0.f, 0.f).data(),
                                Vector3f(0.f, 1.f, 0.f).data());
+  mb.SetAttributeValuesForFace(int_att_id, FaceIndex(0),
+                               VectorD<int32_t, 2>(0, 0).data(),
+                               VectorD<int32_t, 2>(0, 1).data(),
+                               VectorD<int32_t, 2>(0, 2).data());
+
   mb.SetAttributeValuesForFace(pos_att_id, FaceIndex(1),
                                Vector3f(10.f, 1.f, 0.f).data(),
                                Vector3f(1.f, 0.f, 0.f).data(),
                                Vector3f(10.f, 1.f, 0.f).data());
+  mb.SetAttributeValuesForFace(int_att_id, FaceIndex(1),
+                               VectorD<int32_t, 2>(0, 0).data(),
+                               VectorD<int32_t, 2>(0, 1).data(),
+                               VectorD<int32_t, 2>(0, 2).data());
   // clang-format on
 
   std::unique_ptr<Mesh> mesh = mb.Finalize();
   ASSERT_NE(mesh, nullptr) << "Failed to build the test mesh.";
   ASSERT_EQ(mesh->num_faces(), 2) << "Wrong number of faces in the input mesh.";
-  ASSERT_EQ(mesh->num_points(), 4)
+  ASSERT_EQ(mesh->num_points(), 5)
       << "Wrong number of point ids in the input mesh.";
+  ASSERT_EQ(mesh->attribute(int_att_id)->size(), 3);
   const MeshCleanupOptions cleanup_options;
-  MeshCleanup cleanup;
-  ASSERT_TRUE(cleanup(mesh.get(), cleanup_options))
-      << "Failed to cleanup the mesh.";
+  DRACO_ASSERT_OK(MeshCleanup::Cleanup(mesh.get(), cleanup_options));
   ASSERT_EQ(mesh->num_faces(), 1) << "Failed to remove degenerated faces.";
   ASSERT_EQ(mesh->num_points(), 3)
       << "Failed to remove isolated attribute indices.";
+  ASSERT_EQ(mesh->attribute(int_att_id)->size(), 3);
 }
 
 TEST_F(MeshCleanupTest, TestAttributes) {
@@ -116,9 +130,7 @@ TEST_F(MeshCleanupTest, TestAttributes) {
   ASSERT_EQ(mesh->attribute(1)->size(), 2u)
       << "Wrong number of generic attribute entries.";
   const MeshCleanupOptions cleanup_options;
-  MeshCleanup cleanup;
-  ASSERT_TRUE(cleanup(mesh.get(), cleanup_options))
-      << "Failed to cleanup the mesh.";
+  DRACO_ASSERT_OK(MeshCleanup::Cleanup(mesh.get(), cleanup_options));
   ASSERT_EQ(mesh->num_faces(), 1) << "Failed to remove degenerated faces.";
   ASSERT_EQ(mesh->num_points(), 3)
       << "Failed to remove isolated attribute indices.";
@@ -126,6 +138,49 @@ TEST_F(MeshCleanupTest, TestAttributes) {
       << "Wrong number of unique positions after cleanup.";
   ASSERT_EQ(mesh->attribute(1)->size(), 1u)
       << "Wrong number of generic attribute entries after cleanup.";
+}
+
+TEST_F(MeshCleanupTest, TestDuplicateFaces) {
+  TriangleSoupMeshBuilder mb;
+  mb.Start(5);
+  const int pos_att_id =
+      mb.AddAttribute(GeometryAttribute::POSITION, 3, DT_FLOAT32);
+
+  // Five faces where only two are unique.
+
+  // clang-format off
+  mb.SetAttributeValuesForFace(pos_att_id, FaceIndex(0),
+                               Vector3f(0.f, 0.f, 0.f).data(),
+                               Vector3f(1.f, 0.f, 0.f).data(),
+                               Vector3f(0.f, 1.f, 0.f).data());
+
+  mb.SetAttributeValuesForFace(pos_att_id, FaceIndex(1),
+                               Vector3f(0.f, 0.f, 0.f).data(),
+                               Vector3f(1.f, 0.f, 0.f).data(),
+                               Vector3f(0.f, 1.f, 0.f).data());
+
+  mb.SetAttributeValuesForFace(pos_att_id, FaceIndex(2),
+                               Vector3f(0.f, 0.f, 0.f).data(),
+                               Vector3f(1.f, 0.f, 0.f).data(),
+                               Vector3f(0.f, 1.f, 1.f).data());
+
+  mb.SetAttributeValuesForFace(pos_att_id, FaceIndex(3),
+                               Vector3f(1.f, 0.f, 0.f).data(),
+                               Vector3f(0.f, 1.f, 0.f).data(),
+                              Vector3f(0.f, 0.f, 0.f).data());
+
+  mb.SetAttributeValuesForFace(pos_att_id, FaceIndex(4),
+                               Vector3f(0.f, 0.f, 0.f).data(),
+                               Vector3f(1.f, 0.f, 0.f).data(),
+                               Vector3f(0.f, 1.f, 1.f).data());
+  // clang-format on
+
+  std::unique_ptr<Mesh> mesh = mb.Finalize();
+  ASSERT_NE(mesh, nullptr);
+  ASSERT_EQ(mesh->num_faces(), 5);
+  const MeshCleanupOptions cleanup_options;
+  DRACO_ASSERT_OK(MeshCleanup::Cleanup(mesh.get(), cleanup_options));
+  ASSERT_EQ(mesh->num_faces(), 2);
 }
 
 }  // namespace draco

@@ -1,0 +1,22 @@
+// Copyright Contributors to the Open Shading Language project.
+// SPDX-License-Identifier: BSD-3-Clause
+// https://github.com/AcademySoftwareFoundation/OpenShadingLanguage
+
+
+surface
+metal
+    [[ string help = "Shiny metallic material" ]]
+(
+    float Ks = 1
+        [[  string help = "Specular scaling",
+            float min = 0, float max = 1 ]],
+    float eta = 10
+        [[  string help = "Index of refraction (controls fresnel effect)",
+            float min = 1, float max = 100 ]],
+    color Cs = 1
+        [[  string help = "Base color",
+            float min = 0, float max = 1 ]]
+  )
+{
+    Ci = Ks * Cs * reflection (N, eta);
+}

@@ -15,6 +15,9 @@
 #include "draco/mesh/mesh_are_equivalent.h"
 
 #include <algorithm>
+#include <memory>
+
+#include "draco/texture/texture_utils.h"
 
 namespace draco {
 
@@ -101,16 +104,67 @@ void MeshAreEquivalent::Init(const Mesh &mesh0, const Mesh &mesh1) {
 }
 
 bool MeshAreEquivalent::operator()(const Mesh &mesh0, const Mesh &mesh1) {
-  if (mesh0.num_faces() != mesh1.num_faces())
+  if (mesh0.num_faces() != mesh1.num_faces()) {
     return false;
-  if (mesh0.num_attributes() != mesh1.num_attributes())
+  }
+  if (mesh0.num_attributes() != mesh1.num_attributes()) {
     return false;
+  }
 
   // The following function inits mesh info, i.e., computes the order of
   // faces with respect to the lex order. This way one can then compare the
   // the two meshes face by face. It also determines the first corner of each
   // face with respect to lex order.
   Init(mesh0, mesh1);
+
+#ifdef DRACO_TRANSCODER_SUPPORTED
+  // Compare geometry compression settings.
+  if (mesh0.IsCompressionEnabled() != mesh1.IsCompressionEnabled()) {
+    return false;
+  }
+  if (mesh0.GetCompressionOptions() != mesh1.GetCompressionOptions()) {
+    return false;
+  }
+
+  // Compare non-material texture library sizes.
+  if (mesh0.GetNonMaterialTextureLibrary().NumTextures() !=
+      mesh1.GetNonMaterialTextureLibrary().NumTextures()) {
+    return false;
+  }
+
+  // Compare mesh feature ID sets.
+  if (mesh0.NumMeshFeatures() != mesh1.NumMeshFeatures()) {
+    return false;
+  }
+  for (MeshFeaturesIndex i(0); i < mesh0.NumMeshFeatures(); ++i) {
+    const MeshFeatures &features0 = mesh0.GetMeshFeatures(i);
+    const MeshFeatures &features1 = mesh1.GetMeshFeatures(i);
+    if (features0.GetAttributeIndex() != features1.GetAttributeIndex()) {
+      return false;
+    }
+    if (features0.GetFeatureCount() != features1.GetFeatureCount()) {
+      return false;
+    }
+    if (features0.GetLabel() != features1.GetLabel()) {
+      return false;
+    }
+    if (features0.GetNullFeatureId() != features1.GetNullFeatureId()) {
+      return false;
+    }
+    if (features0.GetTextureChannels() != features1.GetTextureChannels()) {
+      return false;
+    }
+    if (features0.GetPropertyTableIndex() !=
+        features1.GetPropertyTableIndex()) {
+      return false;
+    }
+    const TextureMap &map0 = features0.GetTextureMap();
+    const TextureMap &map1 = features1.GetTextureMap();
+    if (map0.tex_coord_index() != map1.tex_coord_index()) {
+      return false;
+    }
+  }
+#endif  // DRACO_TRANSCODER_SUPPORTED
 
   // Check for every attribute that is valid that every corner is identical.
   typedef GeometryAttribute::Type AttributeType;
@@ -121,20 +175,27 @@ bool MeshAreEquivalent::operator()(const Mesh &mesh0, const Mesh &mesh1) {
         mesh0.GetNamedAttribute(AttributeType(att_id));
     const PointAttribute *const att1 =
         mesh1.GetNamedAttribute(AttributeType(att_id));
-    if (att0 == nullptr && att1 == nullptr)
+    if (att0 == nullptr && att1 == nullptr) {
       continue;
-    if (att0 == nullptr)
+    }
+    if (att0 == nullptr) {
       return false;
-    if (att1 == nullptr)
+    }
+    if (att1 == nullptr) {
       return false;
-    if (att0->data_type() != att1->data_type())
+    }
+    if (att0->data_type() != att1->data_type()) {
       return false;
-    if (att0->num_components() != att1->num_components())
+    }
+    if (att0->num_components() != att1->num_components()) {
       return false;
-    if (att0->normalized() != att1->normalized())
+    }
+    if (att0->normalized() != att1->normalized()) {
       return false;
-    if (att0->byte_stride() != att1->byte_stride())
+    }
+    if (att0->byte_stride() != att1->byte_stride()) {
       return false;
+    }
 
     DRACO_DCHECK(att0->IsValid());
     DRACO_DCHECK(att1->IsValid());
@@ -162,8 +223,9 @@ bool MeshAreEquivalent::operator()(const Mesh &mesh0, const Mesh &mesh1) {
         att0->GetValue(index0, data0.get());
         att1->GetValue(index1, data1.get());
         // Compare the data as is in memory.
-        if (memcmp(data0.get(), data1.get(), att0->byte_stride()) != 0)
+        if (memcmp(data0.get(), data1.get(), att0->byte_stride()) != 0) {
           return false;
+        }
       }
     }
   }
@@ -172,18 +234,21 @@ bool MeshAreEquivalent::operator()(const Mesh &mesh0, const Mesh &mesh1) {
 
 bool MeshAreEquivalent::FaceIndexLess::operator()(FaceIndex f0,
                                                   FaceIndex f1) const {
-  if (f0 == f1)
+  if (f0 == f1) {
     return false;
+  }
   const int c0 = mesh_info.corner_index_of_smallest_vertex[f0];
   const int c1 = mesh_info.corner_index_of_smallest_vertex[f1];
 
   for (int i = 0; i < 3; ++i) {
     const Vector3f vf0 = GetPosition(mesh_info.mesh, f0, (c0 + i) % 3);
     const Vector3f vf1 = GetPosition(mesh_info.mesh, f1, (c1 + i) % 3);
-    if (vf0 < vf1)
+    if (vf0 < vf1) {
       return true;
-    if (vf1 < vf0)
+    }
+    if (vf1 < vf0) {
       return false;
+    }
   }
   // In case the two faces are equivalent.
   return false;

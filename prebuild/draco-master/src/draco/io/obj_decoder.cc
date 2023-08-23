@@ -14,9 +14,10 @@
 //
 #include "draco/io/obj_decoder.h"
 
+#include <algorithm>
 #include <cctype>
 #include <cmath>
-#include <fstream>
+#include <utility>
 
 #include "draco/io/file_utils.h"
 #include "draco/io/parser_utils.h"
@@ -37,33 +38,35 @@ ObjDecoder::ObjDecoder()
       norm_att_id_(-1),
       material_att_id_(-1),
       sub_obj_att_id_(-1),
+      added_edge_att_id_(-1),
       deduplicate_input_values_(true),
       last_material_id_(0),
       use_metadata_(false),
+      preserve_polygons_(false),
+      has_polygons_(false),
+      mesh_files_(nullptr),
       out_mesh_(nullptr),
       out_point_cloud_(nullptr) {}
 
 Status ObjDecoder::DecodeFromFile(const std::string &file_name,
                                   Mesh *out_mesh) {
+  return DecodeFromFile(file_name, out_mesh, nullptr);
+}
+
+Status ObjDecoder::DecodeFromFile(const std::string &file_name, Mesh *out_mesh,
+                                  std::vector<std::string> *mesh_files) {
   out_mesh_ = out_mesh;
+  mesh_files_ = mesh_files;
   return DecodeFromFile(file_name, static_cast<PointCloud *>(out_mesh));
 }
 
 Status ObjDecoder::DecodeFromFile(const std::string &file_name,
                                   PointCloud *out_point_cloud) {
-  std::ifstream file(file_name, std::ios::binary);
-  if (!file)
-    return Status(Status::IO_ERROR);
-  // Read the whole file into a buffer.
-  auto pos0 = file.tellg();
-  file.seekg(0, std::ios::end);
-  auto file_size = file.tellg() - pos0;
-  if (file_size == 0)
-    return Status(Status::IO_ERROR);
-  file.seekg(0, std::ios::beg);
-  std::vector<char> data(file_size);
-  file.read(&data[0], file_size);
-  buffer_.Init(&data[0], file_size);
+  std::vector<char> buffer;
+  if (!ReadFileToBuffer(file_name, &buffer)) {
+    return Status(Status::DRACO_ERROR, "Unable to read input file.");
+  }
+  buffer_.Init(buffer.data(), buffer.size());
 
   out_point_cloud_ = out_point_cloud;
   input_file_name_ = file_name;
@@ -95,22 +98,31 @@ Status ObjDecoder::DecodeInternal() {
   Status status(Status::OK);
   while (ParseDefinition(&status) && status.ok()) {
   }
-  if (!status.ok())
+  if (!status.ok()) {
     return status;
+  }
+
+  if (mesh_files_ && !input_file_name_.empty()) {
+    mesh_files_->push_back(input_file_name_);
+  }
+
   bool use_identity_mapping = false;
   if (num_obj_faces_ == 0) {
     // Mesh has no faces. In this case we try to read the geometry as a point
     // cloud where every attribute entry is a point.
 
     // Ensure the number of all entries is same for all attributes.
-    if (num_positions_ == 0)
+    if (num_positions_ == 0) {
       return Status(Status::DRACO_ERROR, "No position attribute");
-    if (num_tex_coords_ > 0 && num_tex_coords_ != num_positions_)
+    }
+    if (num_tex_coords_ > 0 && num_tex_coords_ != num_positions_) {
       return Status(Status::DRACO_ERROR,
                     "Invalid number of texture coordinates for a point cloud");
-    if (num_normals_ > 0 && num_normals_ != num_positions_)
+    }
+    if (num_normals_ > 0 && num_normals_ != num_positions_) {
       return Status(Status::DRACO_ERROR,
                     "Invalid number of normals for a point cloud");
+    }
 
     out_mesh_ = nullptr;  // Treat the output geometry as a point cloud.
     use_identity_mapping = true;
@@ -149,6 +161,24 @@ Status ObjDecoder::DecodeInternal() {
             sizeof(float) * 3, 0);
     norm_att_id_ =
         out_point_cloud_->AddAttribute(va, use_identity_mapping, num_normals_);
+  }
+  if (preserve_polygons_ && has_polygons_) {
+    // Create attribute for polygon reconstruction.
+    GeometryAttribute va;
+    va.Init(GeometryAttribute::GENERIC, nullptr, 1, DT_UINT8, false, 1, 0);
+    PointCloud *const pc = out_point_cloud_;
+    added_edge_att_id_ = pc->AddAttribute(va, false, 2);
+
+    // Set attribute values to zero and one representing old edge and new edge.
+    for (const uint8_t i : {0, 1}) {
+      const AttributeValueIndex avi(i);
+      pc->attribute(added_edge_att_id_)->SetAttributeValue(avi, &i);
+    }
+
+    // Add attribute metadata with name.
+    std::unique_ptr<AttributeMetadata> metadata(new draco::AttributeMetadata());
+    metadata->AddEntryString("name", "added_edges");
+    pc->AddAttributeMetadata(added_edge_att_id_, std::move(metadata));
   }
   if (num_materials_ > 0 && num_obj_faces_ > 0) {
     GeometryAttribute va;
@@ -224,15 +254,17 @@ Status ObjDecoder::DecodeInternal() {
   buffer()->StartDecodingFrom(0);
   while (ParseDefinition(&status) && status.ok()) {
   }
-  if (!status.ok())
+  if (!status.ok()) {
     return status;
+  }
   if (out_mesh_) {
     // Add faces with identity mapping between vertex and corner indices.
     // Duplicate vertices will get removed later.
     Mesh::Face face;
     for (FaceIndex i(0); i < num_obj_faces_; ++i) {
-      for (int c = 0; c < 3; ++c)
+      for (int c = 0; c < 3; ++c) {
         face[c] = 3 * i.value() + c;
+      }
       out_mesh_->SetFace(i, face);
     }
   }
@@ -269,20 +301,27 @@ bool ObjDecoder::ParseDefinition(Status *status) {
     parser::SkipLine(buffer());
     return true;
   }
-  if (ParseVertexPosition(status))
+  if (ParseVertexPosition(status)) {
     return true;
-  if (ParseNormal(status))
+  }
+  if (ParseNormal(status)) {
     return true;
-  if (ParseTexCoord(status))
+  }
+  if (ParseTexCoord(status)) {
     return true;
-  if (ParseFace(status))
+  }
+  if (ParseFace(status)) {
     return true;
-  if (ParseMaterial(status))
+  }
+  if (ParseMaterial(status)) {
     return true;
-  if (ParseMaterialLib(status))
+  }
+  if (ParseMaterialLib(status)) {
     return true;
-  if (ParseObject(status))
+  }
+  if (ParseObject(status)) {
     return true;
+  }
   // No known definition was found. Ignore the line.
   parser::SkipLine(buffer());
   return true;
@@ -293,8 +332,9 @@ bool ObjDecoder::ParseVertexPosition(Status *status) {
   if (!buffer()->Peek(&c)) {
     return false;
   }
-  if (c[0] != 'v' || c[1] != ' ')
+  if (c[0] != 'v' || c[1] != ' ') {
     return false;
+  }
   // Vertex definition found!
   buffer()->Advance(2);
   if (!counting_mode_) {
@@ -321,8 +361,9 @@ bool ObjDecoder::ParseNormal(Status *status) {
   if (!buffer()->Peek(&c)) {
     return false;
   }
-  if (c[0] != 'v' || c[1] != 'n')
+  if (c[0] != 'v' || c[1] != 'n') {
     return false;
+  }
   // Normal definition found!
   buffer()->Advance(2);
   if (!counting_mode_) {
@@ -349,8 +390,9 @@ bool ObjDecoder::ParseTexCoord(Status *status) {
   if (!buffer()->Peek(&c)) {
     return false;
   }
-  if (c[0] != 'v' || c[1] != 't')
+  if (c[0] != 'v' || c[1] != 't') {
     return false;
+  }
   // Texture coord definition found!
   buffer()->Advance(2);
   if (!counting_mode_) {
@@ -373,46 +415,46 @@ bool ObjDecoder::ParseTexCoord(Status *status) {
 }
 
 bool ObjDecoder::ParseFace(Status *status) {
+  constexpr int kMaxCorners = 8;
   char c;
   if (!buffer()->Peek(&c)) {
     return false;
   }
-  if (c != 'f')
+  if (c != 'f') {
     return false;
+  }
   // Face definition found!
   buffer()->Advance(1);
   if (!counting_mode_) {
-    std::array<int32_t, 3> indices[4];
-    // Parse face indices (we try to look for up to four to support quads).
+    std::array<int32_t, 3> indices[kMaxCorners];
+    // Parse face indices.
     int num_valid_indices = 0;
-    for (int i = 0; i < 4; ++i) {
+    for (int i = 0; i < kMaxCorners; ++i) {
       if (!ParseVertexIndices(&indices[i])) {
-        if (i == 3) {
-          break;  // It's OK if there is no fourth vertex index.
+        if (i >= 3) {
+          break;  // It's OK if there is no fourth or higher vertex index.
         }
         *status = Status(Status::DRACO_ERROR, "Failed to parse vertex indices");
         return true;
       }
       ++num_valid_indices;
     }
-    // Process the first face.
-    for (int i = 0; i < 3; ++i) {
-      const PointIndex vert_id(3 * num_obj_faces_ + i);
-      MapPointToVertexIndices(vert_id, indices[i]);
-    }
-    ++num_obj_faces_;
-    if (num_valid_indices == 4) {
-      // Add an additional triangle for the quad.
-      //
-      //   3----2
-      //   |  / |
-      //   | /  |
-      //   0----1
-      //
-      const PointIndex vert_id(3 * num_obj_faces_);
-      MapPointToVertexIndices(vert_id, indices[0]);
-      MapPointToVertexIndices(vert_id + 1, indices[2]);
-      MapPointToVertexIndices(vert_id + 2, indices[3]);
+    // Split quads and other n-gons into n - 2 triangles.
+    const int nt = num_valid_indices - 2;
+    // Iterate over triangles.
+    for (int t = 0; t < nt; t++) {
+      // Iterate over corners.
+      for (int c = 0; c < 3; c++) {
+        const PointIndex vert_id(3 * num_obj_faces_ + c);
+        const int triangulated_index = Triangulate(t, c);
+        MapPointToVertexIndices(vert_id, indices[triangulated_index]);
+        // Save info about new edges that will allow us to reconstruct polygons.
+        if (added_edge_att_id_ >= 0) {
+          const AttributeValueIndex avi(IsNewEdge(nt, t, c));
+          out_point_cloud_->attribute(added_edge_att_id_)
+              ->SetPointMapEntry(vert_id, avi);
+        }
+      }
       ++num_obj_faces_;
     }
   } else {
@@ -434,12 +476,14 @@ bool ObjDecoder::ParseFace(Status *status) {
         }
       }
     }
-    if (num_indices < 3 || num_indices > 4) {
-      *status =
-          Status(Status::DRACO_ERROR, "Invalid number of indices on a face");
+    if (num_indices > 3) {
+      has_polygons_ = true;
+    }
+    if (num_indices < 3 || num_indices > kMaxCorners) {
+      *status = ErrorStatus("Invalid number of indices on a face");
       return false;
     }
-    // Either one or two new triangles.
+    // Either one or more new triangles.
     num_obj_faces_ += num_indices - 2;
   }
   parser::SkipLine(buffer());
@@ -448,14 +492,16 @@ bool ObjDecoder::ParseFace(Status *status) {
 
 bool ObjDecoder::ParseMaterialLib(Status *status) {
   // Allow only one material library per file for now.
-  if (material_name_to_id_.size() > 0)
+  if (!material_name_to_id_.empty()) {
     return false;
+  }
   std::array<char, 6> c;
   if (!buffer()->Peek(&c)) {
     return false;
   }
-  if (std::memcmp(&c[0], "mtllib", 6) != 0)
+  if (std::memcmp(&c[0], "mtllib", 6) != 0) {
     return false;
+  }
   buffer()->Advance(6);
   DecoderBuffer line_buffer = parser::ParseLineIntoDecoderBuffer(buffer());
   parser::SkipWhitespace(&line_buffer);
@@ -466,7 +512,10 @@ bool ObjDecoder::ParseMaterialLib(Status *status) {
   }
   parser::SkipLine(&line_buffer);
 
-  if (material_file_name_.size() > 0) {
+  if (!material_file_name_.empty()) {
+    if (mesh_files_) {
+      mesh_files_->push_back(material_file_name_);
+    }
     if (!ParseMaterialFile(material_file_name_, status)) {
       // Silently ignore problems with material files for now.
       return true;
@@ -477,21 +526,24 @@ bool ObjDecoder::ParseMaterialLib(Status *status) {
 
 bool ObjDecoder::ParseMaterial(Status * /* status */) {
   // In second pass, skip when we don't use materials.
-  if (!counting_mode_ && material_att_id_ < 0)
+  if (!counting_mode_ && material_att_id_ < 0) {
     return false;
+  }
   std::array<char, 6> c;
   if (!buffer()->Peek(&c)) {
     return false;
   }
-  if (std::memcmp(&c[0], "usemtl", 6) != 0)
+  if (std::memcmp(&c[0], "usemtl", 6) != 0) {
     return false;
+  }
   buffer()->Advance(6);
   DecoderBuffer line_buffer = parser::ParseLineIntoDecoderBuffer(buffer());
   parser::SkipWhitespace(&line_buffer);
   std::string mat_name;
   parser::ParseLine(&line_buffer, &mat_name);
-  if (mat_name.length() == 0)
+  if (mat_name.length() == 0) {
     return false;
+  }
   auto it = material_name_to_id_.find(mat_name);
   if (it == material_name_to_id_.end()) {
     // In first pass, materials found in obj that's not in the .mtl file
@@ -510,16 +562,19 @@ bool ObjDecoder::ParseObject(Status *status) {
   if (!buffer()->Peek(&c)) {
     return false;
   }
-  if (std::memcmp(&c[0], "o ", 2) != 0)
+  if (std::memcmp(&c[0], "o ", 2) != 0) {
     return false;
+  }
   buffer()->Advance(1);
   DecoderBuffer line_buffer = parser::ParseLineIntoDecoderBuffer(buffer());
   parser::SkipWhitespace(&line_buffer);
   std::string obj_name;
-  if (!parser::ParseString(&line_buffer, &obj_name))
+  if (!parser::ParseString(&line_buffer, &obj_name)) {
     return false;
-  if (obj_name.length() == 0)
+  }
+  if (obj_name.length() == 0) {
     return true;  // Ignore empty name entries.
+  }
   auto it = obj_name_to_id_.find(obj_name);
   if (it == obj_name_to_id_.end()) {
     const int num_obj = static_cast<int>(obj_name_to_id_.size());
@@ -539,32 +594,39 @@ bool ObjDecoder::ParseVertexIndices(std::array<int32_t, 3> *out_indices) {
   // 4. POS_INDEX//NORMAL_INDEX
   parser::SkipCharacters(buffer(), " \t");
   if (!parser::ParseSignedInt(buffer(), &(*out_indices)[0]) ||
-      (*out_indices)[0] == 0)
+      (*out_indices)[0] == 0) {
     return false;  // Position index must be present and valid.
+  }
   (*out_indices)[1] = (*out_indices)[2] = 0;
   char ch;
-  if (!buffer()->Peek(&ch))
+  if (!buffer()->Peek(&ch)) {
     return true;  // It may be OK if we cannot read any more characters.
-  if (ch != '/')
+  }
+  if (ch != '/') {
     return true;
+  }
   buffer()->Advance(1);
   // Check if we should skip texture index or not.
-  if (!buffer()->Peek(&ch))
+  if (!buffer()->Peek(&ch)) {
     return false;  // Here, we should be always able to read the next char.
+  }
   if (ch != '/') {
     // Must be texture coord index.
     if (!parser::ParseSignedInt(buffer(), &(*out_indices)[1]) ||
-        (*out_indices)[1] == 0)
+        (*out_indices)[1] == 0) {
       return false;  // Texture index must be present and valid.
+    }
   }
-  if (!buffer()->Peek(&ch))
+  if (!buffer()->Peek(&ch)) {
     return true;
+  }
   if (ch == '/') {
     buffer()->Advance(1);
     // Read normal index.
     if (!parser::ParseSignedInt(buffer(), &(*out_indices)[2]) ||
-        (*out_indices)[2] == 0)
+        (*out_indices)[2] == 0) {
       return false;  // Normal index must be present and valid.
+    }
   }
   return true;
 }
@@ -634,22 +696,15 @@ void ObjDecoder::MapPointToVertexIndices(
 bool ObjDecoder::ParseMaterialFile(const std::string &file_name,
                                    Status *status) {
   const std::string full_path = GetFullPath(file_name, input_file_name_);
-  std::ifstream file(full_path, std::ios::binary);
-  if (!file)
+  std::vector<char> buffer;
+  if (!ReadFileToBuffer(full_path, &buffer)) {
     return false;
-  // Read the whole file into a buffer.
-  file.seekg(0, std::ios::end);
-  const std::string::size_type file_size = file.tellg();
-  if (file_size == 0)
-    return false;
-  file.seekg(0, std::ios::beg);
-  std::vector<char> data(file_size);
-  file.read(&data[0], file_size);
+  }
 
   // Backup the original decoder buffer.
   DecoderBuffer old_buffer = buffer_;
 
-  buffer_.Init(&data[0], file_size);
+  buffer_.Init(buffer.data(), buffer.size());
 
   num_materials_ = 0;
   while (ParseMaterialFileDefinition(status)) {
@@ -673,17 +728,59 @@ bool ObjDecoder::ParseMaterialFileDefinition(Status * /* status */) {
     return true;
   }
   std::string str;
-  if (!parser::ParseString(buffer(), &str))
+  if (!parser::ParseString(buffer(), &str)) {
     return false;
+  }
   if (str == "newmtl") {
     parser::SkipWhitespace(buffer());
     parser::ParseLine(buffer(), &str);
-    if (str.empty())
+    if (str.empty()) {
       return false;
+    }
     // Add new material to our map.
     material_name_to_id_[str] = num_materials_++;
   }
   return true;
+}
+
+// Methods Triangulate() and IsNewEdge() are used for polygon triangulation and
+// representation as an attribute for reconstruction in the decoder.
+//
+// Polygon reconstruction attribute is associated with every triangle corner and
+// has values zero or one. Zero indicates that an edge opposite to the corner is
+// present in the original mesh (dashed lines), and one indicates that the
+// opposite edge has been added during polygon triangulation (dotted lines).
+//
+// Polygon triangulation is illustrated below. Pentagon ABCDE is split into
+// three triangles ABC, ACD, ADE. It is sufficient to set polygon reconstruction
+// attribute at corners ABC and ACD. The attribute at the second corner of all
+// triangles except for the last is set to one.
+//
+//          C           D
+//          * --------- *
+//         /. 1     0  .|
+//        / .         . |
+//       /  .        .  |
+//      / 0 .       . 0 |
+//     /    .      .    |
+//  B * 1   .     .     |
+//     \    .    .      |
+//      \ 0 . 0 .       |
+//       \  .  .        |
+//        \ . .         |
+//         \..  0     0 |
+//          *-----------*
+//          A           E
+//
+inline int ObjDecoder::Triangulate(int tri_index, int tri_corner) {
+  return tri_corner == 0 ? 0 : tri_index + tri_corner;
+}
+
+inline bool ObjDecoder::IsNewEdge(int tri_count, int tri_index,
+                                  int tri_corner) {
+  // All but the last triangle of the triangulated polygon have an added edge
+  // opposite of corner 1.
+  return tri_index != tri_count - 1 && tri_corner == 1;
 }
 
 }  // namespace draco

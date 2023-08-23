@@ -1,0 +1,13 @@
+// Copyright Contributors to the Open Shading Language project.
+// SPDX-License-Identifier: BSD-3-Clause
+// https://github.com/AcademySoftwareFoundation/OpenShadingLanguage
+
+
+shader
+test ()
+{
+    float a = 10;
+    printf ("  isnan (%g) = %d\n", a, isnan(a));
+    printf ("  isinf (%g) = %d\n", a, isinf(a));
+    printf ("  isfinite (%g) = %d\n", a, isfinite(a));
+}

@@ -38,6 +38,10 @@ namespace draco {
 PredictionSchemeMethod SelectPredictionMethod(int att_id,
                                               const PointCloudEncoder *encoder);
 
+PredictionSchemeMethod SelectPredictionMethod(int att_id,
+                                              const EncoderOptions &options,
+                                              const PointCloudEncoder *encoder);
+
 // Factory class for creating mesh prediction schemes.
 template <typename DataTypeT>
 struct MeshPredictionSchemeEncoderFactory {
@@ -86,8 +90,9 @@ CreatePredictionSchemeForEncoder(PredictionSchemeMethod method, int att_id,
   if (method == PREDICTION_UNDEFINED) {
     method = SelectPredictionMethod(att_id, encoder);
   }
-  if (method == PREDICTION_NONE)
+  if (method == PREDICTION_NONE) {
     return nullptr;  // No prediction is used.
+  }
   if (encoder->GetGeometryType() == TRIANGULAR_MESH) {
     // Cast the encoder to mesh encoder. This is not necessarily safe if there
     // is some other encoder decides to use TRIANGULAR_MESH as the return type,
@@ -96,12 +101,14 @@ CreatePredictionSchemeForEncoder(PredictionSchemeMethod method, int att_id,
     // template nature of the prediction schemes).
     const MeshEncoder *const mesh_encoder =
         static_cast<const MeshEncoder *>(encoder);
+    const uint16_t bitstream_version = kDracoMeshBitstreamVersion;
     auto ret = CreateMeshPredictionScheme<
         MeshEncoder, PredictionSchemeEncoder<DataTypeT, TransformT>,
         MeshPredictionSchemeEncoderFactory<DataTypeT>>(
-        mesh_encoder, method, att_id, transform, kDracoMeshBitstreamVersion);
-    if (ret)
+        mesh_encoder, method, att_id, transform, bitstream_version);
+    if (ret) {
       return ret;
+    }
     // Otherwise try to create another prediction scheme.
   }
   // Create delta encoder.

@@ -1,0 +1,10 @@
+// Copyright Contributors to the Open Shading Language project.
+// SPDX-License-Identifier: BSD-3-Clause
+// https://github.com/AcademySoftwareFoundation/OpenShadingLanguage
+
+shader test ()
+{
+    printf ("camera? %d\n", raytype("camera"));
+    printf ("glossy? %d\n", raytype("glossy"));
+    printf ("diffuse? %d\n", raytype("diffuse"));
+}

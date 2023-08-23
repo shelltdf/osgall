@@ -1,0 +1,107 @@
+/*!
+
+\page mod_dcmsign dcmsign: a digital signature library and utility apps
+
+This module contains classes to create digital signatures in DICOM data sets, to
+verify and to remove signatures. Signatures are conforming to the DICOM "Digital
+Signatures" extension (formerly Supplement 41). This module requires the
+external OpenSSL library.
+
+The main interface classes are:
+\li \b DcmSignature
+\li \b DcmSignatureHelper
+\li \b SiSecurityProfile
+\li \b SiCertificate
+\li \b SiPrivateKey
+\li \b SiMAC
+
+\section Tools
+
+This module contains the following command line tool:
+\li \ref dcmsign
+
+\section Examples
+
+The following example shows how to verify all signatures in a DICOM file:
+
+\code
+DcmFileFormat fileformat;
+if (fileformat.loadFile("test.dcm").good())
+{
+  // Load a root Certification Authority certificate from "ca_cert.pem"
+  // and declare it as trusted. All certificates issued by this CA will
+  // be considered trustworthy (if within their validity time).
+  SiCertificateVerifier certVerifier;
+  if (certVerifier.addTrustedCertificateFile("ca_cert.pem",
+    X509_FILETYPE_PEM).bad())
+  {
+    cerr << "unable to load CA certificate" << endl;
+    return;
+  }
+
+  // Verify all signatures in the dataset, and verify the signer
+  // certificate against the root CA defined above.
+  // Fail if no signature is present in the dataset, but do not require
+  // any specific DICOM signature profile. Verify a secure timestamp
+  // if present, but do not fail signature verification if no timestamp
+  // is there.
+  int result = DcmSignatureHelper::do_verify(fileformat.getDataset(),
+    certVerifier, ESVP_requireSignature, ETVP_verifyTSIfPresent);
+
+  if (result == 0)
+    std::cerr << "signature(s) found and successfully verified" << endl;
+  else
+    std::cerr << "signature absent or verification failed"  << endl;
+}
+\endcode
+
+The following example shows how to sign a DICOM file:
+
+\code
+DcmFileFormat fileformat;
+if (fileformat.loadFile("test.dcm").good())
+{
+  // dataset to be signed
+  DcmDataset *dataset = fileformat.getDataset();
+
+  // select transfer syntax in which digital signature will be created
+  E_TransferSyntax xfer = dataset->getOriginalXfer();
+
+  // use Little Endian Explicit for uncompressed files
+  if ((xfer == EXS_LittleEndianImplicit) ||
+      (xfer == EXS_BigEndianExplicit))
+     xfer = EXS_LittleEndianExplicit;
+
+  SiCreatorProfile profile;  // use the "RSA Creator Profile"
+  SiRIPEMD160 mac;           // use RIPEMD160 as MAC algorithm
+  SiCertificate cert;        // our certificate
+  if (cert.loadCertificate("certificate.pem", X509_FILETYPE_PEM).bad())
+  {
+    cerr << "unable to load certificate" << endl;
+    return;
+  }
+  SiPrivateKey key;  // private key, must be unencrypted here
+  if (key.loadPrivateKey("privkey.pem", X509_FILETYPE_PEM).bad())
+  {
+    cerr << "unable to load private key" << endl;
+    return;
+  }
+
+  // list of attributes to be signed. It can remain empty here
+  // since we're using the RSA Creator Profile to determine the
+  // list of attributes that needs to be signed
+  DcmAttributeTag tags;
+
+  // now create the signature
+  int result = DcmSignatureHelper::do_sign(dataset,
+    key, cert, &mac, &profile, &tags, xfer, NULL,
+    SiSignaturePurpose::ESP_none, NULL);
+
+   if (result == 0)
+     std::cerr << "signature successfully created" << endl;
+   else
+     std::cerr << "signature creation failed"  << endl;
+}
+\endcode
+
+*/

@@ -1,0 +1,18 @@
+// Copyright Contributors to the Open Shading Language project.
+// SPDX-License-Identifier: BSD-3-Clause
+// https://github.com/AcademySoftwareFoundation/OpenShadingLanguage
+
+float f (point p)
+{
+    // Error: no 'return' statement when needed
+    area(p);
+}
+
+
+
+shader
+test ()
+{
+    float x = f(P);
+}
+

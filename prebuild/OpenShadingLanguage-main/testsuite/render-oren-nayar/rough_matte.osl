@@ -1,0 +1,11 @@
+// Copyright Contributors to the Open Shading Language project.
+// SPDX-License-Identifier: BSD-3-Clause
+// https://github.com/AcademySoftwareFoundation/OpenShadingLanguage
+
+surface rough_matte(
+    float Kd = 1,
+    float sigma = 0.1,
+    color Cs = 1)
+{
+    Ci = Kd * Cs * oren_nayar (N, sigma);
+}

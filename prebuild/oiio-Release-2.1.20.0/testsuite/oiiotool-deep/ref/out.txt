@@ -1,0 +1,42 @@
+Computing diff of "src/deep-nosamples.exr" vs "src/deep-onesample.exr"
+  Mean error = 42
+  RMS error = 42
+  Peak SNR = 0
+  Max error  = 42 @ (0, 0, Z)
+  1 pixels (100%) over 1e-06
+  0 pixels (0%) over 100
+WARNING
+Computing diff of "src/deep-onesample.exr" vs "src/deep-nosamples.exr"
+  Mean error = 42
+  RMS error = 42
+  Peak SNR = 0
+  Max error  = 42 @ (0, 0, Z)
+  1 pixels (100%) over 1e-06
+  0 pixels (0%) over 100
+WARNING
+Comparing "flat.exr" and "ref/flat.exr"
+PASS
+Comparing "ch.exr" and "ref/ch.exr"
+PASS
+Comparing "deepen.exr" and "ref/deepen.exr"
+PASS
+Comparing "crop1.exr" and "ref/crop1.exr"
+PASS
+Comparing "crop2.exr" and "ref/crop2.exr"
+PASS
+Comparing "trim1.exr" and "ref/trim1.exr"
+PASS
+Comparing "trim2.exr" and "ref/trim2.exr"
+PASS
+Comparing "deep_addc.exr" and "ref/deep_addc.exr"
+PASS
+Comparing "deep_subc.exr" and "ref/deep_subc.exr"
+PASS
+Comparing "deep_mulc.exr" and "ref/deep_mulc.exr"
+PASS
+Comparing "deep_divc.exr" and "ref/deep_divc.exr"
+PASS
+Comparing "deepmerge.exr" and "ref/deepmerge.exr"
+PASS
+Comparing "resampled-balls.exr" and "ref/resampled-balls.exr"
+PASS

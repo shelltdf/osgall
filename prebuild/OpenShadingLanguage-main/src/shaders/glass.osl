@@ -1,0 +1,35 @@
+// Copyright Contributors to the Open Shading Language project.
+// SPDX-License-Identifier: BSD-3-Clause
+// https://github.com/AcademySoftwareFoundation/OpenShadingLanguage
+
+
+surface
+glass
+    [[ string help = "Simple dielectric material" ]]
+(
+    float Ks = 1
+        [[  string help = "Color scaling of the refraction",
+            float min = 0, float max = 1 ]],
+    color Cs = 1
+        [[  string help = "Base color",
+            float min = 0, float max = 1 ]],
+    float eta = 1.5
+        [[  string help = "Index of refraction",
+            float min = 1, float max = 3 ]],
+    int TIR = 0
+        [[  string help = "Enable Total Internal Reflection",
+            string widget = "checkBox" ]]
+  )
+{
+    // Take into account backfacing to invert eta accordingly
+    if (backfacing()) {
+        Ci = Cs * refraction(N, 1.0 / eta);
+        // If Total Internal Reflection is enabled, we also return a
+        // reflection closure, which might make rays bounce too much
+        // inside an object. That's why we make it optional.
+        if (TIR)
+           Ci += Ks * reflection(N, 1.0 / eta);
+    } else {
+        Ci = Ks * reflection(N, eta) + Cs * refraction(N, eta);
+    }
+}

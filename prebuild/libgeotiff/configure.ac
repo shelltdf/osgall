@@ -1,7 +1,7 @@
 
 
 m4_define([VERSION_MAJOR], [1])
-m4_define([VERSION_MINOR], [5])
+m4_define([VERSION_MINOR], [7])
 m4_define([VERSION_POINT], [1])
 m4_define([GEOTIFF_VERSION],
           [VERSION_MAJOR.VERSION_MINOR.VERSION_POINT])
@@ -30,13 +30,6 @@ AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_PROG_LIBTOOL
 
-dnl AC_PROG_CC
-dnl AC_COMPILER_WFLAGS
-
-dnl AC_PROG_RANLIB
-dnl AC_COMPILER_PIC
-dnl AC_LD_SHARED
-
 dnl #########################################################################
 dnl Default compilation flags
 dnl #########################################################################
@@ -52,7 +45,11 @@ dnl #########################################################################
 dnl Checks for header files.
 dnl #########################################################################
 
-AC_CHECK_HEADERS([string.h],[HAVE_STRING_H=1], [AC_MSG_ERROR([cannot find string.h, bailing out])])
+dnl AC_CHECK_HEADERS([string.h],[HAVE_STRING_H=1], [AC_MSG_ERROR([cannot find string.h, bailing out])])
+AC_CHECK_HEADERS([strings.h],[GEOTIFF_HAVE_STRINGS_H=1])
+AC_DEFINE_UNQUOTED(GEOTIFF_HAVE_STRINGS_H, 1,
+          [Define if you have the <strings.h> header file.])
+
 AC_CHECK_HEADERS([stdio.h],, [AC_MSG_ERROR([cannot find stdio.h, bailing out])])
 AC_CHECK_HEADERS([stdlib.h],, [AC_MSG_ERROR([cannot find stdlib.h, bailing out])])
 
@@ -74,7 +71,7 @@ dnl #########################################################################
 
 AC_ARG_ENABLE([debug],
     AC_HELP_STRING([--enable-debug=ARG], [Enable debug compilation mode @<:@yes|no@:>@, default=debug_default]),,)
-    
+
 AC_MSG_CHECKING([for debug enabled])
 
 if test "x$enable_debug" = "xyes"; then
@@ -246,9 +243,12 @@ if test "x$with_proj" = "xno" ; then
 else
 
   if test "x$with_proj" = "xyes" -o "x$with_proj" = "x"; then
-    ORIG_LIBS="$LIBS"
-    LIBS="-lproj $ORIG_LIBS"
-    AC_CHECK_LIB(proj,proj_create_from_wkt,PROJ_FOUND=yes,PROJ_FOUND=no,)
+    PKG_CHECK_MODULES(PROJ, proj, [LIBS="$LIBS $PROJ_LIBS" PROJ_FOUND=yes], [PROJ_FOUND=no])
+    if test "$PROJ_FOUND" = "no"; then
+        ORIG_LIBS="$LIBS"
+        LIBS="-lproj $ORIG_LIBS"
+        AC_CHECK_LIB(proj,proj_create_from_wkt,PROJ_FOUND=yes,PROJ_FOUND=no,)
+    fi
     if test "$PROJ_FOUND" = "no"; then
         AC_CHECK_LIB(proj,internal_proj_create_from_wkt,PROJ_FOUND=yes,PROJ_FOUND=no,)
         if test "$PROJ_FOUND" = "yes"; then
@@ -320,7 +320,21 @@ fi
 AC_SUBST(PROJ_INCLUDE)
 
 
-AC_ARG_ENABLE(towgs84, [  --disable-towgs84       Disable WGS84 parameters for binary compatibility with pre-1.4.1], AC_DEFINE(GEO_NORMALIZE_DISABLE_TOWGS84, [], [Disable WGS84 parameters]))
+AC_ARG_ENABLE(towgs84, [  --disable-towgs84       Disable WGS84 parameters for binary compatibility with pre-1.4.1], AC_DEFINE([GEO_NORMALIZE_DISABLE_TOWGS84], [], [Disable WGS84 parameters]))
+
+AC_MSG_CHECKING([if libtool needs -no-undefined flag to build shared libraries])
+case "${host}" in
+   *-*-cygwin* | *-*-mingw*|*-*-aix*)
+    ## Add in the -no-undefined flag to LDFLAGS for libtool.
+    AC_MSG_RESULT([yes])
+    NOUNDEFINED=" -no-undefined"
+    ;;
+  *)
+    ## Don't add in anything.
+    AC_MSG_RESULT([no])
+    ;;
+esac
+AC_SUBST([NOUNDEFINED])
 
 dnl #########################################################################
 dnl Doxygen settings

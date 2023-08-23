@@ -32,6 +32,7 @@ import argparse
 import os
 import re
 import ssl
+import shutil
 
 # Try to import Python 3 library urllib.request
 # and if it fails, fall back to Python 2 urllib2
@@ -98,6 +99,7 @@ def download(url, dst):
 parser = argparse.ArgumentParser(description='gl3w generator script')
 parser.add_argument('--ext', action='store_true', help='Load extensions')
 parser.add_argument('--root', type=str, default='', help='Root directory')
+parser.add_argument('--src', type=str, default='', help='Source directory')
 args = parser.parse_args()
 
 # Create directories
@@ -106,10 +108,19 @@ touch_dir(os.path.join(args.root, 'include/KHR'))
 touch_dir(os.path.join(args.root, 'src'))
 
 # Download glcorearb.h and khrplatform.h
-download('https://www.khronos.org/registry/OpenGL/api/GL/glcorearb.h',
-         os.path.join(args.root, 'include/GL/glcorearb.h'))
-download('https://www.khronos.org/registry/EGL/api/KHR/khrplatform.h',
-         os.path.join(args.root, 'include/KHR/khrplatform.h'))
+# if not os.path.isfile(os.getcwd() + '/include/GL/glcorearb.h'):
+    # print(os.getcwd() + '/include/GL/glcorearb.h')
+    # download('https://www.khronos.org/registry/OpenGL/api/GL/glcorearb.h',
+             # os.path.join(args.root, 'include/GL/glcorearb.h'))
+# if not os.path.isfile(os.getcwd() + 'include/KHR/khrplatform.h'):
+    # print(os.getcwd() + 'include/KHR/khrplatform.h')
+    # download('https://www.khronos.org/registry/EGL/api/KHR/khrplatform.h',
+         # os.path.join(args.root, 'include/KHR/khrplatform.h'))
+
+# print('src = ' + args.src + '/include/GL/glcorearb.h')
+# print('dst = ' + os.getcwd() + '/include/GL/glcorearb.h')
+shutil.copyfile(args.src + '/dwonload_include/GL/glcorearb.h', os.getcwd() +  '/include/GL/glcorearb.h')
+shutil.copyfile(args.src + '/dwonload_include/KHR/khrplatform.h', os.getcwd() + '/include/KHR/khrplatform.h')
 
 # Parse function names from glcorearb.h
 print('Parsing glcorearb.h header...')

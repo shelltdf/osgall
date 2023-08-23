@@ -25,7 +25,7 @@ def getDependency( str_name ,getDependency):
     list_name = addDependency("glew" , list_name,getDependency)
     list_name = addDependency("googletest" , list_name,getDependency)
     list_name = addDependency("hdf" , list_name,getDependency)
-    list_name = addDependency("ilmbase" , list_name,getDependency)
+    # list_name = addDependency("ilmbase" , list_name,getDependency)
     list_name = addDependency("imgui" , list_name,getDependency)
     # list_name = addDependency("ifcplusplus" , list_name,getDependency)
     list_name = addDependency("jasper" , list_name,getDependency)
@@ -84,6 +84,14 @@ def getDependency( str_name ,getDependency):
     list_name = addDependency("libktx" , list_name,getDependency)
     list_name = addDependency("openctm" , list_name,getDependency)
     
+    # 
+    list_name = addDependency("openusd" , list_name,getDependency)
+    
+    #
+    list_name = addDependency("osl" , list_name,getDependency)
+    list_name = addDependency("pcl" , list_name,getDependency)
+    list_name = addDependency("occt" , list_name,getDependency)
+    list_name = addDependency("cgal" , list_name,getDependency)
     
     return list_name + [str_name]
     

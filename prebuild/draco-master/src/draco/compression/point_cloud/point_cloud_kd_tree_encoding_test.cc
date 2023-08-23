@@ -68,7 +68,7 @@ class PointCloudKdTreeEncodingTest : public ::testing::Test {
          ++compression_level) {
       options.SetSpeed(10 - compression_level, 10 - compression_level);
       encoder.SetPointCloud(pc);
-      ASSERT_TRUE(encoder.Encode(options, &buffer).ok());
+      DRACO_ASSERT_OK(encoder.Encode(options, &buffer));
 
       DecoderBuffer dec_buffer;
       dec_buffer.Init(buffer.data(), buffer.size());
@@ -76,7 +76,7 @@ class PointCloudKdTreeEncodingTest : public ::testing::Test {
 
       std::unique_ptr<PointCloud> out_pc(new PointCloud());
       DecoderOptions dec_options;
-      ASSERT_TRUE(decoder.Decode(dec_options, &dec_buffer, out_pc.get()).ok());
+      DRACO_ASSERT_OK(decoder.Decode(dec_options, &dec_buffer, out_pc.get()));
 
       ComparePointClouds(pc, *out_pc);
     }
@@ -86,7 +86,7 @@ class PointCloudKdTreeEncodingTest : public ::testing::Test {
     std::unique_ptr<PointCloud> pc = ReadPointCloudFromTestFile(file_name);
     ASSERT_NE(pc, nullptr);
 
-    TestKdTreeEncoding(*pc.get());
+    TestKdTreeEncoding(*pc);
   }
 };
 
@@ -382,8 +382,9 @@ TEST_F(PointCloudKdTreeEncodingTest, TestIntKdTreeEncodingSignedTypes) {
     std::array<int32_t, 2> pos;
     // Generate some pseudo-random points.
     pos[0] = 8 * ((i * 7) % 127) + 1;
-    if (i % 3 == 0)
+    if (i % 3 == 0) {
       pos[0] = -pos[0];
+    }
     pos[1] = 13 * ((i * 3) % 321) + 1;
     points2[i] = pos;
   }
@@ -392,8 +393,9 @@ TEST_F(PointCloudKdTreeEncodingTest, TestIntKdTreeEncodingSignedTypes) {
     std::array<int16_t, 1> pos;
     // Generate some pseudo-random points.
     pos[0] = 8 * ((i * 7) % 127) + 11;
-    if (i % 5 == 0)
+    if (i % 5 == 0) {
       pos[0] = -pos[0];
+    }
     points1[i] = pos;
   }
 

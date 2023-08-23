@@ -1,0 +1,34 @@
+[build-system]
+requires = [
+    "setuptools>=42",
+    "wheel",
+    "cmake>=3.13",
+    "ninja; sys_platform != 'win32' and platform_machine != 'arm64'",
+    # Documentation requirements
+    "six",
+    "testresources",
+    "recommonmark",
+    "sphinx-press-theme",
+    "sphinx-tabs",
+    "breathe"
+]
+build-backend = "setuptools.build_meta"
+
+[tool.cibuildwheel]
+build-verbosity = "1"
+
+test-command = "python -m PyOpenColorIO.tests.OpenColorIOTestSuite"
+test-requires = ["numpy"]
+
+manylinux-x86_64-image = "manylinux2014"
+manylinux-i686-image = "manylinux2014"
+manylinux-aarch64-image = "manylinux2014"
+
+[tool.cibuildwheel.linux]
+before-build = "share/ci/scripts/linux/yum/install_docs_env.sh"
+
+[tool.cibuildwheel.macos]
+before-build = "share/ci/scripts/macos/install_docs_env.sh"
+
+[tool.cibuildwheel.windows]
+before-build = "bash -c share/ci/scripts/windows/install_docs_env.sh"

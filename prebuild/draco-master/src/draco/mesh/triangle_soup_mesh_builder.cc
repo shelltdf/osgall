@@ -23,11 +23,23 @@ void TriangleSoupMeshBuilder::Start(int num_faces) {
   attribute_element_types_.clear();
 }
 
+#ifdef DRACO_TRANSCODER_SUPPORTED
+void TriangleSoupMeshBuilder::SetName(const std::string &name) {
+  mesh_->SetName(name);
+}
+#endif  // DRACO_TRANSCODER_SUPPORTED
+
 int TriangleSoupMeshBuilder::AddAttribute(
     GeometryAttribute::Type attribute_type, int8_t num_components,
     DataType data_type) {
+  return AddAttribute(attribute_type, num_components, data_type, false);
+}
+
+int TriangleSoupMeshBuilder::AddAttribute(
+    GeometryAttribute::Type attribute_type, int8_t num_components,
+    DataType data_type, bool normalized) {
   GeometryAttribute va;
-  va.Init(attribute_type, nullptr, num_components, data_type, false,
+  va.Init(attribute_type, nullptr, num_components, data_type, normalized,
           DataTypeLength(data_type) * num_components, 0);
   attribute_element_types_.push_back(-1);
   return mesh_->AddAttribute(va, true, mesh_->num_points());
@@ -41,8 +53,6 @@ void TriangleSoupMeshBuilder::SetAttributeValuesForFace(
   att->SetAttributeValue(AttributeValueIndex(start_index), corner_value_0);
   att->SetAttributeValue(AttributeValueIndex(start_index + 1), corner_value_1);
   att->SetAttributeValue(AttributeValueIndex(start_index + 2), corner_value_2);
-  // TODO(ostava): The below code should be called only for one attribute.
-  // It will work OK even for multiple attributes, but it's redundant.
   mesh_->SetFace(face_id,
                  {{PointIndex(start_index), PointIndex(start_index + 1),
                    PointIndex(start_index + 2)}});
@@ -60,15 +70,17 @@ void TriangleSoupMeshBuilder::SetPerFaceAttributeValueForFace(
                  {{PointIndex(start_index), PointIndex(start_index + 1),
                    PointIndex(start_index + 2)}});
   int8_t &element_type = attribute_element_types_[att_id];
-  if (element_type < 0)
+  if (element_type < 0) {
     element_type = MESH_FACE_ATTRIBUTE;
+  }
 }
 
 std::unique_ptr<Mesh> TriangleSoupMeshBuilder::Finalize() {
 #ifdef DRACO_ATTRIBUTE_VALUES_DEDUPLICATION_SUPPORTED
   // First deduplicate attribute values.
-  if (!mesh_->DeduplicateAttributeValues())
+  if (!mesh_->DeduplicateAttributeValues()) {
     return nullptr;
+  }
 #endif
 #ifdef DRACO_ATTRIBUTE_INDICES_DEDUPLICATION_SUPPORTED
   // Also deduplicate vertex indices.

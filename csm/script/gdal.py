@@ -94,8 +94,8 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         STR_CFG += " -DPROJ_LIBRARY='" + install_dir + "/lib/proj.lib'"
         STR_CFG += " -DPROJ_LIBRARY_DEBUG='" + install_dir + "/lib/proj_d.lib'"
 
-        STR_CFG += " -DEXPAT_LIBRARY='" + install_dir + "/lib/expat.lib'"
-        STR_CFG += " -DEXPAT_LIBRARY_DEBUG='" + install_dir + "/lib/expatd.lib'"
+        STR_CFG += " -DEXPAT_LIBRARY='" + install_dir + "/lib/libexpat.lib'"
+        STR_CFG += " -DEXPAT_LIBRARY_DEBUG='" + install_dir + "/lib/libexpatd.lib'"
         
         STR_CFG += " -DZLIB_LIBRARY='" + install_dir + "/lib/zlib.lib'"
         STR_CFG += " -DZLIB_LIBRARY_DEBUG='" + install_dir + "/lib/zlibd.lib'"

@@ -1,0 +1,128 @@
+/*!
+
+\page mod_dcmrt dcmrt: a radiation therapy library and utility apps
+
+This module contains classes to read, write, create, modify and access various
+DICOM Radiation Therapy (RT) objects.  These classes are generated automatically
+from the official DocBook/XML version of the DICOM standard.
+
+The main interface classes are:
+\li \b DRTDoseIOD
+\li \b DRTImageIOD
+\li \b DRTPlanIOD
+\li \b DRTStructureSetIOD
+\li \b DRTTreatmentSummaryRecordIOD
+\li \b DRTIonPlanIOD
+\li \b DRTIonBeamsTreatmentRecordIOD
+
+To simplify working with this low-level interface, there are some hand-written
+classes which provide commonly needed functionality.
+
+These classes are:
+\li \b DRTDose
+\li \b DRTImage
+\li \b DRTPlan
+\li \b DRTStructureSet
+
+\section Tools
+
+This module contains the following command line tools:
+\li \ref drtdump
+
+\section Examples
+
+The following example shows how to load an RT Dose file and output the
+patient's name:
+
+\code
+DcmFileFormat fileformat;
+OFCondition status = fileformat.loadFile("rtdose.dcm");
+if (status.good())
+{
+  DRTDoseIOD rtdose;
+  status = rtdose.read(*fileformat.getDataset());
+  if (status.good())
+  {
+    OFString patientName;
+    status = rtdose.getPatientName(patientName);
+    if (status.good())
+    {
+      cout << "Patient's Name: " << patientName << endl;
+    } else
+      cerr << "Error: cannot access Patient's Name (" << status.text() << ")" << endl;
+  } else
+    cerr << "Error: cannot read RT Dose object (" << status.text() << ")" << endl;
+} else
+  cerr << "Error: cannot load DICOM file (" << status.text() << ")" << endl;
+\endcode
+
+The following example shows how to load an RT Dose file and access the scaled
+dose image:
+
+\code
+DRTDose rtdose;
+OFCondition status = rtdose.loadFile("rtdose.dcm");
+if (status.good())
+{
+  const unsigned int frame = 0;
+  OFVector<double> doseImage;
+  status = rtdose.getDoseImage(doseImage, frame);
+  if (status.good())
+  {
+    OFVector<double>::iterator it = doseImage.begin();
+    for (int y = 0; y < doseImage.getDoseImageHeight(); ++y)
+    {
+      for (int x = 0; x < doseImage.getDoseImageWidth(); ++x)
+      {
+        double value = *it++;
+        /* do something useful with the dose image pixel */
+      }
+    }
+  } else
+    cerr << "Error: cannot read RT Dose image (" << status.text() << ")" << endl;
+} else
+  cerr << "Error: cannot load RT Dose object (" << status.text() << ")" << endl;
+\endcode
+
+The following example shows how to load an RT Plan file, change the patient's
+name and save it to a new file:
+
+\code
+DcmFileFormat fileformat;
+OFCondition status = fileformat.loadFile("rtplan.dcm");
+if (status.good())
+{
+  DRTPlanIOD rtplan;
+  status = rtplan.read(*fileformat.getDataset());
+  if (status.good())
+  {
+    status = rtplan.setPatientName("Doe^John");
+    if (status.good())
+    {
+      fileformat.clear();
+      status = rtplan.write(*fileformat.getDataset());
+      if (status.good())
+      {
+        status = fileformat.saveFile("rtplan_new.dcm");
+        if (status.bad())
+          cerr << "Error: cannot save DICOM file (" << status.text() << ")" << endl;
+      } else
+        cerr << "Error: cannot write RT Plan object (" << status.text() << ")" << endl;
+    } else
+      cerr << "Error: cannot change Patient's Name (" << status.text() << ")" << endl;
+  } else
+    cerr << "Error: cannot read RT Plan object (" << status.text() << ")" << endl;
+} else
+  cerr << "Error: cannot load DICOM file (" << status.text() << ")" << endl;
+\endcode
+
+\section known_issues Known Issues
+
+Since most of the classes in this module are generated automatically from a
+machine-readable version of the DICOM standard and the RT objects are known to
+"re-use" the same sequence attributes with different content at various places,
+there still might be some issues with wrong definitions in a few sub-sequences.
+E.g., the Referenced Beam Sequence (300C,0004) and the Referenced SOP Sequence
+(0008,1199) are candidates that might not be handled 100% correctly yet.
+
+*/

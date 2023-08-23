@@ -15,18 +15,20 @@
 #ifndef DRACO_CORE_MACROS_H_
 #define DRACO_CORE_MACROS_H_
 
-#include "assert.h"
+#include <cassert>
 
 #include "draco/draco_features.h"
 
 #ifdef ANDROID_LOGGING
 #include <android/log.h>
 #define LOG_TAG "draco"
-#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
-#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
+#define DRACO_LOGI(...) \
+  __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
+#define DRACO_LOGE(...) \
+  __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
 #else
-#define LOGI printf
-#define LOGE printf
+#define DRACO_LOGI printf
+#define DRACO_LOGE printf
 #endif
 
 #include <iostream>
@@ -36,7 +38,7 @@ namespace draco {
 #define DISALLOW_COPY_AND_ASSIGN(TypeName) \
   TypeName(const TypeName &) = delete;     \
   void operator=(const TypeName &) = delete;
-#endif
+#endif  // DISALLOW_COPY_AND_ASSIGN
 
 #ifndef FALLTHROUGH_INTENDED
 #if defined(__clang__) && defined(__has_warning)
@@ -45,7 +47,7 @@ namespace draco {
 #endif
 #elif defined(__GNUC__) && __GNUC__ >= 7
 #define FALLTHROUGH_INTENDED [[gnu::fallthrough]]
-#endif
+#endif  // FALLTHROUGH_INTENDED
 
 // If FALLTHROUGH_INTENDED is still not defined, define it.
 #ifndef FALLTHROUGH_INTENDED
@@ -53,7 +55,7 @@ namespace draco {
   do {                       \
   } while (0)
 #endif
-#endif
+#endif  // FALLTHROUGH_INTENDED
 
 #ifndef LOG
 #define LOG(...) std::cout
@@ -83,11 +85,15 @@ namespace draco {
 #define DRACO_DCHECK_LE(a, b)
 #define DRACO_DCHECK_LT(a, b)
 #define DRACO_DCHECK_NOTNULL(x)
-#endif
+#endif  // DRACO_DEBUG
 
 // Helper macros for concatenating macro values.
 #define DRACO_MACROS_IMPL_CONCAT_INNER_(x, y) x##y
 #define DRACO_MACROS_IMPL_CONCAT_(x, y) DRACO_MACROS_IMPL_CONCAT_INNER_(x, y)
+
+#define DRACO_MACROS_IMPL_CONCAT_INNER_3_(x, y, z) x##y##z
+#define DRACO_MACROS_IMPL_CONCAT_3_(x, y, z) \
+  DRACO_MACROS_IMPL_CONCAT_INNER_3_(x, y, z)
 
 // Expand the n-th argument of the macro. Used to select an argument based on
 // the number of entries in a variadic macro argument. Example usage:
@@ -99,13 +105,20 @@ namespace draco {
 // #define VARIADIC_MACRO(...)
 //   DRACO_SELECT_NTH_FROM_3(__VA_ARGS__, FUNC_3, FUNC_2, FUNC_1) __VA_ARGS__
 //
-#define DRACO_SELECT_NTH_FROM_2(_1, _2, NAME) NAME
-#define DRACO_SELECT_NTH_FROM_3(_1, _2, _3, NAME) NAME
-#define DRACO_SELECT_NTH_FROM_4(_1, _2, _3, _4, NAME) NAME
+#define DRACO_SELECT_NTH_FROM_2(_1, _2, NAME, ...) NAME
+#define DRACO_SELECT_NTH_FROM_3(_1, _2, _3, NAME, ...) NAME
+#define DRACO_SELECT_NTH_FROM_4(_1, _2, _3, _4, NAME, ...) NAME
 
 // Macro that converts the Draco bit-stream into one uint16_t number.
 // Useful mostly when checking version numbers.
 #define DRACO_BITSTREAM_VERSION(MAJOR, MINOR) \
   ((static_cast<uint16_t>(MAJOR) << 8) | MINOR)
+
+// Macro that converts the uint16_t Draco bit-stream number into the major
+// and minor components respectively.
+#define DRACO_BISTREAM_VERSION_MAJOR(VERSION) \
+  (static_cast<uint8_t>(VERSION >> 8))
+#define DRACO_BISTREAM_VERSION_MINOR(VERSION) \
+  (static_cast<uint8_t>(VERSION & 0xFF))
 
 #endif  // DRACO_CORE_MACROS_H_

@@ -1,0 +1,12 @@
+// Copyright Contributors to the Open Shading Language project.
+// SPDX-License-Identifier: BSD-3-Clause
+// https://github.com/AcademySoftwareFoundation/OpenShadingLanguage
+
+
+
+shader test (float A = 1)
+{
+    printf ("Is param A const? %d\n", isconstant(A));
+    printf ("Is 2*A const? %d\n", isconstant(2*A));
+    printf ("Is noise(P) const? %d\n", isconstant((color)noise(P)));
+}

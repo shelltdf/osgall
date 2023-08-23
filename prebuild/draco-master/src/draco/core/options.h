@@ -19,6 +19,8 @@
 #include <map>
 #include <string>
 
+#include "draco/draco_features.h"
+
 namespace draco {
 
 // Class for storing generic options as a <name, value> pair in a string map.
@@ -27,7 +29,8 @@ namespace draco {
 // data type.
 class Options {
  public:
-  Options();
+  Options() = default;
+  ~Options() = default;
 
   // Merges |other_options| on top of the existing options of this instance
   // replacing all entries that are present in both options instances.
@@ -71,8 +74,6 @@ class Options {
  private:
   // All entries are internally stored as strings and converted to the desired
   // return type based on the used Get* method.
-  // TODO(ostava): Consider adding type safety mechanism that would prevent
-  // unsafe operations such as a conversion from vector to int.
   std::map<std::string, std::string> options_;
 };
 
@@ -81,8 +82,9 @@ void Options::SetVector(const std::string &name, const DataTypeT *vec,
                         int num_dims) {
   std::string out;
   for (int i = 0; i < num_dims; ++i) {
-    if (i > 0)
+    if (i > 0) {
       out += " ";
+    }
 
 // GNU STL on android doesn't include a proper std::to_string, but the libc++
 // version does
@@ -107,11 +109,13 @@ template <typename DataTypeT>
 bool Options::GetVector(const std::string &name, int num_dims,
                         DataTypeT *out_val) const {
   const auto it = options_.find(name);
-  if (it == options_.end())
+  if (it == options_.end()) {
     return false;
+  }
   const std::string value = it->second;
-  if (value.length() == 0)
+  if (value.length() == 0) {
     return true;  // Option set but no data is present
+  }
   const char *act_str = value.c_str();
   char *next_str;
   for (int i = 0; i < num_dims; ++i) {
@@ -119,10 +123,11 @@ bool Options::GetVector(const std::string &name, int num_dims,
 #ifdef ANDROID
       const int val = strtol(act_str, &next_str, 10);
 #else
-      const int val = std::strtol(act_str, &next_str, 10);
+      const int val = static_cast<int>(std::strtol(act_str, &next_str, 10));
 #endif
-      if (act_str == next_str)
+      if (act_str == next_str) {
         return true;  // End reached.
+      }
       act_str = next_str;
       out_val[i] = static_cast<DataTypeT>(val);
     } else {
@@ -131,8 +136,9 @@ bool Options::GetVector(const std::string &name, int num_dims,
 #else
       const float val = std::strtof(act_str, &next_str);
 #endif
-      if (act_str == next_str)
+      if (act_str == next_str) {
         return true;  // End reached.
+      }
       act_str = next_str;
       out_val[i] = static_cast<DataTypeT>(val);
     }

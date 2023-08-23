@@ -1,0 +1,6 @@
+iconvert ERROR: Tile part length size inconsistent with stream length
+Failed to decode the codestream in the JP2 file
+Comparing "../oiio-images/jpeg2000/broken/issue_3427.jp2" and "issue_3427.jp2"
+idiff ERROR: Could not read ../oiio-images/jpeg2000/broken/issue_3427.jp2:
+	Invalid image file "../oiio-images/jpeg2000/broken/issue_3427.jp2": Tile part length size inconsistent with stream length
+Failed to decode the codestream in the JP2 file

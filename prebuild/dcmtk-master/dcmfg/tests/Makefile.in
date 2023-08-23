@@ -1,0 +1,71 @@
+#
+#	Makefile for dcmfg/tests
+#
+
+@SET_MAKE@
+
+SHELL = /bin/sh
+VPATH = @srcdir@:@top_srcdir@/include:@top_srcdir@/@configdir@/include
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+configdir = @top_srcdir@/@configdir@
+
+include $(configdir)/@common_makefile@
+
+oficonvdir = $(top_srcdir)/../oficonv
+ofstddir = $(top_srcdir)/../ofstd
+oflogdir = $(top_srcdir)/../oflog
+dcmdatadir = $(top_srcdir)/../dcmdata
+dcmioddir = $(top_srcdir)/../dcmiod
+
+LIBDIRS = -L$(top_srcdir)/libsrc -L$(ofstddir)/libsrc -L$(oflogdir)/libsrc \
+	-L$(dcmdatadir)/libsrc -L$(dcmioddir)/libsrc -L$(oficonvdir)/libsrc
+LOCALLIBS = -ldcmfg -ldcmiod -ldcmdata -loflog -lofstd -loficonv $(ZLIBLIBS) \
+	$(CHARCONVLIBS) $(MATHLIBS)
+LOCALINCLUDES = -I$(top_srcdir)/include -I$(ofstddir)/include -I$(oflogdir)/include \
+	-I$(dcmdatadir)/include -I$(dcmioddir)/include
+
+test_objs = t_concatenation_creator.o \
+	t_concatenation_loader.o \
+	t_ct_acquisition_details.o \
+	t_ct_acquisition_type.o \
+	t_ct_image_frame_type.o \
+	t_ct_position.o \
+	t_ct_table_dynamics.o \
+	t_deriv_image.o \
+	t_fg_base.o \
+	t_frame_content.o \
+	t_irradiation_event_identification.o \
+	tests.o
+
+objs = $(test_objs)
+progs = tests
+
+
+all: $(progs)
+
+tests: $(test_objs)
+	$(CXX) $(CXXFLAGS) $(LIBDIRS) $(LDFLAGS) -o $@ $(test_objs) $(LOCALLIBS) $(LIBS)
+
+
+check: tests
+	DCMDICTPATH=../../dcmdata/data/dicom.dic ./tests
+
+check-exhaustive: tests
+	DCMDICTPATH=../../dcmdata/data/dicom.dic ./tests -x
+
+
+install: all
+
+
+clean:
+	rm -f $(objs) $(progs) $(LOCALTRASH) $(TRASH)
+
+distclean:
+	rm -f $(objs) $(progs) $(LOCALTRASH) $(DISTTRASH)
+
+
+dependencies:
+	$(CXX) -MM $(defines) $(includes) $(CPPFLAGS) $(CXXFLAGS) *.cc  > $(DEP)
+
+include $(DEP)

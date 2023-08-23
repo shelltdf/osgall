@@ -25,6 +25,8 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         STR_CFG += ' -DBUILD_DYNAMIC_LIBRARY=1'
         
     source_dir = os.getcwd() + '/../prebuild/zlib-1.2.8'
+    # source_dir = os.getcwd() + '/../prebuild/zlib-1.2.13'
+    # source_dir = os.getcwd() + '/../prebuild/zlib-master'
     
     configure(str_name,dict_config,STR_CFG,"",source_dir)
     build(str_name,dict_config)

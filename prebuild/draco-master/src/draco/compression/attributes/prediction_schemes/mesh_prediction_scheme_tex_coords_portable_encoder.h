@@ -51,10 +51,12 @@ class MeshPredictionSchemeTexCoordsPortableEncoder
   }
 
   bool IsInitialized() const override {
-    if (!predictor_.IsInitialized())
+    if (!predictor_.IsInitialized()) {
       return false;
-    if (!this->mesh_data().IsInitialized())
+    }
+    if (!this->mesh_data().IsInitialized()) {
       return false;
+    }
     return true;
   }
 
@@ -67,10 +69,12 @@ class MeshPredictionSchemeTexCoordsPortableEncoder
   }
 
   bool SetParentAttribute(const PointAttribute *att) override {
-    if (att->attribute_type() != GeometryAttribute::POSITION)
+    if (att->attribute_type() != GeometryAttribute::POSITION) {
       return false;  // Invalid attribute type.
-    if (att->num_components() != 3)
+    }
+    if (att->num_components() != 3) {
       return false;  // Currently works only for 3 component positions.
+    }
     predictor_.SetPositionAttribute(*att);
     return true;
   }
@@ -94,7 +98,10 @@ bool MeshPredictionSchemeTexCoordsPortableEncoder<DataTypeT, TransformT,
            static_cast<int>(this->mesh_data().data_to_corner_map()->size() - 1);
        p >= 0; --p) {
     const CornerIndex corner_id = this->mesh_data().data_to_corner_map()->at(p);
-    predictor_.template ComputePredictedValue<true>(corner_id, in_data, p);
+    if (!predictor_.template ComputePredictedValue<true>(corner_id, in_data,
+                                                         p)) {
+      return false;
+    }
 
     const int dst_offset = p * num_components;
     this->transform().ComputeCorrection(in_data + dst_offset,

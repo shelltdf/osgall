@@ -1,0 +1,9 @@
+// Copyright Contributors to the Open Shading Language project.
+// SPDX-License-Identifier: BSD-3-Clause
+// https://github.com/AcademySoftwareFoundation/OpenShadingLanguage
+
+surface test_print ( string str = "default", color Cs = 1)
+{
+    printf("str: %s\n", str);
+    Ci = Cs * diffuse (N);
+}

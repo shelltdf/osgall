@@ -13,6 +13,9 @@
 // limitations under the License.
 //
 #include "draco/io/file_utils.h"
+
+#include <string>
+
 #include "draco/core/draco_test_base.h"
 #include "draco/core/draco_test_utils.h"
 
@@ -40,6 +43,19 @@ TEST(FileUtilsTest, ReplaceExtension) {
   ASSERT_EQ(draco::ReplaceFileExtension("a.abc", "x"), "a.x");
   ASSERT_EQ(draco::ReplaceFileExtension("abc", "x"), "abc.x");  // No extension
   ASSERT_EQ(draco::ReplaceFileExtension("a/b/c.d", "xyz"), "a/b/c.xyz");
+}
+
+TEST(FileUtilsTest, LowercaseFileExtension) {
+  ASSERT_EQ(draco::LowercaseFileExtension("image.jpeg"), "jpeg");
+  ASSERT_EQ(draco::LowercaseFileExtension("image.JPEG"), "jpeg");
+  ASSERT_EQ(draco::LowercaseFileExtension("image.png"), "png");
+  ASSERT_EQ(draco::LowercaseFileExtension("image.pNg"), "png");
+  ASSERT_EQ(draco::LowercaseFileExtension("FILE.glb"), "glb");
+  ASSERT_EQ(draco::LowercaseFileExtension(".file.gltf"), "gltf");
+  ASSERT_EQ(draco::LowercaseFileExtension("the.file.gltf"), "gltf");
+  ASSERT_EQ(draco::LowercaseFileExtension("FILE_glb"), "");
+  ASSERT_EQ(draco::LowercaseFileExtension(""), "");
+  ASSERT_EQ(draco::LowercaseFileExtension("image."), "");
 }
 
 TEST(FileUtilsTest, GetFullPath) {
