@@ -8,7 +8,6 @@
 /Linux-*
 *.o
 *.cmake
-*.txt
 *.make
 *.marks
 *.includecache
