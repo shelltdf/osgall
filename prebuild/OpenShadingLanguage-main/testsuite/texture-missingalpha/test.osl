@@ -1,0 +1,15 @@
+// Copyright Contributors to the Open Shading Language project.
+// SPDX-License-Identifier: BSD-3-Clause
+// https://github.com/AcademySoftwareFoundation/OpenShadingLanguage
+
+shader
+test (string filename = "missing.tx",
+      output color Cout = 0)
+{
+    float alpha = 0;
+    float x = texture (filename, u, v, "missingalpha", 0.75,
+                       "alpha", alpha);
+    Cout = alpha;
+    if (alpha != 0.75)
+        error ("missingalpha did not work\n");
+}

@@ -19,6 +19,8 @@
 
 #include "draco/core/vector_d.h"
 
+namespace draco {
+
 #define DRACO_INCREMENT_MOD(I, M) (((I) == ((M)-1)) ? 0 : ((I) + 1))
 
 // Returns floor(sqrt(x)) where x is an integer number. The main intend of this
@@ -27,8 +29,9 @@
 // replacement for std::sqrt() for general cases. IntSqrt is in fact about 3X
 // slower compared to most implementation of std::sqrt().
 inline uint64_t IntSqrt(uint64_t number) {
-  if (number == 0)
+  if (number == 0) {
     return 0;
+  }
   // First estimate good initial value of the square root as log2(number).
   uint64_t act_number = number;
   uint64_t square_root = 1;
@@ -50,5 +53,27 @@ inline uint64_t IntSqrt(uint64_t number) {
   } while (square_root * square_root > number);
   return square_root;
 }
+
+// Performs the addition in unsigned type to avoid signed integer overflow. Note
+// that the result will be the same (for non-overflowing values).
+template <
+    typename DataTypeT,
+    typename std::enable_if<std::is_integral<DataTypeT>::value &&
+                            std::is_signed<DataTypeT>::value>::type * = nullptr>
+inline DataTypeT AddAsUnsigned(DataTypeT a, DataTypeT b) {
+  typedef typename std::make_unsigned<DataTypeT>::type DataTypeUT;
+  return static_cast<DataTypeT>(static_cast<DataTypeUT>(a) +
+                                static_cast<DataTypeUT>(b));
+}
+
+template <typename DataTypeT,
+          typename std::enable_if<!std::is_integral<DataTypeT>::value ||
+                                  !std::is_signed<DataTypeT>::value>::type * =
+              nullptr>
+inline DataTypeT AddAsUnsigned(DataTypeT a, DataTypeT b) {
+  return a + b;
+}
+
+}  // namespace draco
 
 #endif  // DRACO_CORE_MATH_UTILS_H_

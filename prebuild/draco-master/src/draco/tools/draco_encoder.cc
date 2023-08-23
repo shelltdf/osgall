@@ -14,10 +14,12 @@
 //
 #include <cinttypes>
 #include <cstdlib>
-#include <fstream>
 
+#include "draco/compression/config/compression_shared.h"
 #include "draco/compression/encode.h"
+#include "draco/compression/expert_encode.h"
 #include "draco/core/cycle_timer.h"
+#include "draco/io/file_utils.h"
 #include "draco/io/mesh_io.h"
 #include "draco/io/point_cloud_io.h"
 
@@ -35,6 +37,7 @@ struct Options {
   int generic_quantization_bits;
   bool generic_deleted;
   int compression_level;
+  bool preserve_polygons;
   bool use_metadata;
   std::string input;
   std::string output;
@@ -42,14 +45,15 @@ struct Options {
 
 Options::Options()
     : is_point_cloud(false),
-      pos_quantization_bits(14),
-      tex_coords_quantization_bits(12),
+      pos_quantization_bits(11),
+      tex_coords_quantization_bits(10),
       tex_coords_deleted(false),
-      normals_quantization_bits(10),
+      normals_quantization_bits(8),
       normals_deleted(false),
       generic_quantization_bits(8),
       generic_deleted(false),
       compression_level(7),
+      preserve_polygons(false),
       use_metadata(false) {}
 
 void Usage() {
@@ -64,13 +68,13 @@ void Usage() {
       "cloud.\n");
   printf(
       "  -qp <value>           quantization bits for the position "
-      "attribute, default=14.\n");
+      "attribute, default=11.\n");
   printf(
       "  -qt <value>           quantization bits for the texture coordinate "
-      "attribute, default=12.\n");
+      "attribute, default=10.\n");
   printf(
       "  -qn <value>           quantization bits for the normal vector "
-      "attribute, default=10.\n");
+      "attribute, default=8.\n");
   printf(
       "  -qg <value>           quantization bits for any generic attribute, "
       "default=8.\n");
@@ -83,6 +87,11 @@ void Usage() {
   printf(
       "  --metadata            use metadata to encode extra information in "
       "mesh files.\n");
+  // Mesh with polygonal faces loaded from OBJ format is converted to triangular
+  // mesh and polygon reconstruction information is encoded into a new generic
+  // attribute.
+  printf("  -preserve_polygons    encode polygon info as an attribute.\n");
+
   printf(
       "\nUse negative quantization values to skip the specified attribute\n");
 }
@@ -138,12 +147,12 @@ void PrintOptions(const draco::PointCloud &pc, const Options &options) {
 }
 
 int EncodePointCloudToFile(const draco::PointCloud &pc, const std::string &file,
-                           draco::Encoder *encoder) {
+                           draco::ExpertEncoder *encoder) {
   draco::CycleTimer timer;
   // Encode the geometry.
   draco::EncoderBuffer buffer;
   timer.Start();
-  const draco::Status status = encoder->EncodePointCloudToBuffer(pc, &buffer);
+  const draco::Status status = encoder->EncodeToBuffer(&buffer);
   if (!status.ok()) {
     printf("Failed to encode the point cloud.\n");
     printf("%s\n", status.error_msg());
@@ -151,12 +160,10 @@ int EncodePointCloudToFile(const draco::PointCloud &pc, const std::string &file,
   }
   timer.Stop();
   // Save the encoded geometry into a file.
-  std::ofstream out_file(file, std::ios::binary);
-  if (!out_file) {
-    printf("Failed to create the output file.\n");
+  if (!draco::WriteBufferToFile(buffer.data(), buffer.size(), file)) {
+    printf("Failed to write the output file.\n");
     return -1;
   }
-  out_file.write(buffer.data(), buffer.size());
   printf("Encoded point cloud saved to %s (%" PRId64 " ms to encode).\n",
          file.c_str(), timer.GetInMs());
   printf("\nEncoded size = %zu bytes\n\n", buffer.size());
@@ -164,12 +171,12 @@ int EncodePointCloudToFile(const draco::PointCloud &pc, const std::string &file,
 }
 
 int EncodeMeshToFile(const draco::Mesh &mesh, const std::string &file,
-                     draco::Encoder *encoder) {
+                     draco::ExpertEncoder *encoder) {
   draco::CycleTimer timer;
   // Encode the geometry.
   draco::EncoderBuffer buffer;
   timer.Start();
-  const draco::Status status = encoder->EncodeMeshToBuffer(mesh, &buffer);
+  const draco::Status status = encoder->EncodeToBuffer(&buffer);
   if (!status.ok()) {
     printf("Failed to encode the mesh.\n");
     printf("%s\n", status.error_msg());
@@ -177,12 +184,10 @@ int EncodeMeshToFile(const draco::Mesh &mesh, const std::string &file,
   }
   timer.Stop();
   // Save the encoded geometry into a file.
-  std::ofstream out_file(file, std::ios::binary);
-  if (!out_file) {
+  if (!draco::WriteBufferToFile(buffer.data(), buffer.size(), file)) {
     printf("Failed to create the output file.\n");
     return -1;
   }
-  out_file.write(buffer.data(), buffer.size());
   printf("Encoded mesh saved to %s (%" PRId64 " ms to encode).\n", file.c_str(),
          timer.GetInMs());
   printf("\nEncoded size = %zu bytes\n\n", buffer.size());
@@ -253,6 +258,8 @@ int main(int argc, char **argv) {
       ++i;
     } else if (!strcmp("--metadata", argv[i])) {
       options.use_metadata = true;
+    } else if (!strcmp("-preserve_polygons", argv[i])) {
+      options.preserve_polygons = true;
     }
   }
   if (argc < 3 || options.input.empty()) {
@@ -263,8 +270,10 @@ int main(int argc, char **argv) {
   std::unique_ptr<draco::PointCloud> pc;
   draco::Mesh *mesh = nullptr;
   if (!options.is_point_cloud) {
-    auto maybe_mesh =
-        draco::ReadMeshFromFile(options.input, options.use_metadata);
+    draco::Options load_options;
+    load_options.SetBool("use_metadata", options.use_metadata);
+    load_options.SetBool("preserve_polygons", options.preserve_polygons);
+    auto maybe_mesh = draco::ReadMeshFromFile(options.input, load_options);
     if (!maybe_mesh.ok()) {
       printf("Failed loading the input mesh: %s.\n",
              maybe_mesh.status().error_msg());
@@ -354,14 +363,36 @@ int main(int argc, char **argv) {
     options.output = options.input + ".drc";
   }
 
-  PrintOptions(*pc.get(), options);
+  PrintOptions(*pc, options);
+
+  const bool input_is_mesh = mesh && mesh->num_faces() > 0;
+
+  // Convert to ExpertEncoder that allows us to set per-attribute options.
+  std::unique_ptr<draco::ExpertEncoder> expert_encoder;
+  if (input_is_mesh) {
+    expert_encoder.reset(new draco::ExpertEncoder(*mesh));
+  } else {
+    expert_encoder.reset(new draco::ExpertEncoder(*pc));
+  }
+  expert_encoder->Reset(encoder.CreateExpertEncoderOptions(*pc));
+
+  // Check if there is an attribute that stores polygon edges. If so, we disable
+  // the default prediction scheme for the attribute as it actually makes the
+  // compression worse.
+  const int poly_att_id =
+      pc->GetAttributeIdByMetadataEntry("name", "added_edges");
+  if (poly_att_id != -1) {
+    expert_encoder->SetAttributePredictionScheme(
+        poly_att_id, draco::PredictionSchemeMethod::PREDICTION_NONE);
+  }
 
   int ret = -1;
-  const bool input_is_mesh = mesh && mesh->num_faces() > 0;
-  if (input_is_mesh)
-    ret = EncodeMeshToFile(*mesh, options.output, &encoder);
-  else
-    ret = EncodePointCloudToFile(*pc.get(), options.output, &encoder);
+
+  if (input_is_mesh) {
+    ret = EncodeMeshToFile(*mesh, options.output, expert_encoder.get());
+  } else {
+    ret = EncodePointCloudToFile(*pc, options.output, expert_encoder.get());
+  }
 
   if (ret != -1 && options.compression_level < 10) {
     printf(

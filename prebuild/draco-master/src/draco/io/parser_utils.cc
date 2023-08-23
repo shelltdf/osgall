@@ -18,13 +18,15 @@
 #include <cctype>
 #include <cmath>
 #include <iterator>
+#include <limits>
 
 namespace draco {
 namespace parser {
 
 void SkipCharacters(DecoderBuffer *buffer, const char *skip_chars) {
-  if (skip_chars == nullptr)
+  if (skip_chars == nullptr) {
     return;
+  }
   const int num_skip_chars = static_cast<int>(strlen(skip_chars));
   char c;
   while (buffer->Peek(&c)) {
@@ -36,8 +38,9 @@ void SkipCharacters(DecoderBuffer *buffer, const char *skip_chars) {
         break;
       }
     }
-    if (!skip)
+    if (!skip) {
       return;
+    }
     buffer->Advance(1);
   }
 }
@@ -56,26 +59,20 @@ bool PeekWhitespace(DecoderBuffer *buffer, bool *end_reached) {
     *end_reached = true;
     return false;  // eof reached.
   }
-  if (!isspace(c))
+  if (!isspace(c)) {
     return false;  // Non-whitespace character reached.
+  }
   return true;
 }
 
-void SkipLine(DecoderBuffer *buffer) {
-  char c;
-  while (buffer->Peek(&c)) {
-    // Skip the character.
-    buffer->Advance(1);
-    if (c == '\n')
-      return;  // Return at the end of line
-  }
-}
+void SkipLine(DecoderBuffer *buffer) { ParseLine(buffer, nullptr); }
 
 bool ParseFloat(DecoderBuffer *buffer, float *value) {
   // Read optional sign.
   char ch;
-  if (!buffer->Peek(&ch))
+  if (!buffer->Peek(&ch)) {
     return false;
+  }
   int sign = GetSignValue(ch);
   if (sign != 0) {
     buffer->Advance(1);
@@ -107,8 +104,9 @@ bool ParseFloat(DecoderBuffer *buffer, float *value) {
   if (!have_digits) {
     // Check for special constants (inf, nan, ...).
     std::string text;
-    if (!ParseString(buffer, &text))
+    if (!ParseString(buffer, &text)) {
       return false;
+    }
     if (text == "inf" || text == "Inf") {
       v = std::numeric_limits<double>::infinity();
     } else if (text == "nan" || text == "NaN") {
@@ -124,8 +122,9 @@ bool ParseFloat(DecoderBuffer *buffer, float *value) {
 
       // Parse integer exponent.
       int32_t exponent = 0;
-      if (!ParseSignedInt(buffer, &exponent))
+      if (!ParseSignedInt(buffer, &exponent)) {
         return false;
+      }
 
       // Apply exponent scaling to value.
       v *= pow(static_cast<double>(10.0), exponent);
@@ -140,16 +139,19 @@ bool ParseSignedInt(DecoderBuffer *buffer, int32_t *value) {
   // Parse any explicit sign and set the appropriate largest magnitude
   // value that can be represented without overflow.
   char ch;
-  if (!buffer->Peek(&ch))
+  if (!buffer->Peek(&ch)) {
     return false;
+  }
   const int sign = GetSignValue(ch);
-  if (sign != 0)
+  if (sign != 0) {
     buffer->Advance(1);
+  }
 
   // Attempt to parse integer body.
   uint32_t v;
-  if (!ParseUnsignedInt(buffer, &v))
+  if (!ParseUnsignedInt(buffer, &v)) {
     return false;
+  }
   *value = (sign < 0) ? -v : v;
   return true;
 }
@@ -165,17 +167,20 @@ bool ParseUnsignedInt(DecoderBuffer *buffer, uint32_t *value) {
     buffer->Advance(1);
     have_digits = true;
   }
-  if (!have_digits)
+  if (!have_digits) {
     return false;
+  }
   *value = v;
   return true;
 }
 
 int GetSignValue(char c) {
-  if (c == '-')
+  if (c == '-') {
     return -1;
-  if (c == '+')
+  }
+  if (c == '+') {
     return 1;
+  }
   return 0;
 }
 
@@ -185,24 +190,55 @@ bool ParseString(DecoderBuffer *buffer, std::string *out_string) {
   bool end_reached = false;
   while (!PeekWhitespace(buffer, &end_reached) && !end_reached) {
     char c;
-    if (!buffer->Decode(&c))
+    if (!buffer->Decode(&c)) {
       return false;
+    }
     *out_string += c;
   }
   return true;
 }
 
 void ParseLine(DecoderBuffer *buffer, std::string *out_string) {
-  out_string->clear();
+  if (out_string) {
+    out_string->clear();
+  }
   char c;
+  int num_delims = 0;
+  char last_delim;
   while (buffer->Peek(&c)) {
-    // Skip the character.
+    // Check if |c| is a delimiter symbol. We want to identify all possible
+    // delimiters that can occur on different platforms (i.e. we want to detect
+    // '\r\n', '\r', '\n').
+    const bool is_delim = (c == '\r' || c == '\n');
+
+    if (is_delim) {
+      if (num_delims == 0) {
+        last_delim = c;
+      } else if (num_delims == 1) {
+        // We already parsed either '\r' or '\n'. Ensure the new delim symbol is
+        // '\n' and different from the previous symbol.
+        if (c == last_delim || c != '\n') {
+          return;  // Same delimiter symbol already processed.
+        }
+      } else {
+        // Too many delimiter symbols.
+        return;
+      }
+      num_delims++;
+    }
+
+    if (!is_delim && num_delims > 0) {
+      // We reached a non-delimiter symbol after a delimiter was already found.
+      // Stop the parsing.
+      return;
+    }
+
     buffer->Advance(1);
-    if (c == '\n')
-      return;  // Return at the end of line.
-    if (c == '\r')
-      continue;  // Ignore extra line ending characters.
-    *out_string += c;
+
+    // We put the non-delimiter symbol into the output string.
+    if (!is_delim && out_string) {
+      out_string->push_back(c);
+    }
   }
 }
 
@@ -212,10 +248,12 @@ DecoderBuffer ParseLineIntoDecoderBuffer(DecoderBuffer *buffer) {
   while (buffer->Peek(&c)) {
     // Skip the character.
     buffer->Advance(1);
-    if (c == '\n')
+    if (c == '\n') {
       break;  // End of the line reached.
-    if (c == '\r')
+    }
+    if (c == '\r') {
       continue;  // Ignore extra line ending characters.
+    }
   }
   DecoderBuffer out_buffer;
   out_buffer.Init(head, buffer->data_head() - head);

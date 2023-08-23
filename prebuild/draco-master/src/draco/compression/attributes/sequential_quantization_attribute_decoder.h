@@ -15,9 +15,9 @@
 #ifndef DRACO_COMPRESSION_ATTRIBUTES_SEQUENTIAL_QUANTIZATION_ATTRIBUTE_DECODER_H_
 #define DRACO_COMPRESSION_ATTRIBUTES_SEQUENTIAL_QUANTIZATION_ATTRIBUTE_DECODER_H_
 
-#include "draco/draco_features.h"
-
+#include "draco/attributes/attribute_quantization_transform.h"
 #include "draco/compression/attributes/sequential_integer_attribute_decoder.h"
+#include "draco/draco_features.h"
 
 namespace draco {
 
@@ -44,12 +44,7 @@ class SequentialQuantizationAttributeDecoder
   virtual bool DequantizeValues(uint32_t num_values);
 
  private:
-  // Max number of quantization bits used to encode each component of the
-  // attribute.
-  int32_t quantization_bits_;
-
-  std::unique_ptr<float[]> min_value_;
-  float max_value_dif_;
+  AttributeQuantizationTransform quantization_transform_;
 };
 
 }  // namespace draco

@@ -15,6 +15,7 @@
 #ifndef DRACO_CORE_STATUS_H_
 #define DRACO_CORE_STATUS_H_
 
+#include <ostream>
 #include <string>
 
 namespace draco {
@@ -31,6 +32,7 @@ class Status {
     UNSUPPORTED_VERSION = -4,  // Input not compatible with the current version.
     UNKNOWN_VERSION = -5,      // Input was created with an unknown version of
                                // the library.
+    UNSUPPORTED_FEATURE = -6,  // Input contains feature that is not supported.
   };
 
   Status() : code_(OK) {}
@@ -43,6 +45,8 @@ class Status {
   Code code() const { return code_; }
   const std::string &error_msg_string() const { return error_msg_; }
   const char *error_msg() const { return error_msg_.c_str(); }
+  std::string code_string() const;
+  std::string code_and_error_string() const;
 
   bool operator==(Code code) const { return code == code_; }
   bool ok() const { return code_ == OK; }
@@ -60,14 +64,18 @@ inline std::ostream &operator<<(std::ostream &os, const Status &status) {
 }
 
 inline Status OkStatus() { return Status(Status::OK); }
+inline Status ErrorStatus(const std::string &msg) {
+  return Status(Status::DRACO_ERROR, msg);
+}
 
 // Evaluates an expression that returns draco::Status. If the status is not OK,
 // the macro returns the status object.
 #define DRACO_RETURN_IF_ERROR(expression)             \
   {                                                   \
     const draco::Status _local_status = (expression); \
-    if (!_local_status.ok())                          \
+    if (!_local_status.ok()) {                        \
       return _local_status;                           \
+    }                                                 \
   }
 
 }  // namespace draco

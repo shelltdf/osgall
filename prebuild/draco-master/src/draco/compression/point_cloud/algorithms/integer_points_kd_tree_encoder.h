@@ -12,7 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// TODO(hemmer): Make this a wrapper using DynamicIntegerPointsKdTreeEncoder.
+// TODO(b/199760123): Make this a wrapper using
+// DynamicIntegerPointsKdTreeEncoder.
 #ifndef DRACO_COMPRESSION_POINT_CLOUD_ALGORITHMS_INTEGER_POINTS_KD_TREE_ENCODER_H_
 #define DRACO_COMPRESSION_POINT_CLOUD_ALGORITHMS_INTEGER_POINTS_KD_TREE_ENCODER_H_
 
@@ -204,8 +205,9 @@ bool IntegerPointsKdTreeEncoder<PointDiT, compression_level_t>::EncodePoints(
 
   buffer->Encode(bit_length_);
   buffer->Encode(num_points_);
-  if (num_points_ == 0)
+  if (num_points_ == 0) {
     return true;
+  }
 
   numbers_encoder_.StartEncoding();
   remaining_bits_encoder_.StartEncoding();
@@ -228,8 +230,9 @@ uint32_t IntegerPointsKdTreeEncoder<PointDiT, compression_level_t>::GetAxis(
     RandomAccessIteratorT begin, RandomAccessIteratorT end,
     const PointDiT &old_base, std::array<uint32_t, D> levels,
     uint32_t last_axis) {
-  if (!Policy::select_axis)
+  if (!Policy::select_axis) {
     return DRACO_INCREMENT_MOD(last_axis, D);
+  }
 
   // For many points this function selects the axis that should be used
   // for the split by keeping as many points as possible bundled.
@@ -256,8 +259,9 @@ uint32_t IntegerPointsKdTreeEncoder<PointDiT, compression_level_t>::GetAxis(
     PointDiT split(old_base);
 
     for (int i = 0; i < D; i++) {
-      if (num_remaining_bits[i])
+      if (num_remaining_bits[i]) {
         split[i] += 1 << (num_remaining_bits[i] - 1);
+      }
     }
 
     std::array<uint32_t, D> deviations = PointTraits<PointDiT>::ZeroArray();
@@ -316,8 +320,9 @@ void IntegerPointsKdTreeEncoder<PointDiT, compression_level_t>::EncodeInternal(
     const uint32_t num_remaining_points = end - begin;
 
     // If this happens all axis are subdivided to the end.
-    if ((bit_length_ - level) == 0)
+    if ((bit_length_ - level) == 0) {
       continue;
+    }
 
     // Fast encoding of remaining bits if number of points is 1.
     // Doing this also for 2 gives a slight additional speed up.
@@ -361,8 +366,9 @@ void IntegerPointsKdTreeEncoder<PointDiT, compression_level_t>::EncodeInternal(
     const uint32_t second_half = end - split;
     const bool left = first_half < second_half;
 
-    if (first_half != second_half)
+    if (first_half != second_half) {
       half_encoder_.EncodeBit(left);
+    }
 
     if (left) {
       EncodeNumber(required_bits, num_remaining_points / 2 - first_half);
@@ -371,12 +377,14 @@ void IntegerPointsKdTreeEncoder<PointDiT, compression_level_t>::EncodeInternal(
     }
 
     levels[axis] += 1;
-    if (split != begin)
+    if (split != begin) {
       status_q.push(EncodingStatus<RandomAccessIteratorT>(
           begin, split, old_base, levels, axis));
-    if (split != end)
+    }
+    if (split != end) {
       status_q.push(EncodingStatus<RandomAccessIteratorT>(split, end, new_base,
                                                           levels, axis));
+    }
   }
 }
 

@@ -1,0 +1,37 @@
+// Copyright Contributors to the Open Shading Language project.
+// SPDX-License-Identifier: BSD-3-Clause
+// https://github.com/AcademySoftwareFoundation/OpenShadingLanguage
+
+shader
+test ()
+{
+    {
+        float a = -M_E;
+        printf ("  cosh (%g) = %g\n", a, cosh(a));
+        printf ("  sinh (%g) = %g\n", a, sinh(a));
+        printf ("  tanh (%g) = %g\n", a, tanh(a));
+        a = 0;
+        printf ("  cosh (%g) = %g\n", a, cosh(a));
+        printf ("  sinh (%g) = %g\n", a, sinh(a));
+        printf ("  tanh (%g) = %g\n", a, tanh(a));
+        a = M_E;
+        printf ("  cosh (%g) = %g\n", a, cosh(a));
+        printf ("  sinh (%g) = %g\n", a, sinh(a));
+        printf ("  tanh (%g) = %g\n", a, tanh(a));
+    }
+
+    {
+        vector a = -M_E;
+        printf ("  cosh (%g) = %g\n", a, cosh(a));
+        printf ("  sinh (%g) = %g\n", a, sinh(a));
+        printf ("  tanh (%g) = %g\n", a, tanh(a));
+        a = 0;
+        printf ("  cosh (%g) = %g\n", a, cosh(a));
+        printf ("  sinh (%g) = %g\n", a, sinh(a));
+        printf ("  tanh (%g) = %g\n", a, tanh(a));
+        a = M_E;
+        printf ("  cosh (%g) = %g\n", a, cosh(a));
+        printf ("  sinh (%g) = %g\n", a, sinh(a));
+        printf ("  tanh (%g) = %g\n", a, tanh(a));
+    }
+}

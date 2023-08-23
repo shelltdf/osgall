@@ -1,0 +1,29 @@
+test.osl:56: error: No matching function call to 'failifnota (initializer-list)'
+  Candidates are:
+    test.osl:20	void failifnota (struct acolor)
+test.osl:57: error: No matching function call to 'failifnota (initializer-list)'
+  Candidates are:
+    test.osl:20	void failifnota (struct acolor)
+test.osl:58: error: Ambiguous call to 'ddd (initializer-list, int)'
+  Candidates are:
+    test.osl:39	void ddd (struct B, int)
+    test.osl:38	void ddd (struct A, int)
+test.osl:59: error: Ambiguous call to 'eee (initializer-list, int)'
+  Candidates are:
+    test.osl:41	float eee (struct A, int)
+    test.osl:42	void eee (struct B, int)
+test.osl:60: error: Ambiguous call to 'noise (initializer-list)'
+  Candidates are:
+    test.osl:50	float noise (struct A)
+    float noise (point)
+    color noise (point)
+    vector noise (point)
+test.osl:61: error: Ambiguous call to 'fff (initializer-list)'
+  Candidates are:
+    test.osl:45	void fff (point)
+    test.osl:44	void fff (struct A)
+test.osl:62: error: Ambiguous call to 'ggg (initializer-list)'
+  Candidates are:
+    test.osl:48	float ggg (struct D)
+    test.osl:47	void ggg (struct C)
+FAILED test.osl

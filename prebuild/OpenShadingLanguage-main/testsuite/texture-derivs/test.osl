@@ -1,0 +1,15 @@
+// Copyright Contributors to the Open Shading Language project.
+// SPDX-License-Identifier: BSD-3-Clause
+// https://github.com/AcademySoftwareFoundation/OpenShadingLanguage
+
+shader
+test (string filename = "ramp.exr",
+      float scale = 1,
+      output color Cout = 0,
+      output color dx = 0,
+      output color dy = 0)
+{
+    Cout = (color) texture (filename, u, v);
+    dx = Dx (Cout) * scale;
+    dy = Dy (Cout) * scale;
+}

@@ -21,6 +21,7 @@
 #include "draco/compression/attributes/prediction_schemes/prediction_scheme_normal_octahedron_canonicalized_transform_base.h"
 #include "draco/core/decoder_buffer.h"
 #include "draco/core/macros.h"
+#include "draco/core/math_utils.h"
 #include "draco/core/vector_d.h"
 
 namespace draco {
@@ -44,18 +45,23 @@ class PredictionSchemeNormalOctahedronCanonicalizedDecodingTransform
 
   bool DecodeTransformData(DecoderBuffer *buffer) {
     DataTypeT max_quantized_value, center_value;
-    if (!buffer->Decode(&max_quantized_value))
+    if (!buffer->Decode(&max_quantized_value)) {
       return false;
-    if (!buffer->Decode(&center_value))
+    }
+    if (!buffer->Decode(&center_value)) {
       return false;
+    }
     (void)center_value;
-    if (!this->set_max_quantized_value(max_quantized_value))
+    if (!this->set_max_quantized_value(max_quantized_value)) {
       return false;
+    }
     // Account for reading wrong values, e.g., due to fuzzing.
-    if (this->quantization_bits() < 2)
+    if (this->quantization_bits() < 2) {
       return false;
-    if (this->quantization_bits() > 30)
+    }
+    if (this->quantization_bits() > 30) {
       return false;
+    }
     return true;
   }
 
@@ -93,9 +99,8 @@ class PredictionSchemeNormalOctahedronCanonicalizedDecodingTransform
     if (!pred_is_in_bottom_left) {
       pred = this->RotatePoint(pred, rotation_count);
     }
-    Point2 orig = pred + corr;
-    orig[0] = this->ModMax(orig[0]);
-    orig[1] = this->ModMax(orig[1]);
+    Point2 orig(this->ModMax(AddAsUnsigned(pred[0], corr[0])),
+                this->ModMax(AddAsUnsigned(pred[1], corr[1])));
     if (!pred_is_in_bottom_left) {
       const int32_t reverse_rotation_count = (4 - rotation_count) % 4;
       orig = this->RotatePoint(orig, reverse_rotation_count);

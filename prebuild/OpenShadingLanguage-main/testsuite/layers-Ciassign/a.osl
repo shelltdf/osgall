@@ -1,0 +1,11 @@
+// Copyright Contributors to the Open Shading Language project.
+// SPDX-License-Identifier: BSD-3-Clause
+// https://github.com/AcademySoftwareFoundation/OpenShadingLanguage
+
+shader a (output color out = 0)
+{
+    printf ("a start, Ci = '%s'\n", Ci);
+    Ci = color(1,0,0) * emission();
+    printf ("a end, Ci = '%s'\n", Ci);
+    out = color(0,1,u);
+}

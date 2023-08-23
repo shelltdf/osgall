@@ -1,0 +1,37 @@
+// Copyright Contributors to the Open Shading Language project.
+// SPDX-License-Identifier: BSD-3-Clause
+// https://github.com/AcademySoftwareFoundation/OpenShadingLanguage
+
+shader
+test (output color Cout = 0)
+{
+    int i_init = 0;
+    int i_uninit;
+    float f_init = 0.5;
+    float f_uninit;
+    string s_init = "";
+    string s_uninit;
+    Cout = color (f_uninit, (float)i_uninit, 0);
+    Cout *= texture (s_uninit, u, v);
+
+    float x = 0;
+    {
+        float A[3];         // uninitialized
+        A[1] = 1;           // initialize one element
+        x += A[1];          // NOT an error
+        x += A[2];          // An error
+    }
+    {
+        color C;            // uninitialized
+        C[1] = 1;           // initialize one element
+        x += C[1];          // NOT an error
+        x += C[2];          // An error
+    }
+    {
+        matrix M;           // uninitialized
+        M[1][2] = 1;        // initialize one element
+        x += M[1][2];       // NOT an error
+        x += M[0][0];       // An error
+    }
+    Cout[0] += x;  // force x results to not be optimized away
+}

@@ -1,0 +1,36 @@
+// Copyright Contributors to the Open Shading Language project.
+// SPDX-License-Identifier: BSD-3-Clause
+// https://github.com/AcademySoftwareFoundation/OpenShadingLanguage
+
+
+shader
+image
+    [[ string help = "Texture lookup" ]]
+(
+    string filename = ""
+        [[  string help = "Texture filename" ]],
+    float s = u
+        [[  string help = "s coordinate for the lookup" ]],
+    float t = v
+        [[  string help = "t coordinate for the lookup" ]],
+    float  sblur = 0
+        [[  string help = "Blur in the s direction",
+            float min = 0, float max = 1 ]],
+    float  tblur = 0
+        [[  string help = "Blur in the s direction",
+            float min = 0, float max = 1 ]],
+    string swrap = "periodic"
+        [[  string help = "Wrap mode for the s direction",
+            string widget = "popup",
+            string options = "default|black|clamp|periodic|mirror" ]],
+    string twrap = "periodic"
+        [[  string help = "Wrap mode for the t direction",
+            string widget = "popup",
+            string options = "default|black|clamp|periodic|mirror" ]],
+    output color Cout = 0
+        [[  string help = "Output color" ]]
+  )
+{
+    Cout = texture (filename, s, t, "sblur", sblur, "tblur", tblur,
+                    "swrap", swrap, "twrap", twrap);
+}

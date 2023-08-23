@@ -12,25 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-#ifndef DRACO_IO_MESH_PLY_DECODER_H_
-#define DRACO_IO_MESH_PLY_DECODER_H_
+#ifndef DRACO_IO_PLY_DECODER_H_
+#define DRACO_IO_PLY_DECODER_H_
 
 #include <string>
 
-#include "draco/draco_features.h"
-
 #include "draco/core/decoder_buffer.h"
 #include "draco/core/status.h"
+#include "draco/draco_features.h"
 #include "draco/io/ply_reader.h"
 #include "draco/mesh/mesh.h"
 
 namespace draco {
 
-// Decodes a Wavefront OBJ file into draco::Mesh (or draco::PointCloud if the
+// Decodes a PLY file into draco::Mesh (or draco::PointCloud if the
 // connectivity data is not needed).
-// TODO(ostava): The current implementation assumes that the input vertices are
-// defined with x, y, z properties. The decoder also reads uint8 red, green,
-// blue, alpha color information, but all other attributes are ignored for now.
+// TODO(b/34330853): The current implementation assumes that the input vertices
+// are defined with x, y, z properties. The decoder also reads uint8 red, green,
+// blue, alpha color information, float32 defined as nx, ny, nz properties, but
+// all other attributes are ignored for now.
 class PlyDecoder {
  public:
   PlyDecoder();
@@ -66,4 +66,4 @@ class PlyDecoder {
 
 }  // namespace draco
 
-#endif  // DRACO_IO_MESH_PLY_DECODER_H_
+#endif  // DRACO_IO_PLY_DECODER_H_

@@ -40,15 +40,16 @@ class MeshAttributeCornerTable {
   // whenever the seam edges are updated).
   // |mesh| and |att| can be null, in which case mapping between vertices and
   // attribute value ids is set to identity.
-  void RecomputeVertices(const Mesh *mesh, const PointAttribute *att);
+  bool RecomputeVertices(const Mesh *mesh, const PointAttribute *att);
 
   inline bool IsCornerOppositeToSeamEdge(CornerIndex corner) const {
     return is_edge_on_seam_[corner.value()];
   }
 
   inline CornerIndex Opposite(CornerIndex corner) const {
-    if (corner == kInvalidCornerIndex || IsCornerOppositeToSeamEdge(corner))
+    if (corner == kInvalidCornerIndex || IsCornerOppositeToSeamEdge(corner)) {
       return kInvalidCornerIndex;
+    }
     return corner_table_->Opposite(corner);
   }
 
@@ -88,6 +89,7 @@ class MeshAttributeCornerTable {
     return static_cast<int>(vertex_to_attribute_entry_id_map_.size());
   }
   int num_faces() const { return static_cast<int>(corner_table_->num_faces()); }
+  int num_corners() const { return corner_table_->num_corners(); }
 
   VertexIndex Vertex(CornerIndex corner) const {
     DRACO_DCHECK_LT(corner.value(), corner_to_vertex_map_.size());
@@ -105,11 +107,33 @@ class MeshAttributeCornerTable {
     return vertex_to_left_most_corner_map_[v.value()];
   }
 
+  inline FaceIndex Face(CornerIndex corner) const {
+    return corner_table_->Face(corner);
+  }
+
+  inline CornerIndex FirstCorner(FaceIndex face) const {
+    return corner_table_->FirstCorner(face);
+  }
+
+  inline std::array<CornerIndex, 3> AllCorners(FaceIndex face) const {
+    return corner_table_->AllCorners(face);
+  }
+
   inline bool IsOnBoundary(VertexIndex vert) const {
     const CornerIndex corner = LeftMostCorner(vert);
-    if (corner == kInvalidCornerIndex)
+    if (corner == kInvalidCornerIndex) {
       return true;
-    return IsCornerOnSeam(corner);
+    }
+    if (SwingLeft(corner) == kInvalidCornerIndex) {
+      return true;
+    }
+    return false;
+  }
+
+  bool IsDegenerated(FaceIndex face) const {
+    // Introducing seams can't change the degeneracy of the individual faces,
+    // therefore we can delegate the check to the original |corner_table_|.
+    return corner_table_->IsDegenerated(face);
   }
 
   bool no_interior_seams() const { return no_interior_seams_; }
@@ -126,8 +150,9 @@ class MeshAttributeCornerTable {
   // Returns the valence of the vertex at the given corner.
   inline int Valence(CornerIndex c) const {
     DRACO_DCHECK_LT(c.value(), corner_table_->num_corners());
-    if (c == kInvalidCornerIndex)
+    if (c == kInvalidCornerIndex) {
       return -1;
+    }
     return ConfidentValence(c);
   }
   inline int ConfidentValence(CornerIndex c) const {
@@ -147,7 +172,7 @@ class MeshAttributeCornerTable {
 
  private:
   template <bool init_vertex_to_attribute_entry_map>
-  void RecomputeVerticesInternal(const Mesh *mesh, const PointAttribute *att);
+  bool RecomputeVerticesInternal(const Mesh *mesh, const PointAttribute *att);
 
   std::vector<bool> is_edge_on_seam_;
   std::vector<bool> is_vertex_on_seam_;

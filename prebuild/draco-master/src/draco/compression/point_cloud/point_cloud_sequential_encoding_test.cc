@@ -27,8 +27,9 @@ class PointCloudSequentialEncodingTest : public ::testing::Test {
     PointCloudSequentialEncoder encoder;
     EncoderOptions options = EncoderOptions::CreateDefaultOptions();
     encoder.SetPointCloud(*pc);
-    if (!encoder.Encode(options, &buffer).ok())
+    if (!encoder.Encode(options, &buffer).ok()) {
       return nullptr;
+    }
 
     DecoderBuffer dec_buffer;
     dec_buffer.Init(buffer.data(), buffer.size());
@@ -36,8 +37,9 @@ class PointCloudSequentialEncodingTest : public ::testing::Test {
 
     std::unique_ptr<PointCloud> out_pc(new PointCloud());
     DecoderOptions dec_options;
-    if (!decoder.Decode(dec_options, &dec_buffer, out_pc.get()).ok())
+    if (!decoder.Decode(dec_options, &dec_buffer, out_pc.get()).ok()) {
       return nullptr;
+    }
     return out_pc;
   }
 

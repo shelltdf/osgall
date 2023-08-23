@@ -1,0 +1,10 @@
+// Copyright Contributors to the Open Shading Language project.
+// SPDX-License-Identifier: BSD-3-Clause
+// https://github.com/AcademySoftwareFoundation/OpenShadingLanguage
+
+shader b (color in = color(0,1,0))
+{
+    printf ("b start, Ci = '%s'\n", Ci);
+    Ci = in * emission();
+    printf ("b end, Ci = '%s'\n", Ci);
+}

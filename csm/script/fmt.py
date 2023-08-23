@@ -21,7 +21,8 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     else:
         STR_CFG += " -DBUILD_SHARED_LIBS=1"
         
-    source_dir = os.getcwd() + '/../prebuild/fmt-master'
+    # source_dir = os.getcwd() + '/../prebuild/fmt-master'
+    source_dir = os.getcwd() + '/../prebuild/fmt-9.1.0'
     
     configure(str_name,dict_config,STR_CFG,"",source_dir)
     build(str_name,dict_config)

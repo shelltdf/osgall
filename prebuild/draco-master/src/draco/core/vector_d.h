@@ -16,9 +16,11 @@
 #define DRACO_CORE_VECTOR_D_H_
 
 #include <inttypes.h>
+
 #include <algorithm>
 #include <array>
 #include <cmath>
+#include <limits>
 
 #include "draco/core/macros.h"
 
@@ -32,17 +34,18 @@ class VectorD {
   typedef ScalarT Scalar;
   typedef VectorD<Scalar, dimension_t> Self;
 
-  // TODO(hemmer): Deprecate.
+  // TODO(b/199760123): Deprecate.
   typedef ScalarT CoefficientType;
 
   VectorD() {
-    for (int i = 0; i < dimension; ++i)
+    for (int i = 0; i < dimension; ++i) {
       (*this)[i] = Scalar(0);
+    }
   }
 
   // The following constructor does not compile in opt mode, which for now led
   // to the constructors further down, which is not ideal.
-  // TODO(hemmer): fix constructor below and remove others.
+  // TODO(b/199760123): Fix constructor below and remove others.
   // template <typename... Args>
   // explicit VectorD(Args... args) : v_({args...}) {}
 
@@ -83,8 +86,9 @@ class VectorD {
   }
 
   VectorD(const Self &o) {
-    for (int i = 0; i < dimension; ++i)
+    for (int i = 0; i < dimension; ++i) {
       (*this)[i] = o[i];
+    }
   }
 
   // Constructs the vector from another vector with a different data type or a
@@ -97,16 +101,17 @@ class VectorD {
   template <class OtherScalarT, int other_dimension_t>
   explicit VectorD(const VectorD<OtherScalarT, other_dimension_t> &src_vector) {
     for (int i = 0; i < dimension; ++i) {
-      if (i < other_dimension_t)
+      if (i < other_dimension_t) {
         v_[i] = Scalar(src_vector[i]);
-      else
+      } else {
         v_[i] = Scalar(0);
+      }
     }
   }
 
   Scalar &operator[](int i) { return v_[i]; }
   const Scalar &operator[](int i) const { return v_[i]; }
-  // TODO(hemmer): remove.
+  // TODO(b/199760123): Remove.
   // Similar to interface of Eigen library.
   Scalar &operator()(int i) { return v_[i]; }
   const Scalar &operator()(int i) const { return v_[i]; }
@@ -135,6 +140,35 @@ class VectorD {
       ret[i] = (*this)[i] - o[i];
     }
     return ret;
+  }
+
+  Self operator*(const Self &o) const {
+    Self ret;
+    for (int i = 0; i < dimension; ++i) {
+      ret[i] = (*this)[i] * o[i];
+    }
+    return ret;
+  }
+
+  Self &operator+=(const Self &o) {
+    for (int i = 0; i < dimension; ++i) {
+      (*this)[i] += o[i];
+    }
+    return *this;
+  }
+
+  Self &operator-=(const Self &o) {
+    for (int i = 0; i < dimension; ++i) {
+      (*this)[i] -= o[i];
+    }
+    return *this;
+  }
+
+  Self &operator*=(const Self &o) {
+    for (int i = 0; i < dimension; ++i) {
+      (*this)[i] *= o[i];
+    }
+    return *this;
   }
 
   Self operator*(const Scalar &o) const {
@@ -171,8 +205,9 @@ class VectorD {
 
   bool operator==(const Self &o) const {
     for (int i = 0; i < dimension; ++i) {
-      if ((*this)[i] != o[i])
+      if ((*this)[i] != o[i]) {
         return false;
+      }
     }
     return true;
   }
@@ -181,14 +216,17 @@ class VectorD {
 
   bool operator<(const Self &x) const {
     for (int i = 0; i < dimension - 1; ++i) {
-      if (v_[i] < x.v_[i])
+      if (v_[i] < x.v_[i]) {
         return true;
-      if (v_[i] > x.v_[i])
+      }
+      if (v_[i] > x.v_[i]) {
         return false;
+      }
     }
     // Only one check needed for the last dimension.
-    if (v_[dimension - 1] < x.v_[dimension - 1])
+    if (v_[dimension - 1] < x.v_[dimension - 1]) {
       return true;
+    }
     return false;
   }
 
@@ -199,7 +237,12 @@ class VectorD {
   Scalar AbsSum() const {
     Scalar result(0);
     for (int i = 0; i < dimension; ++i) {
-      result += std::abs(v_[i]);
+      Scalar next_value = std::abs(v_[i]);
+      if (result > std::numeric_limits<Scalar>::max() - next_value) {
+        // Return the max if adding would have caused an overflow.
+        return std::numeric_limits<Scalar>::max();
+      }
+      result += next_value;
     }
     return result;
   }
@@ -222,6 +265,12 @@ class VectorD {
     }
   }
 
+  Self GetNormalized() const {
+    Self ret(*this);
+    ret.Normalize();
+    return ret;
+  }
+
   const Scalar &MaxCoeff() const {
     return *std::max_element(v_.begin(), v_.end());
   }
@@ -231,6 +280,7 @@ class VectorD {
   }
 
   Scalar *data() { return &(v_[0]); }
+  const Scalar *data() const { return &(v_[0]); }
 
  private:
   std::array<Scalar, dimension> v_;

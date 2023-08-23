@@ -1,0 +1,17 @@
+// Copyright Contributors to the Open Shading Language project.
+// SPDX-License-Identifier: BSD-3-Clause
+// https://github.com/AcademySoftwareFoundation/OpenShadingLanguage
+
+// We expect this to be launched with oslc -Dfoo=bar
+
+#ifndef foo
+#define foo 0
+#endif
+
+
+shader test ()
+{
+    int bar = 42;
+    printf ("foo is %d\n", foo );
+}
+

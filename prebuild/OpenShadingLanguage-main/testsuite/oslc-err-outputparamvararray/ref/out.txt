@@ -1,0 +1,2 @@
+test.osl:6: error: shader output parameter 'c' can't be unsized array
+FAILED test.osl

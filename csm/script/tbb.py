@@ -33,7 +33,7 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     # cmd = "cd " + source_dir
     os.chdir( source_dir )
     
-    cmd = "python build/build.py --msbuild --vs=2019 --install-devel --prefix=" + install_dir
+    cmd = "python build/build.py --msbuild --vs=2019 --install-libs --install-devel --prefix=" + install_dir
     my_exec( cmd )
     
     os.chdir( CWD )

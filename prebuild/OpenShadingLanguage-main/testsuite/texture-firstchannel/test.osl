@@ -1,0 +1,10 @@
+// Copyright Contributors to the Open Shading Language project.
+// SPDX-License-Identifier: BSD-3-Clause
+// https://github.com/AcademySoftwareFoundation/OpenShadingLanguage
+
+shader
+test (string filename = "../common/textures/mandrill.tif",
+      output color Cout = 0)
+{
+    Cout = (color) texture (filename, u, v, "firstchannel", 1, "fill", 0.5);
+}

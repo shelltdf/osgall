@@ -17,7 +17,9 @@ def getDependency( str_name ,getDependency):
     list_name = addDependency("lua" , list_name,getDependency)
     list_name = addDependency("liblas" , list_name,getDependency) #no support ndk
     list_name = addDependency("gl3w" , list_name,getDependency) # support glcore
-    list_name = addDependency("dcmtk" , list_name,getDependency) # support glcore
+    list_name = addDependency("dcmtk" , list_name,getDependency)
+    list_name = addDependency("itk" , list_name,getDependency)
+    list_name = addDependency("occt" , list_name,getDependency)
 
     return list_name + [str_name]
     
@@ -38,6 +40,11 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     STR_CFG += ' -DOSG_USE_LOCAL_LUA_SOURCE=0'
     STR_CFG += ' -DOSG_CPP_EXCEPTIONS_AVAILABLE=1'
     
+    if(dict_config['static']):
+        STR_CFG += ' -DOPENCASCADE_LIBRARY_TYPE=Static'
+    else:
+        STR_CFG += ' -DOPENCASCADE_LIBRARY_TYPE=Shared'
+            
     if( GLES_VER == 1 ):
         STR_CFG += " -DOPENGL_PROFILE=\"GLES1\""
     if( GLES_VER == 2 ):

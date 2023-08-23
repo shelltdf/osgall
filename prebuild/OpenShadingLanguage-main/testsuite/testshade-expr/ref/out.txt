@@ -1,0 +1,24 @@
+Expression-based shader text is:
+---
+shader expr_0 (
+    float s = u [[ int interpolated=1 ]],
+    float t = v [[ int interpolated=1 ]],
+    output color result = 0,
+    output float alpha = 1,
+  )
+{
+    result=color(u,v,0)
+    ;
+}
+---
+Shader group:
+---
+shader expr_0 expr_0_0 ;
+
+---
+
+Shader group "unnamed_group_1" layers are:
+    expr_0_0
+
+
+Output result to out.tif
