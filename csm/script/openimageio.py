@@ -1,5 +1,6 @@
 
 from ._common import *
+from ._config import *
 
 def getDependency( str_name ,getDependency):
     list_name = []
@@ -85,7 +86,8 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     STR_CFG += ' -DOpenJpeg_ROOT=' + install_dir + '/'
     # STR_CFG += ' -DWebp_ROOT=' + install_dir + '/'
     
-    STR_CFG += ' -DQt5_ROOT=D:/Qt/5.15.2/msvc2019_64/lib/cmake/Qt5'
+    if(ENABLE_QT):
+        STR_CFG += ' -DQt5_ROOT=' + Qt_LIB
     
     STR_CFG += ' -DOpenCV_INCLUDE_DIR=' + install_dir + '/include/'
     if(dict_config['debug']==True):

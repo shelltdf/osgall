@@ -9,6 +9,7 @@ def getDependency( str_name ,getDependency):
     list_name = addDependency("libdeflate" , list_name,getDependency)
     list_name = addDependency("xz" , list_name,getDependency)
     list_name = addDependency("zstd" , list_name,getDependency)
+    list_name = addDependency("freeglut" , list_name,getDependency)
 
     return list_name + [str_name]
     

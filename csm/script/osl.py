@@ -1,5 +1,6 @@
 
 from ._common import *
+from ._config import *
 
 def getDependency( str_name ,getDependency):
     list_name = []
@@ -42,7 +43,7 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     STR_CFG += ' -DBoost_LIBRARY_DIRS=' + install_dir + '/lib/'
     
     # llvm-project-llvmorg-15.0.7
-    STR_CFG += ' -DLLVM_ROOT=C:/LLVM/'
+    STR_CFG += ' -DLLVM_ROOT=' + LLVM_ROOT
     # STR_CFG += ' -DLLVM_ROOT=C:/LLVM/lib/cmake/llvm'
     # STR_CFG += ' -DLLVM_INCLUDES=C:/LLVM/include/'
     # STR_CFG += ' -DLLVM_DIRECTORY=C:/LLVM/'
@@ -56,9 +57,10 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     
     if(dict_config['release']==True):
         if(dict_config['dynamic']):
-            configure(str_name,dict_config,STR_CFG,"",source_dir)
-            build(str_name,dict_config)
-            install(str_name,dict_config)
+            if(ENABLE_LLVM and os.path.isdir(LLVM_ROOT)):
+                configure(str_name,dict_config,STR_CFG,"",source_dir)
+                build(str_name,dict_config)
+                install(str_name,dict_config)
             
     
     
