@@ -1,0 +1,241 @@
+python build_scripts\build_usd.py --ptex --openimageio --opencolorio --openvdb --prman --alembic --hdf5 --draco d:\usd
+
+python build_scripts\build_usd.py --ptex --openimageio --opencolorio --openvdb --alembic --hdf5 --draco --no-python d:\usd
+
+python build_scripts\build_usd.py --ptex --openimageio --opencolorio --openvdb --alembic --hdf5 --draco --no-python --usdview d:\usd
+
+python build_scripts\build_usd.py --ptex --openimageio --opencolorio --openvdb --alembic --hdf5 --draco --python --usdview d:\usd
+
+python build_scripts\build_usd.py --ptex --openimageio --opencolorio --openvdb --alembic --hdf5 --draco --usdview d:\usd
+
+
+STATUS: Installing zlib...
+STATUS: Installing boost...
+STATUS: Installing TBB...
+STATUS: Installing HDF5...
+STATUS: Installing OpenEXR...
+STATUS: Installing Alembic...
+STATUS: Installing Draco...
+STATUS: Installing MaterialX...
+STATUS: Installing Ptex...
+STATUS: Installing OpenSubdiv...
+STATUS: Installing Blosc...
+STATUS: Installing OpenVDB...
+STATUS: Installing JPEG...
+STATUS: Installing TIFF...
+STATUS: Installing PNG...
+STATUS: Installing OpenImageIO...
+STATUS: Installing OpenColorIO...
+STATUS: Installing USD...
+
+
+
+OpenSubdiv
+	tbb 的 task_scheduler_init.h 在新版本中消失。
+	只能是 2019_U6 这个版本。
+	只能补充cmakelists了。
+	
+openexr
+	需要更新版本
+
+libtiff
+	需要更新版本
+	添加 JPEG_LIBRARY_STATIC 到cmake
+	
+	IF(BUILD_STATIC_LIBRARY)
+		ADD_DEFINITIONS(-DJPEG_LIBRARY_STATIC)
+	ENDIF()
+	
+libgeotiff
+	注释掉 TIFFOpen 的检测
+		
+expat
+	需要更新版本
+	
+zlib
+	需要更新版本
+	没必要
+	
+	只需要修改引用zlib的debug链接方式
+	libgeotiff
+	
+	
+必须开启
+	usd必须
+		boost 的 python 支持，可选numpy扩展。
+		PySide6 必须 
+		PyOpenGL 必须 
+		PySide2
+		jinja2  必须
+	
+	fbx sdk 必须
+	llvm 	osl必须 安装路径在 c:/LLVM 
+	
+	cuda
+	optix
+	
+	doxygen
+	
+openusd
+	注释掉tbb版本搜索
+	没用，大量代码耦合严重。
+
+
+pystring
+	注释掉 set(BUILD_SHARED_LIBS YES)
+	添加 include 安装
+	INSTALL(
+		FILES       pystring.h
+		DESTINATION include/pystring
+	)
+	
+bzip2
+	添加 cmake 脚本
+
+
+nimizip-bg
+	添加 
+	if(BUILD_SHARED_LIBS)
+		add_definitions(-DMZ_EXPORTS)
+	endif(BUILD_SHARED_LIBS)
+	
+	添加函数的 MZ_EXPORT 前缀
+	因为这个库必须支持动态
+	
+OpenVDB
+	CMake Error at C:/Program Files/CMake/share/cmake-3.27/Modules/FindPackageHandleStandardArgs.cmake:230 (message):
+		Could NOT find TBB: Found unsuitable version "2019.0", but required is at
+		least "2020.2" (found C:/dev/vs2019-64_dynamic_release/include, found
+		components: tbb)
+		
+	退回到 v7.1.0
+	
+	必须没有 IlmBase 也就是 openexr3 而且依赖于 TBB 2019.0 的版本。
+	OpenVDB 8.1.0 是可以的。
+	
+OpenImageIO
+	退回到  oiio-Release-2.1.16.0
+	
+fmt
+	string_view 有个乱码问题
+	EF BF BD
+
+opencv
+	有下载行为 IPPICV (先禁止)
+	
+openUSD
+	避免自动链接
+	if(WIN32)
+		add_definitions(-D__TBB_NO_IMPLICIT_LINKAGE=1)
+	endif()
+	
+	TBB_USE_DEBUG_BUILD
+	
+openUSD
+	boost(boost_1_82_0)
+		zlib
+		libiconv
+		python
+		bzip2
+	tbb(oneTBB-2019_U6)
+	opensubdiv
+		tbb
+		ptex
+			zlib
+	openimageio（oiio-Release-2.1.16.0）（oiio-Release-2.1.20.0）
+		libtiff
+			zlib
+			libjpeg
+		boost
+		openexr（必须是3）(这里必须是2还是禁止了)（必须是v2.5.2还不能禁止）
+			zlib
+			imath
+			libdeflate
+		libjpeg
+		bzip2
+		tbb
+		openvdb
+			boost
+			tbb
+			blosc
+			ilmbase(23版本冲突)（8.1貌似不需要OpenEXR了）
+		ptex
+		fmt
+		libpng
+		freetype
+		opencolorio
+		giflib
+		hdf
+		
+		Webp
+		Nuke(禁止)
+		Qt5
+		Libsquish(nvtt)
+		JPEGTurbo
+		OpenCV
+		DCMTK
+		FFmpeg(禁止)
+		Field3D（编译实在问题太多，还是禁止了。）
+		Libheif
+		LibRaw（0.20.0）
+		OpenJpeg
+		
+		robin-map
+		
+	opencolorio（OpenColorIO-1.1.0）
+		expat
+		imath(取消)
+		zlib
+		openexr（？）
+		pystring
+		minizip-ng
+			zlib
+			bzip2
+			xz
+			zstd
+		yaml-cpp
+		lcms2
+	materialx
+	alembic
+		openexr
+		
+静态编译
+	跟 jpeg 有关的修改
+	if(NOT BUILD_SHARED_LIBS)
+		add_definitions(-DJPEG_LIBRARY_STATIC)
+	endif(NOT BUILD_SHARED_LIBS)
+
+下一步接入
+	VTK
+	OCCT
+	CGAL
+	PCL
+	OSL
+	
+	
+	
+llvm
+	cmake -S llvm -B build -DCMAKE_INSTALL_PREFIX=c:/LLVM
+	cmake -S llvm -B build -DCMAKE_INSTALL_PREFIX=c:/LLVM -DLLVM_ENABLE_PROJECTS="all"
+	cmake -S llvm -B build -DCMAKE_INSTALL_PREFIX=c:/LLVM -DLLVM_ENABLE_PROJECTS="clang"
+	
+	
+下一步接入
+	physx
+	
+    
+    
+重复编译的问题
+    openvdb 会重复编译 可能是他之上的库造成的？
+    openusd 也会大面积重新编译
+    
+    
+总结
+    1 physx 有两个版本，现在无法确定支持哪个。
+    2 usd osl 都有特殊的依赖关系。
+    3 openexr 2 3 是不兼容的。
+    4 目前必须依赖于python和cuda。
+    5 ANNRI 还不能合并进来，变化太多。
+    6 osgPatch 改成py脚本来决定。
+    7 osl 需要固定版本的 llvm 源码编译版本。
+    
