@@ -37,6 +37,8 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     
     STR_CFG = ''
     
+    STR_CFG += ' -DUSE_OSG_PATCH=0'
+    
     STR_CFG += ' -DOSG_USE_LOCAL_LUA_SOURCE=0'
     STR_CFG += ' -DOSG_CPP_EXCEPTIONS_AVAILABLE=1'
     
