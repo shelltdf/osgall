@@ -17,6 +17,32 @@
   
 ## 编译说明
 
+### Windows 依赖库安装
+
+**【必须】**
+
+CUDA 12 及以上 直接安装（cuda_12.2.1_536.67_windows.exe）
+
+FBX SDK 直接安装（2019.2）
+
+Qt5 在线安装（5.15.2）
+
+python 3 （ numpy PySide6 PyOpenGL 必须安装 debug 相关）
+
+```
+在 pyconfig.h 文件里注释掉所有的 pragma comment(lib,"python310_d.lib") 自动链接
+```
+
+**【可选】**
+
+LLVM 源码编译安装（llvm-project-llvmorg-15.0.7）
+
+ISPC 直接解压（ispc-v1.20.0-windows.zip）
+
+Optix 直接安装（NVIDIA-OptiX-SDK-7.4.0-win64.exe）
+
+
+
 ### Visual Studio 2015
 
 参考 2017。
@@ -28,13 +54,14 @@
 2. 输入命令（假设编译zlib，使用all取代zlib可以编译全部库。使用vs2017编译32bit版本）（因为不需要下载了所以取消了source操作）
 
 ```
-cmake-git.py source zlib
+
 cmake-git.py install zlib -arch vs2017-64 [-release] [-debug] [-dynamic] [-static]
+
 ```
 
 3. 等待结束
 
-### Visual Studio 2019
+### Visual Studio 2019（主要版本）
 
 参考 2017。
 

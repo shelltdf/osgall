@@ -7,6 +7,7 @@ def getDependency( str_name ,getDependency):
     list_name = addDependency("eigen" , list_name,getDependency)
     list_name = addDependency("flann" , list_name,getDependency)
     list_name = addDependency("boost" , list_name,getDependency)
+    list_name = addDependency("qhull" , list_name,getDependency)
     
     return list_name + [str_name]
     
