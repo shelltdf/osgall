@@ -20,6 +20,7 @@ def getDependency( str_name ,getDependency):
     list_name = addDependency("dcmtk" , list_name,getDependency)
     list_name = addDependency("itk" , list_name,getDependency)
     list_name = addDependency("occt" , list_name,getDependency)
+    # list_name = addDependency("collada" , list_name,getDependency)
 
     return list_name + [str_name]
     
@@ -96,6 +97,11 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += " -DLIBLAS_LIBRARY='" + install_dir + "/lib/liblas.lib'"
             STR_CFG += " -DLUA_LIBRARY='" + install_dir + "/lib/lua.lib'"
             
+            STR_CFG += " -DOPENEXR_IlmImf_LIBRARY='" + install_dir + "/lib/IlmImf-2_5.lib'"
+            STR_CFG += " -DILMBASE_Half_LIBRARY='" + install_dir + "/lib/Half-2_5.lib'"
+            STR_CFG += " -DILMBASE_Iex_LIBRARY='" + install_dir + "/lib/Iex-2_5.lib'"
+            STR_CFG += " -DILMBASE_IlmThread_LIBRARY='" + install_dir + "/lib/IlmThread-2_5.lib'"
+            
         if(dict_config['debug']):
             STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/gdal31d.lib'"
             # STR_CFG += " -DCURL_LIBRARY_RELEASE='" + install_dir + "/lib/libcurld_imp.lib'"
@@ -105,6 +111,11 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += " -DGIFLIB_LIBRARY='" + install_dir + "/lib/giflibd.lib'"
             STR_CFG += " -DLIBLAS_LIBRARY='" + install_dir + "/lib/liblasd.lib'"
             STR_CFG += " -DLUA_LIBRARY='" + install_dir + "/lib/luad.lib'"
+            
+            STR_CFG += " -DOPENEXR_IlmImf_LIBRARY_DEBUG='" + install_dir + "/lib/IlmImf-2_5_d.lib'"
+            STR_CFG += " -DILMBASE_Half_LIBRARY_DEBUG='" + install_dir + "/lib/Half-2_5_d.lib'"
+            STR_CFG += " -DILMBASE_Iex_LIBRARY_DEBUG='" + install_dir + "/lib/Iex-2_5_d.lib'"
+            STR_CFG += " -DILMBASE_IlmThread_LIBRARY_DEBUG='" + install_dir + "/lib/IlmThread-2_5_d.lib'"
 
     if(dict_config['arch']=="unix"):
         STR_CFG += ' -DOSG_USE_UTF8_FILENAME=0'

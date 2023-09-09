@@ -5,6 +5,7 @@ def getDependency( str_name ,getDependency):
     list_name = []
     
     list_name = addDependency("lcms2" , list_name,getDependency)
+    list_name = addDependency("jasper" , list_name,getDependency)
     
     return list_name + [str_name]
     
