@@ -20,7 +20,7 @@ def getDependency( str_name ,getDependency):
     list_name = addDependency("dcmtk" , list_name,getDependency)
     list_name = addDependency("itk" , list_name,getDependency)
     list_name = addDependency("occt" , list_name,getDependency)
-    # list_name = addDependency("collada" , list_name,getDependency)
+    list_name = addDependency("collada" , list_name,getDependency)
 
     return list_name + [str_name]
     
@@ -76,6 +76,55 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
         
         # STR_CFG += ' -DNVTT_SHARED=1'
         
+        STR_CFG += " -DOPENEXR_IlmImf_LIBRARY='" + install_dir + "/lib/IlmImf-2_5.lib'"
+        STR_CFG += " -DILMBASE_Half_LIBRARY='" + install_dir + "/lib/Half-2_5.lib'"
+        STR_CFG += " -DILMBASE_Iex_LIBRARY='" + install_dir + "/lib/Iex-2_5.lib'"
+        STR_CFG += " -DILMBASE_IlmThread_LIBRARY='" + install_dir + "/lib/IlmThread-2_5.lib'"
+        
+        STR_CFG += " -DOPENEXR_IlmImf_LIBRARY_DEBUG='" + install_dir + "/lib/IlmImf-2_5_d.lib'"
+        STR_CFG += " -DILMBASE_Half_LIBRARY_DEBUG='" + install_dir + "/lib/Half-2_5_d.lib'"
+        STR_CFG += " -DILMBASE_Iex_LIBRARY_DEBUG='" + install_dir + "/lib/Iex-2_5_d.lib'"
+        STR_CFG += " -DILMBASE_IlmThread_LIBRARY_DEBUG='" + install_dir + "/lib/IlmThread-2_5_d.lib'"
+        
+        # STR_CFG += " -DCOLLADA_DIR='" + install_dir + "/include/collada-dom2.4'"
+        # STR_CFG += " -DCOLLADA_DIR='" + install_dir + "/include/collada-dom2.4/1.4'"
+        # STR_CFG += " -DCOLLADA_DOM_ROOT='" + install_dir + "/include/collada-dom2.4/1.4/dom'"
+        STR_CFG += " -DCOLLADA_INCLUDE_DIR='" + install_dir + "/include/collada-dom2.4'"
+        
+        STR_CFG += " -DCOLLADA_BOOST_FILESYSTEM_LIBRARY='" + install_dir + "/lib/boost_filesystem-vc142-mt-x64-1_82.lib'"
+        STR_CFG += " -DCOLLADA_BOOST_FILESYSTEM_LIBRARY_DEBUG='" + install_dir + "/lib/boost_filesystem-vc142-mt-gd-x64-1_82.lib'"
+        # STR_CFG += " -DCOLLADA_BOOST_SYSTEM_LIBRARY='" + install_dir + "/lib/boost_filesystem-vc142-mt-gd-x64-1_82.lib'"
+        # STR_CFG += " -DCOLLADA_BOOST_SYSTEM_LIBRARY_DEBUG='" + install_dir + "/lib/boost_filesystem-vc142-mt-gd-x64-1_82.lib'"
+        STR_CFG += " -DCOLLADA_DYNAMIC_LIBRARY='" + install_dir + "/lib/collada-dom2.4-dp-vc100-mt.lib'"
+        STR_CFG += " -DCOLLADA_DYNAMIC_LIBRARY_DEBUG='" + install_dir + "/lib/collada-dom2.4-dp-vc100-mt.lib'"
+        STR_CFG += " -DCOLLADA_LIBXML_LIBRARY='" + install_dir + "/lib/libxml2.lib'"
+        STR_CFG += " -DCOLLADA_LIBXML_LIBRARY_DEBUG='" + install_dir + "/lib/libxml2d.lib'"
+        STR_CFG += " -DCOLLADA_MINIZIP_LIBRARY='" + install_dir + "/lib/minizip.lib'"
+        STR_CFG += " -DCOLLADA_MINIZIP_LIBRARY_DEBUG='" + install_dir + "/lib/minizip.lib'"
+        STR_CFG += " -DCOLLADA_PCRECPP_LIBRARY='" + install_dir + "/lib/pcrecpp_local.lib'"
+        STR_CFG += " -DCOLLADA_PCRECPP_LIBRARY_DEBUG='" + install_dir + "/lib/pcrecpp_locald.lib'"
+        STR_CFG += " -DCOLLADA_PCRE_LIBRARY='" + install_dir + "/lib/pcre_local.lib'"
+        STR_CFG += " -DCOLLADA_PCRE_LIBRARY_DEBUG='" + install_dir + "/lib/pcre_locald.lib'"
+        STR_CFG += " -DCOLLADA_ZLIB_LIBRARY='" + install_dir + "/lib/zlib.lib'"
+        STR_CFG += " -DCOLLADA_ZLIB_LIBRARY_DEBUG='" + install_dir + "/lib/zlibd.lib'"
+
+        STR_CFG += " -DNVTT_LIBRARY_RELEASE='" + install_dir + "/lib/nvtt.lib'"
+        STR_CFG += " -DNVTT_LIBRARY_DEBUG='" + install_dir + "/lib/nvtt_d.lib'"
+        STR_CFG += " -DNVBC6H_LIBRARY_RELEASE='" + install_dir + "/lib/bc6h.lib'"
+        STR_CFG += " -DNVBC6H_LIBRARY_DEBUG='" + install_dir + "/lib/bc6h_d.lib'"
+        STR_CFG += " -DNVBC7_LIBRARY_RELEASE='" + install_dir + "/lib/bc7.lib'"
+        STR_CFG += " -DNVBC7_LIBRARY_DEBUG='" + install_dir + "/lib/bc7_d.lib'"
+        STR_CFG += " -DNVCORE_LIBRARY_RELEASE='" + install_dir + "/lib/nvcore.lib'"
+        STR_CFG += " -DNVCORE_LIBRARY_DEBUG='" + install_dir + "/lib/nvcore_d.lib'"
+        STR_CFG += " -DNVIMAGE_LIBRARY_RELEASE='" + install_dir + "/lib/nvimage.lib'"
+        STR_CFG += " -DNVIMAGE_LIBRARY_DEBUG='" + install_dir + "/lib/nvimage_d.lib'"
+        STR_CFG += " -DNVMATH_LIBRARY_RELEASE='" + install_dir + "/lib/nvmath.lib'"
+        STR_CFG += " -DNVMATH_LIBRARY_DEBUG='" + install_dir + "/lib/nvmath_d.lib'"
+        STR_CFG += " -DNVSQUISH_LIBRARY_RELEASE='" + install_dir + "/lib/squish.lib'"
+        STR_CFG += " -DNVSQUISH_LIBRARY_DEBUG='" + install_dir + "/lib/squishd.lib'"
+        STR_CFG += " -DNVTHREAD_LIBRARY_RELEASE='" + install_dir + "/lib/nvthread.lib'"
+        STR_CFG += " -DNVTHREAD_LIBRARY_DEBUG='" + install_dir + "/lib/nvthread_d.lib'"
+        
         if(dict_config['static']):
             STR_CFG += ' -DBUILD_OSG_APPLICATIONS=0'
             STR_CFG += ' -DBUILD_OSG_EXAMPLES=0'
@@ -96,27 +145,21 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
             STR_CFG += " -DGIFLIB_LIBRARY='" + install_dir + "/lib/giflib.lib'"
             STR_CFG += " -DLIBLAS_LIBRARY='" + install_dir + "/lib/liblas.lib'"
             STR_CFG += " -DLUA_LIBRARY='" + install_dir + "/lib/lua.lib'"
-            
-            STR_CFG += " -DOPENEXR_IlmImf_LIBRARY='" + install_dir + "/lib/IlmImf-2_5.lib'"
-            STR_CFG += " -DILMBASE_Half_LIBRARY='" + install_dir + "/lib/Half-2_5.lib'"
-            STR_CFG += " -DILMBASE_Iex_LIBRARY='" + install_dir + "/lib/Iex-2_5.lib'"
-            STR_CFG += " -DILMBASE_IlmThread_LIBRARY='" + install_dir + "/lib/IlmThread-2_5.lib'"
-            
+              
+            STR_CFG += " -DLIBXML2_LIBRARY='" + install_dir + "/lib/libxml2.lib'"
+            # STR_CFG += " -DLIBXML2_LIBRARY_DEBUG='" + install_dir + "/lib/libxml2d.lib'"
+        
         if(dict_config['debug']):
             STR_CFG += " -DGDAL_LIBRARY='" + install_dir + "/lib/gdal31d.lib'"
             # STR_CFG += " -DCURL_LIBRARY_RELEASE='" + install_dir + "/lib/libcurld_imp.lib'"
             STR_CFG += " -DCURL_LIBRARY_DEBUG='" + install_dir + "/lib/libcurld_imp.lib'"
-            STR_CFG += " -DNVSQUISH_LIBRARY_DEBUG='" + install_dir + "/lib/squishd.lib'"
-            STR_CFG += " -DNVTT_LIBRARY_DEBUG='" + install_dir + "/lib/nvttd.lib'"
             STR_CFG += " -DGIFLIB_LIBRARY='" + install_dir + "/lib/giflibd.lib'"
             STR_CFG += " -DLIBLAS_LIBRARY='" + install_dir + "/lib/liblasd.lib'"
             STR_CFG += " -DLUA_LIBRARY='" + install_dir + "/lib/luad.lib'"
             
-            STR_CFG += " -DOPENEXR_IlmImf_LIBRARY_DEBUG='" + install_dir + "/lib/IlmImf-2_5_d.lib'"
-            STR_CFG += " -DILMBASE_Half_LIBRARY_DEBUG='" + install_dir + "/lib/Half-2_5_d.lib'"
-            STR_CFG += " -DILMBASE_Iex_LIBRARY_DEBUG='" + install_dir + "/lib/Iex-2_5_d.lib'"
-            STR_CFG += " -DILMBASE_IlmThread_LIBRARY_DEBUG='" + install_dir + "/lib/IlmThread-2_5_d.lib'"
-
+            STR_CFG += " -DLIBXML2_LIBRARY='" + install_dir + "/lib/libxml2d.lib'"
+            # STR_CFG += " -DLIBXML2_LIBRARY_DEBUG='" + install_dir + "/lib/libxml2d.lib'"
+            
     if(dict_config['arch']=="unix"):
         STR_CFG += ' -DOSG_USE_UTF8_FILENAME=0'
         
