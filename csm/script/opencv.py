@@ -4,7 +4,9 @@ from ._common import *
 def getDependency( str_name ,getDependency):
     list_name = []
     
-    # list_name = addDependency("zlib" , list_name,getDependency)
+    list_name = addDependency("eigen" , list_name,getDependency)
+    list_name = addDependency("vtk" , list_name,getDependency)
+    list_name = addDependency("openexr" , list_name,getDependency)
     
     return list_name + [str_name]
     
