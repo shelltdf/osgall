@@ -62,5 +62,10 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
                 build(str_name,dict_config)
                 install(str_name,dict_config)
             
-    
+    if( not dict_config['static']):
+        source_dir = install_dir + "/lib/"
+        dist_dir = install_dir + '/bin/'
+        print(source_dir)
+        print(dist_dir)
+        movefiles(source_dir,dist_dir+"/","*.dll")
     

@@ -15,7 +15,9 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     # if(b_only_download):
         # download_source(str_name,"https://github.com/madler/zlib.git")
         # return
-        
+    
+    install_dir = dict_config['install_dir'] + '/' + my_build_and_install_dir(dict_config)
+    
     STR_CFG = ''
     if(dict_config['static']):
         STR_CFG += " -DALEMBIC_SHARED_LIBS=0"
@@ -28,4 +30,11 @@ def SBI( str_name , b_only_download ,dict_config, getLibrary ):
     build(str_name,dict_config)
     install(str_name,dict_config)
     
-    
+    if( not dict_config['static']):
+        source_dir = install_dir + "/lib/"
+        dist_dir = install_dir + '/bin/'
+        print(source_dir)
+        print(dist_dir)
+        movefiles(source_dir,dist_dir+"/","*.dll")
+        
+        
