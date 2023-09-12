@@ -33,6 +33,8 @@ python 3 （ numpy PySide6 PyOpenGL 必须安装 debug 相关）
 在 pyconfig.h 文件里注释掉所有的 pragma comment(lib,"python310_d.lib") 自动链接
 ```
 
+perl 是 hdf 必须的命令行工具。不然无法创建对应的h文件。(不能使用 ActivePerl 了，只能安装 Strawberry Perl。安装后删除所有h文件，保证没有库被cmake搜索到而引起混乱。)
+
 **【可选】**
 
 LLVM 源码编译安装（llvm-project-llvmorg-15.0.7）
